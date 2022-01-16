@@ -71,62 +71,122 @@ public class Limelight {
         return solvePNP.getDoubleArray(defaultArray)[1];
     }
 
+    /**
+     * This function uses the Limelight's Solve3D function to compute the z-distance from the target in inches. The limelight must be in Solve3D mode with High-Res enabled.
+     * @return y-distance from the target in inches
+     */
     public double getZPos() {
         return solvePNP.getDoubleArray(defaultArray)[2];
     }
 
+    /**
+     * This function uses the Limelight's Solve3D function to compute the pitch of the robot. The limelight must be in Solve3D mode with High-Res enabled.
+     * @return Pitch of the robot in degrees
+     */
     public double getPitch() {
         return solvePNP.getDoubleArray(defaultArray)[3];
     }
 
+    /**
+     * This function uses the Limelight's Solve3D function to compute the yaw of the robot. The limelight must be in Solve3D mode with High-Res enabled.
+     * @return Yaw of the robot in degrees
+     */
     public double getYaw() {
         return solvePNP.getDoubleArray(defaultArray)[4];
     }
 
+    /**
+     * This function uses the Limelight's Solve3D function to compute the roll of the robot. The limelight must be in Solve3D mode with High-Res enabled.
+     * @return Roll of the robot in degrees
+     */
     public double getRoll() {
         return solvePNP.getDoubleArray(defaultArray)[5];
     }
 
+    /**
+     * This function returns the target's side-to-side angle from the center of the Limelight's field of view
+     * @return x-angle of the target in degrees
+     */
     public double getX() {
         return tx.getDouble(0.0);
     }
 
+    /**
+     * This function returns the target's up-down angle from the center of the Limelight's field of view
+     * @return y-angle of the target in degrees
+     */
     public double getY() {
         return ty.getDouble(0.0);
     }
 
+    /**
+     * This function returns the target's area in the image
+     * @return Area of the target in pixels
+     */
     public double getArea() {
         return ta.getDouble(0.0);
     }
 
+    /**
+     * This function returns the skew of the target in relation to the robot
+     * @return Skew of the target in degrees
+     */
     public double getSkew() {
         return ts.getDouble(0.0);
     }
 
+    /**
+     * This function returns if there is a valid vision target
+     * @return True if there is a target
+     */
     public boolean hasValidTarget() {
         return tv.getDouble(0) == 1.0;
     }
 
+    /**
+     * This function returns the processing latency of the Limelight
+     * @return Milliseconds of delay
+     */
     public double getLatency() {
         return tl.getDouble(0.0);
     }
 
+    /**
+     * This function returns the height of the shorter side of the target (works well on targets like Stronghold)
+     * @return Height of short side in pixels
+     */
     public double getShortSide() {
         return tshort.getDouble(0.0);
     }
 
+    /**
+     * This function returns the height of the longer side of the target (works well on targets like Stronghold)
+     * @return Height of long side in pixels
+     */
     public double getLongSide() {
         return tlong.getDouble(0.0);
     }
 
+    /**
+     * This function returns the width of the target
+     * @return Width of the target in pixels
+     */
     public double getWidth() {
         return thoriz.getDouble(0.0);
     }
 
+    /**
+     * This function returns the height of the target
+     * @return Height of the target in pixels
+     */
     public double getHeight() {
         return tvert.getDouble(0.0);
     }
 
+    /**
+     * This function sets the pipeline ID for when you have multiple different pipelines
+     * @param ID
+     */
     public void setPipeline(int id) {
         pipeline.setNumber(id);
     }
