@@ -178,7 +178,9 @@ public class DrivetrainSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     SwerveModuleState[] states = m_kinematics.toSwerveModuleStates(m_chassisSpeeds);//removed a second param of MAX_VELOCITY_METERS_PER_SECOND, and changed the first param from itself(states) to the chassisspeeds object 
-    //SwerveDriveKinematics.normalizeWheelSpeeds(states, MAX_VELOCITY_METERS_PER_SECOND); What does this do?
+    //Ensures we aren't going past the speed that we should be going
+    //Important note: This is the method SwerveDriveKinematics.normalizeWheelSpeeds() from the documentation, but it actually works, even though THIS isn't documented.
+    SwerveDriveKinematics.desaturateWheelSpeeds(states, MAX_VELOCITY_METERS_PER_SECOND);
     
      //these seem to maintain the same movement as the robot continues
     m_frontLeftModule.set(states[0].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, states[0].angle.getRadians());
