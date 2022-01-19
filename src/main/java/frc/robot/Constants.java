@@ -29,7 +29,6 @@ public final class Constants {
     // public static final int DRIVETRAIN_PIGEON_ID = 0; // Set Pigeon ID - We do not use Pigeon
 
     // Values have been assigned from 2021 code 2021-11-30
-
     public static final int FRONT_RIGHT_MODULE_DRIVE_MOTOR = 1; // Set front right drive motor ID
     public static final int FRONT_RIGHT_MODULE_STEER_MOTOR = 2; // Set front right steer motor ID
     public static final int FRONT_RIGHT_MODULE_STEER_ENCODER = 21; // Set front right steer encoder ID
@@ -50,6 +49,11 @@ public final class Constants {
     public static final int FRONT_LEFT_MODULE_STEER_ENCODER = 24; // Set front left steer encoder ID
     public static final double FRONT_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(157.5); // Measure and set front left steer offset
 
+    // Motors need to be assigned in the CTRE Phoenix Tuner
+    // Two motors are used to launch the "Cargo"
+    // FIXME Give new values in code and TUNER
+    public static final int bottomLaunchMotor = 9; // Sets the left launcher motor ID value
+    public static final int topLaunchMotor = 10; // Sets the right launcher motor ID value
     // Added from previous code
     // public static AHRS gyro = new AHRS(SPI.Port.kMXP);
 
