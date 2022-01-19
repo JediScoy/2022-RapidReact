@@ -8,7 +8,7 @@ package frc.robot.subsystems;
 // import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-//import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
+import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 // import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 // Shuffleboard imports
@@ -32,9 +32,9 @@ public class LauncherSubsystem extends SubsystemBase {
   private final TalonFX m_LauncherMotorTop = new TalonFX(Constants.topLaunchMotor);
   private final TalonFX m_LauncherMotorBottom = new TalonFX(Constants.bottomLaunchMotor);
 
-      // invert commands are not working for some reason 
-      //final TalonFXInvertType rightLaunchMotor = TalonFXInvertType.CounterClockwise;
-      //final TalonFXInvertType leftLaunchMotor = TalonFXInvertType.Clockwise;
+  // invert commands are not working for some reason 
+  // final TalonFXInvertType topLaunchMotor = TalonFXInvertType.CounterClockwise;
+  // final TalonFXInvertType bottomLaunchMotor = TalonFXInvertType.Clockwise;
 
     
   public LauncherSubsystem() {}
@@ -42,11 +42,10 @@ public class LauncherSubsystem extends SubsystemBase {
   /** Launches the Cargo with speed set for low hub
     * Eventually the absolute value could be replaced with sensor-driven values
     **/
-  public void launchCargo() {
-    double cargoSpeedTop = 0.30;
-    double cargoSpeedBottom = -0.40;
-    m_LauncherMotorTop.set(ControlMode.PercentOutput, cargoSpeedTop);
-    m_LauncherMotorBottom.set(ControlMode.PercentOutput, cargoSpeedBottom);
+  public void launchCargoLow() {
+    // Sets the output of launcher motors for launching cargo
+    m_LauncherMotorTop.set(ControlMode.PercentOutput, 0.30);
+    m_LauncherMotorBottom.set(ControlMode.PercentOutput, -0.30);
     // Document for adding CopntrolMode.PecentOutput https://docs.ctre-phoenix.com/en/stable/ch13_MC.html
   }
 
@@ -54,20 +53,15 @@ public class LauncherSubsystem extends SubsystemBase {
     * Eventually the absolute value could be replaced with sensor-driven values
     **/
   public void launchCargoHigh() {
-    double cargoSpeedTop = 0.30;
-    double cargoSpeedBottom = -0.30;
-    m_LauncherMotorTop.set(ControlMode.PercentOutput, cargoSpeedTop);
-    m_LauncherMotorBottom.set(ControlMode.PercentOutput, cargoSpeedBottom);
+    // Sets the output of launcher motors for launching cargo
+    m_LauncherMotorTop.set(ControlMode.PercentOutput, 0.30);
+    m_LauncherMotorBottom.set(ControlMode.PercentOutput, -0.40);
   }
 
   public void stopLaunch(){
-    double cargoSpeedTop = 0;
-    double cargoSpeedBottom = 0;
-    m_LauncherMotorTop.set(ControlMode.PercentOutput, cargoSpeedTop);
-    m_LauncherMotorBottom.set(ControlMode.PercentOutput, cargoSpeedBottom);
+    m_LauncherMotorTop.set(ControlMode.PercentOutput, 0);
+    m_LauncherMotorBottom.set(ControlMode.PercentOutput, 0);
   }
-
-  // Shaun or Jackson: Create an action to "releaseCargo" if needed by the drive team
 
   @Override
   public void periodic() {

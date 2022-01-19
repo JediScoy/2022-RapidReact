@@ -3,26 +3,24 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.commands;
-
 import frc.robot.subsystems.LauncherSubsystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+// import edu.wpi.first.wpilibj.motorcontrol.MotorController;
+// import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 
 // Change from m_subsystem references to m_launcher in command
 
-/** An example command that uses an example subsystem. */
-public class LaunchCargo extends CommandBase {
+public class LaunchCargoLow extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   
   // Subsystem the command uses
   private final LauncherSubsystem m_launcherSubsystem; 
 
-
-  /**
-   * Creates a new ExampleCommand.
-   * The subsystem used by this command.
-   */
-
-  public LaunchCargo(LauncherSubsystem subsystem) {
+  public LaunchCargoLow(LauncherSubsystem subsystem) {
     m_launcherSubsystem = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_launcherSubsystem);
@@ -31,7 +29,7 @@ public class LaunchCargo extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_launcherSubsystem.launchCargo();
+    m_launcherSubsystem.launchCargoLow();
     
     }
     
@@ -52,6 +50,10 @@ public class LaunchCargo extends CommandBase {
     // This is more like the Hatchbot example online
     // LauncherSubsystem.setDefaultCommand(StopLaunch);
 
+    // Try AFTER testing all of the other "new" stuff
+    // EXAMPLE m_LauncherSubsystem.drive(new ChassisSpeeds(0.0, 0.0, 0.0));
+    // m_LauncherMotorTop.set(new ControlMode.PercentOutput, 0));
+    // m_LauncherMotorBottom.set(new ControlMode.PercentOutput, 0));
   }
 
   // Returns true when the command should end.
