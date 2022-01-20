@@ -160,3 +160,5 @@ bin/
 
 # Simulation GUI and other tools window save file
 *-window.json
+.gradle/buildOutputCleanup/buildOutputCleanup.lock
+.gradle/buildOutputCleanup/outputFiles.bin
