@@ -51,9 +51,8 @@ public final class Constants {
 
     // Motors need to be assigned in the CTRE Phoenix Tuner
     // Two motors are used to launch the "Cargo"
-    // FIXME Give new values in code and TUNER
-    public static final int bottomLaunchMotor = 9; // Sets the left launcher motor ID value
-    public static final int topLaunchMotor = 10; // Sets the right launcher motor ID value
+    public static final int bottomLaunchMotor = 9; // Sets the bottom launcher motor ID value
+    public static final int topLaunchMotor = 10; // Sets the top launcher motor ID value
     // Added from previous code
     // public static AHRS gyro = new AHRS(SPI.Port.kMXP);
 
