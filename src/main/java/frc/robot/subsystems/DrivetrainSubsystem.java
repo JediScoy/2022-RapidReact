@@ -22,7 +22,6 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
 
 
-
 import static frc.robot.Constants.*;
 
 public class DrivetrainSubsystem extends SubsystemBase {
@@ -73,7 +72,9 @@ public class DrivetrainSubsystem extends SubsystemBase {
   // private final PigeonIMU m_pigeon = new PigeonIMU(DRIVETRAIN_PIGEON_ID);
   
   // Uncomment if you are using a NavX
+ 
   private final AHRS m_navx = new AHRS(SPI.Port.kMXP, (byte) 200); // NavX connected over MXP
+  
 
   // These are our modules. We initialize them in the constructor.
   private final SwerveModule m_frontLeftModule;
@@ -152,9 +153,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
   public void zeroGyroscope() {
     // Remove if you are using a Pigeon
     // m_pigeon.setFusedHeading(0.0);
-
     // Uncomment if you are using a NavX
-    m_navx.zeroYaw();
+        m_navx.zeroYaw();
   }
 
   public Rotation2d getGyroscopeRotation() {
