@@ -10,7 +10,10 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
+// private final TalonFX m_LauncherMotorTop = new TalonFX(Constants.topLaunchMotor);
+// private final TalonFX m_LauncherMotorBottom = new TalonFX(Constants.bottomLaunchMotor);
 
 // Change from m_subsystem references to m_launcher in command
 
@@ -52,7 +55,7 @@ public class LaunchCargoLow extends CommandBase {
 
     // Try AFTER testing all of the other "new" stuff
     // EXAMPLE m_LauncherSubsystem.drive(new ChassisSpeeds(0.0, 0.0, 0.0));
-    // m_LauncherMotorTop.set(new ControlMode.PercentOutput, 0));
+    // TalonFX m_LauncherSubsystem.set(new ControlMode.PercentOutput, 0);
     // m_LauncherMotorBottom.set(new ControlMode.PercentOutput, 0));
   }
 
