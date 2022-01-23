@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
  * edu.wpi.first.wpilibj2.command.InstantCommand}.
  */
 
-public class LiftStage1UP extends CommandBase {
+public class LiftStageOne extends CommandBase {
  
     /** 
     // The subsystem the command runs on

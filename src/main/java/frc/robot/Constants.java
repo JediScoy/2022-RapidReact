@@ -25,7 +25,7 @@ public final class Constants {
     public static final double DRIVETRAIN_WHEELBASE_METERS = 0.585; // FIXED Measure and set wheelbase
     // public static final int DRIVETRAIN_PIGEON_ID = 0; // Set Pigeon ID - We do not use Pigeon
 
-    // Motors ID in the CTRE Phoenix Tuner need to match code
+    // Motors are ID in the CTRE Phoenix Tuner need to match code
     // Values have been assigned from 2021 code 2021-11-30
     public static final int FRONT_RIGHT_MODULE_DRIVE_MOTOR = 1; // Set front right drive motor ID
     public static final int FRONT_RIGHT_MODULE_STEER_MOTOR = 2; // Set front right steer motor ID
@@ -50,7 +50,18 @@ public final class Constants {
     // Two motors are used to launch the "Cargo"
     public static final int bottomLaunchMotor = 9; // Sets the bottom launcher motor ID value
     public static final int topLaunchMotor = 10; // Sets the top launcher motor ID value
-    // Added from previous code
-    // public static AHRS gyro = new AHRS(SPI.Port.kMXP);
+    
+    // Lift motors
+    /** */
+
+    // Intake motors
+    /** */
+
+    // Index motors
+    /** */
+
+    
+    // Already defined in DrivetrainSub as "m_navx"
+    // public static AHRS gyro = new AHRS(Port.kMXP); // From 2021-Infinite Recharge
 
 }

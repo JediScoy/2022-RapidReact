@@ -6,11 +6,11 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 // import edu.wpi.first.wpilibj.buttons.JoystickButton; // OldCommands vendorsdep
 import edu.wpi.first.wpilibj2.command.button.JoystickButton; //NewCommands vendordep
 // import edu.wpi.first.wpilibj2.command.button.Button;
-
-import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import static edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -22,6 +22,7 @@ import frc.robot.subsystems.DrivetrainSubsystem;
 // import frc.robot.commands.LaunchCargoHigh;
 // import frc.robot.commands.StopLaunch;
 // import frc.robot.subsystems.LauncherSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 
 
 
@@ -92,6 +93,9 @@ public class RobotContainer {
 
     final JoystickButton rBumper = new JoystickButton(operatorController, Button.kRightBumper.value);
     final JoystickButton lBumper = new JoystickButton(operatorController, Button.kLeftBumper.value);
+    final JoystickButton greenA = new JoystickButton(operatorController, Button.kA.value);
+
+    // FIXME rBumper.whePressed(new Intake(IntakeSubsystem, 0));
 
     /** COMMENTING OUT LAUNCHER CODE FOR PRACTICE BOT
     // Connect the buttons to commands
@@ -100,11 +104,11 @@ public class RobotContainer {
     // We tried whileHeld command initially, but it only starts the motors, it does not stop the motors automatically
     upon button release as it should
     //this is working to start falcon motors when button held
-    l1.whenHeld(new LaunchCargoLow(m_launcherSubsystem));
-    r1.whenHeld(new LaunchCargoHigh(m_launcherSubsystem));
+    lBumper.whenHeld(new LaunchCargoLow(m_launcherSubsystem));
+    rBumper.whenHeld(new LaunchCargoHigh(m_launcherSubsystem));
     //added a when button released command until we have whileHeld working as it should
-    l1.whenReleased(new StopLaunch(m_launcherSubsystem));
-    r1.whenReleased(new StopLaunch(m_launcherSubsystem));
+    lBumper.whenReleased(new StopLaunch(m_launcherSubsystem));
+    rBumper.whenReleased(new StopLaunch(m_launcherSubsystem));
     **/
 
   /** Use this to pass the autonomous command to the main {@link Robot} class.
