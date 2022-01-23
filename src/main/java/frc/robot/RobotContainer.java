@@ -6,7 +6,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-// import static edu.wpi.first.wpilibj.XboxController.Button;
+import static edu.wpi.first.wpilibj.XboxController.Button;
 // import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
 // import edu.wpi.first.wpilibj2.command.FunctionalCommand;
@@ -32,7 +32,10 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem();
 
+  // Main driver controller
   private final XboxController m_controller = new XboxController(0);
+  // Second operator controller
+  private final XboxController m_driver2 = new XboxController(1);
 
   // private final LauncherSubsystem m_launcherSubsystem = new LauncherSubsystem();
 
@@ -45,8 +48,6 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-    
-
     // Set up the default command for the drivetrain.
     // The controls are for field-oriented driving:
     // Left stick Y axis -> forward and backwards movement
@@ -70,8 +71,8 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     //declaring buttons on controller
-      
-  /** COMMENTING OUT LAUNCHER CODE FOR PRACTICE BOT 
+
+  /** COMMENTING OUT LAUNCHER CODE FOR PRACTICE BOT
     final JoystickButton r1 = new JoystickButton(m_controller, Button.kRightBumper.value);
     final JoystickButton l1 = new JoystickButton(m_controller, Button.kLeftBumper.value);
 
@@ -91,9 +92,9 @@ public class RobotContainer {
   /** Use this to pass the autonomous command to the main {@link Robot} class.
   * @return the command to run in autonomous
  */
-  
+
   // Back button zeros the gyroscope
-  // Shaun's previously working code (?) that we broke :) 
+  // Shaun's previously working code (?) that we broke :)
   new Button(m_controller::getBackButton)
             // No requirements because we don't need to interrupt anything
             .whenPressed(m_drivetrainSubsystem::zeroGyroscope);    
@@ -110,7 +111,7 @@ public class RobotContainer {
     // new LaunchCargoLow(m_launcherSubsystem);
     // This is from Prototype launacher
     // return m_autoCommand;
-    
+
     // This is from SDS Drive code base
     return new InstantCommand();
   }

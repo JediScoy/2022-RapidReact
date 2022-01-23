@@ -15,17 +15,14 @@ package frc.robot;
 public final class Constants {
     /**
      * The left-to-right distance between the drivetrain wheels
-     *
      * Should be measured from center to center.
      */
     public static final double DRIVETRAIN_TRACKWIDTH_METERS = 0.585; // FIXED Measure and set trackwidth
     /**
      * The front-to-back distance between the drivetrain wheels.
-     *
      * Should be measured from center to center.
      */
     public static final double DRIVETRAIN_WHEELBASE_METERS = 0.585; // FIXED Measure and set wheelbase
-
     // public static final int DRIVETRAIN_PIGEON_ID = 0; // Set Pigeon ID - We do not use Pigeon
 
     // Motors ID in the CTRE Phoenix Tuner need to match code
