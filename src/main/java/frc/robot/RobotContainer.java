@@ -6,12 +6,16 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+// import edu.wpi.first.wpilibj.buttons.JoystickButton; // OldCommands vendorsdep
+import edu.wpi.first.wpilibj2.command.button.JoystickButton; //NewCommands vendordep
+// import edu.wpi.first.wpilibj2.command.button.Button;
+
+import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import static edu.wpi.first.wpilibj.XboxController.Button;
-// import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
-// import edu.wpi.first.wpilibj2.command.FunctionalCommand;
+import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.button.Button;
 import frc.robot.commands.DefaultDriveCommand;
 import frc.robot.subsystems.DrivetrainSubsystem;
 // import frc.robot.commands.LaunchCargoLow;
@@ -19,7 +23,6 @@ import frc.robot.subsystems.DrivetrainSubsystem;
 // import frc.robot.commands.StopLaunch;
 // import frc.robot.subsystems.LauncherSubsystem;
 
-// import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 
 /**
@@ -33,9 +36,9 @@ public class RobotContainer {
   private final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem();
 
   // Main driver controller
-  private final XboxController m_controller = new XboxController(0);
+  private final XboxController driverController = new XboxController(0);
   // Second operator controller
-  private final XboxController m_driver2 = new XboxController(1);
+  private final XboxController operatorController = new XboxController(1);
 
   // private final LauncherSubsystem m_launcherSubsystem = new LauncherSubsystem();
 
@@ -55,13 +58,16 @@ public class RobotContainer {
     // Right stick X axis -> rotation
     m_drivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(
             m_drivetrainSubsystem,
-            () -> -modifyAxis(m_controller.getLeftY()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
-            () -> -modifyAxis(m_controller.getLeftX()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
-            () -> -modifyAxis(m_controller.getRightX()) * DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
+            () -> -modifyAxis(driverController.getLeftY()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
+            () -> -modifyAxis(driverController.getLeftX()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
+            () -> -modifyAxis(driverController.getRightX()) * DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
     ));
 
     // Configure the button bindings
     configureButtonBindings();
+
+    // Reset the navx
+    
   }
   /**
    * Use this method to define your button->command mappings. Buttons can be created by
@@ -69,13 +75,25 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
+
+  /** Code from 2021 Skills bot of Enginerds 2337 
+  public void resetDrivetrain (){
+    swerveDrivetrain.resetAngleMotors();
+    swerveDrivetrain.resetOdometry();
+    swerveDrivetrain.resetDriveMotos();
+  }
+  */
   private void configureButtonBindings() {
     //declaring buttons on controller
 
-  /** COMMENTING OUT LAUNCHER CODE FOR PRACTICE BOT
-    final JoystickButton r1 = new JoystickButton(m_controller, Button.kRightBumper.value);
-    final JoystickButton l1 = new JoystickButton(m_controller, Button.kLeftBumper.value);
+    // Doesn't work "Cannot instantiate the type ... final Button backButton = new Button(driverController, XboxController.Button.kBack.value);
+    final JoystickButton backButton = new JoystickButton(driverController, XboxController.Button.kBack.value);
 
+
+    final JoystickButton rBumper = new JoystickButton(operatorController, Button.kRightBumper.value);
+    final JoystickButton lBumper = new JoystickButton(operatorController, Button.kLeftBumper.value);
+
+    /** COMMENTING OUT LAUNCHER CODE FOR PRACTICE BOT
     // Connect the buttons to commands
     // Launch the Cargo when either left bumper or right bumper is held
     // left bumper = low shot, right bumper = high shot
@@ -95,10 +113,12 @@ public class RobotContainer {
 
   // Back button zeros the gyroscope
   // Shaun's previously working code (?) that we broke :)
-  new Button(m_controller::getBackButton)
+  // new Button(driverController::getBackButton)
             // No requirements because we don't need to interrupt anything
-            .whenPressed(m_drivetrainSubsystem::zeroGyroscope);    
+  //          .whenPressed(m_drivetrainSubsystem::zeroGyroscope);    
 
+  // Using the Engingerds RobotContainer.java line 136
+  // backButton.whenPressed(() -> swerveDrivetrain.resetDriveMotors());
   }
 
   /**
