@@ -55,7 +55,7 @@ public final class Constants {
     /** */
 
     // Intake motors
-    /** */
+    public static final int INTAKE = 11; // Sets the Intake Motor ID value; needs to match in Phoenix Tuner.
 
     // Index motors
     /** */
