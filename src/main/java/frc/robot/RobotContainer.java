@@ -81,7 +81,7 @@ public class RobotContainer {
     configureButtonBindings();
 
     // Reset the navx
-    
+    // FIXME
   }
   /**
    * Use this method to define your button->command mappings. Buttons can be created by
@@ -101,7 +101,7 @@ public class RobotContainer {
     // Declaring buttons on controller
 
     // final Button backButton = new Button(driverController, XboxController.Button.kBack.value); // "Cannot instantiate the type ..." for "Button"
-    final JoystickButton backButton = new JoystickButton(driverController, XboxController.Button.kBack.value);
+    final JoystickButton backButton = new JoystickButton(driverController, Button.kBack.value);
     final JoystickButton rBumper = new JoystickButton(operatorController, Button.kRightBumper.value);
     final JoystickButton lBumper = new JoystickButton(operatorController, Button.kLeftBumper.value);
     final JoystickButton greenA = new JoystickButton(operatorController, Button.kA.value);
@@ -147,7 +147,7 @@ public class RobotContainer {
 
   // Back button zeros the gyroscope
   // Shaun's previously working code (?) that we broke :)
-  // new Button(driverController::getBackButton)
+  // new JoystickButton(driverController::getBackButton)
             // No requirements because we don't need to interrupt anything
   //          .whenPressed(m_drivetrainSubsystem::zeroGyroscope);    
 

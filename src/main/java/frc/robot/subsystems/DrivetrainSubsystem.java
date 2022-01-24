@@ -154,7 +154,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
     // Remove if you are using a Pigeon
     // m_pigeon.setFusedHeading(0.0);
     // Uncomment if you are using a NavX
-        m_navx.zeroYaw();
+        m_navx.zeroYaw(); // FIXME
   }
 
   public Rotation2d getGyroscopeRotation() {

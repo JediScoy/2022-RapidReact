@@ -52,7 +52,7 @@ public final class Constants {
     public static final int topLaunchMotor = 10; // Sets the top launcher motor ID value
     
     // Lift motors
-    /** */
+    /** public static final int */
 
     // Intake motors
     public static final int INTAKE = 11; // Sets the Intake Motor ID value; needs to match in Phoenix Tuner.

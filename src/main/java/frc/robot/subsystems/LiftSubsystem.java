@@ -20,7 +20,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 // import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 // import com.ctre.phoenix.motorcontrol.TalonFXSensorCollection;
 
-public class LiftStage2Subsystem extends SubsystemBase {
+public class LiftSubsystem extends SubsystemBase {
 /** Creates a Subsystem using Falcon 500s controlled by TalonFX.
     * These are the two motors for [ ]
 **/

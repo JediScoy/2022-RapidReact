@@ -15,12 +15,13 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 // import com.ctre.phoenix.motorcontrol.TalonFXSensorCollection;
+import frc.robot.Constants;
 
 
 
 public class IntakeSubsystem extends SubsystemBase {
   
-  // FIXME private TalonFX intakeMotor;
+  private TalonFX intakeMotor;
 
 
   /** Creates a Subsystem using Falcon 500s controlled by TalonFX.
@@ -35,11 +36,12 @@ public class IntakeSubsystem extends SubsystemBase {
   */
     
 // final TalonFXInvertType rightLaunchMotor = TalonFXInvertType.CounterClockwise;
-// FIXME
 
-/** 
-public Intake(){
+ 
+public IntakeSubsystem() {
   intakeMotor = new TalonFX(Constants.INTAKE);
+  intakeMotor.setInverted(true);
+  intakeMotor.setNeutralMode(NeutralMode.Coast);
 
 }
 
@@ -47,21 +49,23 @@ public Intake(){
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    // Dashboard stuff would go here
   }
 
+  // Sets the Intake system speed as a percentage between -1 and 1. Speed is given actual value in the RobotContrainer.java button code
   public void setIntakeSpeed(double speed){
-    // intakeMotor.set(controlMode.PercentOutput, speed);
+    intakeMotor.set(ControlMode.PercentOutput, speed);
   }
 
   public void stopIntake(){
-    return intakeMotor.set(ControlMode.PercentOutput, 0)
+    intakeMotor.set(ControlMode.PercentOutput, 0);
   }
 
   @Override
   public void simulationPeriodic() {
     // This method will be called once per scheduler run during simulation
   }
-*/
+
 
 } // End of Class
 

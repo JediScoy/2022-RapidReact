@@ -1,0 +1,15 @@
+Intake
+    1 motor
+    2 buttons (+/-) speed
+IntakeUpper
+    2 motors, grouped
+    1 button
+Launcher
+    2 motors, independent speeds
+    3 buttons; low goal up close, high goal up close, high goal long shot
+Lift
+    2 motors, grouped
+    2 buttons (+/-)
+Rotational Arms
+    2 motors, grouped
+    2 buttons (+/-) speed
