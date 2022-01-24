@@ -16,6 +16,11 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.math.geometry.Translation2d;
+
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
+
 import frc.robot.commands.DefaultDriveCommand;
 import frc.robot.subsystems.DrivetrainSubsystem;
 // import frc.robot.commands.LaunchCargoLow;
@@ -23,6 +28,10 @@ import frc.robot.subsystems.DrivetrainSubsystem;
 // import frc.robot.commands.StopLaunch;
 // import frc.robot.subsystems.LauncherSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.commands.IntakeSpeed;
+
+
+// frc.robot.commands.auto.SomeAuto;
 
 
 
@@ -42,6 +51,9 @@ public class RobotContainer {
   private final XboxController operatorController = new XboxController(1);
 
   // private final LauncherSubsystem m_launcherSubsystem = new LauncherSubsystem();
+
+  // ENGINERDS private Intake intake = new Intake();
+  private IntakeSubsystem intake = new IntakeSubsystem();
 
   // Robot Commands
   // private final LaunchCargoLow m_autoCommand = new LaunchCargoLow(m_launcherSubsystem);
@@ -63,6 +75,7 @@ public class RobotContainer {
             () -> -modifyAxis(driverController.getLeftX()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
             () -> -modifyAxis(driverController.getRightX()) * DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
     ));
+    
 
     // Configure the button bindings
     configureButtonBindings();
@@ -85,30 +98,47 @@ public class RobotContainer {
   }
   */
   private void configureButtonBindings() {
-    //declaring buttons on controller
+    // Declaring buttons on controller
 
-    // Doesn't work "Cannot instantiate the type ... final Button backButton = new Button(driverController, XboxController.Button.kBack.value);
+    // final Button backButton = new Button(driverController, XboxController.Button.kBack.value); // "Cannot instantiate the type ..." for "Button"
     final JoystickButton backButton = new JoystickButton(driverController, XboxController.Button.kBack.value);
-
-
     final JoystickButton rBumper = new JoystickButton(operatorController, Button.kRightBumper.value);
     final JoystickButton lBumper = new JoystickButton(operatorController, Button.kLeftBumper.value);
     final JoystickButton greenA = new JoystickButton(operatorController, Button.kA.value);
 
-    // FIXME rBumper.whePressed(new Intake(IntakeSubsystem, 0));
+    
+    /**  ENGINERDS "Intake" is a Command class, "intake" is a variable that makes a new IntakeSubsystem defined aboved
+    bumperRight.whenPressed(new SetIntakeSpeed(intake, 0.75));
+    bumperRight.whenReleased(new SetIntakeSpeed(intake, 0));
+    bumperLeft.whenPressed(new SetIntakeSpeed(intake, -0.25));
+    bumperLeft.whenReleased(new SetIntakeSpeed(intake, 0));
+
+    // This could be used for launching cargo
+    rBumper.whenReleased(new IntakeSpeed(intake, 0));
+    lBumper.whenPressed(new IntakeSpeed(intake, 0));
+    lBumper.whenReleased(new IntakeSpeed(intake, 0));
+    */
+
+    greenA.whenPressed(new IntakeSpeed(intake, 1.0)); // Turns on the Intake
+    greenA.whenReleased(new IntakeSpeed(intake, 00)); // Needed to turn off the Intake
+   
+   
 
     /** COMMENTING OUT LAUNCHER CODE FOR PRACTICE BOT
     // Connect the buttons to commands
-    // Launch the Cargo when either left bumper or right bumper is held
-    // left bumper = low shot, right bumper = high shot
+    // Launch the Cargo when either left bumper or right bumper is pressed
     // We tried whileHeld command initially, but it only starts the motors, it does not stop the motors automatically
     upon button release as it should
     //this is working to start falcon motors when button held
-    lBumper.whenHeld(new LaunchCargoLow(m_launcherSubsystem));
-    rBumper.whenHeld(new LaunchCargoHigh(m_launcherSubsystem));
-    //added a when button released command until we have whileHeld working as it should
+    
+    // Cargo low shot on Hub
+    lBumper.whenPressed(new LaunchCargoLow(m_launcherSubsystem)); // replace "m_launcherSubsystem" with speed variable?
     lBumper.whenReleased(new StopLaunch(m_launcherSubsystem));
+    // Cargo high shot on Hub
+    rBumper.whenPressed(new LaunchCargoHigh(m_launcherSubsystem));
     rBumper.whenReleased(new StopLaunch(m_launcherSubsystem));
+    //added a when button released command until we have whileHeld working as it should
+    
     **/
 
   /** Use this to pass the autonomous command to the main {@link Robot} class.
@@ -122,7 +152,7 @@ public class RobotContainer {
   //          .whenPressed(m_drivetrainSubsystem::zeroGyroscope);    
 
   // Using the Engingerds RobotContainer.java line 136
-  // backButton.whenPressed(() -> swerveDrivetrain.resetDriveMotors());
+  // FIXME backButton.whenPressed(() -> swerveDrivetrain.resetDriveMotors());
   }
 
   /**
