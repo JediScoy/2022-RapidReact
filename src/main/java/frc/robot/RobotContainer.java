@@ -19,8 +19,8 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-//import frc.robot.commands.DefaultDriveCommand;
-//import frc.robot.subsystems.DrivetrainSubsystem;
+import frc.robot.commands.DefaultDriveCommand;
+import frc.robot.subsystems.DrivetrainSubsystem;
 // import frc.robot.commands.LaunchCargoLow;
 // import frc.robot.commands.LaunchCargoHigh;
 // import frc.robot.commands.StopLaunch;
@@ -41,7 +41,7 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  // private final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem();
+  private final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem();
 
   // Main driver controller
   private final XboxController driverController = new XboxController(0);
@@ -56,7 +56,7 @@ public class RobotContainer {
   // Robot Commands
   // private final LaunchCargoLow m_autoCommand = new LaunchCargoLow(m_launcherSubsystem);
 
-  // private final XboxController m_joystick = new XboxController(0);
+  private final XboxController m_joystick = new XboxController(0);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -67,12 +67,12 @@ public class RobotContainer {
     // Left stick Y axis -> forward and backwards movement
     // Left stick X axis -> left and right movement
     // Right stick X axis -> rotation
-   /**  m_drivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(
+     m_drivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(
             m_drivetrainSubsystem,
             () -> -modifyAxis(driverController.getLeftY()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
             () -> -modifyAxis(driverController.getLeftX()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
             () -> -modifyAxis(driverController.getRightX()) * DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
-    )); */
+    ));
     
 
     // Configure the button bindings
@@ -88,13 +88,13 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
 
-  /** Code from 2021 Skills bot of Enginerds 2337 
+  /**  Code from 2021 Skills bot of Enginerds 2337 
   public void resetDrivetrain (){
     swerveDrivetrain.resetAngleMotors();
     swerveDrivetrain.resetOdometry();
     swerveDrivetrain.resetDriveMotos();
-  }
-  */
+  } */
+  
   private void configureButtonBindings() {
     // Declaring buttons on controller
 
@@ -138,10 +138,6 @@ public class RobotContainer {
     //added a when button released command until we have whileHeld working as it should
     
     **/
-
-  /** Use this to pass the autonomous command to the main {@link Robot} class.
-  * @return the command to run in autonomous
- */
 
   // Back button zeros the gyroscope
   // Shaun's previously working code (?) that we broke :)
