@@ -28,7 +28,7 @@ import frc.robot.subsystems.DrivetrainSubsystem;
 // import frc.robot.commands.StopLaunch;
 // import frc.robot.subsystems.LauncherSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.commands.IntakeSpeed;
+//import frc.robot.commands.IntakeSpeed;
 
 
 // frc.robot.commands.auto.SomeAuto;
@@ -119,8 +119,8 @@ public class RobotContainer {
     lBumper.whenReleased(new IntakeSpeed(intake, 0));
     */
 
-    greenA.whenPressed(new IntakeSpeed(intake, 1.0)); // Turns on the Intake
-    greenA.whenReleased(new IntakeSpeed(intake, 00)); // Needed to turn off the Intake
+    // greenA.whenPressed(new IntakeSpeed(intake, 1.0)); // Turns on the Intake
+    // greenA.whenReleased(new IntakeSpeed(intake, 00)); // Needed to turn off the Intake
    
    
 
