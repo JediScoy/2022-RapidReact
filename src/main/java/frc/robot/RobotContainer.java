@@ -17,17 +17,15 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.math.geometry.Translation2d;
-
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-
-import frc.robot.commands.DefaultDriveCommand;
-import frc.robot.subsystems.DrivetrainSubsystem;
+//import frc.robot.commands.DefaultDriveCommand;
+//import frc.robot.subsystems.DrivetrainSubsystem;
 // import frc.robot.commands.LaunchCargoLow;
 // import frc.robot.commands.LaunchCargoHigh;
 // import frc.robot.commands.StopLaunch;
 // import frc.robot.subsystems.LauncherSubsystem;
-import frc.robot.subsystems.IntakeSubsystem;
+// import frc.robot.subsystems.IntakeSubsystem;
 //import frc.robot.commands.IntakeSpeed;
 
 
@@ -43,7 +41,7 @@ import frc.robot.subsystems.IntakeSubsystem;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem();
+  // private final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem();
 
   // Main driver controller
   private final XboxController driverController = new XboxController(0);
@@ -53,7 +51,7 @@ public class RobotContainer {
   // private final LauncherSubsystem m_launcherSubsystem = new LauncherSubsystem();
 
   // ENGINERDS private Intake intake = new Intake();
-  private IntakeSubsystem intake = new IntakeSubsystem();
+  // private IntakeSubsystem intake = new IntakeSubsystem();
 
   // Robot Commands
   // private final LaunchCargoLow m_autoCommand = new LaunchCargoLow(m_launcherSubsystem);
@@ -69,12 +67,12 @@ public class RobotContainer {
     // Left stick Y axis -> forward and backwards movement
     // Left stick X axis -> left and right movement
     // Right stick X axis -> rotation
-    m_drivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(
+   /**  m_drivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(
             m_drivetrainSubsystem,
             () -> -modifyAxis(driverController.getLeftY()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
             () -> -modifyAxis(driverController.getLeftX()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
             () -> -modifyAxis(driverController.getRightX()) * DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
-    ));
+    )); */
     
 
     // Configure the button bindings
