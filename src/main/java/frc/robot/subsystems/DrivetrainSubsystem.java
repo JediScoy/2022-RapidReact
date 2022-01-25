@@ -11,6 +11,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -23,6 +24,7 @@ import edu.wpi.first.wpilibj.SPI;
 
 
 import static frc.robot.Constants.*;
+import static frc.robot.CTREEncoder.*;
 
 public class DrivetrainSubsystem extends SubsystemBase {
   /**
@@ -72,9 +74,12 @@ public class DrivetrainSubsystem extends SubsystemBase {
   // private final PigeonIMU m_pigeon = new PigeonIMU(DRIVETRAIN_PIGEON_ID);
   
   // Uncomment if you are using a NavX
- 
-  private final AHRS m_navx = new AHRS(SPI.Port.kMXP, (byte) 200); // NavX connected over MXP
-  
+  // NavX connected over MXP
+  private final AHRS m_navx = new AHRS(SPI.Port.kMXP, (byte) 200); 
+
+  //Adding Odometer for Auton Mode
+  private final SwerveDriveOdometry odometer = new SwerveDriveOdometry(m_kinematics,
+        new Rotation2d(0));    
 
   // These are our modules. We initialize them in the constructor.
   private final SwerveModule m_frontLeftModule;
@@ -188,5 +193,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
     m_backLeftModule.set(states[2].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, states[2].angle.getRadians());
     m_backRightModule.set(states[3].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, states[3].angle.getRadians());
    
+    //Repeatedly update Odometer to get accurate location
+    odometer.update(getGyroscopeRotation(), states);
   }
 }
