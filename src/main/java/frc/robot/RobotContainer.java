@@ -12,23 +12,32 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton; //NewCommands vendordep
 // import edu.wpi.first.wpilibj2.command.button.Button;
 import static edu.wpi.first.wpilibj.XboxController.Button;
+
+import java.util.List;
+
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
+import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.math.geometry.Translation2d;
-
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-
 import frc.robot.commands.DefaultDriveCommand;
 import frc.robot.subsystems.DrivetrainSubsystem;
 // import frc.robot.commands.LaunchCargoLow;
 // import frc.robot.commands.LaunchCargoHigh;
 // import frc.robot.commands.StopLaunch;
 // import frc.robot.subsystems.LauncherSubsystem;
-import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.commands.IntakeSpeed;
+// import frc.robot.subsystems.IntakeSubsystem;
+//import frc.robot.commands.IntakeSpeed;
 
 
 // frc.robot.commands.auto.SomeAuto;
@@ -53,12 +62,12 @@ public class RobotContainer {
   // private final LauncherSubsystem m_launcherSubsystem = new LauncherSubsystem();
 
   // ENGINERDS private Intake intake = new Intake();
-  private IntakeSubsystem intake = new IntakeSubsystem();
+  // private IntakeSubsystem intake = new IntakeSubsystem();
 
   // Robot Commands
   // private final LaunchCargoLow m_autoCommand = new LaunchCargoLow(m_launcherSubsystem);
 
-  // private final XboxController m_joystick = new XboxController(0);
+  private final XboxController m_joystick = new XboxController(0);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -69,7 +78,7 @@ public class RobotContainer {
     // Left stick Y axis -> forward and backwards movement
     // Left stick X axis -> left and right movement
     // Right stick X axis -> rotation
-    m_drivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(
+     m_drivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(
             m_drivetrainSubsystem,
             () -> -modifyAxis(driverController.getLeftY()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
             () -> -modifyAxis(driverController.getLeftX()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
@@ -90,13 +99,13 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
 
-  /** Code from 2021 Skills bot of Enginerds 2337 
+  /**  Code from 2021 Skills bot of Enginerds 2337 
   public void resetDrivetrain (){
     swerveDrivetrain.resetAngleMotors();
     swerveDrivetrain.resetOdometry();
     swerveDrivetrain.resetDriveMotos();
-  }
-  */
+  } */
+  
   private void configureButtonBindings() {
     // Declaring buttons on controller
 
@@ -119,8 +128,8 @@ public class RobotContainer {
     lBumper.whenReleased(new IntakeSpeed(intake, 0));
     */
 
-    greenA.whenPressed(new IntakeSpeed(intake, 1.0)); // Turns on the Intake
-    greenA.whenReleased(new IntakeSpeed(intake, 00)); // Needed to turn off the Intake
+    // greenA.whenPressed(new IntakeSpeed(intake, 1.0)); // Turns on the Intake
+    // greenA.whenReleased(new IntakeSpeed(intake, 00)); // Needed to turn off the Intake
    
    
 
@@ -141,15 +150,9 @@ public class RobotContainer {
     
     **/
 
-  /** Use this to pass the autonomous command to the main {@link Robot} class.
-  * @return the command to run in autonomous
- */
-
   // Back button zeros the gyroscope
-            backButton.whenPressed(m_drivetrainSubsystem::zeroGyroscope);    
+      backButton.whenPressed(m_drivetrainSubsystem::zeroGyroscope);    
 
-  // Using the Engingerds RobotContainer.java line 136
-  // FIXME backButton.whenPressed(() -> swerveDrivetrain.resetDriveMotors());
   }
 
   /**
@@ -164,7 +167,48 @@ public class RobotContainer {
     // return m_autoCommand;
 
     // This is from SDS Drive code base
-    return new InstantCommand();
+    // return new InstantCommand();
+
+    // 1. Create trajectory settings
+    TrajectoryConfig trajectoryConfig = new TrajectoryConfig(
+      DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
+      DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND)
+              .setKinematics(Constants.m_kinematics);
+
+
+    // 2. Generate trajectory
+    Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
+      new Pose2d(0, 0, new Rotation2d(0)),
+      List.of(
+              new Translation2d(1, 0),
+              new Translation2d(1, -1)),
+      new Pose2d(2, -1, Rotation2d.fromDegrees(180)),
+      trajectoryConfig);
+
+
+    // 3. Define PID controllers for tracking trajectory
+    PIDController xController = new PIDController(Constants.kPXController, 0, 0);
+    PIDController yController = new PIDController(Constants.kPYController, 0, 0);
+    ProfiledPIDController thetaController = new ProfiledPIDController(
+            Constants.kPThetaController, 0, 0, Constants.kThetaControllerConstraints);
+    thetaController.enableContinuousInput(-Math.PI, Math.PI);
+
+    // 4. Construct command to follow trajectory
+    SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(
+            trajectory,
+            m_drivetrainSubsystem::getPose,
+            Constants.m_kinematics,
+            xController,
+            yController,
+            thetaController,
+            m_drivetrainSubsystem::setModuleStates,
+            m_drivetrainSubsystem);
+
+    // 5. Add some init and wrap-up, and return everything
+    return new SequentialCommandGroup(
+            new InstantCommand(() -> m_drivetrainSubsystem.resetOdometry(trajectory.getInitialPose())),
+            swerveControllerCommand,
+            new InstantCommand(() -> m_drivetrainSubsystem.stop()));
   }
 
   private static double deadband(double value, double deadband) {
