@@ -24,6 +24,10 @@ public class LiftSubsystem extends SubsystemBase {
 /** Creates a Subsystem using Falcon 500s controlled by TalonFX.
     * These are the two motors for [ ]
 **/
+  /** 
+  private final TalonFX liftMotor1;
+  private final TalonFX liftMotor2;
+  */
 
   /** Uncomment setup for each specific subystem with motors
   private final MotorController m_IntakeMotors = 
@@ -33,7 +37,12 @@ public class LiftSubsystem extends SubsystemBase {
   */
     
 // final TalonFXInvertType rightLaunchMotor = TalonFXInvertType.CounterClockwise;
-
+  /**
+  public LiftSubsystem() {
+    LiftMotor = new TalonFX(Constants.LIFT_1, LIFT.ROTATE_2);
+    liftMotor.setInverted(true);
+    liftMotor.setNeutralMode(NeutralMode.Coast);
+  */
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

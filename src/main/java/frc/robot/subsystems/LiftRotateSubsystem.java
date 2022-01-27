@@ -26,8 +26,8 @@ public class LiftRotateSubsystem extends SubsystemBase {
     * These are the two motors for [ ]
 **/
 
-  // public final TalonFX Rotate1;
-  // public final TalonFX Rotate2;
+  // public final TalonFX RotateMotor1;
+  // public final TalonFX RotateMotor2;
 
   /** Uncomment setup for each specific subystem with motors
   private final MotorController m_IntakeMotors = 
@@ -40,9 +40,9 @@ public class LiftRotateSubsystem extends SubsystemBase {
 
   /**
   public LiftRotateSubsystem() {
-    Rotate1 = new TalonFX(Constants.ROTATE_1, Constants.ROTATE_2);
-    Rotate1.setInverted(true);
-    Rotate1.setNeutralMode(NeutralMode.Coast);
+    RotateMotor = new TalonFX(Constants.ROTATE_1, Constants.ROTATE_2);
+    RotateMotor.setInverted(true);
+    RotateMotor.setNeutralMode(NeutralMode.Coast);
 
   }
   */
