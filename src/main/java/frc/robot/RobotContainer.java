@@ -12,12 +12,23 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton; //NewCommands vendordep
 // import edu.wpi.first.wpilibj2.command.button.Button;
 import static edu.wpi.first.wpilibj.XboxController.Button;
+
+import java.util.List;
+
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
+import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.DefaultDriveCommand;
 import frc.robot.subsystems.DrivetrainSubsystem;
@@ -140,13 +151,8 @@ public class RobotContainer {
     **/
 
   // Back button zeros the gyroscope
-  // Shaun's previously working code (?) that we broke :)
-  // new JoystickButton(driverController::getBackButton)
-            // No requirements because we don't need to interrupt anything
-  //          .whenPressed(m_drivetrainSubsystem::zeroGyroscope);    
+      backButton.whenPressed(m_drivetrainSubsystem::zeroGyroscope);    
 
-  // Using the Engingerds RobotContainer.java line 136
-  // FIXME backButton.whenPressed(() -> swerveDrivetrain.resetDriveMotors());
   }
 
   /**
@@ -161,7 +167,48 @@ public class RobotContainer {
     // return m_autoCommand;
 
     // This is from SDS Drive code base
-    return new InstantCommand();
+    // return new InstantCommand();
+
+    // 1. Create trajectory settings
+    TrajectoryConfig trajectoryConfig = new TrajectoryConfig(
+      DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
+      DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND)
+              .setKinematics(Constants.m_kinematics);
+
+
+    // 2. Generate trajectory
+    Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
+      new Pose2d(0, 0, new Rotation2d(0)),
+      List.of(
+              new Translation2d(1, 0),
+              new Translation2d(1, -1)),
+      new Pose2d(2, -1, Rotation2d.fromDegrees(180)),
+      trajectoryConfig);
+
+
+    // 3. Define PID controllers for tracking trajectory
+    PIDController xController = new PIDController(Constants.kPXController, 0, 0);
+    PIDController yController = new PIDController(Constants.kPYController, 0, 0);
+    ProfiledPIDController thetaController = new ProfiledPIDController(
+            Constants.kPThetaController, 0, 0, Constants.kThetaControllerConstraints);
+    thetaController.enableContinuousInput(-Math.PI, Math.PI);
+
+    // 4. Construct command to follow trajectory
+    SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(
+            trajectory,
+            m_drivetrainSubsystem::getPose,
+            Constants.m_kinematics,
+            xController,
+            yController,
+            thetaController,
+            m_drivetrainSubsystem::setModuleStates,
+            m_drivetrainSubsystem);
+
+    // 5. Add some init and wrap-up, and return everything
+    return new SequentialCommandGroup(
+            new InstantCommand(() -> m_drivetrainSubsystem.resetOdometry(trajectory.getInitialPose())),
+            swerveControllerCommand,
+            new InstantCommand(() -> m_drivetrainSubsystem.stop()));
   }
 
   private static double deadband(double value, double deadband) {
