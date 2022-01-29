@@ -170,3 +170,5 @@ bin/
 .gradle/buildOutputCleanup/outputFiles.bin
 *.lock
 *.bin
+.gradle/buildOutputCleanup/buildOutputCleanup.lock
+.gradle/buildOutputCleanup/buildOutputCleanup.lock
