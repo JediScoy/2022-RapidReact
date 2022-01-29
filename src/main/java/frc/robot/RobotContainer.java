@@ -146,7 +146,10 @@ public class RobotContainer {
  */
 
   // Back button zeros the gyroscope
-            backButton.whenPressed(m_drivetrainSubsystem::zeroGyroscope);    
+  // Shaun's previously working code (?) that we broke :)
+  // new JoystickButton(driverController::getBackButton)
+            // No requirements because we don't need to interrupt anything
+  //          .whenPressed(m_drivetrainSubsystem::zeroGyroscope);    
 
   // Using the Engingerds RobotContainer.java line 136
   // FIXME backButton.whenPressed(() -> swerveDrivetrain.resetDriveMotors());
