@@ -14,39 +14,37 @@ import frc.robot.Constants;
 
 // CTRE imports
 // import com.ctre.phoenix.motorcontrol.ControlMode;
-// import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 // import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 // import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 // import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 // import com.ctre.phoenix.motorcontrol.TalonFXSensorCollection;
 
-public class LiftRotateSubsystem extends SubsystemBase {
+public class IntakeUpper extends SubsystemBase {
 /** Creates a Subsystem using Falcon 500s controlled by TalonFX.
     * These are the two motors for [ ]
 **/
-
-  // public final TalonFX RotateMotor1;
-  // public final TalonFX RotateMotor2;
+  // private final TalonFX intakeMotorUpper1;
+  // private final TalonFX intakeMotorUpper2;
 
   /** Uncomment setup for each specific subystem with motors
   private final MotorController m_IntakeMotors = 
     /** new MotorControllerGroup(
-        * new TalonFX(LauncherConstants.ROTATE_1),
-        * new TalonFX(LauncherConstants.ROTATE_2));
+        * new TalonFX(Constants.INTAKE_UPPER_1),
+        * new TalonFX(Constants.INTAKE_UPPER_2));
   */
     
 // final TalonFXInvertType rightLaunchMotor = TalonFXInvertType.CounterClockwise;
 
-  /**
-  public LiftRotateSubsystem() {
-    RotateMotor = new TalonFX(Constants.ROTATE_1, Constants.ROTATE_2);
-    RotateMotor.setInverted(true);
-    RotateMotor.setNeutralMode(NeutralMode.Coast);
+/**
+  public IntakeUpperSubsystem() {
+  intakeMotorUpper = new TalonFX(Constants.INTAKE_UPPER_1, Constants.INTAKE_UPPER_2);
+  intakeMotorUpper.setInverted(true);
+  intakeMotorUpper.setNeutralMode(NeutralMode.Coast);
 
-  }
-  */
-
+}
+*/
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
