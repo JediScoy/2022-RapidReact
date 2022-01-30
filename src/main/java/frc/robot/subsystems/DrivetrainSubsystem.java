@@ -72,6 +72,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
   // private final PigeonIMU m_pigeon = new PigeonIMU(DRIVETRAIN_PIGEON_ID);
   
   // Uncomment if you are using a NavX
+ 
   private final AHRS m_navx = new AHRS(SPI.Port.kMXP, (byte) 200); // NavX connected over MXP
   
 
