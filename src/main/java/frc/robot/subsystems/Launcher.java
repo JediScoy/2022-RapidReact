@@ -23,7 +23,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 // import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 // import com.ctre.phoenix.motorcontrol.TalonFXSensorCollection;
 
-public class LauncherSubsystem extends SubsystemBase {
+public class Launcher extends SubsystemBase {
 
   // Falcon 500 is controlled by TalonFX
   // These are the two motors for launching the cargo
@@ -37,7 +37,7 @@ public class LauncherSubsystem extends SubsystemBase {
   // final TalonFXInvertType bottomLaunchMotor = TalonFXInvertType.Clockwise;
 
     
-  public LauncherSubsystem() {}
+  public Launcher() {}
 
   /** Launches the Cargo with speed set for low hub
     * Eventually the absolute value could be replaced with sensor-driven values
