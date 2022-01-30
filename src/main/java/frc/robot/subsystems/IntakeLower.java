@@ -19,7 +19,7 @@ import frc.robot.Constants;
 
 
 
-public class IntakeSubsystem extends SubsystemBase {
+public class IntakeLower extends SubsystemBase {
   
   private TalonFX intakeMotor;
 
@@ -38,7 +38,7 @@ public class IntakeSubsystem extends SubsystemBase {
 // final TalonFXInvertType rightLaunchMotor = TalonFXInvertType.CounterClockwise;
 
  
-public IntakeSubsystem() {
+public IntakeLower() {
   intakeMotor = new TalonFX(Constants.INTAKE);
   intakeMotor.setInverted(true);
   intakeMotor.setNeutralMode(NeutralMode.Coast);

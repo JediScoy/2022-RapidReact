@@ -1,6 +1,6 @@
 package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.IntakeLower;
 
 /**
  * A simple command that grabs a hatch with the {@link HatchSubsystem}. Written explicitly for
@@ -12,10 +12,10 @@ public class IntakeSpeed extends CommandBase {
   
     
     // The subsystem the command runs on
-    private final IntakeSubsystem subsystem;
+    private final IntakeLower subsystem;
     private double speed;
   
-    public IntakeSpeed(IntakeSubsystem subsystem, double speed) {
+    public IntakeSpeed(IntakeLower subsystem, double speed) {
       this.subsystem = subsystem;
       this.speed = speed;
       addRequirements(subsystem); // clever way to call in case you change the name of the subsystem
@@ -23,7 +23,12 @@ public class IntakeSpeed extends CommandBase {
   
     @Override
     public void initialize() {
-      // FIXME subsystem.IntakeSubsystem(speed);
+      // FIXME subsystem.IntakeLower(speed);
+    }
+  
+    @Override
+    public void execute() {
+      // FIXME subsystem.IntakeLower(speed);
     }
   
     @Override

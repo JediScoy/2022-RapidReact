@@ -26,7 +26,7 @@ import frc.robot.subsystems.DrivetrainSubsystem;
 // import frc.robot.commands.LaunchCargoLow;
 // import frc.robot.commands.LaunchCargoHigh;
 // import frc.robot.commands.StopLaunch;
-// import frc.robot.subsystems.LauncherSubsystem;
+import frc.robot.subsystems.*;
 //import frc.robot.subsystems.IntakeSubsystem;
 //import frc.robot.commands.IntakeSpeed;
 
@@ -42,14 +42,29 @@ import frc.robot.subsystems.DrivetrainSubsystem;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
-  private final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem();
+
+
+  // The robot's subsystems and commands are defined here
+  private DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem();
+  private IntakeLower intake = new IntakeLower();
+  private IntakeUpper intakeUpper = new IntakeUpper();
+  private LiftRotator liftRotator = new LiftRotator();
+  private Lift lift = new Lift();
+
+  /* --- ENGINERDS Subsystems --- */
+  // public PixyCam2Wire pixy = new PixyCam2Wire(Constants.PIXY_ANALOG, Constants.PIXY_DIGITAL);
+  // private Pigeon pigeon = new Pigeon();
+  // private SwerveDrivetrain swerveDrivetrain = new SwerveDrivetrain(pigeon);
+
 
   // Main driver controller
   private final XboxController driverController = new XboxController(0);
   // Second operator controller
   private final XboxController operatorController = new XboxController(1);
 
+
+
+  private final SendableChooser<Command> autonChooser = new SendableChooser<>();
   // private final LauncherSubsystem m_launcherSubsystem = new LauncherSubsystem();
 
   // ENGINERDS private Intake intake = new Intake();
@@ -57,8 +72,6 @@ public class RobotContainer {
 
   // Robot Commands
   // private final LaunchCargoLow m_autoCommand = new LaunchCargoLow(m_launcherSubsystem);
-
-  // private final XboxController m_joystick = new XboxController(0);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -79,9 +92,6 @@ public class RobotContainer {
 
     // Configure the button bindings
     configureButtonBindings();
-
-    // Reset the navx
-    // FIXME
   }
   /**
    * Use this method to define your button->command mappings. Buttons can be created by
@@ -99,13 +109,15 @@ public class RobotContainer {
   */
   private void configureButtonBindings() {
     // Declaring buttons on controller
-
-    // final Button backButton = new Button(driverController, XboxController.Button.kBack.value); // "Cannot instantiate the type ..." for "Button"
-    final JoystickButton backButton = new JoystickButton(driverController, Button.kBack.value);
-    final JoystickButton rBumper = new JoystickButton(operatorController, Button.kRightBumper.value);
-    final JoystickButton lBumper = new JoystickButton(operatorController, Button.kLeftBumper.value);
-    final JoystickButton greenA = new JoystickButton(operatorController, Button.kA.value);
-
+    /** FIXME Jackson or Shaun, please declare ALL of the remaining buttons
+     * for the driverController and operatorController
+     * Leave them commented out but they will be ready for assigning a function or action as needed */ 
+    final JoystickButton backButton = new JoystickButton(driverController, Button.kBack.value); // Defensive stance
+    // final JoystickButton rBumper = new JoystickButton(operatorController, Button.kRightBumper.value);
+    // final JoystickButton lBumper = new JoystickButton(operatorController, Button.kLeftBumper.value); 
+    // final JoystickButton greenA = new JoystickButton(operatorController, Button.kA.value);
+    // final JoystickButton redB = new JoystickButton(operatorController, Button.kB.value);
+    
     
     /**  ENGINERDS "Intake" is a Command class, "intake" is a variable that makes a new IntakeSubsystem defined aboved
     bumperRight.whenPressed(new SetIntakeSpeed(intake, 0.75));
@@ -113,7 +125,7 @@ public class RobotContainer {
     bumperLeft.whenPressed(new SetIntakeSpeed(intake, -0.25));
     bumperLeft.whenReleased(new SetIntakeSpeed(intake, 0));
 
-    // This could be used for launching cargo
+    // Reworked Enginers for launching cargo
     rBumper.whenReleased(new IntakeSpeed(intake, 0));
     lBumper.whenPressed(new IntakeSpeed(intake, 0));
     lBumper.whenReleased(new IntakeSpeed(intake, 0));
@@ -153,6 +165,8 @@ public class RobotContainer {
 
   // Using the Engingerds RobotContainer.java line 136
   // FIXME backButton.whenPressed(() -> swerveDrivetrain.resetDriveMotors());
+  backButton.whenPressed(() -> m_drivetrainSubsystem.zeroGyroscope());
+
   }
 
   /**
