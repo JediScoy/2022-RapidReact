@@ -101,29 +101,30 @@ public class RobotContainer {
     // Declaring buttons on controller
 
     // final Button backButton = new Button(driverController, XboxController.Button.kBack.value); // "Cannot instantiate the type ..." for "Button"
-    final JoystickButton backButton = new JoystickButton(driverController, Button.kBack.value);
-    final JoystickButton rBumper = new JoystickButton(operatorController, Button.kRightBumper.value);
-    final JoystickButton lBumper = new JoystickButton(operatorController, Button.kLeftBumper.value);
-    final JoystickButton greenA = new JoystickButton(operatorController, Button.kA.value);
-
+    final JoystickButton d_backButton = new JoystickButton(driverController, Button.kBack.value);
+    // final JoystickButton o_rBumper = new JoystickButton(operatorController, Button.kRightBumper.value);
+    // final JoystickButton o_lBumper = new JoystickButton(operatorController, Button.kLeftBumper.value);
+    // final JoystickButton o_greenA = new JoystickButton(operatorController, Button.kA.value);
+    // op_blueX // High shot from a distance
+    // op_yellowY // High shot from a up close
+    // op_redB // low shot from a up close
+    // op_greenA //
     
-    /**  ENGINERDS "Intake" is a Command class, "intake" is a variable that makes a new IntakeSubsystem defined aboved
-    bumperRight.whenPressed(new SetIntakeSpeed(intake, 0.75));
-    bumperRight.whenReleased(new SetIntakeSpeed(intake, 0));
-    bumperLeft.whenPressed(new SetIntakeSpeed(intake, -0.25));
-    bumperLeft.whenReleased(new SetIntakeSpeed(intake, 0));
+    
+    //  ENGINERDS "Intake" is a Command class, "intake" is a variable that makes a new IntakeSubsystem defined aboved
+    // bumperRight.whenPressed(new SetIntakeSpeed(intake, 0.75));
+    // bumperRight.whenReleased(new SetIntakeSpeed(intake, 0));
+    // bumperLeft.whenPressed(new SetIntakeSpeed(intake, -0.25));
+    // bumperLeft.whenReleased(new SetIntakeSpeed(intake, 0));
 
     // This could be used for launching cargo
-    rBumper.whenReleased(new IntakeSpeed(intake, 0));
-    lBumper.whenPressed(new IntakeSpeed(intake, 0));
-    lBumper.whenReleased(new IntakeSpeed(intake, 0));
-    */
-
-    //greenA.whenPressed(new IntakeSpeed(intake, 1.0)); // Turns on the Intake
-    //greenA.whenReleased(new IntakeSpeed(intake, 00)); // Needed to turn off the Intake
-   
-   
-
+    // op_blueX.whenReleased(new LauncherSpeed(speed, 0));
+    // op_blueX.whenPressed(new LauncherSpeed(speed, 0.75); // High shot from a distance
+    // op_yellowY.whenPressed(new LauncherSpeed(speed, 0.75); // High shot from a up close
+    // op_redB.whenPressed(new LauncherSpeed(speed, 0.75); // High shot from a up close
+    // op_greenA.whenPressed(new LauncherSpeed(speed, 0.75); //
+    // lBumper.whenReleased(new IntakeSpeed(intake, 0));
+    
     /** COMMENTING OUT LAUNCHER CODE FOR PRACTICE BOT
     // Connect the buttons to commands
     // Launch the Cargo when either left bumper or right bumper is pressed

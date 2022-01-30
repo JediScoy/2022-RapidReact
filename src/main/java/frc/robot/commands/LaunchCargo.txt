@@ -21,22 +21,43 @@ public class LaunchCargo extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   
   // Subsystem the command uses
-  private final Launcher m_launcher; 
+  private final Launcher subsystem;
+  private double speed; 
 
-  public LaunchCargo(Launcher subsystem) {
-    m_launcher = subsystem;
+  public LaunchCargo(Launcher subsystem, double speed) {
+    this.subsystem = subsystem;
+    this.speed = speed;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_launcher);
+    addRequirements(subsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_launcher.launchCargoLow();
+      subsystem.Launcher(speed);
     
     }
     
-
+    public void launchCargoLow() {
+      // Sets the output of launcher motors for launching cargo
+      m_LauncherMotorTop.set(ControlMode.PercentOutput, 0.30);
+      m_LauncherMotorBottom.set(ControlMode.PercentOutput, -0.30);
+      // Document for adding CopntrolMode.PecentOutput https://docs.ctre-phoenix.com/en/stable/ch13_MC.html
+    }
+  
+    /** Speed to launch the Cargo for High Hub
+      * Eventually the absolute value could be replaced with sensor-driven values
+      **/
+    public void launchCargoHigh() {
+      // Sets the output of launcher motors for launching cargo
+      m_LauncherMotorTop.set(ControlMode.PercentOutput, 0.30);
+      m_LauncherMotorBottom.set(ControlMode.PercentOutput, -0.40);
+    }
+  
+    public void stopLaunch(){
+      m_LauncherMotorTop.set(ControlMode.PercentOutput, 0);
+      m_LauncherMotorBottom.set(ControlMode.PercentOutput, 0);
+    }
     // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
