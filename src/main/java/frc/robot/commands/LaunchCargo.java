@@ -3,7 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.commands;
-import frc.robot.subsystems.LauncherSubsystem;
+import frc.robot.subsystems.Launcher;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 // import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 // import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
@@ -17,22 +17,22 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 // Change from m_subsystem references to m_launcher in command
 
-public class LaunchCargoLow extends CommandBase {
+public class LaunchCargo extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   
   // Subsystem the command uses
-  private final LauncherSubsystem m_launcherSubsystem; 
+  private final Launcher m_launcher; 
 
-  public LaunchCargoLow(LauncherSubsystem subsystem) {
-    m_launcherSubsystem = subsystem;
+  public LaunchCargo(Launcher subsystem) {
+    m_launcher = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_launcherSubsystem);
+    addRequirements(m_launcher);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_launcherSubsystem.launchCargoLow();
+    m_launcher.launchCargoLow();
     
     }
     
