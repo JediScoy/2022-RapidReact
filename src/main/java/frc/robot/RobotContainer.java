@@ -98,17 +98,19 @@ public class RobotContainer {
   }
   */
   private void configureButtonBindings() {
-    // Declaring buttons on controller
+    // Declaring buttons on driver controller
+    // final JoystickButton d_backButton = new JoystickButton(driverController, Button.kBack.value);
 
-    // final Button backButton = new Button(driverController, XboxController.Button.kBack.value); // "Cannot instantiate the type ..." for "Button"
-    final JoystickButton d_backButton = new JoystickButton(driverController, Button.kBack.value);
-    // final JoystickButton o_rBumper = new JoystickButton(operatorController, Button.kRightBumper.value);
-    // final JoystickButton o_lBumper = new JoystickButton(operatorController, Button.kLeftBumper.value);
-    // final JoystickButton o_greenA = new JoystickButton(operatorController, Button.kA.value);
-    // op_blueX // High shot from a distance
-    // op_yellowY // High shot from a up close
-    // op_redB // low shot from a up close
-    // op_greenA //
+
+    
+    // Declaring buttons on the operator controller
+
+    // op_ButtonX 
+    // op_ButtonY 
+    // op_ButtonB 
+    // final JoystickButton op_ButtonA = new JoystickButton(operatorController, Button.kA.value);
+    // final JoystickButton op_RightBumper = new JoystickButton(operatorController, Button.kRightBumper.value);
+    // final JoystickButton op_LeftBumper = new JoystickButton(operatorController, Button.kLeftBumper.value);
     
     
     //  ENGINERDS "Intake" is a Command class, "intake" is a variable that makes a new IntakeSubsystem defined aboved
@@ -117,12 +119,12 @@ public class RobotContainer {
     // bumperLeft.whenPressed(new SetIntakeSpeed(intake, -0.25));
     // bumperLeft.whenReleased(new SetIntakeSpeed(intake, 0));
 
-    // This could be used for launching cargo
-    // op_blueX.whenReleased(new LauncherSpeed(speed, 0));
-    // op_blueX.whenPressed(new LauncherSpeed(speed, 0.75); // High shot from a distance
-    // op_yellowY.whenPressed(new LauncherSpeed(speed, 0.75); // High shot from a up close
-    // op_redB.whenPressed(new LauncherSpeed(speed, 0.75); // High shot from a up close
-    // op_greenA.whenPressed(new LauncherSpeed(speed, 0.75); //
+    // Defining the actions associated with buttons cargo -- these are just suggested 1-30-22
+    // op_ButtonX.whenReleased(new LauncherSpeed(speed, 0.0));
+    // op_ButtonX.whenPressed(new LauncherSpeed(speed, 0.75); // High shot from a distance
+    // op_ButtonY.whenPressed(new LauncherSpeed(speed, 0.75); // High shot from a up close
+    // op_ButtonB.whenPressed(new LauncherSpeed(speed, 0.75); // Low shot from a up close
+    // op_ButtonA.whenPressed(new LauncherSpeed(speed, 0.75); //
     // lBumper.whenReleased(new IntakeSpeed(intake, 0));
     
     /** COMMENTING OUT LAUNCHER CODE FOR PRACTICE BOT
