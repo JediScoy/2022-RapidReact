@@ -5,9 +5,10 @@
 package frc.robot.commands;
 import frc.robot.subsystems.Launcher;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-// import edu.wpi.first.wpilibj.motorcontrol.MotorController;
-// import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.commands.LauncherSpeed;
+import edu.wpi.first.wpilibj.motorcontrol.MotorController;
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import frc.robot.Constants;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
@@ -19,10 +20,12 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 public class LaunchCargo extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  
+
   // Subsystem the command uses
   private final Launcher subsystem;
   private double speed; 
+ 
+
 
   public LaunchCargo(Launcher subsystem, double speed) {
     this.subsystem = subsystem;
@@ -34,30 +37,17 @@ public class LaunchCargo extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-      subsystem.Launcher(speed);
+      subsystem.setLauncherSpeed(speed); // FIXME Launcher or setLauncherSpeed?
     
     }
     
-    public void launchCargoLow() {
-      // Sets the output of launcher motors for launching cargo
-      m_LauncherMotorTop.set(ControlMode.PercentOutput, 0.30);
-      m_LauncherMotorBottom.set(ControlMode.PercentOutput, -0.30);
-      // Document for adding CopntrolMode.PecentOutput https://docs.ctre-phoenix.com/en/stable/ch13_MC.html
-    }
-  
-    /** Speed to launch the Cargo for High Hub
-      * Eventually the absolute value could be replaced with sensor-driven values
-      **/
-    public void launchCargoHigh() {
-      // Sets the output of launcher motors for launching cargo
-      m_LauncherMotorTop.set(ControlMode.PercentOutput, 0.30);
-      m_LauncherMotorBottom.set(ControlMode.PercentOutput, -0.40);
-    }
-  
+    /** Stops the launcher - maybe unnecessary now
     public void stopLaunch(){
-      m_LauncherMotorTop.set(ControlMode.PercentOutput, 0);
-      m_LauncherMotorBottom.set(ControlMode.PercentOutput, 0);
+      topLauncherMotor.set(ControlMode.PercentOutput, 0);
+      bottomLauncherMotor.set(ControlMode.PercentOutput, 0);
     }
+    */ 
+
     // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
