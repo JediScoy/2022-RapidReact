@@ -4,22 +4,22 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.GenericHID;
+// import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+// import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+// import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 // import edu.wpi.first.wpilibj.buttons.JoystickButton; // OldCommands vendorsdep
 import edu.wpi.first.wpilibj2.command.button.JoystickButton; //NewCommands vendordep
 // import edu.wpi.first.wpilibj2.command.button.Button;
 import static edu.wpi.first.wpilibj.XboxController.Button;
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
+// import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.FunctionalCommand;
+// import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.math.geometry.Translation2d;
+// import edu.wpi.first.math.geometry.Translation2d;
 
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
+// import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+// import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.DrivetrainSubsystem;
 
 import frc.robot.commands.DefaultDriveCommand;
@@ -70,9 +70,6 @@ public class RobotContainer {
 
     // Configure the button bindings
     configureButtonBindings();
-
-    // Reset the navx
-    // FIXME
   }
   /**
    * Use this method to define your button->command mappings. Buttons can be created by
@@ -90,36 +87,26 @@ public class RobotContainer {
   */
 
   private void configureButtonBindings() {
-    // Declaring buttons on driver controller
+    /// Declaring buttons on driver controller
     final JoystickButton d_backButton = new JoystickButton(driverController, Button.kBack.value);
 
     // Declaring buttons on the operator controller
-    // op_ButtonX 
-    // op_ButtonY 
-    // op_ButtonB 
     final JoystickButton op_ButtonA = new JoystickButton(operatorController, Button.kA.value);
-    final JoystickButton op_RightBumper = new JoystickButton(operatorController, Button.kRightBumper.value);
-    final JoystickButton op_LeftBumper = new JoystickButton(operatorController, Button.kLeftBumper.value);
-    final JoystickButton op_ButtonX = new JoystickButton(operatorController, Button.kA.value);
-    final JoystickButton op_ButtonY= new JoystickButton(operatorController, Button.kRightBumper.value);
-    final JoystickButton op_ButtonB = new JoystickButton(operatorController, Button.kLeftBumper.value);
+    final JoystickButton op_ButtonB = new JoystickButton(operatorController, Button.kB.value);
+    final JoystickButton op_ButtonX = new JoystickButton(operatorController, Button.kX.value);
+    final JoystickButton op_ButtonY= new JoystickButton(operatorController, Button.kY.value);
+    // final JoystickButton op_RightBumper = new JoystickButton(operatorController, Button.kRightBumper.value);
+    // final JoystickButton op_LeftBumper = new JoystickButton(operatorController, Button.kLeftBumper.value);
     
-    //  ENGINERDS "Intake" is a Command class, "intake" is a variable that makes a new IntakeSubsystem defined aboved
-    // bumperRight.whenPressed(new SetIntakeSpeed(intake, 0.75));
-    // bumperRight.whenReleased(new SetIntakeSpeed(intake, 0));
-    // bumperLeft.whenPressed(new SetIntakeSpeed(intake, -0.25));
-    // bumperLeft.whenReleased(new SetIntakeSpeed(intake, 0));
 
     // Defining the actions associated with buttons cargo -- these are just suggested 1-30-22
-    op_ButtonA.whenPressed(new LauncherSpeed(launcher, 0.75)); //
-    op_ButtonB.whenPressed(new LauncherSpeed(launcher, 0.75)); // Low shot from a up close
+    // Modeled after ENGINERDS "Intake" is a Command class, "intake" is a variable that makes a new IntakeSubsystem defined aboved
+    op_ButtonA.whenPressed(new LauncherSpeed(launcher, 0.50)); //
+    op_ButtonB.whenPressed(new LauncherSpeed(launcher, 0.20)); // Low shot from a up close
     op_ButtonX.whenReleased(new LauncherSpeed(launcher, 0.0));
-    op_ButtonX.whenPressed(new LauncherSpeed(launcher, 0.75)); // High shot from a distance
-    op_ButtonY.whenPressed(new LauncherSpeed(launcher, 0.75)); // High shot from a up close
-    // NOT used at the momement - lBumper.whenReleased(new IntakeSpeed(intake, 0));
-    
-
-    // COMMENTING OUT LAUNCHER CODE FOR PRACTICE BOT
+    op_ButtonX.whenPressed(new LauncherSpeed(launcher, 0.60)); // High shot from a distance
+    op_ButtonY.whenPressed(new LauncherSpeed(launcher, 0.40)); // High shot from a up close
+   
     // Connect the buttons to commands
     // Launch the Cargo when either left bumper or right bumper is pressed
     // We tried whileHeld command initially, but it only starts the motors, it does not stop the motors automatically
@@ -150,19 +137,7 @@ public class RobotContainer {
   // FIXME backButton.whenPressed(() -> swerveDrivetrain.resetDriveMotors());
   }
 
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   * @return the command to run in autonomous
-   */
-  public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
-    // new LaunchCargo(m_launcherSubsystem);
-    // This is from Prototype launcher
-    // return m_autoCommand;
-
-    // This is from SDS Drive code base
-    return new InstantCommand();
-  }
+ 
 
   private static double deadband(double value, double deadband) {
     if (Math.abs(value) > deadband) {
@@ -184,5 +159,19 @@ public class RobotContainer {
     value = Math.copySign(value * value, value);
 
     return value;
+  }
+   
+  /**
+   * Use this to pass the autonomous command to the main {@link Robot} class.
+   * @return the command to run in autonomous
+   */
+  public Command getAutonomousCommand() {
+    // An ExampleCommand will run in autonomous
+    // new LaunchCargo(m_launcherSubsystem);
+    // This is from Prototype launcher
+    // return m_autoCommand;
+
+    // This is from SDS Drive code base
+    return new InstantCommand();
   }
 }
