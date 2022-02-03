@@ -31,8 +31,8 @@ public class IntakeUpper extends SubsystemBase {
   /** Uncomment setup for each specific subystem with motors
   private final MotorController m_IntakeMotors = 
     /** new MotorControllerGroup(
-        * new TalonFX(Constants.INTAKE_UPPER_1),
-        * new TalonFX(Constants.INTAKE_UPPER_2));
+        * new TalonFX(Constants.intakeUpper1),
+        * new TalonFX(Constants.intakeUpper2));
   */
     
 // final TalonFXInvertType rightLaunchMotor = TalonFXInvertType.CounterClockwise;

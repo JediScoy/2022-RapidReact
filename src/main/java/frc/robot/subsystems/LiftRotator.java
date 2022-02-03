@@ -14,7 +14,7 @@ import frc.robot.Constants;
 
 // CTRE imports
 // import com.ctre.phoenix.motorcontrol.ControlMode;
-// import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 // import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 // import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
@@ -26,23 +26,23 @@ public class LiftRotator extends SubsystemBase {
     * These are the two motors for [ ]
 **/
 
-  // public final TalonFX RotateMotor1;
-  // public final TalonFX RotateMotor2;
+  // public final TalonFX rotateMotor1;
+  // public final TalonFX rotateMotor2;
 
   /** Uncomment setup for each specific subystem with motors
   private final MotorController m_IntakeMotors = 
     /** new MotorControllerGroup(
-        * new TalonFX(LauncherConstants.ROTATE_1),
-        * new TalonFX(LauncherConstants.ROTATE_2));
+        * new TalonFX(LauncherConstants.rotateMotor1),
+        * new TalonFX(LauncherConstants.rotateMotor2));
   */
     
 // final TalonFXInvertType rightLaunchMotor = TalonFXInvertType.CounterClockwise;
 
   /**
   public LiftRotateSubsystem() {
-    RotateMotor = new TalonFX(Constants.ROTATE_1, Constants.ROTATE_2);
-    RotateMotor.setInverted(true);
-    RotateMotor.setNeutralMode(NeutralMode.Coast);
+    rotateMotor = new TalonFX(Constants.ROTATE_1, Constants.ROTATE_2);
+    rotateMotor.setInverted(true);
+    rotateMotor.setNeutralMode(NeutralMode.Coast);
 
   }
   */
