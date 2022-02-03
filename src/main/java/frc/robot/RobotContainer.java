@@ -20,20 +20,14 @@ import edu.wpi.first.math.geometry.Translation2d;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.subsystems.DrivetrainSubsystem;
 
 import frc.robot.commands.DefaultDriveCommand;
-import frc.robot.subsystems.DrivetrainSubsystem;
-// import frc.robot.commands.LaunchCargoLow;
-// import frc.robot.commands.LaunchCargoHigh;
-// import frc.robot.commands.StopLaunch;
-// import frc.robot.subsystems.LauncherSubsystem;
-//import frc.robot.subsystems.IntakeSubsystem;
-//import frc.robot.commands.IntakeSpeed;
-
-
-// frc.robot.commands.auto.SomeAuto;
-
-
+import frc.robot.commands.LaunchCargo;
+import frc.robot.commands.LauncherSpeed;
+import frc.robot.subsystems.Launcher;
+// import frc.robot.subsystems.IntakeSubsystem;
+// import frc.robot.commands.IntakeSpeed;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -41,28 +35,25 @@ import frc.robot.subsystems.DrivetrainSubsystem;
  * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
  * subsystems, commands, and button mappings) should be declared here.
  */
+
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem();
+  private final Launcher launcher = new Launcher();
 
   // Main driver controller
   private final XboxController driverController = new XboxController(0);
   // Second operator controller
   private final XboxController operatorController = new XboxController(1);
 
-  // private final LauncherSubsystem m_launcherSubsystem = new LauncherSubsystem();
-
-  // ENGINERDS private Intake intake = new Intake();
-  //private IntakeSubsystem intake = new IntakeSubsystem();
-
+  // private Intake intake = new Intake();
+  
   // Robot Commands
   // private final LaunchCargoLow m_autoCommand = new LaunchCargoLow(m_launcherSubsystem);
 
   // private final XboxController m_joystick = new XboxController(0);
 
-  /**
-   * The container for the robot. Contains subsystems, OI devices, and commands.
-   */
+  // The container for the robot. Contains subsystems, OI devices, and commands.
   public RobotContainer() {
     // Set up the default command for the drivetrain.
     // The controls are for field-oriented driving:
@@ -97,49 +88,53 @@ public class RobotContainer {
     swerveDrivetrain.resetDriveMotos();
   }
   */
+
   private void configureButtonBindings() {
-    // Declaring buttons on controller
+    // Declaring buttons on driver controller
+    final JoystickButton d_backButton = new JoystickButton(driverController, Button.kBack.value);
 
-    // final Button backButton = new Button(driverController, XboxController.Button.kBack.value); // "Cannot instantiate the type ..." for "Button"
-    final JoystickButton backButton = new JoystickButton(driverController, Button.kBack.value);
-    final JoystickButton rBumper = new JoystickButton(operatorController, Button.kRightBumper.value);
-    final JoystickButton lBumper = new JoystickButton(operatorController, Button.kLeftBumper.value);
-    final JoystickButton greenA = new JoystickButton(operatorController, Button.kA.value);
-
+    // Declaring buttons on the operator controller
+    // op_ButtonX 
+    // op_ButtonY 
+    // op_ButtonB 
+    final JoystickButton op_ButtonA = new JoystickButton(operatorController, Button.kA.value);
+    final JoystickButton op_RightBumper = new JoystickButton(operatorController, Button.kRightBumper.value);
+    final JoystickButton op_LeftBumper = new JoystickButton(operatorController, Button.kLeftBumper.value);
+    final JoystickButton op_ButtonX = new JoystickButton(operatorController, Button.kA.value);
+    final JoystickButton op_ButtonY= new JoystickButton(operatorController, Button.kRightBumper.value);
+    final JoystickButton op_ButtonB = new JoystickButton(operatorController, Button.kLeftBumper.value);
     
-    /**  ENGINERDS "Intake" is a Command class, "intake" is a variable that makes a new IntakeSubsystem defined aboved
-    bumperRight.whenPressed(new SetIntakeSpeed(intake, 0.75));
-    bumperRight.whenReleased(new SetIntakeSpeed(intake, 0));
-    bumperLeft.whenPressed(new SetIntakeSpeed(intake, -0.25));
-    bumperLeft.whenReleased(new SetIntakeSpeed(intake, 0));
+    //  ENGINERDS "Intake" is a Command class, "intake" is a variable that makes a new IntakeSubsystem defined aboved
+    // bumperRight.whenPressed(new SetIntakeSpeed(intake, 0.75));
+    // bumperRight.whenReleased(new SetIntakeSpeed(intake, 0));
+    // bumperLeft.whenPressed(new SetIntakeSpeed(intake, -0.25));
+    // bumperLeft.whenReleased(new SetIntakeSpeed(intake, 0));
 
-    // This could be used for launching cargo
-    rBumper.whenReleased(new IntakeSpeed(intake, 0));
-    lBumper.whenPressed(new IntakeSpeed(intake, 0));
-    lBumper.whenReleased(new IntakeSpeed(intake, 0));
-    */
+    // Defining the actions associated with buttons cargo -- these are just suggested 1-30-22
+    op_ButtonA.whenPressed(new LauncherSpeed(launcher, 0.75)); //
+    op_ButtonB.whenPressed(new LauncherSpeed(launcher, 0.75)); // Low shot from a up close
+    op_ButtonX.whenReleased(new LauncherSpeed(launcher, 0.0));
+    op_ButtonX.whenPressed(new LauncherSpeed(launcher, 0.75)); // High shot from a distance
+    op_ButtonY.whenPressed(new LauncherSpeed(launcher, 0.75)); // High shot from a up close
+    // NOT used at the momement - lBumper.whenReleased(new IntakeSpeed(intake, 0));
+    
 
-    //greenA.whenPressed(new IntakeSpeed(intake, 1.0)); // Turns on the Intake
-    //greenA.whenReleased(new IntakeSpeed(intake, 00)); // Needed to turn off the Intake
-   
-   
-
-    /** COMMENTING OUT LAUNCHER CODE FOR PRACTICE BOT
+    // COMMENTING OUT LAUNCHER CODE FOR PRACTICE BOT
     // Connect the buttons to commands
     // Launch the Cargo when either left bumper or right bumper is pressed
     // We tried whileHeld command initially, but it only starts the motors, it does not stop the motors automatically
-    upon button release as it should
-    //this is working to start falcon motors when button held
+    // upon button release as it should
+    // this is working to start falcon motors when button held
     
     // Cargo low shot on Hub
-    lBumper.whenPressed(new LaunchCargoLow(m_launcherSubsystem)); // replace "m_launcherSubsystem" with speed variable?
-    lBumper.whenReleased(new StopLaunch(m_launcherSubsystem));
+    // lBumper.whenPressed(new LaunchCargoLow(m_launcherSubsystem)); // replace "m_launcherSubsystem" with speed variable?
+    // lBumper.whenReleased(new StopLaunch(m_launcherSubsystem));
+
     // Cargo high shot on Hub
-    rBumper.whenPressed(new LaunchCargoHigh(m_launcherSubsystem));
-    rBumper.whenReleased(new StopLaunch(m_launcherSubsystem));
-    //added a when button released command until we have whileHeld working as it should
+    // rBumper.whenPressed(new LaunchCargoHigh(m_launcherSubsystem));
+    // rBumper.whenReleased(new StopLaunch(m_launcherSubsystem));
+    // added a when button released command until we have whileHeld working as it should
     
-    **/
 
   /** Use this to pass the autonomous command to the main {@link Robot} class.
   * @return the command to run in autonomous
@@ -157,13 +152,12 @@ public class RobotContainer {
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    // new LaunchCargoLow(m_launcherSubsystem);
-    // This is from Prototype launacher
+    // new LaunchCargo(m_launcherSubsystem);
+    // This is from Prototype launcher
     // return m_autoCommand;
 
     // This is from SDS Drive code base

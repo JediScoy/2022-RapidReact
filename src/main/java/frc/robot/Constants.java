@@ -48,8 +48,8 @@ public final class Constants {
     public static final double FRONT_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(157.5); // Measure and set front left steer offset
 
     // Two motors are used to launch the "Cargo"
-    public static final int bottomLaunchMotor = 9; // Sets the bottom launcher motor ID value
-    public static final int topLaunchMotor = 10; // Sets the top launcher motor ID value
+    public static final int BOTTOM_LAUNCHER_MOTOR = 9; // Sets the bottom launcher motor ID value
+    public static final int TOP_LAUNCHER_MOTOR = 10; // Sets the top launcher motor ID value
     
     // Lift motors
     /** public static final int */

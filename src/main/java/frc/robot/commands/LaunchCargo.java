@@ -5,9 +5,10 @@
 package frc.robot.commands;
 import frc.robot.subsystems.Launcher;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-// import edu.wpi.first.wpilibj.motorcontrol.MotorController;
-// import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.commands.LauncherSpeed;
+import edu.wpi.first.wpilibj.motorcontrol.MotorController;
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import frc.robot.Constants;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
@@ -19,23 +20,33 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 public class LaunchCargo extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  
-  // Subsystem the command uses
-  private final Launcher m_launcher; 
 
-  public LaunchCargo(Launcher subsystem) {
-    m_launcher = subsystem;
+  // Subsystem the command uses
+  private final Launcher subsystem;
+  private double speed; 
+ 
+
+
+  public LaunchCargo(Launcher subsystem, double speed) {
+    this.subsystem = subsystem;
+    this.speed = speed;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(m_launcher);
+    addRequirements(subsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_launcher.launchCargoLow();
+      subsystem.setLauncherSpeed(speed); // FIXME Launcher or setLauncherSpeed?
     
     }
     
+    /** Stops the launcher - maybe unnecessary now
+    public void stopLaunch(){
+      topLauncherMotor.set(ControlMode.PercentOutput, 0);
+      bottomLauncherMotor.set(ControlMode.PercentOutput, 0);
+    }
+    */ 
 
     // Called every time the scheduler runs while the command is scheduled.
   @Override
