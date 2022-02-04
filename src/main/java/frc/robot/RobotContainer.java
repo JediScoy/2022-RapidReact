@@ -99,7 +99,7 @@ public class RobotContainer {
     final JoystickButton op_ButtonA = new JoystickButton(operatorController, Button.kA.value);
     final JoystickButton op_ButtonB = new JoystickButton(operatorController, Button.kB.value);
     final JoystickButton op_ButtonX = new JoystickButton(operatorController, Button.kX.value);
-    final JoystickButton op_ButtonY= new JoystickButton(operatorController, Button.kY.value);
+    final JoystickButton op_ButtonY = new JoystickButton(operatorController, Button.kY.value);
     // final JoystickButton op_RightBumper = new JoystickButton(operatorController, Button.kRightBumper.value);
     // final JoystickButton op_LeftBumper = new JoystickButton(operatorController, Button.kLeftBumper.value);
     
@@ -139,7 +139,7 @@ public class RobotContainer {
   /** Use this to pass the autonomous command to the main {@link Robot} class.
   * @return the command to run in autonomous
  */
-  // Shaun's previously working code (?) that we broke :)
+  // Shaun's working code for reseting gyro
   d_backButton.whenPressed(m_drivetrainSubsystem::zeroGyroscope);  
 
   }
