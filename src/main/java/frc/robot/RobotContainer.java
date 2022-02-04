@@ -89,10 +89,7 @@ public class RobotContainer {
 
 
   */
-// Shaun's previously working code (?) that we broke :)
-//  new JoystickButton(driverController::getBackButton)
-  //No requirements because we don't need to interrupt anything
-  //.whenPressed(m_drivetrainSubsystem::zeroGyroscope);    
+  
 
   private void configureButtonBindings() {
     /// Declaring buttons on driver controller
@@ -142,7 +139,8 @@ public class RobotContainer {
   /** Use this to pass the autonomous command to the main {@link Robot} class.
   * @return the command to run in autonomous
  */
-
+  // Shaun's previously working code (?) that we broke :)
+  d_backButton.whenPressed(m_drivetrainSubsystem::zeroGyroscope);  
 
   }
 
