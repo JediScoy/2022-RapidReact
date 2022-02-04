@@ -106,17 +106,17 @@ public class RobotContainer {
 
     // Defining the actions associated with buttons cargo -- these are just suggested 1-30-22
     // Modeled after ENGINERDS "Intake" is a Command class, "intake" is a variable that makes a new IntakeSubsystem defined aboved
-    op_ButtonA.whenPressed(new LauncherSpeed(launcher, 0.50)); //
-    op_ButtonA.whenReleased(new LauncherSpeed(launcher, 0.0));
+    op_ButtonA.whenPressed(new LauncherSpeed(launcher, 0.30, -030)); // High shot from a distance
+    op_ButtonA.whenReleased(new LauncherSpeed(launcher, 0.0, 0.00));
 
-    op_ButtonB.whenPressed(new LauncherSpeed(launcher, 0.20)); // Low shot from a up close
-    op_ButtonB.whenReleased(new LauncherSpeed(launcher, 0.0));
+    op_ButtonB.whenPressed(new LauncherSpeed(launcher, 0.30, -0.30)); // Low shot from a up close
+    op_ButtonB.whenReleased(new LauncherSpeed(launcher, 0.0, 0.00));
 
-    op_ButtonX.whenPressed(new LauncherSpeed(launcher, 0.60)); // High shot from a distance
-    op_ButtonX.whenReleased(new LauncherSpeed(launcher, 0.0));
+    op_ButtonX.whenPressed(new LauncherSpeed(launcher, 0.30, -0.40)); // High shot up close
+    op_ButtonX.whenReleased(new LauncherSpeed(launcher, 0.0, 0.00));
 
-    op_ButtonY.whenPressed(new LauncherSpeed(launcher, 0.40)); // High shot from a up close
-    op_ButtonY.whenReleased(new LauncherSpeed(launcher, 0.0));
+    op_ButtonY.whenPressed(new LauncherSpeed(launcher, 0.00, 0.00));
+    op_ButtonY.whenReleased(new LauncherSpeed(launcher, 0.0, 0.00));
    
     // Connect the buttons to commands
     // Launch the Cargo when either left bumper or right bumper is pressed

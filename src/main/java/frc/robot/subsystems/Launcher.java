@@ -51,9 +51,9 @@ public class Launcher extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  public void setLauncherSpeed(double speed) {
-    bottomLauncherMotor.set(ControlMode.PercentOutput, speed); // Rename to speed_bottom?
-    topLauncherMotor.set(ControlMode.PercentOutput, speed); // Rename to speed_top?
+  public void setLauncherSpeed(double speedTop, double speedBottom) {
+    bottomLauncherMotor.set(ControlMode.PercentOutput, speedBottom);
+    topLauncherMotor.set(ControlMode.PercentOutput, speedTop);
   }
 
   public void stopLauncher() {
