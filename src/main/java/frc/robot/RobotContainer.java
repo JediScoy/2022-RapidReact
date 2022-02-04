@@ -23,7 +23,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.DrivetrainSubsystem;
 
 import frc.robot.commands.DefaultDriveCommand;
-import frc.robot.commands.LaunchCargo;
+// import frc.robot.commands.LaunchCargo;
 import frc.robot.commands.LauncherSpeed;
 import frc.robot.subsystems.Launcher;
 // import frc.robot.subsystems.IntakeSubsystem;
@@ -78,13 +78,21 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
 
+  // FIXME reset the gyro (navx) ideas
   /** Code from 2021 Skills bot of Enginerds 2337 
   public void resetDrivetrain (){
     swerveDrivetrain.resetAngleMotors();
     swerveDrivetrain.resetOdometry();
     swerveDrivetrain.resetDriveMotos();
   }
+  // backButton.whenPressed(() -> swerveDrivetrain.resetDriveMotors());   // Using the Engingerds RobotContainer.java line 136
+
+
   */
+// Shaun's previously working code (?) that we broke :)
+//  new JoystickButton(driverController::getBackButton)
+  //No requirements because we don't need to interrupt anything
+  //.whenPressed(m_drivetrainSubsystem::zeroGyroscope);    
 
   private void configureButtonBindings() {
     /// Declaring buttons on driver controller
@@ -102,11 +110,19 @@ public class RobotContainer {
     // Defining the actions associated with buttons cargo -- these are just suggested 1-30-22
     // Modeled after ENGINERDS "Intake" is a Command class, "intake" is a variable that makes a new IntakeSubsystem defined aboved
     op_ButtonA.whenPressed(new LauncherSpeed(launcher, 0.50)); //
+    op_ButtonX.whenReleased(new LauncherSpeed(launcher, 0.0));
+
     op_ButtonB.whenPressed(new LauncherSpeed(launcher, 0.20)); // Low shot from a up close
     op_ButtonX.whenReleased(new LauncherSpeed(launcher, 0.0));
+
     op_ButtonX.whenPressed(new LauncherSpeed(launcher, 0.60)); // High shot from a distance
+    op_ButtonX.whenReleased(new LauncherSpeed(launcher, 0.0));
+
     op_ButtonY.whenPressed(new LauncherSpeed(launcher, 0.40)); // High shot from a up close
+    op_ButtonX.whenReleased(new LauncherSpeed(launcher, 0.0));
    
+    d_backButton.whenPressed(m_drivetrainSubsystem::zeroGyroscope);
+
     // Connect the buttons to commands
     // Launch the Cargo when either left bumper or right bumper is pressed
     // We tried whileHeld command initially, but it only starts the motors, it does not stop the motors automatically
@@ -127,14 +143,7 @@ public class RobotContainer {
   * @return the command to run in autonomous
  */
 
-  // Back button zeros the gyroscope
-  // Shaun's previously working code (?) that we broke :)
-  // new JoystickButton(driverController::getBackButton)
-            // No requirements because we don't need to interrupt anything
-  //          .whenPressed(m_drivetrainSubsystem::zeroGyroscope);    
 
-  // Using the Engingerds RobotContainer.java line 136
-  // FIXME backButton.whenPressed(() -> swerveDrivetrain.resetDriveMotors());
   }
 
  
