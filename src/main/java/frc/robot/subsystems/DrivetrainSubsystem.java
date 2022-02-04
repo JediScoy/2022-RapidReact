@@ -42,12 +42,11 @@ public class DrivetrainSubsystem extends SubsystemBase {
    * <p>
    * This is a measure of how fast the robot should be able to drive in a straight line.
    */
-  public static final double MAX_VELOCITY_METERS_PER_SECOND = 6380.0 / 60.0 * // FIXME with our values
+  public static final double MAX_VELOCITY_METERS_PER_SECOND = 6380.0 / 60.0 * // FIXME Use our robots' velocity values
           SdsModuleConfigurations.MK3_STANDARD.getDriveReduction() *
           SdsModuleConfigurations.MK3_STANDARD.getWheelDiameter() * Math.PI;
   /**
    * The maximum angular velocity of the robot in radians per second.
-   * <p>
    * This is a measure of how fast the robot can rotate in place.
    */
   // Here we calculate the theoretical maximum angular velocity. You can also replace this with a measured amount.
@@ -86,7 +85,6 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
   public DrivetrainSubsystem() {
     ShuffleboardTab tab = Shuffleboard.getTab("Drivetrain");
-
     // There are 4 methods you can call to create your swerve modules.
     // The method you use depends on what motors you are using.
 
@@ -154,20 +152,17 @@ public class DrivetrainSubsystem extends SubsystemBase {
     // Remove if you are using a Pigeon
     // m_pigeon.setFusedHeading(0.0);
     // Uncomment if you are using a NavX
-        m_navx.zeroYaw(); // FIXME
+        m_navx.zeroYaw(); // I think this is correct - Scoy
   }
 
   public Rotation2d getGyroscopeRotation() {
-    // Remove if you are using a Pigeon
-    // return Rotation2d.fromDegrees(m_pigeon.getFusedHeading());
-
-    // Uncomment if you are using a NavX
     if (m_navx.isMagnetometerCalibrated()) {
       // We will only get valid fused headings if the magnetometer is calibrated
       return Rotation2d.fromDegrees(m_navx.getFusedHeading());
     }
 
     // We have to invert the angle of the NavX so that rotating the robot counter-clockwise makes the angle increase.
+    // FIXME check this with our robot configuration
     return Rotation2d.fromDegrees(360.0 - m_navx.getYaw());
   }
 
