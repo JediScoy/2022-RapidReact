@@ -118,8 +118,6 @@ public class RobotContainer {
     op_ButtonY.whenPressed(new LauncherSpeed(launcher, 0.40)); // High shot from a up close
     op_ButtonX.whenReleased(new LauncherSpeed(launcher, 0.0));
    
-    d_backButton.whenPressed(m_drivetrainSubsystem::zeroGyroscope);
-
     // Connect the buttons to commands
     // Launch the Cargo when either left bumper or right bumper is pressed
     // We tried whileHeld command initially, but it only starts the motors, it does not stop the motors automatically
