@@ -17,11 +17,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 // import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 // import edu.wpi.first.math.geometry.Translation2d;
-
 // import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 // import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.DrivetrainSubsystem;
-
 import frc.robot.commands.DefaultDriveCommand;
 // import frc.robot.commands.LaunchCargo;
 import frc.robot.commands.LauncherSpeed;
@@ -94,14 +92,23 @@ public class RobotContainer {
   private void configureButtonBindings() {
     /// Declaring buttons on driver controller
     final JoystickButton d_backButton = new JoystickButton(driverController, Button.kBack.value);
+    final JoystickButton d_startButton = new JoystickButton(driverController, Button.kStart.value);
+    final JoystickButton d_ButtonA = new JoystickButton(driverController, Button.kA.value);
+    final JoystickButton d_ButtonB = new JoystickButton(driverController, Button.kB.value);
+    final JoystickButton d_ButtonX = new JoystickButton(driverController, Button.kX.value);
+    final JoystickButton d_ButtonY = new JoystickButton(driverController, Button.kY.value);
+    final JoystickButton d_RightBumper = new JoystickButton(driverController, Button.kRightBumper.value);
+    final JoystickButton d_LeftBumper = new JoystickButton(driverController, Button.kLeftBumper.value);
 
     // Declaring buttons on the operator controller
+    final JoystickButton op_backButton = new JoystickButton(operatorController, Button.kBack.value);
+    final JoystickButton op_startButton = new JoystickButton(operatorController, Button.kStart.value);
     final JoystickButton op_ButtonA = new JoystickButton(operatorController, Button.kA.value);
     final JoystickButton op_ButtonB = new JoystickButton(operatorController, Button.kB.value);
     final JoystickButton op_ButtonX = new JoystickButton(operatorController, Button.kX.value);
     final JoystickButton op_ButtonY = new JoystickButton(operatorController, Button.kY.value);
-    // final JoystickButton op_RightBumper = new JoystickButton(operatorController, Button.kRightBumper.value);
-    // final JoystickButton op_LeftBumper = new JoystickButton(operatorController, Button.kLeftBumper.value);
+    final JoystickButton op_RightBumper = new JoystickButton(operatorController, Button.kRightBumper.value);
+    final JoystickButton op_LeftBumper = new JoystickButton(operatorController, Button.kLeftBumper.value);
     
 
     // Defining the actions associated with buttons cargo -- these are just suggested 1-30-22
