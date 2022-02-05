@@ -6,6 +6,7 @@ package frc.robot;
 
 // import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.buttons.Trigger;
 // import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 // import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 // import edu.wpi.first.wpilibj.buttons.JoystickButton; // OldCommands vendorsdep
@@ -99,6 +100,8 @@ public class RobotContainer {
     final JoystickButton d_ButtonY = new JoystickButton(driverController, Button.kY.value);
     final JoystickButton d_RightBumper = new JoystickButton(driverController, Button.kRightBumper.value);
     final JoystickButton d_LeftBumper = new JoystickButton(driverController, Button.kLeftBumper.value);
+    final double d_LeftTrigger = driverController.getLeftTriggerAxis();
+    final double d_RightTrigger = driverController.getRightTriggerAxis();
 
     // Declaring buttons on the operator controller
     final JoystickButton op_backButton = new JoystickButton(operatorController, Button.kBack.value);
@@ -109,7 +112,8 @@ public class RobotContainer {
     final JoystickButton op_ButtonY = new JoystickButton(operatorController, Button.kY.value);
     final JoystickButton op_RightBumper = new JoystickButton(operatorController, Button.kRightBumper.value);
     final JoystickButton op_LeftBumper = new JoystickButton(operatorController, Button.kLeftBumper.value);
-    
+    final double op_LeftTrigger = operatorController.getLeftTriggerAxis();
+    final double op_RightTrigger = operatorController.getRightTriggerAxis();
 
     // Defining the actions associated with buttons cargo -- these are just suggested 1-30-22
     // Modeled after ENGINERDS "Intake" is a Command class, "intake" is a variable that makes a new IntakeSubsystem defined aboved
