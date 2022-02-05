@@ -7,10 +7,13 @@ package frc.robot.subsystems;
 import com.swervedrivespecialties.swervelib.Mk3SwerveModuleHelper;
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 import com.swervedrivespecialties.swervelib.SwerveModule;
+
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -53,7 +56,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
   public static final double MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND = MAX_VELOCITY_METERS_PER_SECOND /
           Math.hypot(DRIVETRAIN_TRACKWIDTH_METERS / 2.0, DRIVETRAIN_WHEELBASE_METERS / 2.0);
 
-  private final SwerveDriveKinematics m_kinematics = new SwerveDriveKinematics(
+  public final SwerveDriveKinematics m_kinematics = new SwerveDriveKinematics(
           // Front left
           new Translation2d(DRIVETRAIN_TRACKWIDTH_METERS / 2.0, DRIVETRAIN_WHEELBASE_METERS / 2.0),
           // Front right
@@ -71,8 +74,11 @@ public class DrivetrainSubsystem extends SubsystemBase {
   // private final PigeonIMU m_pigeon = new PigeonIMU(DRIVETRAIN_PIGEON_ID);
   
   // Uncomment if you are using a NavX
- 
-  private final AHRS m_navx = new AHRS(SPI.Port.kMXP, (byte) 200); // NavX connected over MXP
+  // NavX connected over MXP
+  private final AHRS m_navx = new AHRS(SPI.Port.kMXP, (byte) 200); 
+
+  //creating an odometer for auton
+  private final SwerveDriveOdometry odometer = new SwerveDriveOdometry(m_kinematics, new Rotation2d(0));
   
 
   // These are our modules. We initialize them in the constructor.
@@ -166,6 +172,16 @@ public class DrivetrainSubsystem extends SubsystemBase {
     return Rotation2d.fromDegrees(360.0 - m_navx.getYaw());
   }
 
+  //gets location of robot from odometer
+  public Pose2d getPose(){
+        return odometer.getPoseMeters();
+  }
+
+  //resets odometer to a new location
+  public void resetOdometry(Pose2d pose) {
+        odometer.resetPosition(pose, getGyroscopeRotation());
+  }
+
   public void drive(ChassisSpeeds chassisSpeeds) {
     m_chassisSpeeds = chassisSpeeds;
   }
@@ -183,5 +199,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
     m_backLeftModule.set(states[2].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, states[2].angle.getRadians());
     m_backRightModule.set(states[3].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, states[3].angle.getRadians());
    
+    //update the odometer constantly
+    odometer.update(getGyroscopeRotation(), states);
   }
 }
