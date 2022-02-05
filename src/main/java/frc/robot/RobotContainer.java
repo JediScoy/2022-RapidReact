@@ -7,10 +7,9 @@ package frc.robot;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
-import edu.wpi.first.math.kinematics.SwerveModuleState;
+//import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+//import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.math.trajectory.TrajectoryConfig;
 // import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 // import edu.wpi.first.wpilibj.buttons.Trigger;
@@ -20,10 +19,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton; //NewCommands vendordep
 // import edu.wpi.first.wpilibj2.command.button.Button;
 import static edu.wpi.first.wpilibj.XboxController.Button;
-
 import com.pathplanner.lib.PathPlanner;
-import com.pathplanner.lib.PathPlannerTrajectory;
-import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 
 // import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -107,6 +103,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
     /// Declaring buttons on driver controller
     final JoystickButton d_backButton = new JoystickButton(driverController, Button.kBack.value);
+    /** - unused buttons
     final JoystickButton d_startButton = new JoystickButton(driverController, Button.kStart.value);
     final JoystickButton d_ButtonA = new JoystickButton(driverController, Button.kA.value);
     final JoystickButton d_ButtonB = new JoystickButton(driverController, Button.kB.value);
@@ -116,18 +113,19 @@ public class RobotContainer {
     final JoystickButton d_LeftBumper = new JoystickButton(driverController, Button.kLeftBumper.value);
     final double d_LeftTrigger = driverController.getLeftTriggerAxis();
     final double d_RightTrigger = driverController.getRightTriggerAxis();
+    */
 
     // Declaring buttons on the operator controller
-    final JoystickButton op_backButton = new JoystickButton(operatorController, Button.kBack.value);
-    final JoystickButton op_startButton = new JoystickButton(operatorController, Button.kStart.value);
+    //final JoystickButton op_backButton = new JoystickButton(operatorController, Button.kBack.value);
+    //final JoystickButton op_startButton = new JoystickButton(operatorController, Button.kStart.value);
     final JoystickButton op_ButtonA = new JoystickButton(operatorController, Button.kA.value);
     final JoystickButton op_ButtonB = new JoystickButton(operatorController, Button.kB.value);
     final JoystickButton op_ButtonX = new JoystickButton(operatorController, Button.kX.value);
     final JoystickButton op_ButtonY = new JoystickButton(operatorController, Button.kY.value);
-    final JoystickButton op_RightBumper = new JoystickButton(operatorController, Button.kRightBumper.value);
-    final JoystickButton op_LeftBumper = new JoystickButton(operatorController, Button.kLeftBumper.value);
-    final double op_LeftTrigger = operatorController.getLeftTriggerAxis();
-    final double op_RightTrigger = operatorController.getRightTriggerAxis();
+    //final JoystickButton op_RightBumper = new JoystickButton(operatorController, Button.kRightBumper.value);
+    //final JoystickButton op_LeftBumper = new JoystickButton(operatorController, Button.kLeftBumper.value);
+    //final double op_LeftTrigger = operatorController.getLeftTriggerAxis();
+    //final double op_RightTrigger = operatorController.getRightTriggerAxis();
 
     // Defining the actions associated with buttons cargo -- these are just suggested 1-30-22
     // Modeled after ENGINERDS "Intake" is a Command class, "intake" is a variable that makes a new IntakeSubsystem defined aboved
