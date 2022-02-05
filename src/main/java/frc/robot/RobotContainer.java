@@ -4,24 +4,35 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
 // import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.buttons.Trigger;
+// import edu.wpi.first.wpilibj.buttons.Trigger;
 // import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 // import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 // import edu.wpi.first.wpilibj.buttons.JoystickButton; // OldCommands vendorsdep
 import edu.wpi.first.wpilibj2.command.button.JoystickButton; //NewCommands vendordep
 // import edu.wpi.first.wpilibj2.command.button.Button;
 import static edu.wpi.first.wpilibj.XboxController.Button;
+
+import com.pathplanner.lib.PathPlanner;
+import com.pathplanner.lib.PathPlannerTrajectory;
+import com.pathplanner.lib.commands.PPSwerveControllerCommand;
+
 // import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
 // import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 // import edu.wpi.first.math.geometry.Translation2d;
 // import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 // import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.commands.DefaultDriveCommand;
+import frc.robot.commands.ExampleAuton;
 // import frc.robot.commands.LaunchCargo;
 import frc.robot.commands.LauncherSpeed;
 import frc.robot.subsystems.Launcher;
@@ -188,6 +199,30 @@ public class RobotContainer {
     // return m_autoCommand;
 
     // This is from SDS Drive code base
-    return new InstantCommand();
+    //return new InstantCommand();
+
+    // 1. Creating trajectory settings
+    TrajectoryConfig trajectoryConfig = new TrajectoryConfig(
+      DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND, 
+      DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND)
+        .setKinematics();
+
+    // 2. This will load the file "Square.path" from PathPlanner and generate it with a max velocity of 8 m/s 
+    // and a max acceleration of 5 m/s^2
+    Trajectory examplePath = PathPlanner.loadPath("Square", 8, 5);
+
+    // 3. Defining PID Controllers for tracking trajectory
+    PIDController xController = new PIDController(kp, ki, kd);
+
+    // 4. Command to follow path from PathPlanner
+    SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(
+      examplePath, 
+      pose, 
+      kinematics, 
+      xController, 
+      yController, 
+      thetaController, 
+      outputModuleStates, 
+      requirements);
   }
 }
