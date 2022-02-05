@@ -5,7 +5,10 @@
 package frc.robot;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 // import edu.wpi.first.wpilibj.GenericHID;
@@ -26,13 +29,13 @@ import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.Command;
 // import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 // import edu.wpi.first.math.geometry.Translation2d;
 // import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 // import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.commands.DefaultDriveCommand;
-import frc.robot.commands.ExampleAuton;
 // import frc.robot.commands.LaunchCargo;
 import frc.robot.commands.LauncherSpeed;
 import frc.robot.subsystems.Launcher;
@@ -201,28 +204,32 @@ public class RobotContainer {
     // This is from SDS Drive code base
     //return new InstantCommand();
 
-    // 1. Creating trajectory settings
-    TrajectoryConfig trajectoryConfig = new TrajectoryConfig(
-      DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND, 
-      DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND)
-        .setKinematics();
-
-    // 2. This will load the file "Square.path" from PathPlanner and generate it with a max velocity of 8 m/s 
+    // 1. This will load the file "Square.path" from PathPlanner and generate it with a max velocity of 8 m/s 
     // and a max acceleration of 5 m/s^2
     Trajectory examplePath = PathPlanner.loadPath("Square", 8, 5);
 
-    // 3. Defining PID Controllers for tracking trajectory
-    PIDController xController = new PIDController(kp, ki, kd);
+    // 2. Defining PID Controllers for tracking trajectory
+    PIDController xController = new PIDController(Constants.kPXController, 0, 0);
+    PIDController yController = new PIDController(Constants.kPYController, 0, 0);
+    ProfiledPIDController thetaController = new ProfiledPIDController(
+            Constants.kPThetaController, 0, 0, Constants.kThetaControllerConstraints);
+    thetaController.enableContinuousInput(-Math.PI, Math.PI);
 
-    // 4. Command to follow path from PathPlanner
+    // 3. Command to follow path from PathPlanner
     SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(
       examplePath, 
-      pose, 
-      kinematics, 
+      m_drivetrainSubsystem::getPose, 
+      Constants.m_kinematics, 
       xController, 
       yController, 
       thetaController, 
-      outputModuleStates, 
-      requirements);
+      m_drivetrainSubsystem::setModuleStates, 
+      m_drivetrainSubsystem);
+
+    // 4. Add some init and wrap-up, and return everything
+    return new SequentialCommandGroup(
+      new InstantCommand(() -> m_drivetrainSubsystem.resetOdometry(examplePath.getInitialPose())),
+      swerveControllerCommand,
+      new InstantCommand(() ->m_drivetrainSubsystem.drive(new ChassisSpeeds(0.0, 0.0, 0.0))));
   }
 }
