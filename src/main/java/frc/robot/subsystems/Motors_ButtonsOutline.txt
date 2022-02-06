@@ -1,15 +1,27 @@
 Intake
     1 motor
-    2 buttons (+/-) speed
+    button: forward (+)
+    button: reverse (-)
+
 IntakeUpper
     2 motors, grouped
-    1 button
+    button: forward (+)
+
 Launcher
     2 motors, independent speeds
-    3 buttons; low goal up close, high goal up close, high goal long shot
+    button: low goal, up close
+    button: high goal, up close
+    button: high goal, long shot
 Lift
     2 motors, grouped
-    2 buttons (+/-)
+    button: up (+)
+    button: down (-)
+
 Rotational Arms
     2 motors, grouped
-    2 buttons (+/-) speed
+    button: (+)
+    button: (-)
+
+Gyro reset
+    Navx yaw reset
+    button: backButton

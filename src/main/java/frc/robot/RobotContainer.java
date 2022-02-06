@@ -4,45 +4,39 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
+//import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+//import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.trajectory.Trajectory;
+// import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+// import edu.wpi.first.wpilibj.buttons.Trigger;
+// import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+// import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 // import edu.wpi.first.wpilibj.buttons.JoystickButton; // OldCommands vendorsdep
 import edu.wpi.first.wpilibj2.command.button.JoystickButton; //NewCommands vendordep
 // import edu.wpi.first.wpilibj2.command.button.Button;
 import static edu.wpi.first.wpilibj.XboxController.Button;
+import com.pathplanner.lib.PathPlanner;
 
-import java.util.List;
-
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.math.trajectory.TrajectoryConfig;
-import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+// import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.FunctionalCommand;
+// import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.controller.ProfiledPIDController;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.commands.DefaultDriveCommand;
+// import edu.wpi.first.math.geometry.Translation2d;
+// import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+// import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.DrivetrainSubsystem;
-// import frc.robot.commands.LaunchCargoLow;
-// import frc.robot.commands.LaunchCargoHigh;
-// import frc.robot.commands.StopLaunch;
-// import frc.robot.subsystems.LauncherSubsystem;
+import frc.robot.commands.DefaultDriveCommand;
+// import frc.robot.commands.LaunchCargo;
+import frc.robot.commands.LauncherSpeed;
+import frc.robot.subsystems.Launcher;
 // import frc.robot.subsystems.IntakeSubsystem;
-//import frc.robot.commands.IntakeSpeed;
-
-
-// frc.robot.commands.auto.SomeAuto;
-
-
+// import frc.robot.commands.IntakeSpeed;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -50,35 +44,32 @@ import frc.robot.subsystems.DrivetrainSubsystem;
  * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
  * subsystems, commands, and button mappings) should be declared here.
  */
+
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem();
+  private final Launcher launcher = new Launcher();
 
   // Main driver controller
   private final XboxController driverController = new XboxController(0);
   // Second operator controller
   private final XboxController operatorController = new XboxController(1);
 
-  // private final LauncherSubsystem m_launcherSubsystem = new LauncherSubsystem();
-
-  // ENGINERDS private Intake intake = new Intake();
-  // private IntakeSubsystem intake = new IntakeSubsystem();
-
+  // private Intake intake = new Intake();
+  
   // Robot Commands
   // private final LaunchCargoLow m_autoCommand = new LaunchCargoLow(m_launcherSubsystem);
 
-  private final XboxController m_joystick = new XboxController(0);
+  // private final XboxController m_joystick = new XboxController(0);
 
-  /**
-   * The container for the robot. Contains subsystems, OI devices, and commands.
-   */
+  // The container for the robot. Contains subsystems, OI devices, and commands.
   public RobotContainer() {
     // Set up the default command for the drivetrain.
     // The controls are for field-oriented driving:
     // Left stick Y axis -> forward and backwards movement
     // Left stick X axis -> left and right movement
     // Right stick X axis -> rotation
-     m_drivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(
+    m_drivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(
             m_drivetrainSubsystem,
             () -> -modifyAxis(driverController.getLeftY()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
             () -> -modifyAxis(driverController.getLeftX()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
@@ -88,9 +79,6 @@ public class RobotContainer {
 
     // Configure the button bindings
     configureButtonBindings();
-
-    // Reset the navx
-    // FIXME
   }
   /**
    * Use this method to define your button->command mappings. Buttons can be created by
@@ -99,120 +87,85 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
 
-  /**  Code from 2021 Skills bot of Enginerds 2337 
+  // FIXME reset the gyro (navx) ideas
+  /** Code from 2021 Skills bot of Enginerds 2337 
   public void resetDrivetrain (){
     swerveDrivetrain.resetAngleMotors();
     swerveDrivetrain.resetOdometry();
     swerveDrivetrain.resetDriveMotos();
-  } */
+  }
+  // backButton.whenPressed(() -> swerveDrivetrain.resetDriveMotors());   // Using the Engingerds RobotContainer.java line 136
+
+
+  */
   
+
   private void configureButtonBindings() {
-    // Declaring buttons on controller
-
-    // final Button backButton = new Button(driverController, XboxController.Button.kBack.value); // "Cannot instantiate the type ..." for "Button"
-    final JoystickButton backButton = new JoystickButton(driverController, Button.kBack.value);
-    final JoystickButton rBumper = new JoystickButton(operatorController, Button.kRightBumper.value);
-    final JoystickButton lBumper = new JoystickButton(operatorController, Button.kLeftBumper.value);
-    final JoystickButton greenA = new JoystickButton(operatorController, Button.kA.value);
-
-    
-    /**  ENGINERDS "Intake" is a Command class, "intake" is a variable that makes a new IntakeSubsystem defined aboved
-    bumperRight.whenPressed(new SetIntakeSpeed(intake, 0.75));
-    bumperRight.whenReleased(new SetIntakeSpeed(intake, 0));
-    bumperLeft.whenPressed(new SetIntakeSpeed(intake, -0.25));
-    bumperLeft.whenReleased(new SetIntakeSpeed(intake, 0));
-
-    // This could be used for launching cargo
-    rBumper.whenReleased(new IntakeSpeed(intake, 0));
-    lBumper.whenPressed(new IntakeSpeed(intake, 0));
-    lBumper.whenReleased(new IntakeSpeed(intake, 0));
+    /// Declaring buttons on driver controller
+    final JoystickButton d_backButton = new JoystickButton(driverController, Button.kBack.value);
+    /** - unused buttons
+    final JoystickButton d_startButton = new JoystickButton(driverController, Button.kStart.value);
+    final JoystickButton d_ButtonA = new JoystickButton(driverController, Button.kA.value);
+    final JoystickButton d_ButtonB = new JoystickButton(driverController, Button.kB.value);
+    final JoystickButton d_ButtonX = new JoystickButton(driverController, Button.kX.value);
+    final JoystickButton d_ButtonY = new JoystickButton(driverController, Button.kY.value);
+    final JoystickButton d_RightBumper = new JoystickButton(driverController, Button.kRightBumper.value);
+    final JoystickButton d_LeftBumper = new JoystickButton(driverController, Button.kLeftBumper.value);
+    final double d_LeftTrigger = driverController.getLeftTriggerAxis();
+    final double d_RightTrigger = driverController.getRightTriggerAxis();
     */
 
-    // greenA.whenPressed(new IntakeSpeed(intake, 1.0)); // Turns on the Intake
-    // greenA.whenReleased(new IntakeSpeed(intake, 00)); // Needed to turn off the Intake
-   
-   
+    // Declaring buttons on the operator controller
+    //final JoystickButton op_backButton = new JoystickButton(operatorController, Button.kBack.value);
+    //final JoystickButton op_startButton = new JoystickButton(operatorController, Button.kStart.value);
+    final JoystickButton op_ButtonA = new JoystickButton(operatorController, Button.kA.value);
+    final JoystickButton op_ButtonB = new JoystickButton(operatorController, Button.kB.value);
+    final JoystickButton op_ButtonX = new JoystickButton(operatorController, Button.kX.value);
+    final JoystickButton op_ButtonY = new JoystickButton(operatorController, Button.kY.value);
+    //final JoystickButton op_RightBumper = new JoystickButton(operatorController, Button.kRightBumper.value);
+    //final JoystickButton op_LeftBumper = new JoystickButton(operatorController, Button.kLeftBumper.value);
+    //final double op_LeftTrigger = operatorController.getLeftTriggerAxis();
+    //final double op_RightTrigger = operatorController.getRightTriggerAxis();
 
-    /** COMMENTING OUT LAUNCHER CODE FOR PRACTICE BOT
+    // Defining the actions associated with buttons cargo -- these are just suggested 1-30-22
+    // Modeled after ENGINERDS "Intake" is a Command class, "intake" is a variable that makes a new IntakeSubsystem defined aboved
+    op_ButtonA.whenPressed(new LauncherSpeed(launcher, 0.30, -030)); // High shot from a distance
+    op_ButtonA.whenReleased(new LauncherSpeed(launcher, 0.0, 0.00));
+
+    op_ButtonB.whenPressed(new LauncherSpeed(launcher, 0.30, -0.30)); // Low shot from a up close
+    op_ButtonB.whenReleased(new LauncherSpeed(launcher, 0.0, 0.00));
+
+    op_ButtonX.whenPressed(new LauncherSpeed(launcher, 0.30, -0.40)); // High shot up close
+    op_ButtonX.whenReleased(new LauncherSpeed(launcher, 0.0, 0.00));
+
+    op_ButtonY.whenPressed(new LauncherSpeed(launcher, 0.00, 0.00));
+    op_ButtonY.whenReleased(new LauncherSpeed(launcher, 0.0, 0.00));
+   
     // Connect the buttons to commands
     // Launch the Cargo when either left bumper or right bumper is pressed
     // We tried whileHeld command initially, but it only starts the motors, it does not stop the motors automatically
-    upon button release as it should
-    //this is working to start falcon motors when button held
+    // upon button release as it should
+    // this is working to start falcon motors when button held
     
     // Cargo low shot on Hub
-    lBumper.whenPressed(new LaunchCargoLow(m_launcherSubsystem)); // replace "m_launcherSubsystem" with speed variable?
-    lBumper.whenReleased(new StopLaunch(m_launcherSubsystem));
+    // lBumper.whenPressed(new LaunchCargoLow(m_launcherSubsystem)); // replace "m_launcherSubsystem" with speed variable?
+    // lBumper.whenReleased(new StopLaunch(m_launcherSubsystem));
+
     // Cargo high shot on Hub
-    rBumper.whenPressed(new LaunchCargoHigh(m_launcherSubsystem));
-    rBumper.whenReleased(new StopLaunch(m_launcherSubsystem));
-    //added a when button released command until we have whileHeld working as it should
+    // rBumper.whenPressed(new LaunchCargoHigh(m_launcherSubsystem));
+    // rBumper.whenReleased(new StopLaunch(m_launcherSubsystem));
+    // added a when button released command until we have whileHeld working as it should
     
-    **/
 
-  // Back button zeros the gyroscope
-  // Shaun's previously working code (?) that we broke :)
-  // new JoystickButton(driverController::getBackButton)
-            // No requirements because we don't need to interrupt anything
-  //          .whenPressed(m_drivetrainSubsystem::zeroGyroscope);    
+  /** Use this to pass the autonomous command to the main {@link Robot} class.
+  * @return the command to run in autonomous
+ */
+  // Shaun's working code for reseting gyro
+  d_backButton.whenPressed(m_drivetrainSubsystem::zeroGyroscope);  
 
   }
 
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
-   */
-  public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
-    // new LaunchCargoLow(m_launcherSubsystem);
-    // This is from Prototype launacher
-    // return m_autoCommand;
-
-    // This is from SDS Drive code base
-    // return new InstantCommand();
-
-    // 1. Create trajectory settings
-    TrajectoryConfig trajectoryConfig = new TrajectoryConfig(
-      DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
-      DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND)
-              .setKinematics(Constants.m_kinematics);
-
-
-    // 2. Generate trajectory
-    Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
-      new Pose2d(0, 0, new Rotation2d(0)),
-      List.of(
-              new Translation2d(1, 0),
-              new Translation2d(1, -1)),
-      new Pose2d(2, -1, Rotation2d.fromDegrees(180)),
-      trajectoryConfig);
-
-
-    // 3. Define PID controllers for tracking trajectory
-    PIDController xController = new PIDController(Constants.kPXController, 0, 0);
-    PIDController yController = new PIDController(Constants.kPYController, 0, 0);
-    ProfiledPIDController thetaController = new ProfiledPIDController(
-            Constants.kPThetaController, 0, 0, Constants.kThetaControllerConstraints);
-    thetaController.enableContinuousInput(-Math.PI, Math.PI);
-
-    // 4. Construct command to follow trajectory
-    SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(
-            trajectory,
-            m_drivetrainSubsystem::getPose,
-            Constants.m_kinematics,
-            xController,
-            yController,
-            thetaController,
-            m_drivetrainSubsystem::setModuleStates,
-            m_drivetrainSubsystem);
-
-    // 5. Add some init and wrap-up, and return everything
-    return new SequentialCommandGroup(
-            new InstantCommand(() -> m_drivetrainSubsystem.resetOdometry(trajectory.getInitialPose())),
-            swerveControllerCommand,
-            new InstantCommand(() -> m_drivetrainSubsystem.stop()));
-  }
+ 
 
   private static double deadband(double value, double deadband) {
     if (Math.abs(value) > deadband) {
@@ -234,5 +187,47 @@ public class RobotContainer {
     value = Math.copySign(value * value, value);
 
     return value;
+  }
+   
+  /**
+   * Use this to pass the autonomous command to the main {@link Robot} class.
+   * @return the command to run in autonomous
+   */
+  public Command getAutonomousCommand() {
+    // An ExampleCommand will run in autonomous
+    // new LaunchCargo(m_launcherSubsystem);
+    // This is from Prototype launcher
+    // return m_autoCommand;
+
+    // This is from SDS Drive code base
+    //return new InstantCommand();
+
+    // 1. This will load the file "Square.path" from PathPlanner and generate it with a max velocity of 8 m/s 
+    // and a max acceleration of 5 m/s^2
+    Trajectory examplePath = PathPlanner.loadPath("Square", 8, 5);
+
+    // 2. Defining PID Controllers for tracking trajectory
+    PIDController xController = new PIDController(Constants.kPXController, 0, 0);
+    PIDController yController = new PIDController(Constants.kPYController, 0, 0);
+    ProfiledPIDController thetaController = new ProfiledPIDController(
+            Constants.kPThetaController, 0, 0, Constants.kThetaControllerConstraints);
+    thetaController.enableContinuousInput(-Math.PI, Math.PI);
+
+    // 3. Command to follow path from PathPlanner
+    SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(
+      examplePath, 
+      m_drivetrainSubsystem::getPose, 
+      Constants.m_kinematics, 
+      xController, 
+      yController, 
+      thetaController, 
+      m_drivetrainSubsystem::setModuleStates, 
+      m_drivetrainSubsystem);
+
+    // 4. Add some init and wrap-up, and return everything
+    return new SequentialCommandGroup(
+      new InstantCommand(() -> m_drivetrainSubsystem.resetOdometry(examplePath.getInitialPose())),
+      swerveControllerCommand,
+      new InstantCommand(() ->m_drivetrainSubsystem.drive(new ChassisSpeeds(0.0, 0.0, 0.0))));
   }
 }

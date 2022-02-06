@@ -7,10 +7,9 @@ package frc.robot.subsystems;
 import com.swervedrivespecialties.swervelib.Mk3SwerveModuleHelper;
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 import com.swervedrivespecialties.swervelib.SwerveModule;
-
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
+//import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
@@ -19,14 +18,13 @@ import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import static frc.robot.Constants.*;
 
 // From 2021 SwerveDrivetrain.java
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.interfaces.Gyro;
 
-import static frc.robot.Constants.*;
-import static frc.robot.CTREEncoder.*;
+
 
 public class DrivetrainSubsystem extends SubsystemBase {
   /**
@@ -46,29 +44,16 @@ public class DrivetrainSubsystem extends SubsystemBase {
    * <p>
    * This is a measure of how fast the robot should be able to drive in a straight line.
    */
-  public static final double MAX_VELOCITY_METERS_PER_SECOND = 6380.0 / 60.0 *
+  public static final double MAX_VELOCITY_METERS_PER_SECOND = 6380.0 / 60.0 * // FIXME Use our robots' velocity values
           SdsModuleConfigurations.MK3_STANDARD.getDriveReduction() *
           SdsModuleConfigurations.MK3_STANDARD.getWheelDiameter() * Math.PI;
   /**
    * The maximum angular velocity of the robot in radians per second.
-   * <p>
    * This is a measure of how fast the robot can rotate in place.
    */
   // Here we calculate the theoretical maximum angular velocity. You can also replace this with a measured amount.
   public static final double MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND = MAX_VELOCITY_METERS_PER_SECOND /
           Math.hypot(DRIVETRAIN_TRACKWIDTH_METERS / 2.0, DRIVETRAIN_WHEELBASE_METERS / 2.0);
-
-  /** I moved this block of code to Constants.java
-  public static final SwerveDriveKinematics m_kinematics = new SwerveDriveKinematics(
-          // Front left
-          new Translation2d(DRIVETRAIN_TRACKWIDTH_METERS / 2.0, DRIVETRAIN_WHEELBASE_METERS / 2.0),
-          // Front right
-          new Translation2d(DRIVETRAIN_TRACKWIDTH_METERS / 2.0, -DRIVETRAIN_WHEELBASE_METERS / 2.0),
-          // Back left
-          new Translation2d(-DRIVETRAIN_TRACKWIDTH_METERS / 2.0, DRIVETRAIN_WHEELBASE_METERS / 2.0),
-          // Back right
-          new Translation2d(-DRIVETRAIN_TRACKWIDTH_METERS / 2.0, -DRIVETRAIN_WHEELBASE_METERS / 2.0)
-  ); */
 
   // By default we use a Pigeon for our gyroscope. But if you use another gyroscope, like a NavX, you can change this.
   // The important thing about how you configure your gyroscope is that rotating the robot counter-clockwise should
@@ -80,18 +65,9 @@ public class DrivetrainSubsystem extends SubsystemBase {
   // NavX connected over MXP
   private final AHRS m_navx = new AHRS(SPI.Port.kMXP, (byte) 200); 
 
-  //Adding Odometer for Auton Mode
-  private final SwerveDriveOdometry odometer = new SwerveDriveOdometry(m_kinematics,
-        new Rotation2d(0));    
-        
-   public void zeroHeading() {
-        m_navx.reset();
-   }
-        
-   public double getHeading() {
-        return Math.IEEEremainder(m_navx.getAngle(), 360);
-   }
-
+  //creating an odometer for auton
+  private final SwerveDriveOdometry odometer = new SwerveDriveOdometry(m_kinematics, new Rotation2d(0));
+  
 
   // These are our modules. We initialize them in the constructor.
   private final SwerveModule m_frontLeftModule;
@@ -102,16 +78,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
   private ChassisSpeeds m_chassisSpeeds = new ChassisSpeeds(0.0, 0.0, 0.0);
 
   public DrivetrainSubsystem() {
-    new Thread(() -> {
-        try {
-                Thread.sleep(1000);
-                zeroHeading();
-        } catch (Exception e) {
-        }
-     }).start();
-
-
-     ShuffleboardTab tab = Shuffleboard.getTab("Drivetrain");
+    ShuffleboardTab tab = Shuffleboard.getTab("Drivetrain");
     // There are 4 methods you can call to create your swerve modules.
     // The method you use depends on what motors you are using.
 
@@ -171,14 +138,6 @@ public class DrivetrainSubsystem extends SubsystemBase {
     );
   }
 
-
-  public void stop() {
-        m_frontLeftModule.set(0, 0);
-        m_frontRightModule.set(0, 0);
-        m_backLeftModule.set(0, 0);
-        m_backRightModule.set(0, 0);
-    }
-
   /**
    * Sets the gyroscope angle to zero. This can be used to set the direction the robot is currently facing to the
    * 'forwards' direction.
@@ -187,53 +146,53 @@ public class DrivetrainSubsystem extends SubsystemBase {
     // Remove if you are using a Pigeon
     // m_pigeon.setFusedHeading(0.0);
     // Uncomment if you are using a NavX
-        m_navx.zeroYaw(); // FIXME
+        m_navx.zeroYaw(); // I think this is correct - Scoy
   }
 
   public Rotation2d getGyroscopeRotation() {
-    // Remove if you are using a Pigeon
-    // return Rotation2d.fromDegrees(m_pigeon.getFusedHeading());
-
-    // Uncomment if you are using a NavX
     if (m_navx.isMagnetometerCalibrated()) {
       // We will only get valid fused headings if the magnetometer is calibrated
       return Rotation2d.fromDegrees(m_navx.getFusedHeading());
     }
 
     // We have to invert the angle of the NavX so that rotating the robot counter-clockwise makes the angle increase.
+    // FIXME check this with our robot configuration
     return Rotation2d.fromDegrees(360.0 - m_navx.getYaw());
+  }
+
+  //gets location of robot from odometer
+  public Pose2d getPose(){
+        return odometer.getPoseMeters();
+  }
+
+  //resets odometer to a new location
+  public void resetOdometry(Pose2d pose) {
+        odometer.resetPosition(pose, getGyroscopeRotation());
   }
 
   public void drive(ChassisSpeeds chassisSpeeds) {
     m_chassisSpeeds = chassisSpeeds;
   }
 
-  public Pose2d getPose() {
-        return odometer.getPoseMeters();
-    }
-
-    public void resetOdometry(Pose2d pose) {
-        odometer.resetPosition(pose, getGyroscopeRotation());
-    }
+  public void setModuleStates(SwerveModuleState[] states) {
+        //Ensures we aren't going past the speed that we should be going
+        //Important note: This is the method SwerveDriveKinematics.normalizeWheelSpeeds() from the documentation, but it actually works, even though THIS isn't documented.
+        SwerveDriveKinematics.desaturateWheelSpeeds(states, MAX_VELOCITY_METERS_PER_SECOND);
+        
+        //these seem to maintain the same movement as the robot continues
+        m_frontLeftModule.set(states[0].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, states[0].angle.getRadians());
+        m_frontRightModule.set(states[1].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, states[1].angle.getRadians());
+        m_backLeftModule.set(states[2].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, states[2].angle.getRadians());
+        m_backRightModule.set(states[3].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, states[3].angle.getRadians());
+        }
 
   @Override
   public void periodic() {
+
     //defining states - Repeatedly update
-    SwerveModuleState[] states= m_kinematics.toSwerveModuleStates(m_chassisSpeeds);
-    //Repeatedly update Odometer to get accurate location
+    SwerveModuleState[] states = m_kinematics.toSwerveModuleStates(m_chassisSpeeds);//removed a second param of MAX_VELOCITY_METERS_PER_SECOND, and changed the first param from itself(states) to the chassisspeeds object 
+    
+    //update the odometer constantly
     odometer.update(getGyroscopeRotation(), states);
   }
-
-  public void setModuleStates(SwerveModuleState[] states) {//= m_kinematics.toSwerveModuleStates(m_chassisSpeeds);//removed a second param of MAX_VELOCITY_METERS_PER_SECOND, and changed the first param from itself(states) to the chassisspeeds object 
-         //Ensures we aren't going past the speed that we should be going
-        //Important note: This is the method SwerveDriveKinematics.normalizeWheelSpeeds() from the documentation, but it actually works, even though THIS isn't documented.
-         SwerveDriveKinematics.desaturateWheelSpeeds(states, MAX_VELOCITY_METERS_PER_SECOND);
-  
-        //these seem to maintain the same movement as the robot continues
-        m_frontLeftModule.set(states[0].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, states[0].angle.getRadians());
-         m_frontRightModule.set(states[1].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, states[1].angle.getRadians());
-         m_backLeftModule.set(states[2].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, states[2].angle.getRadians());
-        m_backRightModule.set(states[3].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, states[3].angle.getRadians());
-} 
-
 }
