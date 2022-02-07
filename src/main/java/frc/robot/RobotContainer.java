@@ -228,6 +228,6 @@ public class RobotContainer {
     return new SequentialCommandGroup(
       new InstantCommand(() -> m_drivetrainSubsystem.resetOdometry(examplePath.getInitialPose())),
       swerveControllerCommand,
-      new InstantCommand(() ->m_drivetrainSubsystem.drive(new ChassisSpeeds(0.0, 0.0, 0.0))));
+      new InstantCommand(() -> m_drivetrainSubsystem.stop()));
   }
 }
