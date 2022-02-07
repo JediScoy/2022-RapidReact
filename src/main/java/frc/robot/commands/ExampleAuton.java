@@ -14,12 +14,12 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DrivetrainSubsystem;
 
 public class ExampleAuton extends CommandBase {
-  private final DrivetrainSubsystem subsystem;
+  private final DrivetrainSubsystem drivetrain;
 
   
   /** Creates a new ExampleAuton. */
   public ExampleAuton(DrivetrainSubsystem subsystem) {
-    this.subsystem = subsystem;
+    this.drivetrain = subsystem;
 
  // The subsystem the command runs on
     addRequirements(subsystem);
@@ -45,7 +45,7 @@ public class ExampleAuton extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    subsystem.drive(new ChassisSpeeds(0.0, 0.0, 0.0));
+    drivetrain.drive(new ChassisSpeeds(0.0, 0.0, 0.0));
   }
 
   // Returns true when the command should end.
