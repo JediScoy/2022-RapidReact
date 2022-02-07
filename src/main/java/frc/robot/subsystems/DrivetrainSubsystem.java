@@ -20,6 +20,9 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static frc.robot.Constants.*;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 // From 2021 SwerveDrivetrain.java
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
@@ -195,4 +198,9 @@ public class DrivetrainSubsystem extends SubsystemBase {
     //update the odometer constantly
     odometer.update(getGyroscopeRotation(), states);
   }
+
+  // see SeanSun line 99-102 of SwerveModule.java
+
+  // SeanSun line 93-98 of subsystem
+    
 }

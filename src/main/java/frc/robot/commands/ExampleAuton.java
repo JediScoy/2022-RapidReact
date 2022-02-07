@@ -3,6 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.commands;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
@@ -13,11 +14,17 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DrivetrainSubsystem;
 
 public class ExampleAuton extends CommandBase {
+  private final DrivetrainSubsystem subsystem;
 
+  
   /** Creates a new ExampleAuton. */
-  public ExampleAuton(DrivetrainSubsystem subsytem) {
+  public ExampleAuton(DrivetrainSubsystem subsystem) {
+    this.subsystem = subsystem;
 
-    // Use addRequirements() here to declare subsystem dependencies.
+ // The subsystem the command runs on
+    addRequirements(subsystem);
+ 
+    
     // This will load the file "Square.path" and generate it with a max velocity of 8 m/s and a max acceleration of 5 m/s^2
     PathPlannerTrajectory examplePath = PathPlanner.loadPath("Square", 8, 5);
 
@@ -25,7 +32,7 @@ public class ExampleAuton extends CommandBase {
     // To access PathPlanner specific information, such as holonomic rotation, the state must be cast to a PathPlannerState
     PathPlannerState exampleState = (PathPlannerState) examplePath.sample(1);
 
-  }
+}
 
   // Called when the command is initially scheduled.
   @Override
@@ -37,7 +44,9 @@ public class ExampleAuton extends CommandBase {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    subsystem.drive(new ChassisSpeeds(0.0, 0.0, 0.0));
+  }
 
   // Returns true when the command should end.
   @Override
