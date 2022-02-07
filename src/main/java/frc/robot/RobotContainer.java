@@ -194,7 +194,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
     // new LaunchCargo(m_launcherSubsystem);
     // This is from Prototype launcher
     // return m_autoCommand;
