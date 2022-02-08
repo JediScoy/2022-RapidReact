@@ -78,7 +78,9 @@ public class DrivetrainSubsystem extends SubsystemBase {
   private ChassisSpeeds m_chassisSpeeds = new ChassisSpeeds(0.0, 0.0, 0.0);
 
   public DrivetrainSubsystem() {
+    //creates a tab on Shuffleboard called "Drivetrain"
     ShuffleboardTab tab = Shuffleboard.getTab("Drivetrain");
+
     // There are 4 methods you can call to create your swerve modules.
     // The method you use depends on what motors you are using.
 
@@ -102,6 +104,10 @@ public class DrivetrainSubsystem extends SubsystemBase {
             // This is how much the steer encoder is offset from true zero (In our case, zero is facing straight forward)
             FRONT_LEFT_MODULE_STEER_OFFSET
     );
+
+    // trying to add RPM of the front left wheel to ShuffleBoard
+    Shuffleboard.getTab("LiveWindow")
+       .add("RPM Front Left Wheel", FRONT_LEFT_MODULE_DRIVE_MOTOR);
 
     // We will do the same for the other modules
     m_frontRightModule = Mk3SwerveModuleHelper.createFalcon500(
@@ -144,7 +150,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
         m_frontRightModule.set(0, 0);
         m_backLeftModule.set(0, 0);
         m_backRightModule.set(0, 0);
-    }
+    }   
     
   /**
    * Sets the gyroscope angle to zero. This can be used to set the direction the robot is currently facing to the
