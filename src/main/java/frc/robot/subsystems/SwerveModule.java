@@ -1,49 +1,44 @@
 package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+//not needed?
 //encoder class to use?
-import com.revrobotics.CANEncoder;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.RobotController;
-import edu.wpi.first.wpilibj.motorcontrol.Talon;
+
+//import edu.wpi.first.wpilibj.motorcontrol.Talon;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.CTREEncoder;
 import frc.robot.Constants;
 
 
 public class SwerveModule {
 
-    private final TalonFX driveMotor;
-    private final TalonFX turningMotor;
+    private final WPI_TalonFX driveMotor;
+    private final WPI_TalonFX turningMotor;
 
-    private final Encoder driveEncoder;
-    private final Encoder turningEncoder;
+    private final CTREEncoder driveEncoder;
+    private final CTREEncoder turningEncoder;
 
     private final PIDController turningPidController;
 
-    private final AnalogInput absoluteEncoder;
-    private final boolean absoluteEncoderReversed;
-    private final double absoluteEncoderOffsetRad;
 
-    public SwerveModule(int driveMotorId, int turningMotorId, boolean driveMotorReversed, boolean turningMotorReversed,
-            int absoluteEncoderId, double absoluteEncoderOffset, boolean absoluteEncoderReversed) {
+    public SwerveModule(int driveMotorId, int turningMotorId, boolean driveMotorReversed, boolean turningMotorReversed) {
 
-        this.absoluteEncoderOffsetRad = absoluteEncoderOffset;
-        this.absoluteEncoderReversed = absoluteEncoderReversed;
-        absoluteEncoder = new AnalogInput(absoluteEncoderId);
-
-        driveMotor = new TalonFX(driveMotorId);
-        turningMotor = new TalonFX(turningMotorId);
+        driveMotor = new WPI_TalonFX(driveMotorId);
+        turningMotor = new WPI_TalonFX(turningMotorId);
 
         driveMotor.setInverted(driveMotorReversed);
         turningMotor.setInverted(turningMotorReversed);
 
-        driveEncoder = driveMotor.getEncoder();//FIXME: how do we get these(and why)
-        //turningEncoder = turningMotor.getEncoder();
+        //NOTE: we dont actually know if this encoder will suffice. It does well as an implementation of an encoder, but two questions remain:
+        /*1) does it properly init. to the motor?
+        *2) can it be used where encoders are normally used, due to type issue? If not, can we find a way to convert the data to a compatible encoder class?
+        *
+        */
+        driveEncoder =  new CTREEncoder(driveMotor, false, 0);
+        turningEncoder =  new CTREEncoder(turningMotor, false, 0);
 
         //driveEncoder.setPositionConversionFactor(ModuleConstants.kDriveEncoderRot2Meter);
         //driveEncoder.setVelocityConversionFactor(ModuleConstants.kDriveEncoderRPM2MeterPerSec);
@@ -58,11 +53,12 @@ public class SwerveModule {
 
     public double getDrivePosition() {
        // return driveEncoder.getPosition();
+       return driveEncoder.getDistance();//are distance and velocity the same?
        //TODO: either determine use of an encoder or odometry
     }
 
     public double getTurningPosition() {
-        return turningEncoder.getPosition();
+        return turningEncoder.getDistance();
     }
 
     public double getDriveVelocity() {
@@ -73,16 +69,11 @@ public class SwerveModule {
         return turningEncoder.getVelocity();
     }
 
-    public double getAbsoluteEncoderRad() {
-        double angle = absoluteEncoder.getVoltage() / RobotController.getVoltage5V();
-        angle *= 2.0 * Math.PI;
-        angle -= absoluteEncoderOffsetRad;
-        return angle * (absoluteEncoderReversed ? -1.0 : 1.0);
-    }
-
+    
     public void resetEncoders() {
+       //quite possibly redundant
         driveEncoder.setPosition(0);
-        turningEncoder.setPosition(getAbsoluteEncoderRad());
+       
     }
 
     public SwerveModuleState getState() {
@@ -95,9 +86,9 @@ public class SwerveModule {
             return;
         }
         state = SwerveModuleState.optimize(state, getState().angle);
-        driveMotor.set(state.speedMetersPerSecond / Constants.kPhysicalMaxSpeedMetersPerSecond);
+        driveMotor.set(state.speedMetersPerSecond / Constants.kPhysicalMaxSpeedMetersPerSecond);//TODO: Record max speed
         turningMotor.set(turningPidController.calculate(getTurningPosition(), state.angle.getRadians()));
-        SmartDashboard.putString("Swerve[" + absoluteEncoder.getChannel() + "] state", state.toString());
+        SmartDashboard.putString("Swerve[" + turningEncoder.getChannel() + "] state", state.toString());//this originally called getchannel() for the absoluteencoder, rather than this
     }
 
     public void stop() {

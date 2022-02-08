@@ -19,6 +19,9 @@ public class CTREEncoder {
         return talon.getSelectedSensorVelocity() * distancePerPulse; //this doesn't smell right
     }
 
+    public int getChannel(){//FIXME: what is the difference between getdeviceID() and getBaseID()? (and more importantly, which one is correct?)
+        return talon.getDeviceID();
+    }
     public double getDistance() {
         return talon.getSelectedSensorPosition() * distancePerPulse;
     }
