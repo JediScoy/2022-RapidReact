@@ -12,7 +12,6 @@ import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DrivetrainSubsystem;
-import frc.robot.commands.StopDrive;
 
 public class AutonSquare extends CommandBase {
   private final DrivetrainSubsystem subsystem;
@@ -46,7 +45,6 @@ public class AutonSquare extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    StopDrive();
   }
 
   // Returns true when the command should end.

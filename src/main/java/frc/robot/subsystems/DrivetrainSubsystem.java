@@ -9,7 +9,6 @@ import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 import com.swervedrivespecialties.swervelib.SwerveModule;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-//import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
@@ -20,9 +19,6 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static frc.robot.Constants.*;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
 // From 2021 SwerveDrivetrain.java
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
@@ -58,13 +54,10 @@ public class DrivetrainSubsystem extends SubsystemBase {
   public static final double MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND = MAX_VELOCITY_METERS_PER_SECOND /
           Math.hypot(DRIVETRAIN_TRACKWIDTH_METERS / 2.0, DRIVETRAIN_WHEELBASE_METERS / 2.0);
 
-  // By default we use a Pigeon for our gyroscope. But if you use another gyroscope, like a NavX, you can change this.
+ 
   // The important thing about how you configure your gyroscope is that rotating the robot counter-clockwise should
   // cause the angle reading to increase until it wraps back over to zero.
-  // Remove if you are using a Pigeon
-  // private final PigeonIMU m_pigeon = new PigeonIMU(DRIVETRAIN_PIGEON_ID);
   
-  // Uncomment if you are using a NavX
   // NavX connected over MXP
   private final AHRS m_navx = new AHRS(SPI.Port.kMXP, (byte) 200); 
 
@@ -82,11 +75,6 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
   public DrivetrainSubsystem() {
     ShuffleboardTab tab = Shuffleboard.getTab("Drivetrain");
-    // There are 4 methods you can call to create your swerve modules.
-    // The method you use depends on what motors you are using.
-
-    // Similar helpers also exist for Mk4 modules using the Mk4SwerveModuleHelper class.
-
     // We use Falcon 500s in standard configuration.
     // Setup motor configuration
     m_frontLeftModule = Mk3SwerveModuleHelper.createFalcon500(
@@ -130,14 +118,14 @@ public class DrivetrainSubsystem extends SubsystemBase {
     );
 
     m_backRightModule = Mk3SwerveModuleHelper.createFalcon500(
-            tab.getLayout("Back Right Module", BuiltInLayouts.kList)
-                    .withSize(2, 4)
-                    .withPosition(6, 0),
-            Mk3SwerveModuleHelper.GearRatio.STANDARD,
-            BACK_RIGHT_MODULE_DRIVE_MOTOR,
-            BACK_RIGHT_MODULE_STEER_MOTOR,
-            BACK_RIGHT_MODULE_STEER_ENCODER,
-            BACK_RIGHT_MODULE_STEER_OFFSET
+        tab.getLayout("Back Right Module", BuiltInLayouts.kList)
+            .withSize(2, 4)
+            .withPosition(6, 0),
+        Mk3SwerveModuleHelper.GearRatio.STANDARD,
+        BACK_RIGHT_MODULE_DRIVE_MOTOR,
+        BACK_RIGHT_MODULE_STEER_MOTOR,
+        BACK_RIGHT_MODULE_STEER_ENCODER,
+        BACK_RIGHT_MODULE_STEER_OFFSET
     );
   }
 
@@ -154,10 +142,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
    * 'forwards' direction.
    */
   public void zeroGyroscope() {
-    // Remove if you are using a Pigeon
-    // m_pigeon.setFusedHeading(0.0);
-    // Uncomment if you are using a NavX
-        m_navx.zeroYaw(); // I think this is correct - Scoy
+    m_navx.zeroYaw(); // I think this is correct - Scoy
   }
 
   public Rotation2d getGyroscopeRotation() {
@@ -173,12 +158,12 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
   //gets location of robot from odometer
   public Pose2d getPose(){
-        return odometer.getPoseMeters();
+    return odometer.getPoseMeters();
   }
 
   //resets odometer to a new location
   public void resetOdometry(Pose2d pose) {
-        odometer.resetPosition(pose, getGyroscopeRotation());
+    odometer.resetPosition(pose, getGyroscopeRotation());
   }
 
   public void drive(ChassisSpeeds chassisSpeeds) {
@@ -215,9 +200,4 @@ public class DrivetrainSubsystem extends SubsystemBase {
     m_backLeftModule.set(states[2].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, states[2].angle.getRadians());
     m_backRightModule.set(states[3].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, states[3].angle.getRadians());
   }
-
-  // see SeanSun line 99-102 of SwerveModule.java
-
-  // SeanSun line 93-98 of subsystem
-    
 }
