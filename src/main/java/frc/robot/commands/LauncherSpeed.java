@@ -27,4 +27,4 @@ public class LauncherSpeed extends CommandBase {
     }
     
     
-  }
+  } // end class
