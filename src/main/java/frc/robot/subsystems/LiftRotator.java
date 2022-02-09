@@ -1,11 +1,14 @@
-
 package frc.robot.subsystems;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-// import edu.wpi.first.wpilibj.motorcontrol.MotorController;
-// import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
-// import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
-// import com.ctre.phoenix.motorcontrol.can.TalonFX;
-// import frc.robot.Constants;
+import edu.wpi.first.wpilibj.motorcontrol.MotorController;
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import frc.robot.Constants;
 
 // Shuffleboard imports
 // import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts; // Displaying data?
@@ -15,36 +18,32 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 // CTRE imports
 // import com.ctre.phoenix.motorcontrol.ControlMode;
 // import com.ctre.phoenix.motorcontrol.NeutralMode;
-// import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 // import com.ctre.phoenix.motorcontrol.can.TalonFX;
 // import com.ctre.phoenix.motorcontrol.TalonFXSensorCollection;
 
 public class LiftRotator extends SubsystemBase {
-/** Creates a Subsystem using Falcon 500s controlled by TalonFX.
-    * These are the two motors for [ ]
-**/
 
-  // public final TalonFX rotateMotor1;
-  // public final TalonFX rotateMotor2;
+// FIXME one of these motors will need to run the opposisite direction. Not sure of the syntax
+  public final WPI_TalonFX leftRotationalMotor = new WPI_TalonFX(Constants.LEFT_ROTATIONAL_MOTOR);
+  public final WPI_TalonFX rightRotationalMotor = new WPI_TalonFX(
+    Constants.RIGHT_ROTATIONAL_MOTOR//, TalonFXInvertType.CounterClockwise
+    );
 
-  /** Uncomment setup for each specific subystem with motors
-  private final MotorController m_IntakeMotors = 
-    /** new MotorControllerGroup(
-        * new TalonFX(LauncherConstants.rotateMotor1),
-        * new TalonFX(LauncherConstants.rotateMotor2));
-  */
+
+  private final MotorController rotationalLiftMotors = new MotorControllerGroup(leftRotationalMotor, rightRotationalMotor);
     
-// final TalonFXInvertType rightLaunchMotor = TalonFXInvertType.CounterClockwise;
-
-  /**
-  public LiftRotateSubsystem() {
-    rotateMotor = new TalonFX(Constants.ROTATE_1, Constants.ROTATE_2);
-    rotateMotor.setInverted(true);
-    rotateMotor.setNeutralMode(NeutralMode.Coast);
+  
+  
+  public LiftRotator() {
+    // FIXME rotationalLiftMotors.set(ControlMode.PercentOutput, 0.5);
 
   }
-  */
 
+  public void stopLiftRotational() {
+    // FIXME rotationalLiftMotors.set(ControlMode.PercentOutput, 0);
+  }
+  
+  
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

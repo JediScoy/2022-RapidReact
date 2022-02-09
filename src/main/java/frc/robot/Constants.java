@@ -4,6 +4,11 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import frc.robot.subsystems.DrivetrainSubsystem;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -24,6 +29,18 @@ public final class Constants {
      */
     public static final double DRIVETRAIN_WHEELBASE_METERS = 0.585; // FIXED Measure and set wheelbase
     // public static final int DRIVETRAIN_PIGEON_ID = 0; // Set Pigeon ID - We do not use Pigeon
+
+      //moving this from DrivetrainSubsystem to see if it works
+      public static final SwerveDriveKinematics m_kinematics = new SwerveDriveKinematics(
+        // Front left
+        new Translation2d(DRIVETRAIN_TRACKWIDTH_METERS / 2.0, DRIVETRAIN_WHEELBASE_METERS / 2.0),
+        // Front right
+        new Translation2d(DRIVETRAIN_TRACKWIDTH_METERS / 2.0, -DRIVETRAIN_WHEELBASE_METERS / 2.0),
+        // Back left
+        new Translation2d(-DRIVETRAIN_TRACKWIDTH_METERS / 2.0, DRIVETRAIN_WHEELBASE_METERS / 2.0),
+        // Back right
+        new Translation2d(-DRIVETRAIN_TRACKWIDTH_METERS / 2.0, -DRIVETRAIN_WHEELBASE_METERS / 2.0)
+);
 
     // Motors are ID in the CTRE Phoenix Tuner need to match code
     // Values have been assigned from 2021 code 2021-11-30
@@ -51,15 +68,32 @@ public final class Constants {
     public static final int BOTTOM_LAUNCHER_MOTOR = 9; // Sets the bottom launcher motor ID value
     public static final int TOP_LAUNCHER_MOTOR = 10; // Sets the top launcher motor ID value
     
-    // Lift motors
-    /** public static final int */
-
+   
+    // FIXME Hypothetical motor IDs. These need to be set with Pheonix Tuner
     // Intake motors
-    public static final int INTAKE = 11; // Sets the Intake Motor ID value; needs to match in Phoenix Tuner.
+    public static final int INTAKE_MOTOR = 11; // Sets the Intake Motor ID value
 
     // Index motors
-    /** */
+    public static final int MID_INDEX_MOTOR = 12; // Grouped with the mid motor
+    public static final int HIGH_INDEX_MOTOR = 13; // Group with the high motor
 
+    // Lift motors
+    public static final int LEFT_LIFT_MOTOR = 14; // Grouped
+    public static final int RIGHT_LIFT_MOTOR = 15; // Grouped
+    
+    // Rotational motors
+    public static final int LEFT_ROTATIONAL_MOTOR = 16; // Grouped
+    public static final int RIGHT_ROTATIONAL_MOTOR = 17; // Group
+
+     //Stuff for Auton
+     public static final double kPXController = 1.5;
+     public static final double kPYController = 1.5;
+     public static final double kPThetaController = 3;
+ 
+     public static final TrapezoidProfile.Constraints kThetaControllerConstraints = //
+     new TrapezoidProfile.Constraints(
+         DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
+         DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND);
     
     // Already defined in DrivetrainSub as "m_navx"
     // public static AHRS gyro = new AHRS(Port.kMXP); // From 2021-Infinite Recharge

@@ -1,11 +1,9 @@
 
 package frc.robot.subsystems;
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-// import edu.wpi.first.wpilibj.motorcontrol.MotorController;
-// import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
-// import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
-// import com.ctre.phoenix.motorcontrol.can.TalonFX;
-// import frc.robot.Constants;
+import edu.wpi.first.wpilibj.motorcontrol.MotorController;
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 
 // Shuffleboard imports
 // import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts; // Displaying data?
@@ -13,45 +11,46 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 // import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab; // Displaying data?
 
 // CTRE imports
-// import com.ctre.phoenix.motorcontrol.ControlMode;
-// import com.ctre.phoenix.motorcontrol.NeutralMode;
-// import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-// import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-// import com.ctre.phoenix.motorcontrol.can.TalonFX;
-// import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-// import com.ctre.phoenix.motorcontrol.TalonFXSensorCollection;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+
+import frc.robot.Constants;
+
 
 public class Lift extends SubsystemBase {
-/** Creates a Subsystem using Falcon 500s controlled by TalonFX.
-    * These are the two motors for [ ]
-**/
-  /** 
-  private final TalonFX liftMotor1;
-  private final TalonFX liftMotor2;
-  */
+  private final WPI_TalonFX leftLiftMotor = new WPI_TalonFX(Constants.LEFT_LIFT_MOTOR);
+  private final WPI_TalonFX rightLiftMotor = new WPI_TalonFX(Constants.RIGHT_LIFT_MOTOR);
 
-  /** Uncomment setup for each specific subystem with motors
-  private final MotorController m_IntakeMotors = 
-    /** new MotorControllerGroup(
-        * new TalonFX(LauncherConstants.liftMotor1),
-        * new TalonFX(LauncherConstants.liftMotor2));
-  */
-    
-// final TalonFXInvertType rightLaunchMotor = TalonFXInvertType.CounterClockwise;
-  /**
-  public LiftSubsystem() {
-    liftMOTOR = new TalonFX(Constants.LIFT_1, LIFT_2);
-    liftMotor.setInverted(true);
-    liftMotor.setNeutralMode(NeutralMode.Coast);
-  */
+  private final MotorControllerGroup liftMotors = new MotorControllerGroup(leftLiftMotor, rightLiftMotor); 
+
+public void lift() {
+}
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    // Dashboard stuff would go here
   }
+
+  // Sets the Intake system speed as a percentage between -1 and 1. Speed is given actual value in the RobotContrainer.java button code
+  
+  /** 
+  public void setIntakeSpeed(double speed){
+    liftMotors.set(ControlMode.PercentOutput, speed);
+  }
+
+  public void stopIntake(){
+    liftMotors.set(ControlMode.PercentOutput, 0);
+  }
+  */
 
   @Override
   public void simulationPeriodic() {
     // This method will be called once per scheduler run during simulation
   }
 
+
 } // End of Class
+

@@ -1,6 +1,8 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
 
 public class CTREEncoder {
 
@@ -34,8 +36,15 @@ public class CTREEncoder {
     public void setPosition(double pos) {
         talon.setSelectedSensorPosition(pos);
     }
+    
 
     public void reset() {
         setPosition(0);
     }
+
+//added getState class from example code
+public SwerveModuleState getState() {
+    return new SwerveModuleState(getVelocity(), new Rotation2d(get()));
+}
+
 }

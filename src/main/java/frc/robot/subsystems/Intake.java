@@ -1,47 +1,29 @@
-
 package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-// import edu.wpi.first.wpilibj.motorcontrol.MotorController;
-// import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import frc.robot.Constants;
+// import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 
 // Shuffleboard imports
 // import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts; // Displaying data?
 // import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard; // Displaying data?
 // import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab; // Displaying data?
 
-// CTRE imports
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
-import frc.robot.Constants;
+// import edu.wpi.first.wpilibj.motorcontrol.MotorController;
+// import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 
 
-
-public class IntakeLower extends SubsystemBase {
+public class Intake extends SubsystemBase {
   
   private TalonFX intakeMotor;
 
-
-  /** Creates a Subsystem using Falcon 500s controlled by TalonFX.
-    * These are the two motors for [ ]
-**/
-
-  /** Uncomment setup for each specific subystem with motors
-  private final MotorController m_IntakeMotors = 
-    /** new MotorControllerGroup(
-        * new TalonFX(LauncherConstants.leftLaunchMotor),
-        * new TalonFX(LauncherConstants.rightLaunchMotor));
-  */
-    
-// final TalonFXInvertType rightLaunchMotor = TalonFXInvertType.CounterClockwise;
-
- 
-public IntakeLower() {
-  intakeMotor = new TalonFX(Constants.INTAKE);
-  intakeMotor.setInverted(true);
-  intakeMotor.setNeutralMode(NeutralMode.Coast);
-
-}
+  public Intake() {
+    intakeMotor = new TalonFX(Constants.INTAKE_MOTOR);
+    intakeMotor.setInverted(true);
+    intakeMotor.setNeutralMode(NeutralMode.Coast);
+  }
 
 
   @Override
@@ -51,7 +33,7 @@ public IntakeLower() {
   }
 
   // Sets the Intake system speed as a percentage between -1 and 1. Speed is given actual value in the RobotContrainer.java button code
-  public void setIntakeSpeed(double speed){
+  public void startIntake(double speed){
     intakeMotor.set(ControlMode.PercentOutput, speed);
   }
 

@@ -4,29 +4,33 @@
 
 package frc.robot;
 
-// import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.buttons.Trigger;
+// import edu.wpi.first.wpilibj.buttons.Trigger;
 // import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 // import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 // import edu.wpi.first.wpilibj.buttons.JoystickButton; // OldCommands vendorsdep
 import edu.wpi.first.wpilibj2.command.button.JoystickButton; //NewCommands vendordep
-// import edu.wpi.first.wpilibj2.command.button.Button;
 import static edu.wpi.first.wpilibj.XboxController.Button;
-// import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import com.pathplanner.lib.PathPlanner;
+
 import edu.wpi.first.wpilibj2.command.Command;
-// import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-// import edu.wpi.first.math.geometry.Translation2d;
-// import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-// import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import frc.robot.subsystems.DrivetrainSubsystem;
+import frc.robot.subsystems.Intake;
 import frc.robot.commands.DefaultDriveCommand;
 // import frc.robot.commands.LaunchCargo;
 import frc.robot.commands.LauncherSpeed;
+import frc.robot.commands.AutonSquare;
+
 import frc.robot.subsystems.Launcher;
 // import frc.robot.subsystems.IntakeSubsystem;
 // import frc.robot.commands.IntakeSpeed;
+import frc.robot.subsystems.Lift;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -39,18 +43,14 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem();
   private final Launcher launcher = new Launcher();
+  // private final Intake intake = new Intake();
+  private final Intake intakeLower = new Intake();
+  private final Lift liftMotors = new Lift();
 
   // Main driver controller
   private final XboxController driverController = new XboxController(0);
   // Second operator controller
   private final XboxController operatorController = new XboxController(1);
-
-  // private Intake intake = new Intake();
-  
-  // Robot Commands
-  // private final LaunchCargoLow m_autoCommand = new LaunchCargoLow(m_launcherSubsystem);
-
-  // private final XboxController m_joystick = new XboxController(0);
 
   // The container for the robot. Contains subsystems, OI devices, and commands.
   public RobotContainer() {
@@ -70,29 +70,11 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
   }
-  /**
-   * Use this method to define your button->command mappings. Buttons can be created by
-   * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
-   * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
-   */
-
-  // FIXME reset the gyro (navx) ideas
-  /** Code from 2021 Skills bot of Enginerds 2337 
-  public void resetDrivetrain (){
-    swerveDrivetrain.resetAngleMotors();
-    swerveDrivetrain.resetOdometry();
-    swerveDrivetrain.resetDriveMotos();
-  }
-  // backButton.whenPressed(() -> swerveDrivetrain.resetDriveMotors());   // Using the Engingerds RobotContainer.java line 136
-
-
-  */
-  
 
   private void configureButtonBindings() {
     /// Declaring buttons on driver controller
     final JoystickButton d_backButton = new JoystickButton(driverController, Button.kBack.value);
+    /** - unused buttons
     final JoystickButton d_startButton = new JoystickButton(driverController, Button.kStart.value);
     final JoystickButton d_ButtonA = new JoystickButton(driverController, Button.kA.value);
     final JoystickButton d_ButtonB = new JoystickButton(driverController, Button.kB.value);
@@ -102,18 +84,19 @@ public class RobotContainer {
     final JoystickButton d_LeftBumper = new JoystickButton(driverController, Button.kLeftBumper.value);
     final double d_LeftTrigger = driverController.getLeftTriggerAxis();
     final double d_RightTrigger = driverController.getRightTriggerAxis();
+    */
 
     // Declaring buttons on the operator controller
-    final JoystickButton op_backButton = new JoystickButton(operatorController, Button.kBack.value);
-    final JoystickButton op_startButton = new JoystickButton(operatorController, Button.kStart.value);
+    //final JoystickButton op_backButton = new JoystickButton(operatorController, Button.kBack.value);
+    //final JoystickButton op_startButton = new JoystickButton(operatorController, Button.kStart.value);
     final JoystickButton op_ButtonA = new JoystickButton(operatorController, Button.kA.value);
     final JoystickButton op_ButtonB = new JoystickButton(operatorController, Button.kB.value);
     final JoystickButton op_ButtonX = new JoystickButton(operatorController, Button.kX.value);
     final JoystickButton op_ButtonY = new JoystickButton(operatorController, Button.kY.value);
-    final JoystickButton op_RightBumper = new JoystickButton(operatorController, Button.kRightBumper.value);
-    final JoystickButton op_LeftBumper = new JoystickButton(operatorController, Button.kLeftBumper.value);
-    final double op_LeftTrigger = operatorController.getLeftTriggerAxis();
-    final double op_RightTrigger = operatorController.getRightTriggerAxis();
+    //final JoystickButton op_RightBumper = new JoystickButton(operatorController, Button.kRightBumper.value);
+    //final JoystickButton op_LeftBumper = new JoystickButton(operatorController, Button.kLeftBumper.value);
+    //final double op_LeftTrigger = operatorController.getLeftTriggerAxis();
+    //final double op_RightTrigger = operatorController.getRightTriggerAxis();
 
     // Defining the actions associated with buttons cargo -- these are just suggested 1-30-22
     // Modeled after ENGINERDS "Intake" is a Command class, "intake" is a variable that makes a new IntakeSubsystem defined aboved
@@ -128,7 +111,12 @@ public class RobotContainer {
 
     op_ButtonY.whenPressed(new LauncherSpeed(launcher, 0.00, 0.00));
     op_ButtonY.whenReleased(new LauncherSpeed(launcher, 0.0, 0.00));
-   
+    
+    // FIXME assign "commands" to a button
+    // liftRotationalMotors -> this is a subsystem variable, not a command yet
+    // liftMotors -> this is a subsystem variable, not a command yet
+    // IntakeCommand
+
     // Connect the buttons to commands
     // Launch the Cargo when either left bumper or right bumper is pressed
     // We tried whileHeld command initially, but it only starts the motors, it does not stop the motors automatically
@@ -182,12 +170,39 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
-    // new LaunchCargo(m_launcherSubsystem);
+    new AutonSquare(m_drivetrainSubsystem);
     // This is from Prototype launcher
-    // return m_autoCommand;
+    // return AutonSquare;
 
     // This is from SDS Drive code base
-    return new InstantCommand();
+    //return new InstantCommand();
+
+    // 1. This will load the file "Square.path" from PathPlanner and generate it with a max velocity of 8 m/s 
+    // and a max acceleration of 5 m/s^2
+    Trajectory examplePath = PathPlanner.loadPath("Square", 8, 5);
+
+    // 2. Defining PID Controllers for tracking trajectory
+    PIDController xController = new PIDController(Constants.kPXController, 0, 0);
+    PIDController yController = new PIDController(Constants.kPYController, 0, 0);
+    ProfiledPIDController thetaController = new ProfiledPIDController(
+            Constants.kPThetaController, 0, 0, Constants.kThetaControllerConstraints);
+    thetaController.enableContinuousInput(-Math.PI, Math.PI);
+
+    // 3. Command to follow path from PathPlanner
+    SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(
+      examplePath, 
+      m_drivetrainSubsystem::getPose, 
+      Constants.m_kinematics, 
+      xController, 
+      yController, 
+      thetaController, 
+      m_drivetrainSubsystem::setModuleStates, 
+      m_drivetrainSubsystem);
+
+    // 4. Add some init and wrap-up, and return everything
+    return new SequentialCommandGroup(
+      new InstantCommand(() -> m_drivetrainSubsystem.resetOdometry(examplePath.getInitialPose())),
+      swerveControllerCommand,
+      new InstantCommand(() -> m_drivetrainSubsystem.stop()));
   }
 }

@@ -7,7 +7,6 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 // import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
-// import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 // Shuffleboard imports
 // import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts; // Displaying data?
