@@ -115,7 +115,7 @@ public class RobotContainer {
     // FIXME assign "commands" to a button
     // liftRotationalMotors -> this is a subsystem variable, not a command yet
     // liftMotors -> this is a subsystem variable, not a command yet
-    // intake
+    // IntakeCommand
 
     // Connect the buttons to commands
     // Launch the Cargo when either left bumper or right bumper is pressed
