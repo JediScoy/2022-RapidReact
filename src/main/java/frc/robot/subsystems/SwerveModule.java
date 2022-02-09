@@ -24,7 +24,7 @@ public class SwerveModule {
     private final PIDController turningPidController;
 
 
-    public SwerveModule(int driveMotorId, int turningMotorId, boolean driveMotorReversed, boolean turningMotorReversed) {
+    public SwerveModule(int driveMotorId, int turningMotorId, boolean driveMotorReversed, boolean turningMotorReversed, double offset) {
 
         driveMotor = new WPI_TalonFX(driveMotorId);
         turningMotor = new WPI_TalonFX(turningMotorId);
