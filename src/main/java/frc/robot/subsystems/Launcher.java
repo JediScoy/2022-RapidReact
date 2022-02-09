@@ -31,13 +31,12 @@ public class Launcher extends SubsystemBase {
   // final TalonFXInvertType topLaunchMotor = TalonFXInvertType.CounterClockwise;
   // final TalonFXInvertType bottomLaunchMotor = TalonFXInvertType.Clockwise;
 
-    
+  // Launch motors do NOT need to be inverted anymore because of a build change  
   public Launcher() {
     bottomLauncherMotor.configFactoryDefault();
     bottomLauncherMotor.setInverted(false); // FIXME double check direction
     bottomLauncherMotor.setNeutralMode(NeutralMode.Coast);
     topLauncherMotor.configFactoryDefault();
-    topLauncherMotor.setInverted(true); // FIXME double check direction
     topLauncherMotor.setNeutralMode(NeutralMode.Coast);
   }
 

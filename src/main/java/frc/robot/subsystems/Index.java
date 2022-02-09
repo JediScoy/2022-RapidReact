@@ -14,13 +14,13 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 public class Index extends SubsystemBase {
 
 // NOTE you must use WPI_TalonFX subclass rather than TalonFX when grouping motors... 60 minutes of my life wasted
-private final WPI_TalonFX midIndexMotor = new WPI_TalonFX(Constants.MID_INDEX_MOTOR);
-private final WPI_TalonFX highIndexMotor = new WPI_TalonFX(Constants.HIGH_INDEX_MOTOR);
+private final WPI_TalonFX frontIndexMotor = new WPI_TalonFX(Constants.FRONT_INDEX_MOTOR);
+private final WPI_TalonFX backIndexMotor = new WPI_TalonFX(Constants.BACK_INDEX_MOTOR);
 // private final MotorController indexMotors;
 
 
 private final MotorControllerGroup indexMotors = 
-    new MotorControllerGroup(midIndexMotor, highIndexMotor);
+    new MotorControllerGroup(frontIndexMotor, backIndexMotor);
     
   
 
