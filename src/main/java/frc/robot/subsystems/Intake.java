@@ -1,32 +1,30 @@
-
 package frc.robot.subsystems;
-import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj.motorcontrol.MotorController;
-import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import frc.robot.Constants;
+// import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 
 // Shuffleboard imports
 // import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts; // Displaying data?
 // import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard; // Displaying data?
 // import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab; // Displaying data?
 
-// CTRE imports
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+// import edu.wpi.first.wpilibj.motorcontrol.MotorController;
+// import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 
-import frc.robot.Constants;
 
+public class Intake extends SubsystemBase {
+  
+  private TalonFX intakeMotor;
 
-public class Lift extends SubsystemBase {
-  private final WPI_TalonFX leftLiftMotor = new WPI_TalonFX(Constants.LEFT_LIFT_MOTOR);
-  private final WPI_TalonFX rightLiftMotor = new WPI_TalonFX(Constants.RIGHT_LIFT_MOTOR);
+  public Intake() {
+    intakeMotor = new TalonFX(Constants.INTAKE_MOTOR);
+    intakeMotor.setInverted(true);
+    intakeMotor.setNeutralMode(NeutralMode.Coast);
+  }
 
-  private final MotorControllerGroup liftMotors = new MotorControllerGroup(leftLiftMotor, rightLiftMotor); 
-
-public void lift() {
-}
 
   @Override
   public void periodic() {
@@ -35,16 +33,13 @@ public void lift() {
   }
 
   // Sets the Intake system speed as a percentage between -1 and 1. Speed is given actual value in the RobotContrainer.java button code
-  
-  /** 
-  public void setIntakeSpeed(double speed){
-    liftMotors.set(ControlMode.PercentOutput, speed);
+  public void startIntake(double speed){
+    intakeMotor.set(ControlMode.PercentOutput, speed);
   }
 
   public void stopIntake(){
-    liftMotors.set(ControlMode.PercentOutput, 0);
+    intakeMotor.set(ControlMode.PercentOutput, 0);
   }
-  */
 
   @Override
   public void simulationPeriodic() {

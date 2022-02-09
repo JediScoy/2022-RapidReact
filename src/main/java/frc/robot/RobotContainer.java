@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import frc.robot.subsystems.DrivetrainSubsystem;
+import frc.robot.subsystems.Intake;
 import frc.robot.commands.DefaultDriveCommand;
 // import frc.robot.commands.LaunchCargo;
 import frc.robot.commands.LauncherSpeed;
@@ -29,6 +30,7 @@ import frc.robot.commands.AutonSquare;
 import frc.robot.subsystems.Launcher;
 // import frc.robot.subsystems.IntakeSubsystem;
 // import frc.robot.commands.IntakeSpeed;
+import frc.robot.subsystems.Lift;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -41,18 +43,14 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem();
   private final Launcher launcher = new Launcher();
+  // private final Intake intake = new Intake();
+  private final Intake intakeLower = new Intake();
+  private final Lift liftMotors = new Lift();
 
   // Main driver controller
   private final XboxController driverController = new XboxController(0);
   // Second operator controller
   private final XboxController operatorController = new XboxController(1);
-
-  // private Intake intake = new Intake();
-  
-  // Robot Commands
-  // private final LaunchCargoLow m_autoCommand = new LaunchCargoLow(m_launcherSubsystem);
-
-  // private final XboxController m_joystick = new XboxController(0);
 
   // The container for the robot. Contains subsystems, OI devices, and commands.
   public RobotContainer() {
@@ -72,25 +70,6 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
   }
-  /**
-   * Use this method to define your button->command mappings. Buttons can be created by
-   * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
-   * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
-   */
-
-  // FIXME reset the gyro (navx) ideas
-  /** Code from 2021 Skills bot of Enginerds 2337 
-  public void resetDrivetrain (){
-    swerveDrivetrain.resetAngleMotors();
-    swerveDrivetrain.resetOdometry();
-    swerveDrivetrain.resetDriveMotos();
-  }
-  // backButton.whenPressed(() -> swerveDrivetrain.resetDriveMotors());   // Using the Engingerds RobotContainer.java line 136
-
-
-  */
-  
 
   private void configureButtonBindings() {
     /// Declaring buttons on driver controller
@@ -132,7 +111,12 @@ public class RobotContainer {
 
     op_ButtonY.whenPressed(new LauncherSpeed(launcher, 0.00, 0.00));
     op_ButtonY.whenReleased(new LauncherSpeed(launcher, 0.0, 0.00));
-   
+    
+    // FIXME assign "commands" to a button
+    // liftRotationalMotors -> this is a subsystem variable, not a command yet
+    // liftMotors -> this is a subsystem variable, not a command yet
+    // intake
+
     // Connect the buttons to commands
     // Launch the Cargo when either left bumper or right bumper is pressed
     // We tried whileHeld command initially, but it only starts the motors, it does not stop the motors automatically
