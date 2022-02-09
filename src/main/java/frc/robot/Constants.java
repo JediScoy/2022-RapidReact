@@ -68,14 +68,22 @@ public final class Constants {
     public static final int BOTTOM_LAUNCHER_MOTOR = 9; // Sets the bottom launcher motor ID value
     public static final int TOP_LAUNCHER_MOTOR = 10; // Sets the top launcher motor ID value
     
-    // Lift motors
-    /** public static final int */
-
+   
+    // FIXME Hypothetical motor IDs. These need to be set with Pheonix Tuner
     // Intake motors
-    public static final int INTAKE = 11; // Sets the Intake Motor ID value; needs to match in Phoenix Tuner.
+    public static final int INTAKE_MOTOR = 11; // Sets the Intake Motor ID value
 
     // Index motors
-    /** */
+    public static final int MID_INDEX_MOTOR = 12; // Grouped with the mid motor
+    public static final int HIGH_INDEX_MOTOR = 13; // Group with the high motor
+
+    // Lift motors
+    public static final int LEFT_LIFT_MOTOR = 14; // Grouped
+    public static final int RIGHT_LIFT_MOTOR = 15; // Grouped
+    
+    // Rotational motors
+    public static final int LEFT_ROTATIONAL_MOTOR = 16; // Grouped
+    public static final int RIGHT_ROTATIONAL_MOTOR = 17; // Group
 
      //Stuff for Auton
      public static final double kPXController = 1.5;
