@@ -23,12 +23,13 @@ public class SwerveModule {
 
     private final PIDController turningPidController;
 
+    private final double turnOffsetRad;
 
     public SwerveModule(int driveMotorId, int turningMotorId, boolean driveMotorReversed, boolean turningMotorReversed, double offset) {
 
         driveMotor = new WPI_TalonFX(driveMotorId);
         turningMotor = new WPI_TalonFX(turningMotorId);
-
+        this.turnOffsetRad = offset;
         driveMotor.setInverted(driveMotorReversed);
         turningMotor.setInverted(turningMotorReversed);
 
