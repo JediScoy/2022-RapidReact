@@ -25,7 +25,7 @@ import frc.robot.subsystems.Intake;
 import frc.robot.commands.DefaultDriveCommand;
 // import frc.robot.commands.LaunchCargo;
 import frc.robot.commands.LauncherSpeed;
-import frc.robot.commands.AutonSquare;
+// import frc.robot.commands.AutonSquare;
 
 import frc.robot.subsystems.Launcher;
 // import frc.robot.subsystems.IntakeSubsystem;
@@ -170,7 +170,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    new AutonSquare(m_drivetrainSubsystem);
+    // new AutonSquare(m_drivetrainSubsystem);
     // This is from Prototype launcher
     // return AutonSquare;
 
