@@ -2,18 +2,12 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-// import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 
 // Shuffleboard imports
 // import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts; // Displaying data?
 // import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard; // Displaying data?
 // import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab; // Displaying data?
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
-// import edu.wpi.first.wpilibj.motorcontrol.MotorController;
-// import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 
@@ -23,6 +17,7 @@ public class Index extends SubsystemBase {
 private final WPI_TalonFX midIndexMotor = new WPI_TalonFX(Constants.MID_INDEX_MOTOR);
 private final WPI_TalonFX highIndexMotor = new WPI_TalonFX(Constants.HIGH_INDEX_MOTOR);
 // private final MotorController indexMotors;
+
 
 private final MotorControllerGroup indexMotors = 
     new MotorControllerGroup(midIndexMotor, highIndexMotor);

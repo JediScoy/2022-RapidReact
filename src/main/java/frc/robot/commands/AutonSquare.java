@@ -16,7 +16,9 @@ import frc.robot.subsystems.DrivetrainSubsystem;
 public class AutonSquare extends CommandBase {
   private final DrivetrainSubsystem subsystem;
 
-  
+  // EXPERIMENTAL talon.configOpenloopRamp(0.5); // 0.5 seconds from neutral to full output (during open-loop control)
+  // EXPERIMENTAL talon.configClosedloopRamp(0); // 0 disables ramping (during closed-loop control)
+
   /** Creates a new ExampleAuton. */
   public AutonSquare(DrivetrainSubsystem subsystem) {
     this.subsystem = subsystem;
