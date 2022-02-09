@@ -18,7 +18,6 @@ import frc.robot.Constants;
 // CTRE imports
 // import com.ctre.phoenix.motorcontrol.ControlMode;
 // import com.ctre.phoenix.motorcontrol.NeutralMode;
-// import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 // import com.ctre.phoenix.motorcontrol.can.TalonFX;
 // import com.ctre.phoenix.motorcontrol.TalonFXSensorCollection;
 
@@ -36,12 +35,12 @@ public class LiftRotator extends SubsystemBase {
   
   
   public LiftRotator() {
-    rotationalLiftMotors.set(ControlMode.PercentOutput, 0.5);
+    // FIXME rotationalLiftMotors.set(ControlMode.PercentOutput, 0.5);
 
   }
 
   public void stopLiftRotational() {
-    rotationalLiftMotors.set(ControlMode.PercentOutput, 0);
+    // FIXME rotationalLiftMotors.set(ControlMode.PercentOutput, 0);
   }
   
   
