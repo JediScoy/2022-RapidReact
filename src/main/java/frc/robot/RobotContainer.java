@@ -9,8 +9,8 @@ import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.XboxController;
 // import edu.wpi.first.wpilibj.buttons.Trigger;
-// import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-// import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 // import edu.wpi.first.wpilibj.buttons.JoystickButton; // OldCommands vendorsdep
 import edu.wpi.first.wpilibj2.command.button.JoystickButton; //NewCommands vendordep
 import static edu.wpi.first.wpilibj.XboxController.Button;
@@ -20,17 +20,22 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
-import frc.robot.subsystems.DrivetrainSubsystem;
-import frc.robot.subsystems.Intake;
-import frc.robot.commands.DefaultDriveCommand;
-// import frc.robot.commands.LaunchCargo;
-import frc.robot.commands.LauncherSpeed;
-// import frc.robot.commands.AutonSquare;
 
+// Subsystem imports
+import frc.robot.subsystems.DrivetrainSubsystem;
+import frc.robot.subsystems.Index;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Launcher;
-// import frc.robot.subsystems.IntakeSubsystem;
-// import frc.robot.commands.IntakeSpeed;
 import frc.robot.subsystems.Lift;
+import frc.robot.subsystems.LiftPivot;
+
+// Command imports
+import frc.robot.commands.DefaultDriveCommand;
+// import frc.robot.commands.IndexCommand; FIXME Create an IndexCommand
+import frc.robot.commands.IntakeCommand;
+import frc.robot.commands.LauncherSpeed;
+import frc.robot.commands.LiftCommand;
+import frc.robot.commands.LiftPivotCommand;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -42,10 +47,11 @@ import frc.robot.subsystems.Lift;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem();
-  private final Launcher launcher = new Launcher();
-  // private final Intake intake = new Intake();
+  private final Index indexMotors = new Index();
   private final Intake intakeLower = new Intake();
+  private final Launcher launcher = new Launcher();
   private final Lift liftMotors = new Lift();
+  private final LiftPivot liftPivotMotors = new LiftPivot();
 
   // Main driver controller
   private final XboxController driverController = new XboxController(0);

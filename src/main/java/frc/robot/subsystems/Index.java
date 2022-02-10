@@ -26,7 +26,7 @@ private final MotorControllerGroup indexMotors =
   
 
   public Index(double speed){
-      frontIndexMotor.set(ControlMode.PercentOutput, speed); // Need to fix so when the button is pressed it sets the speed for both
+      frontIndexMotor.set(ControlMode.PercentOutput, speed); // Need to fix so when the button is pressed it sets the speed for moto group
       backIndexMotor.set(ControlMode.PercentOutput, speed);
   }
   public void stopLauncher() {

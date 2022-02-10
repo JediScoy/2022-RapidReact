@@ -18,16 +18,15 @@ public class LiftPivot extends SubsystemBase {
 
 // FIXME one of these motors will need to run the opposisite direction. Not sure of the syntax
   public final WPI_TalonFX leftPivotMotor = new WPI_TalonFX(Constants.LEFT_PIVOT_MOTOR);
-  public final WPI_TalonFX rightPivotMotor = new WPI_TalonFX(
-    Constants.RIGHT_PIVOT_MOTOR//, TalonFXInvertType.CounterClockwise
-    );
+  public final WPI_TalonFX rightPivotMotor = new WPI_TalonFX(Constants.RIGHT_PIVOT_MOTOR //, TalonFXInvertType.CounterClockwise
+  );
 
 
-  private final MotorController pivotLiftMotors = new MotorControllerGroup(leftPivotMotor, rightPivotMotor);
+  private final MotorController liftPivotMotors = new MotorControllerGroup(leftPivotMotor, rightPivotMotor);
   
   public LiftPivot() {
-    leftPivotMotor.set(ControlMode.PercentOutput, 0.5); // FIXME works on individual not on group of motors
-    rightPivotMotor.set(ControlMode.PercentOutput, 0.5); // FIXME works on individual not on group of motors
+    leftPivotMotor.set(ControlMode.PercentOutput, 0.5); 
+    rightPivotMotor.set(ControlMode.PercentOutput, 0.5);
 
   }
 
