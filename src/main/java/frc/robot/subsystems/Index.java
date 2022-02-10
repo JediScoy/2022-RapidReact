@@ -24,8 +24,9 @@ private final MotorControllerGroup indexMotors =
     new MotorControllerGroup(frontIndexMotor, backIndexMotor);
     
   
+  double speed; // schmaybe
 
-  public Index(double speed){
+  public Index(){
       frontIndexMotor.set(ControlMode.PercentOutput, speed); // Need to fix so when the button is pressed it sets the speed for moto group
       backIndexMotor.set(ControlMode.PercentOutput, speed);
   }
