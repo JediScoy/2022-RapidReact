@@ -185,7 +185,8 @@ public class RobotContainer {
 
     // 1. This will load the file "Square.path" from PathPlanner and generate it with a max velocity of 8 m/s 
     // and a max acceleration of 5 m/s^2
-    Trajectory examplePath = PathPlanner.loadPath("Square", 8, 5);
+
+    Trajectory examplePath = PathPlanner.loadPath("TrackLoop", 4, 2.5);
 
     // 2. Defining PID Controllers for tracking trajectory
     PIDController xController = new PIDController(Constants.kPXController, 0, 0);
