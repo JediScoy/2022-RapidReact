@@ -4,10 +4,11 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 // Shuffleboard imports
-// import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts; // Displaying data?
-// import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard; // Displaying data?
-// import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab; // Displaying data?
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 
@@ -24,11 +25,14 @@ private final MotorControllerGroup indexMotors =
     
   
 
-  public Index() {
-   // indexMotors = indexMotors.setNeutralMode(NeutralMode.Coast);
-
-}
-
+  public Index(double speed){
+      frontIndexMotor.set(ControlMode.PercentOutput, speed); // Need to fix so when the button is pressed it sets the speed for both
+      backIndexMotor.set(ControlMode.PercentOutput, speed);
+  }
+  public void stopLauncher() {
+    frontIndexMotor.set(ControlMode.PercentOutput, 0);
+    backIndexMotor.set(ControlMode.PercentOutput, 0);
+  }
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

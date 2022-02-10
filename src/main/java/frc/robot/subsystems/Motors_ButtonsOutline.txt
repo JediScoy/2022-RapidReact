@@ -17,7 +17,7 @@ Lift
     button: up (+)
     button: down (-)
 
-Pivot Arms
+Lift Pivot
     2 motors, grouped, one inverted
     button: (+)
     button: (-)
