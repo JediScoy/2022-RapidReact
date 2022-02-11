@@ -6,19 +6,19 @@ public class LauncherSpeed extends CommandBase {
     
     // The subsystem the command runs on
     private final Launcher subsystem;
-    private double speedBottom; // Does this need to be seperated into Top and Bottom?
-    private double speedTop;
+    private double speedBack; // Does this need to be seperated into Top and Bottom?
+    private double speedFront;
 
-    public LauncherSpeed(Launcher subsystem, double speedTop, double speedBottom) {
+    public LauncherSpeed(Launcher subsystem, double speedFront, double speedBack) {
       this.subsystem = subsystem;
-      this.speedTop = speedTop;
-      this.speedBottom = speedBottom;
+      this.speedFront = speedFront;
+      this.speedBack = speedBack;
       addRequirements(subsystem); // clever way to call in case you change the name of the subsystem
     }
   
     @Override
     public void initialize() {
-      subsystem.setLauncherSpeed(speedTop, speedBottom);
+      subsystem.setLauncherSpeed(speedFront, speedBack);
     }
   
     @Override

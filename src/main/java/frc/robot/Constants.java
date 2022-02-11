@@ -65,8 +65,8 @@ public final class Constants {
     public static final double FRONT_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(157.5); // Measure and set front left steer offset
 
     // Two motors are used to launch the "Cargo"
-    public static final int BOTTOM_LAUNCHER_MOTOR = 9; // Sets the bottom launcher motor ID value
-    public static final int TOP_LAUNCHER_MOTOR = 10; // Sets the top launcher motor ID value
+    public static final int BACK_LAUNCHER_MOTOR = 9; // Sets the bottom launcher motor ID value
+    public static final int FRONT_LAUNCHER_MOTOR = 10; // Sets the top launcher motor ID value
     
    
     // FIXME Hypothetical motor IDs. These need to be set with Pheonix Tuner
@@ -74,16 +74,16 @@ public final class Constants {
     public static final int INTAKE_MOTOR = 11; // Sets the Intake Motor ID value
 
     // Index motors
-    public static final int MID_INDEX_MOTOR = 12; // Grouped with the mid motor
-    public static final int HIGH_INDEX_MOTOR = 13; // Group with the high motor
+    public static final int FRONT_INDEX_MOTOR = 12; // Grouped with the mid motor
+    public static final int BACK_INDEX_MOTOR = 13; // Group with the high motor
 
     // Lift motors
     public static final int LEFT_LIFT_MOTOR = 14; // Grouped
     public static final int RIGHT_LIFT_MOTOR = 15; // Grouped
     
     // Rotational motors
-    public static final int LEFT_ROTATIONAL_MOTOR = 16; // Grouped
-    public static final int RIGHT_ROTATIONAL_MOTOR = 17; // Group
+    public static final int LEFT_PIVOT_MOTOR = 16; // Grouped
+    public static final int RIGHT_PIVOT_MOTOR = 17; // Group
 
      //Stuff for Auton
      public static final double kPXController = 1.5;
@@ -94,8 +94,5 @@ public final class Constants {
      new TrapezoidProfile.Constraints(
          DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
          DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND);
-    
-    // Already defined in DrivetrainSub as "m_navx"
-    // public static AHRS gyro = new AHRS(Port.kMXP); // From 2021-Infinite Recharge
 
 }

@@ -9,9 +9,9 @@ import frc.robot.Constants;
 // import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 
 // Shuffleboard imports
-// import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts; // Displaying data?
-// import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard; // Displaying data?
-// import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab; // Displaying data?
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts; // Displaying data?
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard; // Displaying data?
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab; // Displaying data?
 
 // CTRE imports
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -24,21 +24,20 @@ public class Launcher extends SubsystemBase {
   // These are the two motors for launching the cargo
   // This might need to go in the subsystem below
 
-  private final TalonFX bottomLauncherMotor = new TalonFX(Constants.BOTTOM_LAUNCHER_MOTOR);
-  private final TalonFX topLauncherMotor = new TalonFX(Constants.TOP_LAUNCHER_MOTOR);
+  private final TalonFX backLauncherMotor = new TalonFX(Constants.BACK_LAUNCHER_MOTOR);
+  private final TalonFX frontLauncherMotor = new TalonFX(Constants.FRONT_LAUNCHER_MOTOR);
 
   // invert commands are not working for some reason 
   // final TalonFXInvertType topLaunchMotor = TalonFXInvertType.CounterClockwise;
   // final TalonFXInvertType bottomLaunchMotor = TalonFXInvertType.Clockwise;
 
-    
+  // Launch motors do NOT need to be inverted anymore because of a build change  
   public Launcher() {
-    bottomLauncherMotor.configFactoryDefault();
-    bottomLauncherMotor.setInverted(false); // FIXME double check direction
-    bottomLauncherMotor.setNeutralMode(NeutralMode.Coast);
-    topLauncherMotor.configFactoryDefault();
-    topLauncherMotor.setInverted(true); // FIXME double check direction
-    topLauncherMotor.setNeutralMode(NeutralMode.Coast);
+    backLauncherMotor.configFactoryDefault();
+    backLauncherMotor.setInverted(false); // FIXME double check direction
+    backLauncherMotor.setNeutralMode(NeutralMode.Coast);
+    frontLauncherMotor.configFactoryDefault();
+    frontLauncherMotor.setNeutralMode(NeutralMode.Coast);
   }
 
   /** Launches the Cargo with speed set for low hub
@@ -50,18 +49,18 @@ public class Launcher extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  public void setLauncherSpeed(double speedTop, double speedBottom) {
-    bottomLauncherMotor.set(ControlMode.PercentOutput, speedBottom);
-    topLauncherMotor.set(ControlMode.PercentOutput, speedTop);
+  public void setLauncherSpeed(double speedFront, double speedBack) {
+    backLauncherMotor.set(ControlMode.PercentOutput, speedBack);
+    frontLauncherMotor.set(ControlMode.PercentOutput, speedFront);
   }
 
   public void stopLauncher() {
-    bottomLauncherMotor.set(ControlMode.PercentOutput, 0);
-    topLauncherMotor.set(ControlMode.PercentOutput, 0);
+    backLauncherMotor.set(ControlMode.PercentOutput, 0);
+    frontLauncherMotor.set(ControlMode.PercentOutput, 0);
   }
 
   public double getIntakeSpeed() {
-    return bottomLauncherMotor.getMotorOutputPercent(); // add another for Top if desired
+    return backLauncherMotor.getMotorOutputPercent(); // add another for Top if desired
   }
 
   @Override

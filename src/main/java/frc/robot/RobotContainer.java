@@ -9,8 +9,8 @@ import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.XboxController;
 // import edu.wpi.first.wpilibj.buttons.Trigger;
-// import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-// import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 // import edu.wpi.first.wpilibj.buttons.JoystickButton; // OldCommands vendorsdep
 import edu.wpi.first.wpilibj2.command.button.JoystickButton; //NewCommands vendordep
 import static edu.wpi.first.wpilibj.XboxController.Button;
@@ -20,17 +20,22 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
-import frc.robot.subsystems.DrivetrainSubsystem;
-import frc.robot.subsystems.Intake;
-import frc.robot.commands.DefaultDriveCommand;
-// import frc.robot.commands.LaunchCargo;
-import frc.robot.commands.LauncherSpeed;
-import frc.robot.commands.AutonSquare;
 
+// Subsystem imports
+import frc.robot.subsystems.DrivetrainSubsystem;
+import frc.robot.subsystems.Index;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Launcher;
-// import frc.robot.subsystems.IntakeSubsystem;
-// import frc.robot.commands.IntakeSpeed;
 import frc.robot.subsystems.Lift;
+import frc.robot.subsystems.LiftPivot;
+
+// Command imports
+import frc.robot.commands.DefaultDriveCommand;
+// import frc.robot.commands.IndexCommand; FIXME Create an IndexCommand
+import frc.robot.commands.IntakeCommand;
+import frc.robot.commands.LauncherSpeed;
+import frc.robot.commands.LiftCommand;
+import frc.robot.commands.LiftPivotCommand;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -42,10 +47,11 @@ import frc.robot.subsystems.Lift;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem();
-  private final Launcher launcher = new Launcher();
-  // private final Intake intake = new Intake();
+  private final Index indexMotors = new Index();
   private final Intake intakeLower = new Intake();
+  private final Launcher launcher = new Launcher();
   private final Lift liftMotors = new Lift();
+  private final LiftPivot liftPivotMotors = new LiftPivot();
 
   // Main driver controller
   private final XboxController driverController = new XboxController(0);
@@ -100,13 +106,13 @@ public class RobotContainer {
 
     // Defining the actions associated with buttons cargo -- these are just suggested 1-30-22
     // Modeled after ENGINERDS "Intake" is a Command class, "intake" is a variable that makes a new IntakeSubsystem defined aboved
-    op_ButtonA.whenPressed(new LauncherSpeed(launcher, 0.30, -030)); // High shot from a distance
+    op_ButtonA.whenPressed(new LauncherSpeed(launcher, 0.30, 030)); // High shot from a distance. No longer need negative values
     op_ButtonA.whenReleased(new LauncherSpeed(launcher, 0.0, 0.00));
 
-    op_ButtonB.whenPressed(new LauncherSpeed(launcher, 0.30, -0.30)); // Low shot from a up close
+    op_ButtonB.whenPressed(new LauncherSpeed(launcher, 0.30, 0.30)); // Low shot from a up close
     op_ButtonB.whenReleased(new LauncherSpeed(launcher, 0.0, 0.00));
 
-    op_ButtonX.whenPressed(new LauncherSpeed(launcher, 0.30, -0.40)); // High shot up close
+    op_ButtonX.whenPressed(new LauncherSpeed(launcher, 0.30, 0.40)); // High shot up close
     op_ButtonX.whenReleased(new LauncherSpeed(launcher, 0.0, 0.00));
 
     op_ButtonY.whenPressed(new LauncherSpeed(launcher, 0.00, 0.00));
@@ -170,7 +176,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    new AutonSquare(m_drivetrainSubsystem);
+    // new AutonSquare(m_drivetrainSubsystem);
     // This is from Prototype launcher
     // return AutonSquare;
 
@@ -179,7 +185,8 @@ public class RobotContainer {
 
     // 1. This will load the file "Square.path" from PathPlanner and generate it with a max velocity of 8 m/s 
     // and a max acceleration of 5 m/s^2
-    Trajectory examplePath = PathPlanner.loadPath("Square", 8, 5);
+
+    Trajectory examplePath = PathPlanner.loadPath("TrackLoop", 4, 2.5);
 
     // 2. Defining PID Controllers for tracking trajectory
     PIDController xController = new PIDController(Constants.kPXController, 0, 0);

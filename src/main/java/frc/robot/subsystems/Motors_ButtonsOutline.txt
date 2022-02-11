@@ -3,22 +3,22 @@ Intake
     button: forward (+)
     button: reverse (-)
 
-IntakeUpper
-    2 motors, grouped
+Index
+    2 motors, grouped, one inverted 
     button: forward (+)
 
 Launcher
-    2 motors, independent speeds
+    2 motors, independent speeds, same directions
     button: low goal, up close
     button: high goal, up close
     button: high goal, long shot
 Lift
-    2 motors, grouped
+    2 motors, grouped, one inverted
     button: up (+)
     button: down (-)
 
-Rotational Arms
-    2 motors, grouped
+Lift Pivot
+    2 motors, grouped, one inverted
     button: (+)
     button: (-)
 
