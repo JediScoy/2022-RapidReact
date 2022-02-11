@@ -15,32 +15,30 @@ public class SwerveSubsystem extends SubsystemBase {
     private final SwerveModule frontLeft = new SwerveModule(
             Constants.FRONT_LEFT_MODULE_DRIVE_MOTOR,
             Constants.FRONT_LEFT_MODULE_STEER_MOTOR,
-            Constants.FRONT_LEFT_DriveEncoderReversed,
-            Constants.FRONT_LEFT_TurningEncoderReversed,
+            false, //drive encoder reversed, change this around if needed
+            false, //turn encoder reversed
             Constants.FRONT_LEFT_MODULE_STEER_OFFSET
     
     );
 
-    private final SwerveModule frontRIGHT_ = new SwerveModule(
+    private final SwerveModule frontRight = new SwerveModule(
             Constants.FRONT_RIGHT_MODULE_DRIVE_MOTOR,
             Constants.FRONT_RIGHT_MODULE_STEER_MOTOR,
-            Constants.FRONT_RIGHT_DriveEncoderReversed,
-            Constants.FRONT_RIGHT_TurningEncoderReversed,
+           false,false,
             Constants.FRONT_RIGHT_MODULE_STEER_OFFSET);
             
 
     private final SwerveModule backLeft = new SwerveModule(
             Constants.BACK_LEFT_MODULE_DRIVE_MOTOR,
             Constants.BACK_LEFT_MODULE_STEER_MOTOR,
-            Constants.BACK_LEFT_DriveEncoderReversed,
-            Constants.BACK_LEFT_TurningEncoderReversed,
+            false, //drive encoder reversed, change this around if needed
+            false, //turn encoder reversed
             Constants.BACK_LEFT_MODULE_STEER_OFFSET);
 
     private final SwerveModule backRight = new SwerveModule(
             Constants.BACK_RIGHT_MODULE_DRIVE_MOTOR,
             Constants.BACK_RIGHT_MODULE_STEER_MOTOR,
-            Constants.BACK_RIGHT_DriveEncoderReversed,
-            Constants.BACK_RIGHT_TurningEncoderReversed,
+          false,false,
             Constants.BACK_RIGHT_MODULE_STEER_OFFSET);
 
     private final AHRS gyro = new AHRS(SPI.Port.kMXP);
@@ -79,7 +77,7 @@ public class SwerveSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        odometer.update(getRotation2d(), frontLeft.getState(), frontRIGHT_.getState(), backLeft.getState(),
+        odometer.update(getRotation2d(), frontLeft.getState(), frontRight.getState(), backLeft.getState(),
                 backRight.getState());
         SmartDashboard.putNumber("Robot Heading", getHeading());
         SmartDashboard.putString("Robot Location", getPose().getTranslation().toString());
@@ -98,4 +96,4 @@ public class SwerveSubsystem extends SubsystemBase {
         frontRight.setDesiredState(desiredStates[1]);
         backLeft.setDesiredState(desiredStates[2]);
         backRight.setDesiredState(desiredStates[3]);
-    }
+    }}
