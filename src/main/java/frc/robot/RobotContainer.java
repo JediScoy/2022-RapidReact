@@ -179,20 +179,19 @@ public class RobotContainer {
     // new AutonSquare(m_drivetrainSubsystem);
     // This is from Prototype launcher
     // return AutonSquare;
-
     // This is from SDS Drive code base
     //return new InstantCommand();
 
     // 1. This will load the file "Square.path" from PathPlanner and generate it with a max velocity of 8 m/s 
     // and a max acceleration of 5 m/s^2
 
-    Trajectory examplePath = PathPlanner.loadPath("TrackLoop", 4, 2.5);
+    Trajectory examplePath = PathPlanner.loadPath("BadPath",8,5);
 
     // 2. Defining PID Controllers for tracking trajectory
     PIDController xController = new PIDController(Constants.kPXController, 0, 0);
     PIDController yController = new PIDController(Constants.kPYController, 0, 0);
     ProfiledPIDController thetaController = new ProfiledPIDController(
-            Constants.kPThetaController, 0, 0, Constants.kThetaControllerConstraints);
+    Constants.kPThetaController, 0, 0, Constants.kThetaControllerConstraints);
     thetaController.enableContinuousInput(-Math.PI, Math.PI);
 
     // 3. Command to follow path from PathPlanner

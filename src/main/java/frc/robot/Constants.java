@@ -74,21 +74,21 @@ public final class Constants {
     public static final int INTAKE_MOTOR = 11; // Sets the Intake Motor ID value
 
     // Index motors
-    public static final int FRONT_INDEX_MOTOR = 12; // Grouped with the mid motor
-    public static final int BACK_INDEX_MOTOR = 13; // Group with the high motor
+    public static final int FRONT_INDEX_MOTOR = 13; // Grouped with the mid motor
+    public static final int BACK_INDEX_MOTOR = 14; // Group with the high motor
 
     // Lift motors
-    public static final int LEFT_LIFT_MOTOR = 14; // Grouped
-    public static final int RIGHT_LIFT_MOTOR = 15; // Grouped
+    public static final int LEFT_LIFT_MOTOR = 15; // Grouped
+    public static final int RIGHT_LIFT_MOTOR = 16; // Grouped
     
     // Rotational motors
-    public static final int LEFT_PIVOT_MOTOR = 16; // Grouped
-    public static final int RIGHT_PIVOT_MOTOR = 17; // Group
+    public static final int LEFT_PIVOT_MOTOR = 17; // Grouped
+    public static final int RIGHT_PIVOT_MOTOR = 18; // Group
 
      //Stuff for Auton
-     public static final double kPXController = 1.5;
-     public static final double kPYController = 1.5;
-     public static final double kPThetaController = 3;
+     public static final double kPXController = 0.5; // default 1.5
+     public static final double kPYController = 0; // default 1.5
+     public static final double kPThetaController = 0; // default 3.0
  
      public static final TrapezoidProfile.Constraints kThetaControllerConstraints = //
      new TrapezoidProfile.Constraints(
