@@ -13,9 +13,11 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static frc.robot.Constants.*;
 
@@ -127,7 +129,34 @@ public class DrivetrainSubsystem extends SubsystemBase {
         BACK_RIGHT_MODULE_STEER_ENCODER,
         BACK_RIGHT_MODULE_STEER_OFFSET
     );
+
   }
+
+  // Class to calculate the current Velocity and Accleration of the robot, and display that info on Shuffleboard
+  class roboCalculator {
+
+    //calling the Drivetrain tab of Shuffleboard
+    public ShuffleboardTab tab = Shuffleboard.getTab("Drivetrain");
+
+    //trying to put total velocity of the robot on the Shuffleboard
+    NetworkTableEntry totalVelocity = 
+      tab.add("Total Velocity", MAX_VELOCITY_METERS_PER_SECOND)
+        .getEntry();
+
+    //trying to put total acceleration of the robot on the Shuffleboard
+    NetworkTableEntry totalAcceleration = 
+      tab.add("Total Velocity", MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND)
+        .getEntry();
+
+    //calculating current Velocity/Accleration of the robot, update this is Periodic
+    public void calculate() {
+      double currentVelocity = MAX_VELOCITY_METERS_PER_SECOND;
+      double currentAcceleration = MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND;
+      totalVelocity.setDouble(currentVelocity);
+      totalAcceleration.setDouble(currentAcceleration);
+    }
+  }//end of roboCalculator
+
 
   //method to stop motors, used for auton
   public void stop() {
@@ -137,6 +166,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
         m_backRightModule.set(0, 0);
     }
     
+  
   /**
    * Sets the gyroscope angle to zero. This can be used to set the direction the robot is currently facing to the
    * 'forwards' direction.
