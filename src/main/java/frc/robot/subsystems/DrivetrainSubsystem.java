@@ -148,7 +148,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
       tab.add("Total Velocity", MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND)
         .getEntry();
 
-    //calculating current Velocity/Accleration of the robot, update this is Periodic
+    //calculating current Velocity/Accleration of the robot, FIXME says you have to update this is Periodic?
     public void calculate() {
       double currentVelocity = MAX_VELOCITY_METERS_PER_SECOND;
       double currentAcceleration = MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND;
