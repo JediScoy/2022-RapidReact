@@ -127,6 +127,9 @@ public class RobotContainer {
     //lift
     //op_startButton.whenPressed(new LiftCommand(liftMotors, 0.0, 0.0));
     //op_startButton.whenReleased(new LiftCommand(liftMotors, 0.0, 0.0));
+
+    //op_backButton.whenPressed(new LiftCommand(liftMotors, 0.0, 0.0));
+    //op_backButton.whenReleased(new LiftCommand(liftMotors, 0.0, 0.0));
     
     // FIXME assign "commands" to a button
     // liftRotationalMotors -> this is a subsystem variable, not a command yet
