@@ -48,7 +48,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem();
   private final Index indexMotors = new Index();
-  private final Intake intakeLower = new Intake();
+  private final Intake intake = new Intake();
   private final Launcher launcher = new Launcher();
   private final Lift liftMotors = new Lift();
   private final LiftPivot liftPivotMotors = new LiftPivot();
@@ -80,25 +80,24 @@ public class RobotContainer {
   private void configureButtonBindings() {
     /// Declaring buttons on driver controller
     final JoystickButton d_backButton = new JoystickButton(driverController, Button.kBack.value);
-    /** - unused buttons
-    final JoystickButton d_startButton = new JoystickButton(driverController, Button.kStart.value);
+    // final JoystickButton d_startButton = new JoystickButton(driverController, Button.kStart.value);
     final JoystickButton d_ButtonA = new JoystickButton(driverController, Button.kA.value);
     final JoystickButton d_ButtonB = new JoystickButton(driverController, Button.kB.value);
     final JoystickButton d_ButtonX = new JoystickButton(driverController, Button.kX.value);
     final JoystickButton d_ButtonY = new JoystickButton(driverController, Button.kY.value);
     final JoystickButton d_RightBumper = new JoystickButton(driverController, Button.kRightBumper.value);
     final JoystickButton d_LeftBumper = new JoystickButton(driverController, Button.kLeftBumper.value);
-    final double d_LeftTrigger = driverController.getLeftTriggerAxis();
-    final double d_RightTrigger = driverController.getRightTriggerAxis();
-    */
+    // final double d_LeftTrigger = driverController.getLeftTriggerAxis();
+    // final double d_RightTrigger = driverController.getRightTriggerAxis();
+    
 
     // Declaring buttons on the operator controller
-    //final JoystickButton op_backButton = new JoystickButton(operatorController, Button.kBack.value);
-    //final JoystickButton op_startButton = new JoystickButton(operatorController, Button.kStart.value);
-    final JoystickButton op_ButtonA = new JoystickButton(operatorController, Button.kA.value);
-    final JoystickButton op_ButtonB = new JoystickButton(operatorController, Button.kB.value);
-    final JoystickButton op_ButtonX = new JoystickButton(operatorController, Button.kX.value);
-    final JoystickButton op_ButtonY = new JoystickButton(operatorController, Button.kY.value);
+    final JoystickButton op_backButton = new JoystickButton(operatorController, Button.kBack.value);
+    final JoystickButton op_startButton = new JoystickButton(operatorController, Button.kStart.value);
+    //final JoystickButton op_ButtonA = new JoystickButton(operatorController, Button.kA.value);
+    //final JoystickButton op_ButtonB = new JoystickButton(operatorController, Button.kB.value);
+    //final JoystickButton op_ButtonX = new JoystickButton(operatorController, Button.kX.value);
+    //final JoystickButton op_ButtonY = new JoystickButton(operatorController, Button.kY.value);
     //final JoystickButton op_RightBumper = new JoystickButton(operatorController, Button.kRightBumper.value);
     //final JoystickButton op_LeftBumper = new JoystickButton(operatorController, Button.kLeftBumper.value);
     //final double op_LeftTrigger = operatorController.getLeftTriggerAxis();
@@ -106,17 +105,28 @@ public class RobotContainer {
 
     // Defining the actions associated with buttons cargo -- these are just suggested 1-30-22
     // Modeled after ENGINERDS "Intake" is a Command class, "intake" is a variable that makes a new IntakeSubsystem defined aboved
-    op_ButtonA.whenPressed(new LauncherSpeed(launcher, 0.30, 030)); // High shot from a distance. No longer need negative values
-    op_ButtonA.whenReleased(new LauncherSpeed(launcher, 0.0, 0.00));
+    d_ButtonA.whenPressed(new LauncherSpeed(launcher, 0.30, 030)); // High shot from a distance. No longer need negative values
+    d_ButtonA.whenReleased(new LauncherSpeed(launcher, 0.0, 0.00));
 
-    op_ButtonB.whenPressed(new LauncherSpeed(launcher, 0.30, 0.30)); // Low shot from a up close
-    op_ButtonB.whenReleased(new LauncherSpeed(launcher, 0.0, 0.00));
+    d_ButtonB.whenPressed(new LauncherSpeed(launcher, 0.30, 0.30)); // Low shot from a up close
+    d_ButtonB.whenReleased(new LauncherSpeed(launcher, 0.0, 0.00));
 
-    op_ButtonX.whenPressed(new LauncherSpeed(launcher, 0.30, 0.40)); // High shot up close
-    op_ButtonX.whenReleased(new LauncherSpeed(launcher, 0.0, 0.00));
+    d_ButtonX.whenPressed(new LauncherSpeed(launcher, 0.30, 0.40)); // High shot up close
+    d_ButtonX.whenReleased(new LauncherSpeed(launcher, 0.0, 0.00));
 
-    op_ButtonY.whenPressed(new LauncherSpeed(launcher, 0.00, 0.00));
-    op_ButtonY.whenReleased(new LauncherSpeed(launcher, 0.0, 0.00));
+    d_RightBumper.whenPressed(new IntakeCommand(intake, 0.5));
+    d_RightBumper.whenReleased(new IntakeCommand(intake, 0.0)); 
+
+    d_LeftBumper.whenPressed(new IntakeCommand(intake, -0.5));
+    d_LeftBumper.whenReleased(new IntakeCommand(intake, 0.0)); 
+
+    //Index
+    //d_ButtonY.whenPressed(new Index(indexMotors, 0.0, 0.0));
+    //d_ButtonY.whenPressed(new Index(indexMotors, 0.0, 0.0));
+
+    //lift
+    //op_startButton.whenPressed(new LiftCommand(liftMotors, 0.0, 0.0));
+    //op_startButton.whenReleased(new LiftCommand(liftMotors, 0.0, 0.0));
     
     // FIXME assign "commands" to a button
     // liftRotationalMotors -> this is a subsystem variable, not a command yet
