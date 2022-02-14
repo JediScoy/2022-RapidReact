@@ -86,9 +86,9 @@ public final class Constants {
     public static final int RIGHT_PIVOT_MOTOR = 18; // Group
 
      //Stuff for Auton
-     public static final double kPXController = 0.5; // default 1.5
-     public static final double kPYController = 0; // default 1.5
-     public static final double kPThetaController = 0; // default 3.0
+     public static final double kPXController = 3.0; // default 1.5 from SeanSun; forum values 
+     public static final double kPYController = 0.0; // default 1.5; forum values
+     public static final double kPThetaController = 0.01; // default 3.0; forum value
  
      public static final TrapezoidProfile.Constraints kThetaControllerConstraints = //
      new TrapezoidProfile.Constraints(
