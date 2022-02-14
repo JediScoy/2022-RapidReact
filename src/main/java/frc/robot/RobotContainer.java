@@ -31,7 +31,7 @@ import frc.robot.subsystems.LiftPivot;
 
 // Command imports
 import frc.robot.commands.DefaultDriveCommand;
-// import frc.robot.commands.IndexCommand; FIXME Create an IndexCommand
+import frc.robot.commands.IndexCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.LauncherSpeed;
 import frc.robot.commands.LiftCommand;
@@ -120,9 +120,8 @@ public class RobotContainer {
     d_LeftBumper.whenPressed(new IntakeCommand(intake, -0.5));
     d_LeftBumper.whenReleased(new IntakeCommand(intake, 0.0)); 
 
-    //Index
-    //d_ButtonY.whenPressed(new Index(indexMotors, 0.0, 0.0));
-    //d_ButtonY.whenPressed(new Index(indexMotors, 0.0, 0.0));
+    d_ButtonY.whenPressed(new IndexCommand(indexMotors, 0.0, 0.0));
+    d_ButtonY.whenReleased(new IndexCommand(indexMotors, 0.0, 0.0));
 
     //lift
     //op_startButton.whenPressed(new LiftCommand(liftMotors, 0.0, 0.0));
@@ -131,11 +130,7 @@ public class RobotContainer {
     //op_backButton.whenPressed(new LiftCommand(liftMotors, 0.0, 0.0));
     //op_backButton.whenReleased(new LiftCommand(liftMotors, 0.0, 0.0));
     
-    // FIXME assign "commands" to a button
-    // liftRotationalMotors -> this is a subsystem variable, not a command yet
-    // liftMotors -> this is a subsystem variable, not a command yet
-    // IntakeCommand
-
+  
     // Connect the buttons to commands
     // Launch the Cargo when either left bumper or right bumper is pressed
     // We tried whileHeld command initially, but it only starts the motors, it does not stop the motors automatically

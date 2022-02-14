@@ -69,7 +69,7 @@ public final class Constants {
     public static final int FRONT_LAUNCHER_MOTOR = 10; // Sets the top launcher motor ID value
     
    
-    // FIXME Hypothetical motor IDs. These need to be set with Pheonix Tuner
+    // TODO Hypothetical motor IDs. These need to be set with Pheonix Tuner
     // Intake motors
     public static final int INTAKE_MOTOR = 11; // Sets the Intake Motor ID value
 

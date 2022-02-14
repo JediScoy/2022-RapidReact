@@ -25,15 +25,21 @@ private final MotorControllerGroup indexMotors =
     
   
   double speed; // schmaybe
+  public Index () {
+    frontIndexMotor.setInverted(false); // FIXME double check direction
+    backIndexMotor.setInverted(false);
+  }
 
-  public Index(){
+  public void startIndex(double speed){
       frontIndexMotor.set(ControlMode.PercentOutput, speed); // Need to fix so when the button is pressed it sets the speed for moto group
       backIndexMotor.set(ControlMode.PercentOutput, speed);
   }
-  public void stopLauncher() {
+
+  public void stopIndex() {
     frontIndexMotor.set(ControlMode.PercentOutput, 0);
     backIndexMotor.set(ControlMode.PercentOutput, 0);
   }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
