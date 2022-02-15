@@ -22,16 +22,10 @@ public class Launcher extends SubsystemBase {
 
   // Falcon 500 is controlled by TalonFX
   // These are the two motors for launching the cargo
-  // This might need to go in the subsystem below
 
   private final TalonFX backLauncherMotor = new TalonFX(Constants.BACK_LAUNCHER_MOTOR);
   private final TalonFX frontLauncherMotor = new TalonFX(Constants.FRONT_LAUNCHER_MOTOR);
 
-  // invert commands are not working for some reason 
-  // final TalonFXInvertType topLaunchMotor = TalonFXInvertType.CounterClockwise;
-  // final TalonFXInvertType bottomLaunchMotor = TalonFXInvertType.Clockwise;
-
-  // Launch motors do NOT need to be inverted anymore because of a build change  
   public Launcher() {
     // backLauncherMotor.configFactoryDefault();
     backLauncherMotor.setInverted(true);

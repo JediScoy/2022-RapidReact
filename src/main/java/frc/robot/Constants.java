@@ -40,7 +40,8 @@ public final class Constants {
         new Translation2d(-DRIVETRAIN_TRACKWIDTH_METERS / 2.0, DRIVETRAIN_WHEELBASE_METERS / 2.0),
         // Back right
         new Translation2d(-DRIVETRAIN_TRACKWIDTH_METERS / 2.0, -DRIVETRAIN_WHEELBASE_METERS / 2.0)
-);
+      );
+
     // TODO Set the offsets using shuffleboard and a straight edge
     public static final int FRONT_RIGHT_MODULE_DRIVE_MOTOR = 1; // Set front right drive motor ID
     public static final int FRONT_RIGHT_MODULE_STEER_MOTOR = 2; // Set front right steer motor ID
@@ -68,7 +69,6 @@ public final class Constants {
     public static final int BACK_LAUNCHER_MOTOR = 9; // Sets the bottom launcher motor ID value
     public static final int FRONT_LAUNCHER_MOTOR = 10; // Sets the top launcher motor ID value
     
-   
     // Intake motors
     public static final int INTAKE_MOTOR = 11; // Sets the Intake Motor ID value
 

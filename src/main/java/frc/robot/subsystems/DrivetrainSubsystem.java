@@ -66,7 +66,6 @@ public class DrivetrainSubsystem extends SubsystemBase {
   //creating an odometer for auton
   private final SwerveDriveOdometry odometer = new SwerveDriveOdometry(m_kinematics, new Rotation2d(0));
   
-
   // These are our modules. We initialize them in the constructor.
   private final SwerveModule m_frontLeftModule;
   private final SwerveModule m_frontRightModule;

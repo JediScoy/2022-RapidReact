@@ -21,8 +21,8 @@ public class Index extends SubsystemBase {
   // private final TalonFX backIndexMotor;
   // private frontIndexMotor = new WPI_TalonFX(Constants.FRONT_INDEX_MOTOR);
   // backIndexMotor = new WPI_TalonFX(Constants.BACK_INDEX_MOTOR);
-  private final TalonFX backIndexMotor = new TalonFX(Constants.BACK_INDEX_MOTOR); // Added so Index() worked
-  private final TalonFX frontIndexMotor = new TalonFX(Constants.FRONT_INDEX_MOTOR); // Added so Index() worked
+  private final WPI_TalonFX backIndexMotor = new WPI_TalonFX(Constants.BACK_INDEX_MOTOR); // Added so Index() worked
+  private final WPI_TalonFX frontIndexMotor = new WPI_TalonFX(Constants.FRONT_INDEX_MOTOR); // Added so Index() worked
 
   // NOTE you must use WPI_TalonFX subclass rather than TalonFX when grouping motors... 60 minutes of my life wasted
   private MotorControllerGroup indexMotors = new MotorControllerGroup(
