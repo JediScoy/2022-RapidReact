@@ -5,9 +5,9 @@ import frc.robot.subsystems.Intake;
 
 public class IntakeCommand extends CommandBase {
   
-    
     // The subsystem the command runs on
     private final Intake subsystem;
+  
     private double speed;
   
     public IntakeCommand(Intake subsystem, double speed) {

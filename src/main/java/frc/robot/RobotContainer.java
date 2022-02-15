@@ -9,8 +9,8 @@ import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.XboxController;
 // import edu.wpi.first.wpilibj.buttons.Trigger;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+// import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+// import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 // import edu.wpi.first.wpilibj.buttons.JoystickButton; // OldCommands vendorsdep
 import edu.wpi.first.wpilibj2.command.button.JoystickButton; //NewCommands vendordep
 import static edu.wpi.first.wpilibj.XboxController.Button;
@@ -48,7 +48,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem();
   private final Index indexMotors = new Index();
-  private final Intake intake = new Intake();
+  private final Intake intakeMotor = new Intake();
   private final Launcher launcher = new Launcher();
   private final Lift liftMotors = new Lift();
   private final LiftPivot liftPivotMotors = new LiftPivot();
@@ -92,19 +92,20 @@ public class RobotContainer {
     
 
     // Declaring buttons on the operator controller
-    final JoystickButton op_backButton = new JoystickButton(operatorController, Button.kBack.value);
-    final JoystickButton op_startButton = new JoystickButton(operatorController, Button.kStart.value);
-    //final JoystickButton op_ButtonA = new JoystickButton(operatorController, Button.kA.value);
-    //final JoystickButton op_ButtonB = new JoystickButton(operatorController, Button.kB.value);
-    //final JoystickButton op_ButtonX = new JoystickButton(operatorController, Button.kX.value);
-    //final JoystickButton op_ButtonY = new JoystickButton(operatorController, Button.kY.value);
+    // final JoystickButton op_backButton = new JoystickButton(operatorController, Button.kBack.value);
+    // final JoystickButton op_startButton = new JoystickButton(operatorController, Button.kStart.value);
+    final JoystickButton op_ButtonA = new JoystickButton(operatorController, Button.kA.value);
+    final JoystickButton op_ButtonB = new JoystickButton(operatorController, Button.kB.value);
+    final JoystickButton op_ButtonX = new JoystickButton(operatorController, Button.kX.value);
+    final JoystickButton op_ButtonY = new JoystickButton(operatorController, Button.kY.value);
     //final JoystickButton op_RightBumper = new JoystickButton(operatorController, Button.kRightBumper.value);
     //final JoystickButton op_LeftBumper = new JoystickButton(operatorController, Button.kLeftBumper.value);
     //final double op_LeftTrigger = operatorController.getLeftTriggerAxis();
     //final double op_RightTrigger = operatorController.getRightTriggerAxis();
 
-    // Defining the actions associated with buttons cargo -- these are just suggested 1-30-22
-    // Modeled after ENGINERDS "Intake" is a Command class, "intake" is a variable that makes a new IntakeSubsystem defined aboved
+    // Defining the actions associated with buttons
+    d_backButton.whenPressed(m_drivetrainSubsystem::zeroGyroscope); // Shaun's gyro reset 
+
     d_ButtonA.whenPressed(new LauncherSpeed(launcher, 0.30, 030)); // High shot from a distance. No longer need negative values
     d_ButtonA.whenReleased(new LauncherSpeed(launcher, 0.0, 0.00));
 
@@ -114,19 +115,28 @@ public class RobotContainer {
     d_ButtonX.whenPressed(new LauncherSpeed(launcher, 0.30, 0.40)); // High shot up close
     d_ButtonX.whenReleased(new LauncherSpeed(launcher, 0.0, 0.00));
 
-    d_RightBumper.whenPressed(new IntakeCommand(intake, 0.5));
-    d_RightBumper.whenReleased(new IntakeCommand(intake, 0.0)); 
+    d_RightBumper.whenPressed(new IntakeCommand(intakeMotor, 0.5)); // Intake cargo from the field
+    d_RightBumper.whenReleased(new IntakeCommand(intakeMotor, 0.0)); 
 
-    d_LeftBumper.whenPressed(new IntakeCommand(intake, -0.5));
-    d_LeftBumper.whenReleased(new IntakeCommand(intake, 0.0)); 
+    d_LeftBumper.whenPressed(new IntakeCommand(intakeMotor, -0.5)); // Reverse cargo back to the field
+    d_LeftBumper.whenReleased(new IntakeCommand(intakeMotor, 0.0)); 
 
-    d_ButtonY.whenPressed(new IndexCommand(indexMotors, 0.0, 0.0));
-    d_ButtonY.whenReleased(new IndexCommand(indexMotors, 0.0, 0.0));
+    d_ButtonY.whenPressed(new IndexCommand(indexMotors, 0.5)); // Advance cargo to the launcher
+    d_ButtonY.whenReleased(new IndexCommand(indexMotors, 0));
 
     //lift
-    //op_startButton.whenPressed(new LiftCommand(liftMotors, 0.0, 0.0));
-    //op_startButton.whenReleased(new LiftCommand(liftMotors, 0.0, 0.0));
-
+    op_ButtonA.whenPressed(new LiftCommand(liftMotors, 0.1)); // Releases the lift arms for extension
+    op_ButtonA.whenReleased(new LiftCommand(liftMotors, 0.0));
+    
+    op_ButtonB.whenPressed(new LiftCommand(liftMotors, -0.1)); // Pulls the arms back down for climbing
+    op_ButtonB.whenReleased(new LiftCommand(liftMotors, 0.0));
+    
+    op_ButtonX.whenPressed(new LiftPivotCommand(liftPivotMotors, 0.1)); // Rotates the pivot-lift arms for the higher bar
+    op_ButtonX.whenReleased(new LiftPivotCommand(liftPivotMotors, 0.0));
+  
+    op_ButtonY.whenPressed(new LiftPivotCommand(liftPivotMotors, -0.1)); // Rotates the pivot-lifts arms back towards the robot
+    op_ButtonY.whenReleased(new LiftPivotCommand(liftPivotMotors, 0.0));
+  
     //op_backButton.whenPressed(new LiftCommand(liftMotors, 0.0, 0.0));
     //op_backButton.whenReleased(new LiftCommand(liftMotors, 0.0, 0.0));
     
@@ -150,8 +160,6 @@ public class RobotContainer {
   /** Use this to pass the autonomous command to the main {@link Robot} class.
   * @return the command to run in autonomous
  */
-  // Shaun's working code for reseting gyro
-  d_backButton.whenPressed(m_drivetrainSubsystem::zeroGyroscope);  
 
   }
 

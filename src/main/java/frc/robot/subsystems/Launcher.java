@@ -9,9 +9,9 @@ import frc.robot.Constants;
 // import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 
 // Shuffleboard imports
-import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts; // Displaying data?
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard; // Displaying data?
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab; // Displaying data?
+// import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
+// import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+// import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 
 // CTRE imports
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -34,14 +34,14 @@ public class Launcher extends SubsystemBase {
   // Launch motors do NOT need to be inverted anymore because of a build change  
   public Launcher() {
     backLauncherMotor.configFactoryDefault();
-    backLauncherMotor.setInverted(false); // FIXME double check direction
+    backLauncherMotor.setInverted(false); // TODO Check direction of motors and determine if one needs to be reverse
     backLauncherMotor.setNeutralMode(NeutralMode.Coast);
     frontLauncherMotor.configFactoryDefault();
     frontLauncherMotor.setNeutralMode(NeutralMode.Coast);
   }
 
   /** Launches the Cargo with speed set for low hub
-    * Eventually the absolute value could be replaced with sensor-driven values
+    * Eventually the absolute value could potentially be replaced with sensor-driven values
     **/
 
   @Override
@@ -67,4 +67,4 @@ public class Launcher extends SubsystemBase {
   public void simulationPeriodic() {
     // This method will be called once per scheduler run during simulation
   }
-}
+} // End class

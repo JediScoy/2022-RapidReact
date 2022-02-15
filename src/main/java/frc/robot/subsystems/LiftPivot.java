@@ -1,6 +1,6 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
+// import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
@@ -16,7 +16,7 @@ import frc.robot.Constants;
 
 public class LiftPivot extends SubsystemBase {
 
-// FIXME one of these motors will need to run the opposisite direction. Not sure of the syntax
+// TODO Check direction of motors and determine if one needs to be reverse
   public final WPI_TalonFX leftPivotMotor = new WPI_TalonFX(Constants.LEFT_PIVOT_MOTOR);
   public final WPI_TalonFX rightPivotMotor = new WPI_TalonFX(Constants.RIGHT_PIVOT_MOTOR //, TalonFXInvertType.CounterClockwise
   );
@@ -25,15 +25,15 @@ public class LiftPivot extends SubsystemBase {
   private final MotorController liftPivotMotors = new MotorControllerGroup(leftPivotMotor, rightPivotMotor);
   
   public LiftPivot() {
-    leftPivotMotor.set(ControlMode.PercentOutput, 0.5); 
-    rightPivotMotor.set(ControlMode.PercentOutput, 0.5);
-
   }
 
-  public void stopLiftRotational() {
-    // FIXME rotationalLiftMotors.set(ControlMode.PercentOutput, 0);
+  public void startLiftPivot(double speed) {
+    liftPivotMotors.set(speed); 
   }
-  
+
+  public void stopLiftPivot() {
+    liftPivotMotors.set(0);
+  }
   
   @Override
   public void periodic() {
