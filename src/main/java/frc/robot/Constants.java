@@ -45,26 +45,24 @@ public final class Constants {
     public static final int FRONT_RIGHT_MODULE_DRIVE_MOTOR = 1; // Set front right drive motor ID
     public static final int FRONT_RIGHT_MODULE_STEER_MOTOR = 2; // Set front right steer motor ID
     public static final int FRONT_RIGHT_MODULE_STEER_ENCODER = 21; // Set front right steer encoder ID
-    public static final double FRONT_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(139.92); 
-    // 180-40.08 =
+    public static final double FRONT_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(-60); // Good-ish
     
     public static final int BACK_RIGHT_MODULE_DRIVE_MOTOR = 3; // Set back right drive motor ID
     public static final int BACK_RIGHT_MODULE_STEER_MOTOR = 4; // Set back right steer motor ID
     public static final int BACK_RIGHT_MODULE_STEER_ENCODER = 22; // Set back right steer encoder ID
-    public static final double BACK_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(2.73); // Measure and set back right steer offset
-    // 180-5.45 = 174.55
+    public static final double BACK_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(-1.5); // Good-ish 
 
     public static final int BACK_LEFT_MODULE_DRIVE_MOTOR = 5; // Set back left drive motor ID
     public static final int BACK_LEFT_MODULE_STEER_MOTOR = 6; // Set back left steer motor ID
     public static final int BACK_LEFT_MODULE_STEER_ENCODER = 23; // Set back left steer encoder ID
-    public static final double BACK_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(57.57); // Measure and set back left steer offset
-    // 241.35
+    public static final double BACK_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(0); // Measure and set back left steer offset
+    // 180 - 241.35 = 119 
 
     public static final int FRONT_LEFT_MODULE_DRIVE_MOTOR = 7; // Set front left module drive motor ID
     public static final int FRONT_LEFT_MODULE_STEER_MOTOR = 8; // Set front left module steer motor ID
     public static final int FRONT_LEFT_MODULE_STEER_ENCODER = 24; // Set front left steer encoder ID
-    public static final double FRONT_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(68.12); // Measure and set front left steer offset
-    // 200.92
+    public static final double FRONT_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(0); // Measure and set front left steer offset
+    // 180-200.92
 
     // Two motors are used to launch the "Cargo"
     public static final int BACK_LAUNCHER_MOTOR = 9; // Sets the bottom launcher motor ID value
