@@ -8,18 +8,21 @@ import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 
-// import com.ctre.phoenix.motorcontrol.ControlMode;
+// CTRE imports
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-
 
 public class Index extends SubsystemBase {
   
   // variables
-  // private final WPI_TalonFX frontIndexMotor;  
-  // private final WPI_TalonFX backIndexMotor;
+  // private final TalonFX frontIndexMotor ;  
+  // private final TalonFX backIndexMotor;
   // private frontIndexMotor = new WPI_TalonFX(Constants.FRONT_INDEX_MOTOR);
   // backIndexMotor = new WPI_TalonFX(Constants.BACK_INDEX_MOTOR);
-
+  private final TalonFX backIndexMotor = new TalonFX(Constants.BACK_INDEX_MOTOR); // Added so Index() worked
+  private final TalonFX frontIndexMotor = new TalonFX(Constants.FRONT_INDEX_MOTOR); // Added so Index() worked
 
   // NOTE you must use WPI_TalonFX subclass rather than TalonFX when grouping motors... 60 minutes of my life wasted
   private MotorControllerGroup indexMotors = new MotorControllerGroup(
@@ -29,7 +32,8 @@ public class Index extends SubsystemBase {
  // private double speed; // schmaybe
 
   public Index() {
-    // TODO Check direction of motors and determine if one needs to be reverse
+    backIndexMotor.setInverted(true);
+    frontIndexMotor.setInverted(false);
   }
 
   public void startIndex(double speed){

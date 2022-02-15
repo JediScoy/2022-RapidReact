@@ -33,11 +33,12 @@ public class Launcher extends SubsystemBase {
 
   // Launch motors do NOT need to be inverted anymore because of a build change  
   public Launcher() {
-    backLauncherMotor.configFactoryDefault();
-    backLauncherMotor.setInverted(false); // TODO Check direction of motors and determine if one needs to be reverse
+    // backLauncherMotor.configFactoryDefault();
+    backLauncherMotor.setInverted(true);
     backLauncherMotor.setNeutralMode(NeutralMode.Coast);
-    frontLauncherMotor.configFactoryDefault();
+    // frontLauncherMotor.configFactoryDefault();
     frontLauncherMotor.setNeutralMode(NeutralMode.Coast);
+    frontLauncherMotor.setInverted(true);
   }
 
   /** Launches the Cargo with speed set for low hub
