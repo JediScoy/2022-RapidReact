@@ -18,7 +18,7 @@ public class CTREEncoder {
     public double getRate() {
         return talon.getSelectedSensorVelocity() * distancePerPulse; //this doesn't smell right
     }
-
+//hopefully adding an extra method doesnt break the funcitonality of the class entirely
     public int getChannel(){//FIXME: what is the difference between getdeviceID() and getBaseID()? (and more importantly, which one is correct?)
         return talon.getDeviceID();
     }
