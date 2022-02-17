@@ -6,7 +6,12 @@ package frc.robot;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
+import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.XboxController;
 // import edu.wpi.first.wpilibj.buttons.Trigger;
 // import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -14,6 +19,9 @@ import edu.wpi.first.wpilibj.XboxController;
 // import edu.wpi.first.wpilibj.buttons.JoystickButton; // OldCommands vendorsdep
 import edu.wpi.first.wpilibj2.command.button.JoystickButton; //NewCommands vendordep
 import static edu.wpi.first.wpilibj.XboxController.Button;
+
+import java.util.List;
+
 import com.pathplanner.lib.PathPlanner;
 
 import edu.wpi.first.wpilibj2.command.Command;
@@ -67,9 +75,9 @@ public class RobotContainer {
     // Right stick X axis -> rotation
     m_drivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(
             m_drivetrainSubsystem,
-            () -> -modifyAxis(driverController.getLeftY()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
-            () -> -modifyAxis(driverController.getLeftX()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
-            () -> -modifyAxis(driverController.getRightX()) * DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
+            () -> -modifyAxis(driverController.getLeftY()) * Constants.MAX_VELOCITY_METERS_PER_SECOND,
+            () -> -modifyAxis(driverController.getLeftX()) *  Constants.MAX_VELOCITY_METERS_PER_SECOND,
+            () -> -modifyAxis(driverController.getRightX()) * Constants.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
     ));
     
 
@@ -172,7 +180,65 @@ public class RobotContainer {
    * Use this to pass the autonomous command to the main {@link Robot} class.
    * @return the command to run in autonomous
    */
+
+
+
+
+
+
+
+   
   public Command getAutonomousCommand() {
+   //#region trajectory
+    // 1. Create trajectory settings
+    TrajectoryConfig trajectoryConfig = new TrajectoryConfig(
+            Constants.MAX_VELOCITY_METERS_PER_SECOND, //original called for max speed (just in case im making one of the dumb physics mistakes)
+            Constants.MAX_ACCELERATION_METERS_SECOND_SQUARED)
+                    .setKinematics(Constants.m_kinematics);
+
+    // 2. Generate trajectory
+    Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
+            new Pose2d(0, 0, new Rotation2d(0)),
+            List.of(
+                    new Translation2d(1, 0),
+                    new Translation2d(1, -1)),
+            new Pose2d(2, -1, Rotation2d.fromDegrees(180)),
+            trajectoryConfig);
+
+    // 3. Define PID controllers for tracking trajectory
+    PIDController xController = new PIDController(Constants.kPXController, 0, 0);
+    PIDController yController = new PIDController(Constants.kPYController, 0, 0);
+    ProfiledPIDController thetaController = new ProfiledPIDController(
+            Constants.kPThetaController, 0, 0, Constants.kThetaControllerConstraints);
+    thetaController.enableContinuousInput(-Math.PI, Math.PI);
+
+    // 4. Construct command to follow trajectory
+    SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(
+            trajectory,
+            m_drivetrainSubsystem::getPose,
+            Constants.m_kinematics,
+            xController,
+            yController,
+            thetaController,
+            m_drivetrainSubsystem::setModuleStates,//?
+            m_drivetrainSubsystem);
+
+    // 5. Add some init and wrap-up, and return everything
+    return new SequentialCommandGroup(
+            new InstantCommand(() -> m_drivetrainSubsystem.resetOdometry(trajectory.getInitialPose())),
+            swerveControllerCommand,
+            new InstantCommand(() -> m_drivetrainSubsystem.stop()));
+
+   //#endregion
+
+
+
+
+
+
+   /*  //#region pathplanner
+    
+   
     // new AutonSquare(m_drivetrainSubsystem);
     // This is from Prototype launcher
     // return AutonSquare;
@@ -207,5 +273,6 @@ public class RobotContainer {
       new InstantCommand(() -> m_drivetrainSubsystem.resetOdometry(examplePath.getInitialPose())),
       swerveControllerCommand,
       new InstantCommand(() -> m_drivetrainSubsystem.stop()));
+       //#endregion */
   }
 }

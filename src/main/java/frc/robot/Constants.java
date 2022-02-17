@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
+
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
@@ -18,7 +20,53 @@ import frc.robot.subsystems.DrivetrainSubsystem;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    /**
+
+  /**
+   * The maximum voltage that will be delivered to the drive motors.
+   * <p>
+   * This can be reduced to cap the robot's maximum speed. Typically, this is useful during initial testing of the robot.
+   */
+  public static final double MAX_VOLTAGE = 12.0;
+  // Measure the drivetrain's maximum velocity or calculate the theoretical.
+  //  The formula for calculating the theoretical maximum velocity is:
+  //   <Motor free speed RPM> / 60 * <Drive reduction> * <Wheel diameter meters> * pi
+  //  By default this value is setup for a Mk3 standard module using Falcon500s to drive.
+  //  An example of this constant for a Mk4 L2 module with NEOs to drive is:
+  //   5880.0 / 60.0 / SdsModuleConfigurations.MK4_L2.getDriveReduction() * SdsModuleConfigurations.MK4_L2.getWheelDiameter() * Math.PI
+  /**
+   * The maximum velocity of the robot in meters per second.
+   * <p>
+   * This is a measure of how fast the robot should be able to drive in a straight line.
+   */
+  public static final double MAX_VELOCITY_METERS_PER_SECOND = 6380.0 / 60.0 * // FIXME Use our robots' velocity values
+          SdsModuleConfigurations.MK3_STANDARD.getDriveReduction() *
+          SdsModuleConfigurations.MK3_STANDARD.getWheelDiameter() * Math.PI;
+  /**
+   * The maximum angular velocity of the robot in radians per second.
+   * This is a measure of how fast the robot can rotate in place.
+   */
+  // Here we calculate the theoretical maximum angular velocity. You can also replace this with a measured amount.
+ 
+ 
+  // The important thing about how you configure your gyroscope is that rotating the robot counter-clockwise should
+  // cause the angle reading to increase until it wraps back over to zero.
+  
+
+  public class m_motionMagicConstants{
+  //0 to 3 slots availble for PID "profiles"
+  public static final int kDrivePIDSlot = 0;
+  //the mode is binary; 0 is normal, and 1 is cascaded. We only want a basic normal loop(for now) 
+  public static final int kDrivePIDLoop = 0;
+//for the sake of easy reassignment
+  public static final int kTimeoutMs = 0;
+//gains for the motionmagic used in the auton
+ public final Gains kDriveMotionMagicGains = new Gains(0, 0, 0, 0, 0, 0);
+  
+  }
+  
+  
+  
+  /**
      * The left-to-right distance between the drivetrain wheels
      * Should be measured from center to center.
      */
@@ -41,6 +89,12 @@ public final class Constants {
         // Back right
         new Translation2d(-DRIVETRAIN_TRACKWIDTH_METERS / 2.0, -DRIVETRAIN_WHEELBASE_METERS / 2.0)
       );
+
+
+      public static final double MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND = MAX_VELOCITY_METERS_PER_SECOND /
+      Math.hypot(DRIVETRAIN_TRACKWIDTH_METERS / 2.0, DRIVETRAIN_WHEELBASE_METERS / 2.0);
+
+
 
     // TODO Set the offsets using shuffleboard and a straight edge
     public static final int FRONT_RIGHT_MODULE_DRIVE_MOTOR = 1; // Set front right drive motor ID
@@ -113,7 +167,7 @@ public final class Constants {
  
      public static final TrapezoidProfile.Constraints kThetaControllerConstraints = //
      new TrapezoidProfile.Constraints(
-         DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
-         DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND);
+         MAX_VELOCITY_METERS_PER_SECOND,
+         MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND);
 
 }
