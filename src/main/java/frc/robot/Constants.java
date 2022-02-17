@@ -46,26 +46,29 @@ public final class Constants {
     public static final int FRONT_RIGHT_MODULE_DRIVE_MOTOR = 1; // Set front right drive motor ID
     public static final int FRONT_RIGHT_MODULE_STEER_MOTOR = 2; // Set front right steer motor ID
     public static final int FRONT_RIGHT_MODULE_STEER_ENCODER = 21; // Set front right steer encoder ID
-    public static final double FRONT_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(57.7); 
+    public static final double FRONT_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(60.4); 
     // abs 1.9 - 59.4 = 57.5 offset on 2/16/22
     // 360 - 358.5 + 1.8 = 3.3
     // 357.5 - 360+2.1 = -0.4
+    // 178; 182.4; 4.4; adding half
+    // 179.5; 180.5
 
     public static final int BACK_RIGHT_MODULE_DRIVE_MOTOR = 3; // Set back right drive motor ID
     public static final int BACK_RIGHT_MODULE_STEER_MOTOR = 4; // Set back right steer motor ID
     public static final int BACK_RIGHT_MODULE_STEER_ENCODER = 22; // Set back right steer encoder ID
-    public static final double BACK_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(6.5); //
+    public static final double BACK_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(9.5); //
     // abs 8.3-1.9 = 6.4 offset on 2/16/22
     // 360 - 357.6 + 1.8 = 4.2
     // 357.4 - 360 + 4.4 = 1.8
     // 360 - 357.6 = 2.4
-    // 
+    // 177.6; 180.6; 4;
+    // 178.0; 180.0;
 
     
     public static final int BACK_LEFT_MODULE_DRIVE_MOTOR = 5; // Set back left drive motor ID
     public static final int BACK_LEFT_MODULE_STEER_MOTOR = 6; // Set back left steer motor ID
     public static final int BACK_LEFT_MODULE_STEER_ENCODER = 23; // Set back left steer encoder ID
-    public static final double BACK_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(297.6); // +10.2
+    public static final double BACK_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(297.6); //
     // 177.1-1.7 = 175.4 ; no
     // 357.6 - 303.4 = 54.2
     // 357.6 - 180 = 177.6
@@ -73,6 +76,7 @@ public final class Constants {
     // 177 - 246 = 69 + (357-229) = 197
     // 107 + 180
     // 287: 181.4, 11.6 ()
+    // 297.6-180 = 117.6 
 
 
     public static final int FRONT_LEFT_MODULE_DRIVE_MOTOR = 7; // Set front left module drive motor ID
