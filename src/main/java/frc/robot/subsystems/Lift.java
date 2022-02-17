@@ -15,15 +15,18 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import frc.robot.Constants;
 
-
 public class Lift extends SubsystemBase {
   private final WPI_TalonFX leftLiftMotor = new WPI_TalonFX(Constants.LEFT_LIFT_MOTOR);
   private final WPI_TalonFX rightLiftMotor = new WPI_TalonFX(Constants.RIGHT_LIFT_MOTOR);
-
-  private final MotorControllerGroup liftMotors = new MotorControllerGroup(leftLiftMotor, rightLiftMotor); 
+  
+  // NOTE you must use WPI_TalonFX subclass rather than TalonFX when grouping motors... 60 minutes of my life wasted
+  private MotorControllerGroup liftMotors = new MotorControllerGroup(
+    new WPI_TalonFX(Constants.LEFT_LIFT_MOTOR), 
+    new WPI_TalonFX(Constants.RIGHT_LIFT_MOTOR));
 
 public Lift() {
-  // TODO Check direction of motors and determine if one needs to be reverse
+  leftLiftMotor.setInverted(true);
+  rightLiftMotor.setInverted(false);
 }
 
   @Override

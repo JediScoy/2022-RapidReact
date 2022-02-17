@@ -106,10 +106,10 @@ public class RobotContainer {
     // Defining the actions associated with buttons
     d_backButton.whenPressed(m_drivetrainSubsystem::zeroGyroscope); // Shaun's gyro reset 
 
-    d_ButtonA.whenPressed(new LauncherSpeed(launcher, 0.30, 030)); // High shot from a distance. No longer need negative values
+    d_ButtonA.whenPressed(new LauncherSpeed(launcher, 0.30, 0.60)); // High shot from a distance. No longer need negative values
     d_ButtonA.whenReleased(new LauncherSpeed(launcher, 0.0, 0.00));
 
-    d_ButtonB.whenPressed(new LauncherSpeed(launcher, 0.30, 0.30)); // Low shot from a up close
+    d_ButtonB.whenPressed(new LauncherSpeed(launcher, 0.20, 0.20)); // Low shot from a up close
     d_ButtonB.whenReleased(new LauncherSpeed(launcher, 0.0, 0.00));
 
     d_ButtonX.whenPressed(new LauncherSpeed(launcher, 0.30, 0.40)); // High shot up close
@@ -125,20 +125,19 @@ public class RobotContainer {
     d_ButtonY.whenReleased(new IndexCommand(indexMotors, 0));
 
     //lift
-    op_ButtonA.whenPressed(new LiftCommand(liftMotors, 0.1)); // Releases the lift arms for extension
+    op_ButtonA.whenPressed(new LiftCommand(liftMotors, 0.5)); // Releases the lift arms for extension
     op_ButtonA.whenReleased(new LiftCommand(liftMotors, 0.0));
     
-    op_ButtonB.whenPressed(new LiftCommand(liftMotors, -0.1)); // Pulls the arms back down for climbing
+    op_ButtonB.whenPressed(new LiftCommand(liftMotors, -0.5)); // Pulls the arms back down for climbing
     op_ButtonB.whenReleased(new LiftCommand(liftMotors, 0.0));
     
-    op_ButtonX.whenPressed(new LiftPivotCommand(liftPivotMotors, 0.1)); // Rotates the pivot-lift arms for the higher bar
+    /** Removed the Pivot arms from the robot, commenting out these buttons 
+    op_ButtonX.whenPressed(new LiftPivotCommand(liftPivotMotors, 0.5)); // Rotates the pivot-lift arms for the higher bar
     op_ButtonX.whenReleased(new LiftPivotCommand(liftPivotMotors, 0.0));
   
-    op_ButtonY.whenPressed(new LiftPivotCommand(liftPivotMotors, -0.1)); // Rotates the pivot-lifts arms back towards the robot
+    op_ButtonY.whenPressed(new LiftPivotCommand(liftPivotMotors, -0.5)); // Rotates the pivot-lifts arms back towards the robot
     op_ButtonY.whenReleased(new LiftPivotCommand(liftPivotMotors, 0.0));
-  
-    //op_backButton.whenPressed(new LiftCommand(liftMotors, 0.0, 0.0));
-    //op_backButton.whenReleased(new LiftCommand(liftMotors, 0.0, 0.0));
+    */
     
   /** Use this to pass the autonomous command to the main {@link Robot} class.
   * @return the command to run in autonomous
