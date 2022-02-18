@@ -106,8 +106,14 @@ public class RobotContainer {
     // Defining the actions associated with buttons
     d_backButton.whenPressed(m_drivetrainSubsystem::zeroGyroscope); // Shaun's gyro reset 
 
-    d_ButtonA.whenPressed(new LauncherSpeed(launcher, 0.30, 0.60)); // High shot from a distance. No longer need negative values
-    d_ButtonA.whenReleased(new LauncherSpeed(launcher, 0.0, 0.00));
+    // d_ButtonA.whenPressed(new LauncherSpeed(launcher, 0.30, 0.60)); // High shot from a distance. No longer need negative values
+    // d_ButtonA.whenReleased(new LauncherSpeed(launcher, 0.0, 0.00));
+
+    d_ButtonA.whenPressed(new SequentialCommandGroup(
+      new LauncherSpeed(launcher, 0.30, 0.60), 
+      new IndexCommand(indexMotors, 0.5)
+      )); // new SequentialCommandGroup(new startIndex(), new setLauncherSpeed());
+
 
     d_ButtonB.whenPressed(new LauncherSpeed(launcher, 0.20, 0.20)); // Low shot from a up close
     d_ButtonB.whenReleased(new LauncherSpeed(launcher, 0.0, 0.00));
