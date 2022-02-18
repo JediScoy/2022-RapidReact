@@ -109,10 +109,13 @@ public class RobotContainer {
     // d_ButtonA.whenPressed(new LauncherSpeed(launcher, 0.30, 0.60)); // High shot from a distance. No longer need negative values
     // d_ButtonA.whenReleased(new LauncherSpeed(launcher, 0.0, 0.00));
 
-    d_ButtonA.whenPressed(new SequentialCommandGroup(
-      new LauncherSpeed(launcher, 0.20, 0.20), 
-      new IndexCommand(indexMotors, 0.5)
-      )); // new SequentialCommandGroup(new startIndex(), new setLauncherSpeed());
+    d_ButtonA.whenPressed(
+      new LauncherSpeed(launcher, 0.20, 0.20),
+      new SequentialCommandGroup(
+        new IndexCommand(indexMotors, 0.5),
+        new IntakeCommand(intakeMotor, 0.5)
+        )
+      ); // new SequentialCommandGroup(new startIndex(), new setLauncherSpeed());
 
 
     d_ButtonB.whenPressed(new LauncherSpeed(launcher, 0.20, 0.20)); // Low shot from a up close
