@@ -110,7 +110,7 @@ public class RobotContainer {
     // d_ButtonA.whenReleased(new LauncherSpeed(launcher, 0.0, 0.00));
 
     d_ButtonA.whenPressed(new SequentialCommandGroup(
-      new LauncherSpeed(launcher, 0.30, 0.60), 
+      new LauncherSpeed(launcher, 0.20, 0.20), 
       new IndexCommand(indexMotors, 0.5)
       )); // new SequentialCommandGroup(new startIndex(), new setLauncherSpeed());
 
