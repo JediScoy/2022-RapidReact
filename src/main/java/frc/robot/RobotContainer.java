@@ -18,6 +18,7 @@ import com.pathplanner.lib.PathPlanner;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 
@@ -112,8 +113,22 @@ public class RobotContainer {
     d_ButtonB.whenPressed(new LauncherSpeed(launcher, 0.20, 0.20)); // Low shot from a up close
     d_ButtonB.whenReleased(new LauncherSpeed(launcher, 0.0, 0.00));
 
+    /** Stealing this button for now to try and combine commands 
     d_ButtonX.whenPressed(new LauncherSpeed(launcher, 0.30, 0.40)); // High shot up close
     d_ButtonX.whenReleased(new LauncherSpeed(launcher, 0.0, 0.00));
+    */
+
+      // when X is held, run Intake, Index, and Shooter motors all at once. 
+      d_ButtonX.whenPressed(new ParallelCommandGroup(
+        new IntakeCommand(intakeMotor, -0.5),
+        new IndexCommand(indexMotors, 0.5),
+        new LauncherSpeed(launcher, 0.35, 0.40))
+      );
+      d_ButtonX.whenReleased(new ParallelCommandGroup(
+        new IntakeCommand(intakeMotor, 0.0),
+        new IndexCommand(indexMotors, 0.0),
+        new LauncherSpeed(launcher, 0.0, 0.0))
+      );
 
     d_RightBumper.whenPressed(new IntakeCommand(intakeMotor, 0.5)); // Intake cargo from the field
     d_RightBumper.whenReleased(new IntakeCommand(intakeMotor, 0.0)); 
