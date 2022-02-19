@@ -119,11 +119,12 @@ public class RobotContainer {
 
     // when A is held, run Launch motors, pause for a second, then run Intake and Index motors
       // Low shot up close
-      d_ButtonA.whenPressed(new ParallelCommandGroup(
+      d_ButtonA.whenPressed(new SequentialCommandGroup(
         new LauncherSpeed(launcher, 0.20, 0.20),
         new WaitCommand(1),
-        new IntakeCommand(intakeMotor, -0.5),
-        new IndexCommand(indexMotors, 0.5))
+        new ParallelCommandGroup (
+          new IntakeCommand(intakeMotor, -0.5),
+          new IndexCommand(indexMotors, 0.5)))
       );
       d_ButtonA.whenReleased(new ParallelCommandGroup(
         new IntakeCommand(intakeMotor, 0.0),
