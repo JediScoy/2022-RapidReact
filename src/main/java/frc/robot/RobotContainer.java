@@ -117,11 +117,11 @@ public class RobotContainer {
     d_ButtonB.whenReleased(new LauncherSpeed(launcher, 0.0, 0.00));
     */
 
-    // when A is held, run Intake, Index, and Shooter motors all at once. 
+    // when A is held, run Launch motors, pause for a second, then run Intake and Index motors
       // Low shot up close
       d_ButtonA.whenPressed(new ParallelCommandGroup(
         new LauncherSpeed(launcher, 0.20, 0.20),
-        new WaitCommand(0.5),
+        new WaitCommand(1),
         new IntakeCommand(intakeMotor, -0.5),
         new IndexCommand(indexMotors, 0.5))
       );
@@ -136,11 +136,11 @@ public class RobotContainer {
     d_ButtonX.whenReleased(new LauncherSpeed(launcher, 0.0, 0.00));
     */
 
-    // when Y is held, run Intake, Index, and Shooter motors all at once. 
+    // when Y is held, run Launch motors, pause for a second, then run Intake and Index motors
       // High shot up close
       d_ButtonY.whenPressed(new ParallelCommandGroup(
         new LauncherSpeed(launcher, 0.35, 0.40),
-        new WaitCommand(0.5),
+        new WaitCommand(1),
         new IntakeCommand(intakeMotor, -0.5),
         new IndexCommand(indexMotors, 0.5))
       );
