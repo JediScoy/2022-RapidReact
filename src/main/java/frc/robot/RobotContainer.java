@@ -128,7 +128,7 @@ public class RobotContainer {
     d_LeftBumper.whenPressed(new IntakeCommand(intakeMotor, -Constants.intakeSpeed)); // Reverse cargo back to the field
     d_LeftBumper.whenReleased(new IntakeCommand(intakeMotor, 0.0)); 
 
-    d_ButtonY.whenPressed(new IndexCommand(indexMotors, IndexCommand.speed)); // Advance cargo to the launcher
+    d_ButtonY.whenPressed(new IndexCommand(indexMotors, IndexCommand.indexSpeed)); // Advance cargo to the launcher
     d_ButtonY.whenReleased(new IndexCommand(indexMotors, 0));
 
     //lift
