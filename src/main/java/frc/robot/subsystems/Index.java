@@ -37,8 +37,6 @@ public class Index extends SubsystemBase {
   }
 
   public void startIndex(double speed){
-      // frontIndexMotor.set(ControlMode.PercentOutput, speed); // Use individual motor lines of code if the group speed doesn't work
-      // backIndexMotor.set(ControlMode.PercentOutput, speed);
       indexMotors.set(speed);
   }
 

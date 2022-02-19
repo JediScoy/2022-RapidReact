@@ -31,16 +31,16 @@ public final class Constants {
     // public static final int DRIVETRAIN_PIGEON_ID = 0; // Set Pigeon ID - We do not use Pigeon
 
       //moving this from DrivetrainSubsystem to see if it works
-      public static final SwerveDriveKinematics m_kinematics = new SwerveDriveKinematics(
+    public static final SwerveDriveKinematics m_kinematics = new SwerveDriveKinematics(
         // Front left
-        new Translation2d(DRIVETRAIN_TRACKWIDTH_METERS / 2.0, DRIVETRAIN_WHEELBASE_METERS / 2.0),
+      new Translation2d(DRIVETRAIN_TRACKWIDTH_METERS / 2.0, DRIVETRAIN_WHEELBASE_METERS / 2.0),
         // Front right
-        new Translation2d(DRIVETRAIN_TRACKWIDTH_METERS / 2.0, -DRIVETRAIN_WHEELBASE_METERS / 2.0),
+      new Translation2d(DRIVETRAIN_TRACKWIDTH_METERS / 2.0, -DRIVETRAIN_WHEELBASE_METERS / 2.0),
         // Back left
-        new Translation2d(-DRIVETRAIN_TRACKWIDTH_METERS / 2.0, DRIVETRAIN_WHEELBASE_METERS / 2.0),
+      new Translation2d(-DRIVETRAIN_TRACKWIDTH_METERS / 2.0, DRIVETRAIN_WHEELBASE_METERS / 2.0),
         // Back right
-        new Translation2d(-DRIVETRAIN_TRACKWIDTH_METERS / 2.0, -DRIVETRAIN_WHEELBASE_METERS / 2.0)
-      );
+      new Translation2d(-DRIVETRAIN_TRACKWIDTH_METERS / 2.0, -DRIVETRAIN_WHEELBASE_METERS / 2.0)
+    );
 
     // TODO Set the offsets using shuffleboard and a straight edge
     public static final int FRONT_RIGHT_MODULE_DRIVE_MOTOR = 1; // Set front right drive motor ID
@@ -119,5 +119,21 @@ public final class Constants {
      new TrapezoidProfile.Constraints(
          DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
          DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND);
+    
+    // Launcher Constants
+    public static final double frontLow = 0.2; // low launch speed
+    public static final double backLow = 0.2; // low launch speed
+    public static final double frontHigh = 0.3; // high launch speed
+    public static final double backHigh = 0.4; // high launch speed
+    public static final double frontLong = 0.3; // long shot
+    public static final double backLong = 0.6; // long shot
+   
+    // Index speeds
+    public static final double indexSpeed = 0.5;
+    
+    // Intake speeds
+    public static final double intakeSpeed = 0.5;
+    
+    
 
-}
+} // end of class

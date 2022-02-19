@@ -15,11 +15,12 @@ import frc.robot.subsystems.Intake;
 
 
 public class LaunchSequence extends SequentialCommandGroup {
-    
-  public void launchSequence(Launcher launcher, Index indexMotors, Intake intakeMotor) {
-      
+  private double m_timeout;
+
+  public void launchSequence(Index indexMotors, double timeout, Intake intakeMotor) {
+      m_timeout=timeout;
       addCommands(
-        new LauncherSpeed(launcher, 0.20, 0.20),
+        // new LauncherSpeed(launcher, 0.20, 0.20),
         new SequentialCommandGroup(
           new IndexCommand(indexMotors, 0.5),
           new IntakeCommand(intakeMotor, 0.5),

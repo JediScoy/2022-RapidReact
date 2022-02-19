@@ -8,17 +8,17 @@ public class IndexCommand extends CommandBase {
     // The subsystem the command runs on
     private final Index subsystem;
 
-    private double speed;
+    public static double indexSpeed = 0.5;
 
-    public IndexCommand(Index subsystem, double speed) {
+    public IndexCommand(Index subsystem, double indexSpeed) {
       this.subsystem = subsystem;
-      this.speed = speed;
+      // this.speed = speed;
       addRequirements(subsystem);
     }
   
     @Override
     public void initialize() {
-      subsystem.startIndex(speed);
+      subsystem.startIndex(indexSpeed);
     }
   
     @Override

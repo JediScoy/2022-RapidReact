@@ -39,6 +39,8 @@ import frc.robot.commands.LiftPivotCommand;
 import frc.robot.commands.LaunchSequence;
 import frc.robot.commands.*;
 
+import frc.robot.Constants;
+
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -114,19 +116,19 @@ public class RobotContainer {
     d_ButtonA.whenPressed(new LaunchSequence()); // new SequentialCommandGroup(new startIndex(), new setLauncherSpeed());
 
 
-    d_ButtonB.whenPressed(new LauncherSpeed(launcher, 0.20, 0.20)); // Low shot from a up close
-    d_ButtonB.whenReleased(new LauncherSpeed(launcher, 0.0, 0.00));
+    d_ButtonB.whenPressed(new LauncherSpeed(launcher, Constants.frontLow, Constants.backLow)); // Low shot from a up close
+    d_ButtonB.whenReleased(new LauncherSpeed(launcher, 0, 0));
 
     d_ButtonX.whenPressed(new LauncherSpeed(launcher, 0.30, 0.40)); // High shot up close
     d_ButtonX.whenReleased(new LauncherSpeed(launcher, 0.0, 0.00));
 
-    d_RightBumper.whenPressed(new IntakeCommand(intakeMotor, 0.5)); // Intake cargo from the field
+    d_RightBumper.whenPressed(new IntakeCommand(intakeMotor, Constants.intakeSpeed)); // Intake cargo from the field
     d_RightBumper.whenReleased(new IntakeCommand(intakeMotor, 0.0)); 
 
-    d_LeftBumper.whenPressed(new IntakeCommand(intakeMotor, -0.5)); // Reverse cargo back to the field
+    d_LeftBumper.whenPressed(new IntakeCommand(intakeMotor, -Constants.intakeSpeed)); // Reverse cargo back to the field
     d_LeftBumper.whenReleased(new IntakeCommand(intakeMotor, 0.0)); 
 
-    d_ButtonY.whenPressed(new IndexCommand(indexMotors, 0.5)); // Advance cargo to the launcher
+    d_ButtonY.whenPressed(new IndexCommand(indexMotors, IndexCommand.speed)); // Advance cargo to the launcher
     d_ButtonY.whenReleased(new IndexCommand(indexMotors, 0));
 
     //lift
