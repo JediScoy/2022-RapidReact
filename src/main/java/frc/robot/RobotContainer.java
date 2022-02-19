@@ -107,24 +107,42 @@ public class RobotContainer {
     // Defining the actions associated with buttons
     d_backButton.whenPressed(m_drivetrainSubsystem::zeroGyroscope); // Shaun's gyro reset 
 
+    /** May not need this button, High shot from far may not be needed. 
     d_ButtonA.whenPressed(new LauncherSpeed(launcher, 0.30, 0.60)); // High shot from a distance. No longer need negative values
     d_ButtonA.whenReleased(new LauncherSpeed(launcher, 0.0, 0.00));
-
-    d_ButtonB.whenPressed(new LauncherSpeed(launcher, 0.20, 0.20)); // Low shot from a up close
-    d_ButtonB.whenReleased(new LauncherSpeed(launcher, 0.0, 0.00));
+    */
 
     /** Stealing this button for now to try and combine commands 
+    d_ButtonB.whenPressed(new LauncherSpeed(launcher, 0.20, 0.20)); // Low shot from a up close
+    d_ButtonB.whenReleased(new LauncherSpeed(launcher, 0.0, 0.00));
+    */
+
+    // when A is held, run Intake, Index, and Shooter motors all at once. 
+      // Low shot up close
+      d_ButtonA.whenPressed(new ParallelCommandGroup(
+        new IntakeCommand(intakeMotor, -0.5),
+        new IndexCommand(indexMotors, 0.5),
+        new LauncherSpeed(launcher, 0.20, 0.20))
+      );
+      d_ButtonA.whenReleased(new ParallelCommandGroup(
+        new IntakeCommand(intakeMotor, 0.0),
+        new IndexCommand(indexMotors, 0.0),
+        new LauncherSpeed(launcher, 0.0, 0.0))
+      );
+
+    /** Stealing this button to try and combine commands 
     d_ButtonX.whenPressed(new LauncherSpeed(launcher, 0.30, 0.40)); // High shot up close
     d_ButtonX.whenReleased(new LauncherSpeed(launcher, 0.0, 0.00));
     */
 
-      // when X is held, run Intake, Index, and Shooter motors all at once. 
-      d_ButtonX.whenPressed(new ParallelCommandGroup(
+    // when Y is held, run Intake, Index, and Shooter motors all at once. 
+      // High shot up close
+      d_ButtonY.whenPressed(new ParallelCommandGroup(
         new IntakeCommand(intakeMotor, -0.5),
         new IndexCommand(indexMotors, 0.5),
         new LauncherSpeed(launcher, 0.35, 0.40))
       );
-      d_ButtonX.whenReleased(new ParallelCommandGroup(
+      d_ButtonY.whenReleased(new ParallelCommandGroup(
         new IntakeCommand(intakeMotor, 0.0),
         new IndexCommand(indexMotors, 0.0),
         new LauncherSpeed(launcher, 0.0, 0.0))
@@ -136,8 +154,8 @@ public class RobotContainer {
     d_LeftBumper.whenPressed(new IntakeCommand(intakeMotor, -0.5)); // Reverse cargo back to the field
     d_LeftBumper.whenReleased(new IntakeCommand(intakeMotor, 0.0)); 
 
-    d_ButtonY.whenPressed(new IndexCommand(indexMotors, 0.5)); // Advance cargo to the launcher
-    d_ButtonY.whenReleased(new IndexCommand(indexMotors, 0));
+    d_ButtonX.whenPressed(new IndexCommand(indexMotors, 0.5)); // Advance cargo to the launcher
+    d_ButtonX.whenReleased(new IndexCommand(indexMotors, 0));
 
     //lift
     op_ButtonA.whenPressed(new LiftCommand(liftMotors, 0.5)); // Releases the lift arms for extension
