@@ -21,7 +21,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
-
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 // Subsystem imports
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.Index;
@@ -120,9 +120,10 @@ public class RobotContainer {
     // when A is held, run Intake, Index, and Shooter motors all at once. 
       // Low shot up close
       d_ButtonA.whenPressed(new ParallelCommandGroup(
+        new LauncherSpeed(launcher, 0.20, 0.20),
+        new WaitCommand(0.5),
         new IntakeCommand(intakeMotor, -0.5),
-        new IndexCommand(indexMotors, 0.5),
-        new LauncherSpeed(launcher, 0.20, 0.20))
+        new IndexCommand(indexMotors, 0.5))
       );
       d_ButtonA.whenReleased(new ParallelCommandGroup(
         new IntakeCommand(intakeMotor, 0.0),
@@ -138,9 +139,10 @@ public class RobotContainer {
     // when Y is held, run Intake, Index, and Shooter motors all at once. 
       // High shot up close
       d_ButtonY.whenPressed(new ParallelCommandGroup(
+        new LauncherSpeed(launcher, 0.35, 0.40),
+        new WaitCommand(0.5),
         new IntakeCommand(intakeMotor, -0.5),
-        new IndexCommand(indexMotors, 0.5),
-        new LauncherSpeed(launcher, 0.35, 0.40))
+        new IndexCommand(indexMotors, 0.5))
       );
       d_ButtonY.whenReleased(new ParallelCommandGroup(
         new IntakeCommand(intakeMotor, 0.0),
