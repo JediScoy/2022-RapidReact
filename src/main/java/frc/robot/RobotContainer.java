@@ -119,7 +119,7 @@ public class RobotContainer {
     d_ButtonB.whenPressed(new LauncherSpeed(launcher, Constants.frontLow, Constants.backLow)); // Low shot from a up close
     d_ButtonB.whenReleased(new LauncherSpeed(launcher, 0, 0));
 
-    d_ButtonX.whenPressed(new LauncherSpeed(launcher, 0.30, 0.40)); // High shot up close
+    d_ButtonX.whenPressed(new LauncherSpeed(launcher, Constants.frontLow, Constants.backLow)); // High shot up close
     d_ButtonX.whenReleased(new LauncherSpeed(launcher, 0.0, 0.00));
 
     d_RightBumper.whenPressed(new IntakeCommand(intakeMotor, Constants.intakeSpeed)); // Intake cargo from the field
