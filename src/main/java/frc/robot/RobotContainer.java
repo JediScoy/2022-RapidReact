@@ -19,6 +19,7 @@ import com.pathplanner.lib.PathPlanner;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ScheduleCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -117,15 +118,18 @@ public class RobotContainer {
     d_ButtonB.whenReleased(new LauncherSpeed(launcher, 0.0, 0.00));
     */
 
-    // when A is held, run Launch motors, pause for a second, then run Intake and Index motors
-      // Low shot up close
+    //Trying SequentialCommandGroup --> ScheduleCommand --> ParallelCommand Group here
+      // when A is held, run Launch motors, pause for a second, then run Intake and Index motors
+        // Low shot up close
       d_ButtonA.whenPressed(new SequentialCommandGroup(
-        new LauncherSpeed(launcher, 0.20, 0.20),
-        new WaitCommand(1),
-        new ParallelCommandGroup (
-          new IntakeCommand(intakeMotor, -0.5),
-          new IndexCommand(indexMotors, 0.5)))
-      );
+        new ScheduleCommand(new LauncherSpeed(launcher, 0.20, 0.20),        
+          new ParallelCommandGroup (
+            /** If i'm thinking about this right, we'll need to duplicate running the launcher motors here, as they will end 
+            with the command above finishing and moving onto the parallel command group */
+            new LauncherSpeed(launcher, 0.20, 0.20),
+            new IntakeCommand(intakeMotor, -0.5),
+            new IndexCommand(indexMotors, 0.5)))
+      ));
       d_ButtonA.whenReleased(new ParallelCommandGroup(
         new IntakeCommand(intakeMotor, 0.0),
         new IndexCommand(indexMotors, 0.0),
@@ -137,14 +141,16 @@ public class RobotContainer {
     d_ButtonX.whenReleased(new LauncherSpeed(launcher, 0.0, 0.00));
     */
 
-    // when Y is held, run Launch motors, pause for a second, then run Intake and Index motors
-      // High shot up close
-      d_ButtonY.whenPressed(new ParallelCommandGroup(
-        new LauncherSpeed(launcher, 0.35, 0.40),
-        new WaitCommand(1),
-        new IntakeCommand(intakeMotor, -0.5),
-        new IndexCommand(indexMotors, 0.5))
-      );
+    //Trying SequentialCommandGroup --> InstantCommand --> ParallelCommand Group here
+      // when Y is held, run Launch motors, pause for a second, then run Intake and Index motors
+        // High shot up close
+      d_ButtonY.whenPressed(new SequentialCommandGroup(
+        new InstantCommand(() -> new LauncherSpeed(launcher, 0.35, 0.40)),
+          new ParallelCommandGroup (
+            new LauncherSpeed(launcher, 0.35, 0.40),
+            new IntakeCommand(intakeMotor, -0.5),
+            new IndexCommand(indexMotors, 0.5))
+      ));
       d_ButtonY.whenReleased(new ParallelCommandGroup(
         new IntakeCommand(intakeMotor, 0.0),
         new IndexCommand(indexMotors, 0.0),
