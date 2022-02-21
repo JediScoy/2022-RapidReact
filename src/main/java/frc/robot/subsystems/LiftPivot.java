@@ -16,7 +16,7 @@ import frc.robot.Constants;
 
 public class LiftPivot extends SubsystemBase {
 
-// TODO Check direction of motors and determine if one needs to be reverse
+
   public final WPI_TalonFX leftPivotMotor = new WPI_TalonFX(Constants.LEFT_PIVOT_MOTOR);
   public final WPI_TalonFX rightPivotMotor = new WPI_TalonFX(Constants.RIGHT_PIVOT_MOTOR //, TalonFXInvertType.CounterClockwise
   );

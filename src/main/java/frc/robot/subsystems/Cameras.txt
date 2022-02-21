@@ -1,7 +1,8 @@
+// https://github.com/PseudoResonance/2019Robot/blob/master/src/main/java/org/usfirst/frc/team3786/robot/subsystems/vision/Cameras.java
 
-Cameras.java package org.usfirst.frc.team3786.robot.subsystems.vision;
+package frc.robot.subsystems;
 
-import edu.wpi.cscore.UsbCamera;
+// import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
 import io.github.pseudoresonance.pixy2api.links.SPILink;
 

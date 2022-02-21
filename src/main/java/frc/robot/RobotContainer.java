@@ -27,7 +27,7 @@ import frc.robot.subsystems.Index;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Launcher;
 import frc.robot.subsystems.Lift;
-import frc.robot.subsystems.LiftPivot;
+// import frc.robot.subsystems.LiftPivot;
 
 // Command imports
 import frc.robot.commands.DefaultDriveCommand;
@@ -35,7 +35,7 @@ import frc.robot.commands.IndexCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.LauncherSpeed;
 import frc.robot.commands.LiftCommand;
-import frc.robot.commands.LiftPivotCommand;
+// import frc.robot.commands.LiftPivotCommand;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -51,7 +51,7 @@ public class RobotContainer {
   private final Intake intakeMotor = new Intake();
   private final Launcher launcher = new Launcher();
   private final Lift liftMotors = new Lift();
-  private final LiftPivot liftPivotMotors = new LiftPivot();
+  // private final LiftPivot liftPivotMotors = new LiftPivot();
 
   // Main driver controller
   private final XboxController driverController = new XboxController(0);
@@ -96,8 +96,8 @@ public class RobotContainer {
     // final JoystickButton op_startButton = new JoystickButton(operatorController, Button.kStart.value);
     final JoystickButton op_ButtonA = new JoystickButton(operatorController, Button.kA.value);
     final JoystickButton op_ButtonB = new JoystickButton(operatorController, Button.kB.value);
-    final JoystickButton op_ButtonX = new JoystickButton(operatorController, Button.kX.value);
-    final JoystickButton op_ButtonY = new JoystickButton(operatorController, Button.kY.value);
+    // final JoystickButton op_ButtonX = new JoystickButton(operatorController, Button.kX.value);
+    // final JoystickButton op_ButtonY = new JoystickButton(operatorController, Button.kY.value);
     //final JoystickButton op_RightBumper = new JoystickButton(operatorController, Button.kRightBumper.value);
     //final JoystickButton op_LeftBumper = new JoystickButton(operatorController, Button.kLeftBumper.value);
     //final double op_LeftTrigger = operatorController.getLeftTriggerAxis();
