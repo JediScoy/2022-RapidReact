@@ -119,4 +119,7 @@ public final class Constants {
          DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
          DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND);
 
+  public static final int PIXY_CHIP_SELECT = 0;
+  public static final int PIXY_ANALOG = 1; // Roborio port 1, 4 was default //MXP pin 3
+  public static final int PIXY_DIGITAL = 1; // Roborio port 1, 5 was default
 }

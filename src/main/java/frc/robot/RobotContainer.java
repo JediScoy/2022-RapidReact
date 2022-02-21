@@ -28,7 +28,7 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Launcher;
 import frc.robot.subsystems.Lift;
 // import frc.robot.subsystems.LiftPivot;
-
+import frc.robot.subsystems.PixyCam2Wire;
 // Command imports
 import frc.robot.commands.DefaultDriveCommand;
 import frc.robot.commands.IndexCommand;
@@ -52,6 +52,9 @@ public class RobotContainer {
   private final Launcher launcher = new Launcher();
   private final Lift liftMotors = new Lift();
   // private final LiftPivot liftPivotMotors = new LiftPivot();
+
+  public PixyCam2Wire pixy = new PixyCam2Wire(Constants.PIXY_ANALOG, Constants.PIXY_DIGITAL);
+
 
   // Main driver controller
   private final XboxController driverController = new XboxController(0);
