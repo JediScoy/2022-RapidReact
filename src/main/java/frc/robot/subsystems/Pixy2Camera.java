@@ -15,8 +15,6 @@ public class Pixy2Camera {
 
 	private static final Pixy2 pixy;
 
-
-
 	public static void initialize() {
 		pixy = Pixy2.createInstance(new SPILink()); // Creates a new Pixy2 camera using SPILink
 		pixy.init(); // Initializes the camera and prepares to send/receive data
