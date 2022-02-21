@@ -122,14 +122,14 @@ public class RobotContainer {
       // when A is held, run Launch motors, pause for a second, then run Intake and Index motors
         // Low shot up close
       d_ButtonA.whenPressed(new SequentialCommandGroup(
-        new ScheduleCommand(new LauncherSpeed(launcher, 0.20, 0.20).withTimeout(1),        
+        new LauncherSpeed(launcher, 0.20, 0.20).withTimeout(1),
           new ParallelCommandGroup (
             /** If i'm thinking about this right, we'll need to duplicate running the launcher motors here, as they will end 
             with the command above finishing and moving onto the parallel command group */
             new LauncherSpeed(launcher, 0.20, 0.20),
             new IntakeCommand(intakeMotor, -0.5),
             new IndexCommand(indexMotors, 0.5)))
-      ));
+      );
       d_ButtonA.whenReleased(new ParallelCommandGroup(
         new IntakeCommand(intakeMotor, 0.0),
         new IndexCommand(indexMotors, 0.0),
@@ -145,7 +145,7 @@ public class RobotContainer {
       // when Y is held, run Launch motors, pause for a second, then run Intake and Index motors
         // High shot up close
       d_ButtonY.whenPressed(new SequentialCommandGroup(
-        new InstantCommand(() -> new LauncherSpeed(launcher, 0.35, 0.40).withTimeout(1)),
+        new LauncherSpeed(launcher, 0.35, 0.40).withTimeout(1),
           new ParallelCommandGroup (
             new LauncherSpeed(launcher, 0.35, 0.40),
             new IntakeCommand(intakeMotor, -0.5),
