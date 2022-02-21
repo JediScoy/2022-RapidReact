@@ -113,18 +113,12 @@ public class RobotContainer {
     d_ButtonA.whenReleased(new LauncherSpeed(launcher, 0.0, 0.00));
     */
 
-    /** Stealing this button for now to try and combine commands 
-    d_ButtonB.whenPressed(new LauncherSpeed(launcher, 0.20, 0.20)); // Low shot from a up close
-    d_ButtonB.whenReleased(new LauncherSpeed(launcher, 0.0, 0.00));
-    */
-
-    //Trying SequentialCommandGroup --> ScheduleCommand --> withTimeout of 1 second --> ParallelCommand Group here
-      // when A is held, run Launch motors, pause for a second, then run Intake and Index motors
+      // when A is held, run Launch motors by themselves for a second, then run Launch, Intake and Index motors all at once
         // Low shot up close
       d_ButtonA.whenPressed(new SequentialCommandGroup(
         new LauncherSpeed(launcher, 0.20, 0.20).withTimeout(1),
           new ParallelCommandGroup (
-            /** If i'm thinking about this right, we'll need to duplicate running the launcher motors here, as they will end 
+            /**  If i'm thinking about this right, we'll need to duplicate running the launcher motors here, as they will end 
             with the command above finishing and moving onto the parallel command group */
             new LauncherSpeed(launcher, 0.20, 0.20),
             new IntakeCommand(intakeMotor, -0.5),
@@ -136,13 +130,7 @@ public class RobotContainer {
         new LauncherSpeed(launcher, 0.0, 0.0))
       );
 
-    /** Stealing this button to try and combine commands 
-    d_ButtonX.whenPressed(new LauncherSpeed(launcher, 0.30, 0.40)); // High shot up close
-    d_ButtonX.whenReleased(new LauncherSpeed(launcher, 0.0, 0.00));
-    */
-
-    //Trying SequentialCommandGroup --> InstantCommand --> withTimeout of 1 second --> ParallelCommand Group here
-      // when Y is held, run Launch motors, pause for a second, then run Intake and Index motors
+      // when Y is held, run Launch motors by themselves for a second, then run Launch, Intake and Index motors all at once
         // High shot up close
       d_ButtonY.whenPressed(new SequentialCommandGroup(
         new LauncherSpeed(launcher, 0.35, 0.40).withTimeout(1),
