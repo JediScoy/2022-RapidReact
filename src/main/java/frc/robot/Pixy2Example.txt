@@ -1,5 +1,8 @@
 Pixy2 Example
 
+// https://andymark-weblinc.netdna-ssl.com/media/W1siZiIsIjIwMTkvMDcvMTIvMTQvMjUvNDgvOTc0MGNkOGItMmRlOS00Mjc4LWFlYzEtMmY0ZGUyMGI1Y2NhL1BpeHlDYW0gU1BJIEluc3RydWN0aW9ucy5wZGYiXV0/PixyCam%20SPI%20Instructions.pdf?sha=e16096fe11ed8b61
+
+
 Example Java: Pixy2 with SPI (ensure changes are made to
 build.gradle)
 /*----------------------------------------------------------------------------*
