@@ -179,12 +179,11 @@ public class RobotContainer {
     leftLiftMotor.setDefaultCommand(new LiftCommand(
       leftLiftMotor, modifyAxis(operatorController.getLeftY()))); //FIXME may or may not work
 
-
     // Use right stick up and down to manually move left climbing arm up and down
     rightLiftMotor.setDefaultCommand(new LiftCommand(
       rightLiftMotor, modifyAxis(operatorController.getRightY()))); //FIXME may or may not work
     
-
+      
     /** Removed the Pivot arms from the robot, commenting out these buttons 
     op_ButtonX.whenPressed(new LiftPivotCommand(liftPivotMotors, 0.5)); // Rotates the pivot-lift arms for the higher bar
     op_ButtonX.whenReleased(new LiftPivotCommand(liftPivotMotors, 0.0));
