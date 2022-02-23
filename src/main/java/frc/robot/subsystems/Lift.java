@@ -28,10 +28,13 @@ public class Lift extends SubsystemBase {
     new WPI_TalonFX(Constants.RIGHT_LIFT_MOTOR));
 
 public Lift() {
+  //leftLiftMotor settings
   leftLiftMotor.setInverted(true);
-  rightLiftMotor.setInverted(false);
   leftLiftMotor.setNeutralMode(NeutralMode.Brake);
+  //rightLiftMotor settings
+  rightLiftMotor.setInverted(false);
   rightLiftMotor.setNeutralMode(NeutralMode.Brake);
+  
 }
 
   @Override
