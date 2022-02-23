@@ -19,10 +19,8 @@ import com.pathplanner.lib.PathPlanner;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import edu.wpi.first.wpilibj2.command.ScheduleCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 // Subsystem imports
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.Index;
@@ -53,7 +51,9 @@ public class RobotContainer {
   private final Intake intakeMotor = new Intake();
   private final Launcher launcher = new Launcher();
   private final Lift liftMotors = new Lift();
-  private final LiftPivot liftPivotMotors = new LiftPivot();
+  private final Lift leftLiftMotor = new Lift();
+  private final Lift rightLiftMotor = new Lift();
+  // private final LiftPivot liftPivotMotors = new LiftPivot();
 
   // Main driver controller
   private final XboxController driverController = new XboxController(0);
@@ -84,7 +84,7 @@ public class RobotContainer {
     final JoystickButton d_backButton = new JoystickButton(driverController, Button.kBack.value);
     // final JoystickButton d_startButton = new JoystickButton(driverController, Button.kStart.value);
     final JoystickButton d_ButtonA = new JoystickButton(driverController, Button.kA.value);
-    final JoystickButton d_ButtonB = new JoystickButton(driverController, Button.kB.value);
+    //final JoystickButton d_ButtonB = new JoystickButton(driverController, Button.kB.value);
     final JoystickButton d_ButtonX = new JoystickButton(driverController, Button.kX.value);
     final JoystickButton d_ButtonY = new JoystickButton(driverController, Button.kY.value);
     final JoystickButton d_RightBumper = new JoystickButton(driverController, Button.kRightBumper.value);
@@ -175,7 +175,16 @@ public class RobotContainer {
     // press Y to auto raise climbing arms to bar #2, then run a loop to hold bot up in the air
     op_ButtonY.whenPressed(new LiftCommand(liftMotors, 0.5)); //FIXME add timeout when it reaches certain encoder value
 
+    // Use left stick up and down to manually move left climbing arm up and down
+    leftLiftMotor.setDefaultCommand(new LiftCommand(
+      leftLiftMotor, modifyAxis(operatorController.getLeftY()))); //FIXME may or may not work
+
+
+    // Use right stick up and down to manually move left climbing arm up and down
+    rightLiftMotor.setDefaultCommand(new LiftCommand(
+      rightLiftMotor, modifyAxis(operatorController.getRightY()))); //FIXME may or may not work
     
+
     /** Removed the Pivot arms from the robot, commenting out these buttons 
     op_ButtonX.whenPressed(new LiftPivotCommand(liftPivotMotors, 0.5)); // Rotates the pivot-lift arms for the higher bar
     op_ButtonX.whenReleased(new LiftPivotCommand(liftPivotMotors, 0.0));
