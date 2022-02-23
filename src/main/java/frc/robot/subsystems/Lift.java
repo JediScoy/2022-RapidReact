@@ -1,6 +1,7 @@
 
 package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 // Shuffleboard imports
@@ -33,6 +34,9 @@ public Lift() {
   public void periodic() {
     // This method will be called once per scheduler run
     // Dashboard stuff would go here
+    //adding encoder values from lift motors to the dashboard to find out climbing heights
+    SmartDashboard.putNumber("Left Lift Arm", leftLiftMotor.getSelectedSensorPosition());
+    SmartDashboard.putNumber("Right Lift Arm", rightLiftMotor.getSelectedSensorPosition());
   }
 
   // Sets the Lift system speed as a percentage between -1 and 1. Speed is given actual value in the RobotContrainer.java button code

@@ -27,7 +27,7 @@ import frc.robot.subsystems.Index;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Launcher;
 import frc.robot.subsystems.Lift;
-import frc.robot.subsystems.LiftPivot;
+//import frc.robot.subsystems.LiftPivot;
 
 // Command imports
 import frc.robot.commands.DefaultDriveCommand;
@@ -35,7 +35,7 @@ import frc.robot.commands.IndexCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.LauncherSpeed;
 import frc.robot.commands.LiftCommand;
-import frc.robot.commands.LiftPivotCommand;
+//import frc.robot.commands.LiftPivotCommand;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
