@@ -4,6 +4,8 @@ import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+
 // Shuffleboard imports
 // import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 // import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard; 
@@ -28,6 +30,8 @@ public class Lift extends SubsystemBase {
 public Lift() {
   leftLiftMotor.setInverted(true);
   rightLiftMotor.setInverted(false);
+  leftLiftMotor.setNeutralMode(NeutralMode.Brake);
+  rightLiftMotor.setNeutralMode(NeutralMode.Brake);
 }
 
   @Override
