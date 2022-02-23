@@ -97,11 +97,11 @@ public class RobotContainer {
     // final JoystickButton op_backButton = new JoystickButton(operatorController, Button.kBack.value);
     // final JoystickButton op_startButton = new JoystickButton(operatorController, Button.kStart.value);
     final JoystickButton op_ButtonA = new JoystickButton(operatorController, Button.kA.value);
-    final JoystickButton op_ButtonB = new JoystickButton(operatorController, Button.kB.value);
-    final JoystickButton op_ButtonX = new JoystickButton(operatorController, Button.kX.value);
+    //final JoystickButton op_ButtonB = new JoystickButton(operatorController, Button.kB.value);
+    //final JoystickButton op_ButtonX = new JoystickButton(operatorController, Button.kX.value);
     final JoystickButton op_ButtonY = new JoystickButton(operatorController, Button.kY.value);
-    //final JoystickButton op_RightBumper = new JoystickButton(operatorController, Button.kRightBumper.value);
-    //final JoystickButton op_LeftBumper = new JoystickButton(operatorController, Button.kLeftBumper.value);
+    final JoystickButton op_RightBumper = new JoystickButton(operatorController, Button.kRightBumper.value);
+    final JoystickButton op_LeftBumper = new JoystickButton(operatorController, Button.kLeftBumper.value);
     //final double op_LeftTrigger = operatorController.getLeftTriggerAxis();
     //final double op_RightTrigger = operatorController.getRightTriggerAxis();
 
@@ -113,13 +113,13 @@ public class RobotContainer {
     d_ButtonA.whenReleased(new LauncherSpeed(launcher, 0.0, 0.00));
     */
 
+    //Driver Controller button commands
       // when A is held, run Launch motors by themselves for a second, then run Launch, Intake and Index motors all at once
+      // release to stop motors
         // Low shot up close
       d_ButtonA.whenPressed(new SequentialCommandGroup(
         new LauncherSpeed(launcher, 0.20, 0.20).withTimeout(1),
           new ParallelCommandGroup (
-            /**  If i'm thinking about this right, we'll need to duplicate running the launcher motors here, as they will end 
-            with the command above finishing and moving onto the parallel command group */
             new LauncherSpeed(launcher, 0.25, 0.25),
             new IntakeCommand(intakeMotor, -0.5),
             new IndexCommand(indexMotors, 0.5)))
@@ -131,6 +131,7 @@ public class RobotContainer {
       );
 
       // when Y is held, run Launch motors by themselves for a second, then run Launch, Intake and Index motors all at once
+      // release to stop motors
         // High shot up close
       d_ButtonY.whenPressed(new SequentialCommandGroup(
         new LauncherSpeed(launcher, 0.40, 0.45).withTimeout(1),
@@ -145,21 +146,35 @@ public class RobotContainer {
         new LauncherSpeed(launcher, 0.0, 0.0))
       );
 
-    d_RightBumper.whenPressed(new IntakeCommand(intakeMotor, 0.5)); // Intake cargo from the field
+    // Hold right bumper to manually Intake cargo from the field, release to stop motors
+    d_RightBumper.whenPressed(new IntakeCommand(intakeMotor, 0.5)); 
     d_RightBumper.whenReleased(new IntakeCommand(intakeMotor, 0.0)); 
 
-    d_LeftBumper.whenPressed(new IntakeCommand(intakeMotor, -0.5)); // Reverse cargo back to the field
+    // Hold left bumper to manually Reverse cargo back to the field, release to stop motors
+    d_LeftBumper.whenPressed(new IntakeCommand(intakeMotor, -0.5)); 
     d_LeftBumper.whenReleased(new IntakeCommand(intakeMotor, 0.0)); 
 
-    d_ButtonX.whenPressed(new IndexCommand(indexMotors, 0.5)); // Advance cargo to the launcher
+    // Hold X to manually Advance cargo to the launcher, release to stop motors
+    d_ButtonX.whenPressed(new IndexCommand(indexMotors, 0.5)); 
     d_ButtonX.whenReleased(new IndexCommand(indexMotors, 0));
 
-    //lift
-    op_ButtonA.whenPressed(new LiftCommand(liftMotors, 0.5)); // Releases the lift arms for extension
-    op_ButtonA.whenReleased(new LiftCommand(liftMotors, 0.0));
+    //Operator Controller
+      //lift button commands
+
+    // hold left bumper to manually raise climbing arms, release to stop motors
+    op_LeftBumper.whenPressed(new LiftCommand(liftMotors, 0.5)); 
+    op_LeftBumper.whenReleased(new LiftCommand(liftMotors, 0.0));
     
-    op_ButtonB.whenPressed(new LiftCommand(liftMotors, -0.5)); // Pulls the arms back down for climbing
-    op_ButtonB.whenReleased(new LiftCommand(liftMotors, 0.0));
+    // hold right bumper to manually lower climbing arms, release to stop motors
+    op_RightBumper.whenPressed(new LiftCommand(liftMotors, -0.5)); 
+    op_RightBumper.whenReleased(new LiftCommand(liftMotors, 0.0));
+
+    // press A to auto raise climbing arms to bar #1, then run a loop to hold bot up in the air
+    op_ButtonA.whenPressed(new LiftCommand(liftMotors, 0.5)); //FIXME add timeout when it reaches certain encoder value
+
+    // press Y to auto raise climbing arms to bar #2, then run a loop to hold bot up in the air
+    op_ButtonY.whenPressed(new LiftCommand(liftMotors, 0.5)); //FIXME add timeout when it reaches certain encoder value
+
     
     /** Removed the Pivot arms from the robot, commenting out these buttons 
     op_ButtonX.whenPressed(new LiftPivotCommand(liftPivotMotors, 0.5)); // Rotates the pivot-lift arms for the higher bar
