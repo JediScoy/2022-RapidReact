@@ -28,7 +28,6 @@ public class Lift extends SubsystemBase {
     new WPI_TalonFX(Constants.RIGHT_LIFT_MOTOR));
 
 public Lift() {
-  
   //leftLiftMotor settings
   leftLiftMotor.setInverted(true);
   leftLiftMotor.setNeutralMode(NeutralMode.Brake);
@@ -52,13 +51,6 @@ public Lift() {
     liftMotors.set(speed);
    }
 
-   // resets encoder values on lift motors
-   public void resetEncoders(){
-     leftLiftMotor.setSelectedSensorPosition(0);
-     rightLiftMotor.setSelectedSensorPosition(0);
-   }
-
-   //stops lift motors
   public void stopLift(){
     liftMotors.set(0);
   }
