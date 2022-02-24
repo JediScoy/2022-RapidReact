@@ -36,6 +36,7 @@ import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.LauncherSpeed;
 import frc.robot.commands.LiftCommand;
 //import frc.robot.commands.LiftPivotCommand;
+import frc.robot.commands.ResetLiftEncoders;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -95,7 +96,7 @@ public class RobotContainer {
 
     // Declaring buttons on the operator controller
     // final JoystickButton op_backButton = new JoystickButton(operatorController, Button.kBack.value);
-    // final JoystickButton op_startButton = new JoystickButton(operatorController, Button.kStart.value);
+    final JoystickButton op_startButton = new JoystickButton(operatorController, Button.kStart.value);
     final JoystickButton op_ButtonA = new JoystickButton(operatorController, Button.kA.value);
     //final JoystickButton op_ButtonB = new JoystickButton(operatorController, Button.kB.value);
     //final JoystickButton op_ButtonX = new JoystickButton(operatorController, Button.kX.value);
@@ -182,6 +183,9 @@ public class RobotContainer {
     // Use right stick up and down to manually move left climbing arm up and down
     rightLiftMotor.setDefaultCommand(new LiftCommand(
       rightLiftMotor, modifyAxis(operatorController.getRightY()))); //FIXME did not work
+
+    // reset lift encoder values when start button is pressed. 
+    op_startButton.whenPressed(new ResetLiftEncoders());
     
       
     /** Removed the Pivot arms from the robot, commenting out these buttons 
