@@ -170,10 +170,10 @@ public class RobotContainer {
     op_RightBumper.whenPressed(new LiftCommand(liftMotors, -0.5)); 
     op_RightBumper.whenReleased(new LiftCommand(liftMotors, 0.0));
 
-    // press A to auto raise climbing arms to bar #1, then run a loop to hold bot up in the air
+    // press A to auto raise climbing arms to the encoder value of bar #1
     op_ButtonA.whenPressed(new LiftCommand(liftMotors, 0.5)); //FIXME add timeout when it reaches certain encoder value of bar 1
 
-    // press Y to auto raise climbing arms to bar #2, then run a loop to hold bot up in the air
+    // press Y to auto raise climbing arms to encoder value of bar #2
     op_ButtonY.whenPressed(new LiftCommand(liftMotors, 0.5)); //FIXME add timeout when it reaches certain encoder value of bar 2
 
     // Use left stick up and down to manually move left climbing arm up and down
