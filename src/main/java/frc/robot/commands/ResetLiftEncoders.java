@@ -13,6 +13,7 @@ public class ResetLiftEncoders extends CommandBase {
   /** Creates a new ResetLiftEncoders. */
   public ResetLiftEncoders() {
     // Use addRequirements() here to declare subsystem dependencies.
+    // FIXME need a end condition, this breaks the code as is
     addRequirements(subsystem);
   }
 
