@@ -4,15 +4,17 @@
 
 package frc.robot;
 
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.controller.ProfiledPIDController;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.math.trajectory.TrajectoryConfig;
-import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+// import edu.wpi.first.math.controller.PIDController;
+// import edu.wpi.first.math.controller.ProfiledPIDController;
+// import edu.wpi.first.math.geometry.Pose2d;
+// import edu.wpi.first.math.geometry.Rotation2d;
+// import edu.wpi.first.math.geometry.Translation2d;
+// import edu.wpi.first.math.trajectory.Trajectory;
+// import edu.wpi.first.math.trajectory.TrajectoryConfig;
+// import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+// import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 // import edu.wpi.first.wpilibj.buttons.Trigger;
 // import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 // import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -20,6 +22,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton; //NewCommands vendordep
 import static edu.wpi.first.wpilibj.XboxController.Button;
 
+import java.io.IOException;
 import java.util.List;
 
 import com.pathplanner.lib.PathPlanner;
@@ -28,7 +31,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
-
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 // Subsystem imports
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.Index;
@@ -36,7 +39,7 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Launcher;
 import frc.robot.subsystems.Lift;
 import frc.robot.subsystems.LiftPivot;
-
+import frc.robot.commands.Auton1;
 // Command imports
 import frc.robot.commands.DefaultDriveCommand;
 import frc.robot.commands.IndexCommand;
@@ -53,6 +56,16 @@ import frc.robot.commands.LiftPivotCommand;
  */
 
 public class RobotContainer {
+
+
+
+  public SendableChooser<Command> commandSender = new SendableChooser<Command>();
+
+
+
+
+
+
   // The robot's subsystems and commands are defined here...
   private final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem();
   private final Index indexMotors = new Index();
@@ -80,6 +93,8 @@ public class RobotContainer {
             () -> -modifyAxis(driverController.getRightX()) * Constants.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
     ));
     
+   //shamelessly robbed code
+    try { commandSender.addOption("Auton-1", new Auton1(m_drivetrainSubsystem)); } catch (Exception e) { e.printStackTrace(); }
 
     // Configure the button bindings
     configureButtonBindings();
@@ -182,53 +197,10 @@ public class RobotContainer {
    */
 
 
-
-
-
-
-
    
   public Command getAutonomousCommand() {
-   //#region trajectory
-    // 1. Create trajectory settings
-    TrajectoryConfig trajectoryConfig = new TrajectoryConfig(
-            Constants.MAX_VELOCITY_METERS_PER_SECOND, //original called for max speed (just in case im making one of the dumb physics mistakes)
-            Constants.MAX_ACCELERATION_METERS_SECOND_SQUARED)
-                    .setKinematics(Constants.m_kinematics);
-
-    // 2. Generate trajectory
-    Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
-            new Pose2d(0, 0, new Rotation2d(0)),
-            List.of(
-                    new Translation2d(1, 0),
-                    new Translation2d(1, -1)),
-            new Pose2d(2, -1, Rotation2d.fromDegrees(180)),
-            trajectoryConfig);
-
-    // 3. Define PID controllers for tracking trajectory
-    PIDController xController = new PIDController(Constants.kPXController, 0, 0);
-    PIDController yController = new PIDController(Constants.kPYController, 0, 0);
-    ProfiledPIDController thetaController = new ProfiledPIDController(
-            Constants.kPThetaController, 0, 0, Constants.kThetaControllerConstraints);
-    thetaController.enableContinuousInput(-Math.PI, Math.PI);
-
-    // 4. Construct command to follow trajectory
-    SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(
-            trajectory,
-            m_drivetrainSubsystem::getPose,
-            Constants.m_kinematics,
-            xController,
-            yController,
-            thetaController,
-            m_drivetrainSubsystem::setModuleStates,//?
-            m_drivetrainSubsystem);
-
-    // 5. Add some init and wrap-up, and return everything
-    return new SequentialCommandGroup(
-            new InstantCommand(() -> m_drivetrainSubsystem.resetOdometry(trajectory.getInitialPose())),
-            swerveControllerCommand,
-            new InstantCommand(() -> m_drivetrainSubsystem.stop()));
-
+    
+    return new Auton1(m_drivetrainSubsystem);
    //#endregion
 
 
