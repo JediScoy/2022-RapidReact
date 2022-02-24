@@ -185,7 +185,7 @@ public class RobotContainer {
       rightLiftMotor, modifyAxis(operatorController.getRightY()))); //FIXME did not work, no movement
 
     // reset lift encoder values when start button is pressed. 
-    op_startButton.whenPressed(new ResetLiftEncoders()); //FIXME want this command to run automatically every time robot starts
+    //op_startButton.whenPressed(new ResetLiftEncoders()); //FIXME want this command to run automatically every time robot starts
     
       
     /** Removed the Pivot arms from the robot, commenting out these buttons 
