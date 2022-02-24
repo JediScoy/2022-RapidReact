@@ -56,6 +56,16 @@ public Lift() {
     liftMotors.set(speed);
    }
 
+   // function for lifting only the left climbing arm
+   public void startLeftLift(double speed){
+    leftLiftMotor.set(speed);
+   }
+
+   // function for lifting only the right climbing arm
+   public void startRightLift(double speed){
+    rightLiftMotor.set(speed);
+   }
+
    // resets encoder values on lift motors
    public void resetEncoders(){
      leftLiftMotor.setSelectedSensorPosition(0);
