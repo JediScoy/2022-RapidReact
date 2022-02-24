@@ -23,9 +23,9 @@ public class Lift extends SubsystemBase {
   private final WPI_TalonFX rightLiftMotor = new WPI_TalonFX(Constants.RIGHT_LIFT_MOTOR);
   
   // NOTE you must use WPI_TalonFX subclass rather than TalonFX when grouping motors... 60 minutes of my life wasted
-  private MotorControllerGroup liftMotors = new MotorControllerGroup(
-    new WPI_TalonFX(Constants.LEFT_LIFT_MOTOR), 
-    new WPI_TalonFX(Constants.RIGHT_LIFT_MOTOR));
+  //private MotorControllerGroup liftMotors = new MotorControllerGroup(
+    //new WPI_TalonFX(Constants.LEFT_LIFT_MOTOR), 
+    //new WPI_TalonFX(Constants.RIGHT_LIFT_MOTOR));
 
 public Lift() {
   
@@ -53,7 +53,9 @@ public Lift() {
 
   // Sets the Lift system speed as a percentage between -1 and 1. Speed is given actual value in the RobotContrainer.java button code
   public void startLift(double speed){
-    liftMotors.set(speed);
+    //liftMotors.set(speed);
+    leftLiftMotor.set(speed);
+    rightLiftMotor.set(speed);
    }
 
    // function for lifting only the left climbing arm
@@ -74,7 +76,9 @@ public Lift() {
 
    //stops lift motors
   public void stopLift(){
-    liftMotors.set(0);
+    //liftMotors.set(0);
+    leftLiftMotor.set(0);
+    rightLiftMotor.set(0);
   }
   
   @Override
