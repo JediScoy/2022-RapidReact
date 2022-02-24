@@ -171,21 +171,21 @@ public class RobotContainer {
     op_RightBumper.whenReleased(new LiftCommand(liftMotors, 0.0));
 
     // press A to auto raise climbing arms to bar #1, then run a loop to hold bot up in the air
-    op_ButtonA.whenPressed(new LiftCommand(liftMotors, 0.5)); //FIXME add timeout when it reaches certain encoder value
+    op_ButtonA.whenPressed(new LiftCommand(liftMotors, 0.5)); //FIXME add timeout when it reaches certain encoder value of bar 1
 
     // press Y to auto raise climbing arms to bar #2, then run a loop to hold bot up in the air
-    op_ButtonY.whenPressed(new LiftCommand(liftMotors, 0.5)); //FIXME add timeout when it reaches certain encoder value
+    op_ButtonY.whenPressed(new LiftCommand(liftMotors, 0.5)); //FIXME add timeout when it reaches certain encoder value of bar 2
 
     // Use left stick up and down to manually move left climbing arm up and down
     leftLiftMotor.setDefaultCommand(new LiftCommand(
-      leftLiftMotor, modifyAxis(operatorController.getLeftY()))); //FIXME did not work
+      leftLiftMotor, modifyAxis(operatorController.getLeftY()))); //FIXME did not work, no movement
 
     // Use right stick up and down to manually move left climbing arm up and down
     rightLiftMotor.setDefaultCommand(new LiftCommand(
-      rightLiftMotor, modifyAxis(operatorController.getRightY()))); //FIXME did not work
+      rightLiftMotor, modifyAxis(operatorController.getRightY()))); //FIXME did not work, no movement
 
     // reset lift encoder values when start button is pressed. 
-    op_startButton.whenPressed(new ResetLiftEncoders());
+    op_startButton.whenPressed(new ResetLiftEncoders()); //FIXME want this command to run automatically every time robot starts
     
       
     /** Removed the Pivot arms from the robot, commenting out these buttons 
