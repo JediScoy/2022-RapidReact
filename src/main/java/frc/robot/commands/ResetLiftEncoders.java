@@ -8,12 +8,13 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Lift;
 
 public class ResetLiftEncoders extends CommandBase {
+  
   private Lift subsystem;
 
   /** Creates a new ResetLiftEncoders. */
   public ResetLiftEncoders() {
     // Use addRequirements() here to declare subsystem dependencies.
-    // FIXME need a end condition, this breaks the code as is
+  
     addRequirements(subsystem);
   }
 
@@ -37,6 +38,6 @@ public class ResetLiftEncoders extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

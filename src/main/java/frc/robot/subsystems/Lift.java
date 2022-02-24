@@ -42,6 +42,10 @@ public Lift() {
   public void periodic() {
     // This method will be called once per scheduler run
     // Dashboard stuff would go here
+
+    //calling reset encoders function
+    resetEncoders();
+
     //adding encoder values from lift motors to the dashboard to find out climbing heights
     SmartDashboard.putNumber("Left Lift Arm", leftLiftMotor.getSelectedSensorPosition());
     SmartDashboard.putNumber("Right Lift Arm", rightLiftMotor.getSelectedSensorPosition());
