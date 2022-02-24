@@ -51,6 +51,13 @@ public Lift() {
     liftMotors.set(speed);
    }
 
+   // resets encoder values on lift motors
+   public void resetEncoders(){
+     leftLiftMotor.setSelectedSensorPosition(0);
+     rightLiftMotor.setSelectedSensorPosition(0);
+   }
+
+   //stops lift motors
   public void stopLift(){
     liftMotors.set(0);
   }
