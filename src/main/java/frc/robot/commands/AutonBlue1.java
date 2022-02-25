@@ -5,15 +5,18 @@
 package frc.robot.commands;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Index;
+import frc.robot.subsystems.Launcher;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
-/** A complex auto command that drives forward, releases a hatch, and then drives backward. */
 public class AutonBlue1 extends SequentialCommandGroup {
-  /**
-  public AutonBlue1(Intake intake) {
+  
+    public AutonBlue1(DrivetrainSubsystem drivetrain, Index indexMotors, Intake intakeMotors, Launcher launcher) {
     addCommands(
-        // Drive forward the specified distance
-        new IntakeCommand(intakeMotor, -0.5));
-  }
-  */
-}
+      new IndexCommand(indexMotors, 0.5),
+      new IntakeCommand(intakeMotors, 0.5)
+      ); // End of commands
+ 
+  }  
+    
+  } // end class

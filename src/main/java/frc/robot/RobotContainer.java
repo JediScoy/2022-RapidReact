@@ -10,6 +10,7 @@ import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.buttons.Trigger;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton; //NewCommands vendordep
 import static edu.wpi.first.wpilibj.XboxController.Button;
@@ -62,9 +63,28 @@ public class RobotContainer {
   private final XboxController driverController = new XboxController(0);
   // Second operator controller
   private final XboxController operatorController = new XboxController(1);
+  
+  // Autononmous TODO Auton
+  
+  // A sample auton
+  private final Command blueOne =
+    new IntakeCommand(intakeMotor, 0.5);
+ 
+  // A sample auton
+  private final Command redOne =
+    new IntakeCommand(intakeMotor, -0.5);
+  
+  // A chooser for autonomous commands
+  SendableChooser<Command> m_chooser = new SendableChooser<>();
+
+
+
 
   // The container for the robot. Contains subsystems, OI devices, and commands.
   public RobotContainer() {
+    // Configure the button bindings
+    configureButtonBindings();
+
     // Set up the default command for the drivetrain.
     // The controls are for field-oriented driving:
     // Left stick Y axis -> forward and backwards movement
@@ -77,9 +97,12 @@ public class RobotContainer {
             () -> -modifyAxis(driverController.getRightX()) * DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
     ));
     
+    // TODO Add commands to the autonomous command chooser
+    m_chooser.setDefaultOption("Blue 1", blueOne);
+    m_chooser.addOption("Red 1", redOne);
 
-    // Configure the button bindings
-    configureButtonBindings();
+    // Puts the chooser on the dashboard
+    Shuffleboard.getTab("Auton").add(m_chooser);
   }
 
   private void configureButtonBindings() {
@@ -232,25 +255,7 @@ public class RobotContainer {
    */
   
   public Command getAutonomousCommand() {
-    // Blue position one that will eventually drive forward, shoot, drive forward, intake, drive back, and launch cargo, stops.
-    final Command blueOne =
-    new IntakeCommand(intakeMotor, 0.5);
-    
-    // new DriveDistance(
-      // AutoConstants.kAutoDriveDistanceInches, AutoConstants.kAutoDriveSpeed, m_robotDrive);
+    return m_chooser.getSelected();  
 
-    // A complex auto routine that drives forward, drops a hatch, and then drives backward.
-    // private final Command m_complexAuto = new ComplexAuto(m_robotDrive, m_hatchSubsystem);
-    
-    // Red position one that will eventually drive forward, shoot, drive forward, intake, drive back, and launch cargo, stops.
-    final Command redOne =
-    new IntakeCommand(intakeMotor, -0.5);
-    
-    // A chooser for autonomous commands
-    SendableChooser<Command> m_chooser = new SendableChooser<>();
-    // Add commands to the autonomous command chooser
-    m_chooser.setDefaultOption("Blue 1", blueOne);
-    m_chooser.addOption("Red 1", redOne);
-    return m_chooser.getSelected();
   }
-}
+} // End of class
