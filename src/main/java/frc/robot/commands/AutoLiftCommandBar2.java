@@ -13,8 +13,10 @@ public class AutoLiftCommandBar2 extends CommandBase{
 
  	private double speed;
 
-	private int bar2HeightLeft = 0;   //FIXME add encoder value for bar 1 height of left arm
-	private int bar2HeightRight = 0;  //FIXME add encoder value for bar 1 height of right arm
+	// encoder value for bar 1 height of left arm
+	private int bar2HeightLeft = 220444;  
+	// encoder value for bar 1 height of right arm 
+	private int bar2HeightRight = 221345;  
 	
 	private final WPI_TalonFX leftLiftMotor = new WPI_TalonFX(Constants.LEFT_LIFT_MOTOR);
 	private final WPI_TalonFX rightLiftMotor = new WPI_TalonFX(Constants.RIGHT_LIFT_MOTOR);
