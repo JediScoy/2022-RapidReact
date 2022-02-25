@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.buttons.Trigger;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton; //NewCommands vendordep
 import static edu.wpi.first.wpilibj.XboxController.Button;
 import com.pathplanner.lib.PathPlanner;
@@ -38,8 +37,8 @@ import frc.robot.commands.LauncherSpeed;
 import frc.robot.commands.LiftCommand;
 //import frc.robot.commands.LiftPivotCommand;
 import frc.robot.commands.ResetLiftEncoders;
-import frc.robot.commands.AutonBlue1;
-import frc.robot.commands.AutonRed1;
+import frc.robot.commands.Blue1;
+import frc.robot.commands.Red1;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -68,11 +67,11 @@ public class RobotContainer {
   
   // A sample auton
   private final Command blueOne =
-    new IntakeCommand(intakeMotor, 0.1);
+    new Blue1(m_drivetrainSubsystem, indexMotors, intakeMotor, launcher);
  
   // A sample auton
   private final Command redOne =
-    new IntakeCommand(intakeMotor, -0.1);
+    new Red1(m_drivetrainSubsystem, indexMotors, intakeMotor, launcher);
   
   // A chooser for autonomous commands
   SendableChooser<Command> m_chooser = new SendableChooser<>();

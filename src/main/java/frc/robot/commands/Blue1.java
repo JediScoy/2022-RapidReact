@@ -9,13 +9,13 @@ import frc.robot.subsystems.Index;
 import frc.robot.subsystems.Launcher;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
-public class AutonBlue1 extends SequentialCommandGroup {
+public class Blue1 extends SequentialCommandGroup {
   
-    public AutonBlue1(DrivetrainSubsystem drivetrain, Index indexMotors, Intake intakeMotors, Launcher launcher) {
-    addCommands(
-      new IndexCommand(indexMotors, 0.2),
-      new IntakeCommand(intakeMotors, 0.2)
-      ); // End of commands
+    public Blue1(DrivetrainSubsystem drivetrain, Index indexMotors, Intake intakeMotor, Launcher launcher) {
+      addCommands(
+        new IndexCommand(indexMotors, 0.2),
+        new IntakeCommand(intakeMotor, 0.2)
+        ); // End of commands
  
   }  
     

@@ -9,15 +9,13 @@ import frc.robot.subsystems.Index;
 import frc.robot.subsystems.Launcher;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
-public class AutonRed1 extends SequentialCommandGroup {
+public class Red1 extends SequentialCommandGroup {
 
-    public AutonRed1(Launcher launcher, Intake intakeMotor, Index indexMotors) {
-    addCommands(
-        new LauncherSpeed(launcher, 0.40, 0.45).withTimeout(1),
-          new LauncherSpeed(launcher, 0.35, 0.40),
-          new IntakeCommand(intakeMotor, -0.5),
-          new IndexCommand(indexMotors, 0.5)
-    );
+    public Red1(DrivetrainSubsystem drivetrain, Index indexMotors, Intake intakeMotor, Launcher launcher) {
+      addCommands(
+        new IndexCommand(indexMotors, -0.2),
+        new IntakeCommand(intakeMotor, -0.2)
+        ); // End of commands
   }  
     
   } // end class
