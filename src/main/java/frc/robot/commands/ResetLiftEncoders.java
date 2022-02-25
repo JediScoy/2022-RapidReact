@@ -22,7 +22,7 @@ public class ResetLiftEncoders extends CommandBase {
   @Override
   public void initialize() {
 
-    //trying to call resetEncoders for Lift motors on Robot startup?
+    //trying to call resetEncoders
       subsystem.resetEncoders();
 
   }

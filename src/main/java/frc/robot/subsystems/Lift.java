@@ -52,6 +52,7 @@ public Lift() {
   }
 
   // Sets the Lift system speed as a percentage between -1 and 1. Speed is given actual value in the RobotContrainer.java button code
+  // function to lift both climbing arms at once
   public void startLift(double speed){
     //liftMotors.set(speed);
     leftLiftMotor.set(speed);
