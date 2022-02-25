@@ -9,10 +9,8 @@ import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-// import edu.wpi.first.wpilibj.buttons.Trigger;
-// import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-// import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-// import edu.wpi.first.wpilibj.buttons.JoystickButton; // OldCommands vendorsdep
+import edu.wpi.first.wpilibj.buttons.Trigger;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton; //NewCommands vendordep
 import static edu.wpi.first.wpilibj.XboxController.Button;
 import com.pathplanner.lib.PathPlanner;
@@ -22,6 +20,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
+
 // Subsystem imports
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.Index;
@@ -38,6 +37,8 @@ import frc.robot.commands.LauncherSpeed;
 import frc.robot.commands.LiftCommand;
 //import frc.robot.commands.LiftPivotCommand;
 import frc.robot.commands.ResetLiftEncoders;
+import frc.robot.commands.AutonBlue1;
+import frc.robot.commands.AutonRed1;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -231,14 +232,20 @@ public class RobotContainer {
    */
   
   public Command getAutonomousCommand() {
-    // A simple auto routine that drives forward a specified distance, and then stops.
-    // private final Command m_simpleAuto =
+    // Blue position one that will eventually drive forward, shoot, drive forward, intake, drive back, and launch cargo, stops.
+    final Command blueOne =
+    new IntakeCommand(intakeMotor, 0.5);
+    
     // new DriveDistance(
       // AutoConstants.kAutoDriveDistanceInches, AutoConstants.kAutoDriveSpeed, m_robotDrive);
 
     // A complex auto routine that drives forward, drops a hatch, and then drives backward.
     // private final Command m_complexAuto = new ComplexAuto(m_robotDrive, m_hatchSubsystem);
-
+    
+    // Red position one that will eventually drive forward, shoot, drive forward, intake, drive back, and launch cargo, stops.
+    final Command redOne =
+    new IntakeCommand(intakeMotor, -0.5);
+    
     // A chooser for autonomous commands
     SendableChooser<Command> m_chooser = new SendableChooser<>();
     // Add commands to the autonomous command chooser
