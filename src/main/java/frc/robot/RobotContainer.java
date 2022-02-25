@@ -28,14 +28,14 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Launcher;
 import frc.robot.subsystems.Lift;
 //import frc.robot.subsystems.LiftPivot;
-import frc.robot.commands.Blue1;
+import frc.robot.commands.auton.Blue1;
 // Command imports
 import frc.robot.commands.DefaultDriveCommand;
 import frc.robot.commands.IndexCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.LauncherSpeed;
 import frc.robot.commands.LiftCommand;
-import frc.robot.commands.Red1;
+import frc.robot.commands.auton.Red1;
 //import frc.robot.commands.LiftPivotCommand;
 import frc.robot.commands.ResetLiftEncoders;
 
