@@ -8,6 +8,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 // import edu.wpi.first.wpilibj.buttons.Trigger;
 // import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 // import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -228,40 +229,21 @@ public class RobotContainer {
    * Use this to pass the autonomous command to the main {@link Robot} class.
    * @return the command to run in autonomous
    */
+  
   public Command getAutonomousCommand() {
-    // new AutonSquare(m_drivetrainSubsystem);
-    // This is from Prototype launcher
-    // return AutonSquare;
-    // This is from SDS Drive code base
-    //return new InstantCommand();
+    // A simple auto routine that drives forward a specified distance, and then stops.
+    // private final Command m_simpleAuto =
+    // new DriveDistance(
+      // AutoConstants.kAutoDriveDistanceInches, AutoConstants.kAutoDriveSpeed, m_robotDrive);
 
-    // 1. This will load the file "Square.path" from PathPlanner and generate it with a max velocity of 8 m/s 
-    // and a max acceleration of 5 m/s^2
+    // A complex auto routine that drives forward, drops a hatch, and then drives backward.
+    // private final Command m_complexAuto = new ComplexAuto(m_robotDrive, m_hatchSubsystem);
 
-    Trajectory examplePath = PathPlanner.loadPath("BadPath",8,5);
-
-    // 2. Defining PID Controllers for tracking trajectory
-    PIDController xController = new PIDController(Constants.kPXController, 0, 0);
-    PIDController yController = new PIDController(Constants.kPYController, 0, 0);
-    ProfiledPIDController thetaController = new ProfiledPIDController(
-    Constants.kPThetaController, 0, 0, Constants.kThetaControllerConstraints);
-    thetaController.enableContinuousInput(-Math.PI, Math.PI);
-
-    // 3. Command to follow path from PathPlanner
-    SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(
-      examplePath, 
-      m_drivetrainSubsystem::getPose, 
-      Constants.m_kinematics, 
-      xController, 
-      yController, 
-      thetaController, 
-      m_drivetrainSubsystem::setModuleStates, 
-      m_drivetrainSubsystem);
-
-    // 4. Add some init and wrap-up, and return everything
-    return new SequentialCommandGroup(
-      new InstantCommand(() -> m_drivetrainSubsystem.resetOdometry(examplePath.getInitialPose())),
-      swerveControllerCommand,
-      new InstantCommand(() -> m_drivetrainSubsystem.stop()));
+    // A chooser for autonomous commands
+    SendableChooser<Command> m_chooser = new SendableChooser<>();
+    // Add commands to the autonomous command chooser
+    m_chooser.setDefaultOption("Blue 1", blueOne);
+    m_chooser.addOption("Red 1", redOne);
+    return m_chooser.getSelected();
   }
 }
