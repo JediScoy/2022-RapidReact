@@ -28,7 +28,8 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Launcher;
 import frc.robot.subsystems.Lift;
 //import frc.robot.subsystems.LiftPivot;
-
+import frc.robot.commands.AutoLiftCommandBar1;
+import frc.robot.commands.AutoLiftCommandBar2;
 // Command imports
 import frc.robot.commands.DefaultDriveCommand;
 import frc.robot.commands.IndexCommand;
@@ -171,10 +172,10 @@ public class RobotContainer {
     op_RightBumper.whenReleased(new LiftCommand(liftMotors, 0.0));
 
     // press A to auto raise climbing arms to the encoder value of bar #1
-    op_ButtonA.whenPressed(new LiftCommand(liftMotors, 0.5)); //FIXME add timeout when it reaches certain encoder value of bar 1
+    op_ButtonA.whenPressed(new AutoLiftCommandBar1(liftMotors, 0.5)); //FIXME add timeout when it reaches certain encoder value of bar 1
 
     // press Y to auto raise climbing arms to encoder value of bar #2
-    op_ButtonY.whenPressed(new LiftCommand(liftMotors, 0.5)); //FIXME add timeout when it reaches certain encoder value of bar 2
+    op_ButtonY.whenPressed(new AutoLiftCommandBar2(liftMotors, 0.5)); //FIXME add timeout when it reaches certain encoder value of bar 2
 
     // Use left stick up and down to manually move left climbing arm up and down
     leftLiftMotor.setDefaultCommand(new LiftCommand(
@@ -183,10 +184,6 @@ public class RobotContainer {
     // Use right stick up and down to manually move left climbing arm up and down
     rightLiftMotor.setDefaultCommand(new LiftCommand(
       rightLiftMotor, modifyAxis(operatorController.getRightY()))); //FIXME did not work, no movement
-
-    // reset lift encoder values when start button is pressed. 
-    //op_startButton.whenPressed(new ResetLiftEncoders()); //FIXME want this command to run automatically every time robot starts
-    
       
     /** Removed the Pivot arms from the robot, commenting out these buttons 
     op_ButtonX.whenPressed(new LiftPivotCommand(liftPivotMotors, 0.5)); // Rotates the pivot-lift arms for the higher bar
