@@ -11,11 +11,12 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 public class Blue1 extends SequentialCommandGroup {
   
-    public Blue1(DrivetrainSubsystem drivetrain, Index indexMotors, Intake intakeMotor, Launcher launcher) {
+    public Blue1(DrivetrainSubsystem drivetrain, Index indexMotors, Intake intakeMotor, Launcher launcher, Launcher speedFront, Launcher speedBack) {
       addCommands(
-        new IndexCommand(indexMotors, 0.2),
-        new IntakeCommand(intakeMotor, 0.2)
-        ); // End of commands
+        new LauncherSpeed(launcher, 0.2, 0.2).alongWith(
+          new IndexCommand(indexMotors, 0.2).alongWith(
+          new IntakeCommand(intakeMotor, 0.2)
+      ))); // end of add commands
  
   }  
     

@@ -13,9 +13,8 @@ public class Red1 extends SequentialCommandGroup {
 
     public Red1(DrivetrainSubsystem drivetrain, Index indexMotors, Intake intakeMotor, Launcher launcher) {
       addCommands(
-        new IndexCommand(indexMotors, -0.2),
-        new IntakeCommand(intakeMotor, -0.2)
-        ); // End of commands
+        new IndexCommand(indexMotors, -0.2).alongWith(new IntakeCommand(intakeMotor, -0.2)
+      )); // End of commands
   }  
     
   } // end class
