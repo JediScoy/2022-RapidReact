@@ -68,11 +68,11 @@ public class RobotContainer {
   
   // A sample auton
   private final Command blueOne =
-    new IntakeCommand(intakeMotor, 0.5);
+    new IntakeCommand(intakeMotor, 0.1);
  
   // A sample auton
   private final Command redOne =
-    new IntakeCommand(intakeMotor, -0.5);
+    new IntakeCommand(intakeMotor, -0.1);
   
   // A chooser for autonomous commands
   SendableChooser<Command> m_chooser = new SendableChooser<>();

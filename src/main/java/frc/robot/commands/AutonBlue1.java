@@ -13,8 +13,8 @@ public class AutonBlue1 extends SequentialCommandGroup {
   
     public AutonBlue1(DrivetrainSubsystem drivetrain, Index indexMotors, Intake intakeMotors, Launcher launcher) {
     addCommands(
-      new IndexCommand(indexMotors, 0.5),
-      new IntakeCommand(intakeMotors, 0.5)
+      new IndexCommand(indexMotors, 0.2),
+      new IntakeCommand(intakeMotors, 0.2)
       ); // End of commands
  
   }  
