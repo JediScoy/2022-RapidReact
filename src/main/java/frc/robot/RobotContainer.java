@@ -8,10 +8,9 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.XboxController;
-// import edu.wpi.first.wpilibj.buttons.Trigger;
-// import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-// import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-// import edu.wpi.first.wpilibj.buttons.JoystickButton; // OldCommands vendorsdep
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.buttons.Trigger;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton; //NewCommands vendordep
 import static edu.wpi.first.wpilibj.XboxController.Button;
 import com.pathplanner.lib.PathPlanner;
@@ -21,6 +20,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
+
 // Subsystem imports
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.Index;
@@ -28,13 +28,14 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Launcher;
 import frc.robot.subsystems.Lift;
 //import frc.robot.subsystems.LiftPivot;
-
+import frc.robot.commands.Blue1;
 // Command imports
 import frc.robot.commands.DefaultDriveCommand;
 import frc.robot.commands.IndexCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.LauncherSpeed;
 import frc.robot.commands.LiftCommand;
+import frc.robot.commands.Red1;
 //import frc.robot.commands.LiftPivotCommand;
 import frc.robot.commands.ResetLiftEncoders;
 
@@ -60,9 +61,28 @@ public class RobotContainer {
   private final XboxController driverController = new XboxController(0);
   // Second operator controller
   private final XboxController operatorController = new XboxController(1);
+  
+  // Autononmous TODO Auton
+  
+  // A sample auton
+  private final Command blueOne =
+    new Red1(m_drivetrainSubsystem, indexMotors, intakeMotor, launcher);
+
+  // A sample auton
+  private final Command redOne =
+    new Red1(m_drivetrainSubsystem, indexMotors, intakeMotor, launcher);
+  
+  // A chooser for autonomous commands
+  SendableChooser<Command> m_chooser = new SendableChooser<>();
+
+
+
 
   // The container for the robot. Contains subsystems, OI devices, and commands.
   public RobotContainer() {
+    // Configure the button bindings
+    configureButtonBindings();
+
     // Set up the default command for the drivetrain.
     // The controls are for field-oriented driving:
     // Left stick Y axis -> forward and backwards movement
@@ -75,9 +95,12 @@ public class RobotContainer {
             () -> -modifyAxis(driverController.getRightX()) * DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
     ));
     
+    // TODO Add commands to the autonomous command chooser
+    m_chooser.setDefaultOption("Blue 1", blueOne);
+    m_chooser.addOption("Red 1", redOne);
 
-    // Configure the button bindings
-    configureButtonBindings();
+    // Puts the chooser on the dashboard
+    Shuffleboard.getTab("Auton").add(m_chooser);
   }
 
   private void configureButtonBindings() {
@@ -228,40 +251,9 @@ public class RobotContainer {
    * Use this to pass the autonomous command to the main {@link Robot} class.
    * @return the command to run in autonomous
    */
+  
   public Command getAutonomousCommand() {
-    // new AutonSquare(m_drivetrainSubsystem);
-    // This is from Prototype launcher
-    // return AutonSquare;
-    // This is from SDS Drive code base
-    //return new InstantCommand();
+    return m_chooser.getSelected();  
 
-    // 1. This will load the file "Square.path" from PathPlanner and generate it with a max velocity of 8 m/s 
-    // and a max acceleration of 5 m/s^2
-
-    Trajectory examplePath = PathPlanner.loadPath("BadPath",8,5);
-
-    // 2. Defining PID Controllers for tracking trajectory
-    PIDController xController = new PIDController(Constants.kPXController, 0, 0);
-    PIDController yController = new PIDController(Constants.kPYController, 0, 0);
-    ProfiledPIDController thetaController = new ProfiledPIDController(
-    Constants.kPThetaController, 0, 0, Constants.kThetaControllerConstraints);
-    thetaController.enableContinuousInput(-Math.PI, Math.PI);
-
-    // 3. Command to follow path from PathPlanner
-    SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(
-      examplePath, 
-      m_drivetrainSubsystem::getPose, 
-      Constants.m_kinematics, 
-      xController, 
-      yController, 
-      thetaController, 
-      m_drivetrainSubsystem::setModuleStates, 
-      m_drivetrainSubsystem);
-
-    // 4. Add some init and wrap-up, and return everything
-    return new SequentialCommandGroup(
-      new InstantCommand(() -> m_drivetrainSubsystem.resetOdometry(examplePath.getInitialPose())),
-      swerveControllerCommand,
-      new InstantCommand(() -> m_drivetrainSubsystem.stop()));
   }
-}
+} // End of class
