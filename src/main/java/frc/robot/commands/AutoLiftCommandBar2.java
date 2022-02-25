@@ -32,9 +32,10 @@ public class AutoLiftCommandBar2 extends CommandBase{
 
  @Override
  public void end(boolean interrupted){ 
+	// if motor encoder values are greater than or the encoder value of the height of bar #2, stop motors.
    	if (leftLiftMotor.getSelectedSensorPosition() >= bar2HeightLeft && 
 	   rightLiftMotor.getSelectedSensorPosition() >= bar2HeightRight) {
-		   return;
+			subsystem.stopLift();
 	   }
  }
 
