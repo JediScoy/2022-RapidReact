@@ -21,7 +21,7 @@ public class Intake extends SubsystemBase {
 
   public Intake() {
     intakeMotor = new TalonFX(Constants.INTAKE_MOTOR);
-    intakeMotor.setInverted(true);
+    intakeMotor.setInverted(false);
     intakeMotor.setNeutralMode(NeutralMode.Coast);
   }
 

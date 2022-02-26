@@ -16,10 +16,10 @@ public class Blue2 extends ParallelCommandGroup {
   
     public Blue2(DrivetrainSubsystem drivetrain, Index indexMotors, Intake intakeMotor, Launcher launcher) {
       addCommands(
-          new LauncherSpeed(launcher, 0.4, 0.6).withTimeout(5).andThen(new LauncherSpeed(launcher, 0.4, 0.6),
+          new LauncherSpeed(launcher, 0.4, 0.6),//.withTimeout(1).andThen(new LauncherSpeed(launcher, 0.4, 0.6),
           new IntakeSpeed(intakeMotor, 0.5),
           new IndexSpeed(indexMotors, 0.5)
-          )); // end of add commands
+          ); // end of add commands
  
     }  
     
