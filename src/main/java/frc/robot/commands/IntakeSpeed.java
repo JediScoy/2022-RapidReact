@@ -1,16 +1,16 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Index;
+import frc.robot.subsystems.Intake;
 
-public class IndexCommand extends CommandBase {
+public class IntakeSpeed extends CommandBase {
   
     // The subsystem the command runs on
-    private final Index subsystem;
-
-    private double speed;
-
-    public IndexCommand(Index subsystem, double speed) {
+    private final Intake subsystem;
+  
+    private double speed = 0.5;
+  
+    public IntakeSpeed(Intake subsystem, double speed) {
       this.subsystem = subsystem;
       this.speed = speed;
       addRequirements(subsystem);
@@ -18,13 +18,14 @@ public class IndexCommand extends CommandBase {
   
     @Override
     public void initialize() {
-      subsystem.startIndex(speed);
+      subsystem.startIntake(speed);
     }
   
     @Override
     public void end(boolean interrupted){ 
-      subsystem.stopIndex();
-      
-    }
+      subsystem.stopIntake();
 
+    }
+    
+    
   } // end class

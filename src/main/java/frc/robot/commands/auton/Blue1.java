@@ -3,8 +3,8 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.commands.auton;
-import frc.robot.commands.IndexCommand;
-import frc.robot.commands.IntakeCommand;
+import frc.robot.commands.IndexSpeed;
+import frc.robot.commands.IntakeSpeed;
 import frc.robot.commands.LauncherSpeed;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.Intake;
@@ -14,9 +14,9 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 public class Blue1 extends SequentialCommandGroup {
   
-    public Blue1(DrivetrainSubsystem drivetrain, Index indexMotors, Intake intakeMotor, Launcher launcher, Launcher speedFront, Launcher speedBack) {
+    public Blue1(DrivetrainSubsystem drivetrain, Index indexMotors, Intake intakeMotor, Launcher launcher) {
       addCommands(
-        new IndexCommand(indexMotors, 0.2).alongWith(new IntakeCommand(intakeMotor, 0.2)
+        new IndexSpeed(indexMotors, 0.2).alongWith(new IntakeSpeed(intakeMotor, 0.2)
       )); // end of add commands
  
     }  

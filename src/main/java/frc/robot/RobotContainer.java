@@ -29,10 +29,11 @@ import frc.robot.subsystems.Launcher;
 import frc.robot.subsystems.Lift;
 //import frc.robot.subsystems.LiftPivot;
 import frc.robot.commands.auton.Blue1;
+import frc.robot.commands.auton.Blue2;
 // Command imports
 import frc.robot.commands.DefaultDriveCommand;
-import frc.robot.commands.IndexCommand;
-import frc.robot.commands.IntakeCommand;
+import frc.robot.commands.IndexSpeed;
+import frc.robot.commands.IntakeSpeed;
 import frc.robot.commands.LauncherSpeed;
 import frc.robot.commands.LiftCommand;
 import frc.robot.commands.auton.Red1;
@@ -62,13 +63,13 @@ public class RobotContainer {
   // Second operator controller
   private final XboxController operatorController = new XboxController(1);
   
-  // Autononmous TODO Auton
-  
-  // A sample auton
+  // Autononmous TODO Auton references. Update throughout season
   private final Command blueOne =
-    new Red1(m_drivetrainSubsystem, indexMotors, intakeMotor, launcher);
+    new Blue1(m_drivetrainSubsystem, indexMotors, intakeMotor, launcher);
 
-  // A sample auton
+  private final Command blueTwo =
+    new Blue2(m_drivetrainSubsystem, indexMotors, intakeMotor, launcher);
+
   private final Command redOne =
     new Red1(m_drivetrainSubsystem, indexMotors, intakeMotor, launcher);
   
@@ -97,6 +98,7 @@ public class RobotContainer {
     
     // TODO Add commands to the autonomous command chooser
     m_chooser.setDefaultOption("Blue 1", blueOne);
+    m_chooser.addOption("Blue 2", blueTwo);
     m_chooser.addOption("Red 1", redOne);
 
     // Puts the chooser on the dashboard
@@ -145,12 +147,12 @@ public class RobotContainer {
         new LauncherSpeed(launcher, 0.20, 0.20).withTimeout(1),
           new ParallelCommandGroup (
             new LauncherSpeed(launcher, 0.25, 0.25),
-            new IntakeCommand(intakeMotor, -0.5),
-            new IndexCommand(indexMotors, 0.5)))
+            new IntakeSpeed(intakeMotor, -0.5),
+            new IndexSpeed(indexMotors, 0.5)))
       );
       d_ButtonA.whenReleased(new ParallelCommandGroup(
-        new IntakeCommand(intakeMotor, 0.0),
-        new IndexCommand(indexMotors, 0.0),
+        new IntakeSpeed(intakeMotor, 0.0),
+        new IndexSpeed(indexMotors, 0.0),
         new LauncherSpeed(launcher, 0.0, 0.0))
       );
 
@@ -161,26 +163,26 @@ public class RobotContainer {
         new LauncherSpeed(launcher, 0.40, 0.45).withTimeout(1),
           new ParallelCommandGroup (
             new LauncherSpeed(launcher, 0.35, 0.40),
-            new IntakeCommand(intakeMotor, -0.5),
-            new IndexCommand(indexMotors, 0.5))
+            new IntakeSpeed(intakeMotor, -0.5),
+            new IndexSpeed(indexMotors, 0.5))
       ));
       d_ButtonY.whenReleased(new ParallelCommandGroup(
-        new IntakeCommand(intakeMotor, 0.0),
-        new IndexCommand(indexMotors, 0.0),
+        new IntakeSpeed(intakeMotor, 0.0),
+        new IndexSpeed(indexMotors, 0.0),
         new LauncherSpeed(launcher, 0.0, 0.0))
       );
 
     // Hold right bumper to manually Intake cargo from the field, release to stop motors
-    d_RightBumper.whenPressed(new IntakeCommand(intakeMotor, 0.5)); 
-    d_RightBumper.whenReleased(new IntakeCommand(intakeMotor, 0.0)); 
+    d_RightBumper.whenPressed(new IntakeSpeed(intakeMotor, 0.5)); 
+    d_RightBumper.whenReleased(new IntakeSpeed(intakeMotor, 0.0)); 
 
     // Hold left bumper to manually Reverse cargo back to the field, release to stop motors
-    d_LeftBumper.whenPressed(new IntakeCommand(intakeMotor, -0.5)); 
-    d_LeftBumper.whenReleased(new IntakeCommand(intakeMotor, 0.0)); 
+    d_LeftBumper.whenPressed(new IntakeSpeed(intakeMotor, -0.5)); 
+    d_LeftBumper.whenReleased(new IntakeSpeed(intakeMotor, 0.0)); 
 
     // Hold X to manually Advance cargo to the launcher, release to stop motors
-    d_ButtonX.whenPressed(new IndexCommand(indexMotors, 0.5)); 
-    d_ButtonX.whenReleased(new IndexCommand(indexMotors, 0));
+    d_ButtonX.whenPressed(new IndexSpeed(indexMotors, 0.5)); 
+    d_ButtonX.whenReleased(new IndexSpeed(indexMotors, 0));
 
     //Operator Controller
       //lift button commands

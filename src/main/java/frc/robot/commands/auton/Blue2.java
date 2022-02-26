@@ -5,19 +5,22 @@
 package frc.robot.commands.auton;
 import frc.robot.commands.IndexSpeed;
 import frc.robot.commands.IntakeSpeed;
+import frc.robot.commands.LauncherSpeed;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Index;
 import frc.robot.subsystems.Launcher;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 
-public class Red1 extends SequentialCommandGroup {
-
-    public Red1(DrivetrainSubsystem drivetrain, Index indexMotors, Intake intakeMotor, Launcher launcher) {
+public class Blue2 extends ParallelCommandGroup {
+  
+    public Blue2(DrivetrainSubsystem drivetrain, Index indexMotors, Intake intakeMotor, Launcher launcher) {
       addCommands(
-        new IndexSpeed(indexMotors, -0.2).alongWith(new IntakeSpeed(intakeMotor, -0.2)
-      )); // End of commands
-      
+          new LauncherSpeed(launcher, 0.4, 0.6).withTimeout(5).andThen(new LauncherSpeed(launcher, 0.4, 0.6),
+          new IntakeSpeed(intakeMotor, 0.5),
+          new IndexSpeed(indexMotors, 0.5)
+          )); // end of add commands
+ 
     }  
     
   } // end class
