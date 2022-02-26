@@ -34,22 +34,21 @@ public class AutoLiftCommandBar1 extends CommandBase{
   	subsystem.startLift(speed);
  }
 
+ @Override
+ public boolean isFinished() {
+	if (leftLiftMotor.getSelectedSensorPosition() >= bar1HeightLeft &&
+	   rightLiftMotor.getSelectedSensorPosition() >= bar1HeightRight) {
+		  return true;
+	}
+	else {
+		return false;
+	}
+}
  
  @Override
  public void end(boolean interrupted){ 
 			subsystem.stopLift();
 	   }
-	   
 
- @Override
- 	public boolean isFinished() {
-		if (leftLiftMotor.getSelectedSensorPosition() >= bar1HeightLeft &&
-	   	rightLiftMotor.getSelectedSensorPosition() >= bar1HeightRight) {
-  			return true;
-		}
-		else {
-			return false;
-		}
- }
 
 } // End class
