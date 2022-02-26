@@ -1,0 +1,30 @@
+package frc.robot.commands;
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.Launcher;
+
+public class GCLauncher extends CommandBase {
+    
+    // The subsystem the command runs on
+    private final Launcher subsystem;
+
+    public GCLauncher(Launcher subsystem) {
+      addRequirements(subsystem);
+      new LauncherSpeed(launcher, 0.20, 0.20).withTimeout(1),
+          new ParallelCommandGroup (
+            new LauncherSpeed(launcher, 0.25, 0.25),
+            new IntakeSpeed(intakeMotor, -0.5),
+            new IndexSpeed(indexMotors, 0.5)))
+    }
+  
+    @Override
+    public void initialize() {
+      subsystem.setLauncherSpeed(speedFront, speedBack);
+    }
+  
+    @Override
+    public void end(boolean interrupted){ 
+      subsystem.setLauncherSpeed(0, 0);
+    }
+    
+    
+  } // end class

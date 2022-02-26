@@ -39,6 +39,8 @@ import frc.robot.commands.LiftCommand;
 import frc.robot.commands.auton.Red1;
 //import frc.robot.commands.LiftPivotCommand;
 import frc.robot.commands.ResetLiftEncoders;
+// import src.main.deploy.pathplanner;
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -257,5 +259,34 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     return m_chooser.getSelected();  
 
-  }
+    /** 
+    Trajectory m_path = PathPlanner.loadPath("Straight", 5, 5);
+
+    // 2. Defining PID Controllers for tracking trajectory
+    PIDController xController = new PIDController(Constants.kPXController, 0, 0);
+    PIDController yController = new PIDController(Constants.kPYController, 0, 0);
+    ProfiledPIDController thetaController = new ProfiledPIDController(Constants.kPThetaController, 0, 0, Constants.kThetaControllerConstraints);
+    thetaController.enableContinuousInput(-Math.PI, Math.PI);
+
+    // 3. Command to follow path from PathPlanner
+    SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(
+      m_path, 
+      m_drivetrainSubsystem::getPose, 
+      Constants.m_kinematics, 
+      xController, 
+      yController, 
+      thetaController, 
+      m_drivetrainSubsystem::setModuleStates, 
+      m_drivetrainSubsystem);
+
+    // 4. Add some init and wrap-up, and return everything
+    return new SequentialCommandGroup(
+      new InstantCommand(() -> m_drivetrainSubsystem.resetOdometry(m_path.getInitialPose())),
+      swerveControllerCommand,
+      new InstantCommand(() -> m_drivetrainSubsystem.stop()));
+    
+    // System.out.println(exampleState.velocityMetersPerSecond);
+    */
+  }    
+  
 } // End of class
