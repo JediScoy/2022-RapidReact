@@ -5,20 +5,19 @@
 package frc.robot.commands.auton;
 import frc.robot.commands.IndexSpeed;
 import frc.robot.commands.IntakeSpeed;
+import frc.robot.commands.LauncherSequence;
 import frc.robot.commands.LauncherSpeed;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Index;
 import frc.robot.subsystems.Launcher;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
-public class Blue2 extends ParallelCommandGroup {
-  
+public class Blue2 extends SequentialCommandGroup {
     public Blue2(DrivetrainSubsystem drivetrain, Index indexMotors, Intake intakeMotor, Launcher launcher) {
       addCommands(
-          new LauncherSpeed(launcher, 0.4, 0.6),//.withTimeout(1).andThen(new LauncherSpeed(launcher, 0.4, 0.6),
-          new IntakeSpeed(intakeMotor, 0.5),
-          new IndexSpeed(indexMotors, 0.5)
+          new LauncherSequence(launcher, intakeMotor, indexMotors)
           ); // end of add commands
  
     }  
