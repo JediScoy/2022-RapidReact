@@ -36,6 +36,7 @@ import frc.robot.commands.IndexCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.LauncherSpeed;
 import frc.robot.commands.LiftCommand;
+import frc.robot.commands.LockLiftCommandBar1;
 //import frc.robot.commands.LiftPivotCommand;
 import frc.robot.commands.ResetLiftEncoders;
 
@@ -171,11 +172,15 @@ public class RobotContainer {
     op_RightBumper.whenPressed(new LiftCommand(liftMotors, -0.5)); 
     op_RightBumper.whenReleased(new LiftCommand(liftMotors, 0.0));
 
-    // press A to auto raise climbing arms to the encoder value of bar #1
-    op_ButtonA.whenPressed(new AutoLiftCommandBar1(liftMotors, 0.5)); //FIXME add timeout when it reaches certain encoder value of bar 1
+    /**  press A to auto raise climbing arms to the encoder value of bar #1, then reverse climbing motors until it reaches
+    encoder value where locking arms engage on bar 1 */
+    op_ButtonA.whenPressed(new SequentialCommandGroup(
+      new AutoLiftCommandBar1(liftMotors, 0.5),
+      new LockLiftCommandBar1(liftMotors, -0.5)
+    ));
 
     // press Y to auto raise climbing arms to encoder value of bar #2
-    op_ButtonY.whenPressed(new AutoLiftCommandBar2(liftMotors, 0.5)); //FIXME add timeout when it reaches certain encoder value of bar 2
+    op_ButtonY.whenPressed(new AutoLiftCommandBar2(liftMotors, 0.5)); 
 
     // Use left stick up and down to manually move left climbing arm up and down
     leftLiftMotor.setDefaultCommand(new LiftCommand(
