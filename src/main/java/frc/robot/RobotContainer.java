@@ -100,8 +100,8 @@ public class RobotContainer {
     // final JoystickButton op_backButton = new JoystickButton(operatorController, Button.kBack.value);
     final JoystickButton op_startButton = new JoystickButton(operatorController, Button.kStart.value);
     final JoystickButton op_ButtonA = new JoystickButton(operatorController, Button.kA.value);
-    //final JoystickButton op_ButtonB = new JoystickButton(operatorController, Button.kB.value);
-    //final JoystickButton op_ButtonX = new JoystickButton(operatorController, Button.kX.value);
+    final JoystickButton op_ButtonB = new JoystickButton(operatorController, Button.kB.value);
+    final JoystickButton op_ButtonX = new JoystickButton(operatorController, Button.kX.value);
     final JoystickButton op_ButtonY = new JoystickButton(operatorController, Button.kY.value);
     final JoystickButton op_RightBumper = new JoystickButton(operatorController, Button.kRightBumper.value);
     final JoystickButton op_LeftBumper = new JoystickButton(operatorController, Button.kLeftBumper.value);
@@ -172,12 +172,11 @@ public class RobotContainer {
     op_RightBumper.whenPressed(new LiftCommand(liftMotors, -0.5)); 
     op_RightBumper.whenReleased(new LiftCommand(liftMotors, 0.0));
 
-    /**  press A to auto raise climbing arms to the encoder value of bar #1, then reverse climbing motors until it reaches
-    encoder value where locking arms engage on bar 1 */
-    op_ButtonA.whenPressed(new SequentialCommandGroup(
-      new AutoLiftCommandBar1(liftMotors, 0.5),
-      new LockLiftCommandBar1(liftMotors, -0.5)
-    ));
+    // press A to auto raise climbing arms to the encoder value of bar #1
+    op_ButtonA.whenPressed(new AutoLiftCommandBar1(liftMotors, 0.5)); 
+
+    // press B to auto lower climbing arms to the encoder value of when the locking arms engage on bar #1
+    op_ButtonA.whenPressed(new LockLiftCommandBar1(liftMotors, -0.5)); 
 
     // press Y to auto raise climbing arms to encoder value of bar #2
     op_ButtonY.whenPressed(new AutoLiftCommandBar2(liftMotors, 0.5)); 
