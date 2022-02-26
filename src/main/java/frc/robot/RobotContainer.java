@@ -125,12 +125,12 @@ public class RobotContainer {
       d_ButtonA.whenPressed(new SequentialCommandGroup(
         new LauncherSpeed(launcher, 0.20, 0.20).withTimeout(1),
           new SequentialCommandGroup(
-            new LauncherSpeed(launcher, 0.20, 0.20).withTimeout(1),
-            new IndexCommand(indexMotors, 0.5).withTimeout(1),
-              new ParallelCommandGroup (
-                new LauncherSpeed(launcher, 0.25, 0.25),
-                new IntakeCommand(intakeMotor, -0.5),
-                new IndexCommand(indexMotors, 0.5)))
+            new LauncherSpeed(launcher, 0.20, 0.20).withTimeout(0.5).alongWith(
+              new IndexCommand(indexMotors, 0.5).withTimeout(0.5)),
+                new ParallelCommandGroup (
+                  new LauncherSpeed(launcher, 0.25, 0.25),
+                  new IntakeCommand(intakeMotor, -0.5),
+                  new IndexCommand(indexMotors, 0.5)))
       ));
       d_ButtonA.whenReleased(new ParallelCommandGroup(
         new IntakeCommand(intakeMotor, 0.0),
@@ -144,12 +144,12 @@ public class RobotContainer {
       d_ButtonY.whenPressed(new SequentialCommandGroup(
         new LauncherSpeed(launcher, 0.40, 0.45).withTimeout(1),
           new SequentialCommandGroup(
-            new LauncherSpeed(launcher, 0.40, 0.45).withTimeout(1),
-            new IndexCommand(indexMotors, 0.5).withTimeout(1),
-              new ParallelCommandGroup (
-                new LauncherSpeed(launcher, 0.35, 0.40),
-                new IntakeCommand(intakeMotor, -0.5),
-                new IndexCommand(indexMotors, 0.5))
+            new LauncherSpeed(launcher, 0.40, 0.45).withTimeout(0.5).alongWith(
+              new IndexCommand(indexMotors, 0.5).withTimeout(0.5)),
+                new ParallelCommandGroup (
+                  new LauncherSpeed(launcher, 0.35, 0.40),
+                  new IntakeCommand(intakeMotor, -0.5),
+                  new IndexCommand(indexMotors, 0.5))
       )));
       d_ButtonY.whenReleased(new ParallelCommandGroup(
         new IntakeCommand(intakeMotor, 0.0),
@@ -184,13 +184,13 @@ public class RobotContainer {
     op_ButtonA.whenPressed(new AutoLiftCommandBar1(liftMotors, 0.5)); 
 
     // press B to auto lower climbing arms to the encoder value of when the locking arms engage on bar #1
-    op_ButtonB.whenPressed(new LockLiftCommandBar1(liftMotors, -0.5)); 
+    op_ButtonB.whenPressed(new LockLiftCommandBar1(liftMotors, -0.5)); //FIXME did not work, no movement
 
     // press Y to auto raise climbing arms to encoder value of bar #2
     op_ButtonY.whenPressed(new AutoLiftCommandBar2(liftMotors, 0.5)); 
 
     // press B to auto lower climbing arms to the encoder value of when the locking arms engage on bar #2
-    op_ButtonX.whenPressed(new LockLiftCommandBar2(liftMotors, -0.5)); 
+    op_ButtonX.whenPressed(new LockLiftCommandBar2(liftMotors, -0.5));  //FIXME did not work, no movement
 
     // Use left stick up and down to manually move left climbing arm up and down
     leftLiftMotor.setDefaultCommand(new LiftCommand(

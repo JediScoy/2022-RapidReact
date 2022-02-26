@@ -38,10 +38,10 @@ public class LockLiftCommandBar1 extends CommandBase{
  public boolean isFinished() {
 	if (leftLiftMotor.getSelectedSensorPosition() >= lockHeightLeft &&
 	   rightLiftMotor.getSelectedSensorPosition() >= lockHeightRight) {
-		  return true;
+		  return false;
 	}
 	else {
-		return false;
+		return true;
 	}
 }
  
