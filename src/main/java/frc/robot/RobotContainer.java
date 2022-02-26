@@ -123,8 +123,8 @@ public class RobotContainer {
         new LauncherSpeed(launcher, 0.20, 0.20).withTimeout(1),
           new ParallelCommandGroup (
             new LauncherSpeed(launcher, 0.25, 0.25),
-            new IntakeCommand(intakeMotor, -0.5),
-            new IndexCommand(indexMotors, 0.5)))
+            new IndexCommand(indexMotors, 0.5),
+            new IntakeCommand(intakeMotor, -0.5)))
       );
       d_ButtonA.whenReleased(new ParallelCommandGroup(
         new IntakeCommand(intakeMotor, 0.0),
@@ -139,8 +139,8 @@ public class RobotContainer {
         new LauncherSpeed(launcher, 0.40, 0.45).withTimeout(1),
           new ParallelCommandGroup (
             new LauncherSpeed(launcher, 0.35, 0.40),
-            new IntakeCommand(intakeMotor, -0.5),
-            new IndexCommand(indexMotors, 0.5))
+            new IndexCommand(indexMotors, 0.5),
+            new IntakeCommand(intakeMotor, -0.5))
       ));
       d_ButtonY.whenReleased(new ParallelCommandGroup(
         new IntakeCommand(intakeMotor, 0.0),
@@ -172,10 +172,10 @@ public class RobotContainer {
     op_RightBumper.whenReleased(new LiftCommand(liftMotors, 0.0));
 
     // press A to auto raise climbing arms to the encoder value of bar #1
-    op_ButtonA.whenPressed(new AutoLiftCommandBar1(liftMotors, 0.5)); //FIXME add timeout when it reaches certain encoder value of bar 1
+    op_ButtonA.whenPressed(new AutoLiftCommandBar1(liftMotors, 0.5)); 
 
     // press Y to auto raise climbing arms to encoder value of bar #2
-    op_ButtonY.whenPressed(new AutoLiftCommandBar2(liftMotors, 0.5)); //FIXME add timeout when it reaches certain encoder value of bar 2
+    op_ButtonY.whenPressed(new AutoLiftCommandBar2(liftMotors, 0.5)); 
 
     // Use left stick up and down to manually move left climbing arm up and down
     leftLiftMotor.setDefaultCommand(new LiftCommand(
