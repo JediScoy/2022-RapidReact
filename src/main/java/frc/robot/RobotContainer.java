@@ -37,6 +37,7 @@ import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.LauncherSpeed;
 import frc.robot.commands.LiftCommand;
 import frc.robot.commands.LockLiftCommandBar1;
+import frc.robot.commands.LockLiftCommandBar2;
 //import frc.robot.commands.LiftPivotCommand;
 import frc.robot.commands.ResetLiftEncoders;
 
@@ -176,10 +177,13 @@ public class RobotContainer {
     op_ButtonA.whenPressed(new AutoLiftCommandBar1(liftMotors, 0.5)); 
 
     // press B to auto lower climbing arms to the encoder value of when the locking arms engage on bar #1
-    op_ButtonA.whenPressed(new LockLiftCommandBar1(liftMotors, -0.5)); 
+    op_ButtonB.whenPressed(new LockLiftCommandBar1(liftMotors, -0.5)); 
 
     // press Y to auto raise climbing arms to encoder value of bar #2
     op_ButtonY.whenPressed(new AutoLiftCommandBar2(liftMotors, 0.5)); 
+
+    // press B to auto lower climbing arms to the encoder value of when the locking arms engage on bar #2
+    op_ButtonX.whenPressed(new LockLiftCommandBar2(liftMotors, -0.5)); 
 
     // Use left stick up and down to manually move left climbing arm up and down
     leftLiftMotor.setDefaultCommand(new LiftCommand(
