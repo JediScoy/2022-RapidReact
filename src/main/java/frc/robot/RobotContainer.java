@@ -39,6 +39,8 @@ import frc.robot.commands.LiftCommand;
 import frc.robot.commands.auton.Red1;
 //import frc.robot.commands.LiftPivotCommand;
 import frc.robot.commands.ResetLiftEncoders;
+// import src.main.deploy.pathplanner;
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -256,6 +258,6 @@ public class RobotContainer {
   
   public Command getAutonomousCommand() {
     return m_chooser.getSelected();  
-
   }
+  
 } // End of class
