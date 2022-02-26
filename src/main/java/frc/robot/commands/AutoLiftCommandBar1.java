@@ -14,9 +14,11 @@ public class AutoLiftCommandBar1 extends CommandBase{
  	private double speed;
 
 	// encoder value for bar 1 height of left arm
-	private int bar1HeightLeft = 79202; 
+	private double bar1HeightLeft = 79202; 
 	// encoder value for bar 1 height of right arm  
-	private int bar1HeightRight = 79856;  
+	private double bar1HeightRight = 79856;  
+
+	//private int leftLiftMotorEncoder = leftLiftMotor.get
 	
 	private final WPI_TalonFX leftLiftMotor = new WPI_TalonFX(Constants.LEFT_LIFT_MOTOR);
 	private final WPI_TalonFX rightLiftMotor = new WPI_TalonFX(Constants.RIGHT_LIFT_MOTOR);
@@ -32,20 +34,16 @@ public class AutoLiftCommandBar1 extends CommandBase{
   	subsystem.startLift(speed);
  }
 
- /** 
+ 
  @Override
  public void end(boolean interrupted){ 
-	// if motor encoder values are greater than or the encoder value of the height of bar #1, stop motors.
-	//FIXME this did not stop the motors, kept going forever.
-   	if (leftLiftMotor.getSelectedSensorPosition() >= bar1HeightLeft && 
-	   rightLiftMotor.getSelectedSensorPosition() >= bar1HeightRight) {
 			subsystem.stopLift();
 	   }
- }*/
+	   
 
  @Override
  	public boolean isFinished() {
-		if (leftLiftMotor.getSelectedSensorPosition() >= bar1HeightLeft && 
+		if (leftLiftMotor.getSelectedSensorPosition() >= bar1HeightLeft &&
 	   	rightLiftMotor.getSelectedSensorPosition() >= bar1HeightRight) {
   			return true;
 		}
