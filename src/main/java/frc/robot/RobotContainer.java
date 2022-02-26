@@ -122,6 +122,7 @@ public class RobotContainer {
       d_ButtonA.whenPressed(new SequentialCommandGroup(
         new LauncherSpeed(launcher, 0.20, 0.20).withTimeout(1),
           new ParallelCommandGroup (
+<<<<<<< HEAD
             new LauncherSpeed(launcher, 0.25, 0.25).withTimeout(1),
             new IndexCommand(indexMotors, 0.5).withTimeout(1),
               new ParallelCommandGroup (
@@ -129,6 +130,12 @@ public class RobotContainer {
                 new IndexCommand(indexMotors, 0.5),
                 new IntakeCommand(intakeMotor, -0.5)))
       ));
+=======
+            new LauncherSpeed(launcher, 0.25, 0.25),
+            new IntakeCommand(intakeMotor, -0.5),
+            new IndexCommand(indexMotors, 0.5)))
+      );
+>>>>>>> parent of 3dc9b9f (Working autolift ro encoder value)
       d_ButtonA.whenReleased(new ParallelCommandGroup(
         new IntakeCommand(intakeMotor, 0.0),
         new IndexCommand(indexMotors, 0.0),
@@ -141,6 +148,7 @@ public class RobotContainer {
       d_ButtonY.whenPressed(new SequentialCommandGroup(
         new LauncherSpeed(launcher, 0.40, 0.45).withTimeout(1),
           new ParallelCommandGroup (
+<<<<<<< HEAD
             new LauncherSpeed(launcher, 0.35, 0.40).withTimeout(1),
             new IndexCommand(indexMotors, 0.5).withTimeout(1),  
               new ParallelCommandGroup (
@@ -148,6 +156,12 @@ public class RobotContainer {
                 new IndexCommand(indexMotors, 0.5),
                 new IntakeCommand(intakeMotor, -0.5))
       )));
+=======
+            new LauncherSpeed(launcher, 0.35, 0.40),
+            new IntakeCommand(intakeMotor, -0.5),
+            new IndexCommand(indexMotors, 0.5))
+      ));
+>>>>>>> parent of 3dc9b9f (Working autolift ro encoder value)
       d_ButtonY.whenReleased(new ParallelCommandGroup(
         new IntakeCommand(intakeMotor, 0.0),
         new IndexCommand(indexMotors, 0.0),
@@ -178,10 +192,10 @@ public class RobotContainer {
     op_RightBumper.whenReleased(new LiftCommand(liftMotors, 0.0));
 
     // press A to auto raise climbing arms to the encoder value of bar #1
-    op_ButtonA.whenPressed(new AutoLiftCommandBar1(liftMotors, 0.5)); 
+    op_ButtonA.whenPressed(new AutoLiftCommandBar1(liftMotors, 0.5)); //FIXME add timeout when it reaches certain encoder value of bar 1
 
     // press Y to auto raise climbing arms to encoder value of bar #2
-    op_ButtonY.whenPressed(new AutoLiftCommandBar2(liftMotors, 0.5)); 
+    op_ButtonY.whenPressed(new AutoLiftCommandBar2(liftMotors, 0.5)); //FIXME add timeout when it reaches certain encoder value of bar 2
 
     // Use left stick up and down to manually move left climbing arm up and down
     leftLiftMotor.setDefaultCommand(new LiftCommand(
