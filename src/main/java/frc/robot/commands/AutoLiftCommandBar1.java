@@ -32,13 +32,26 @@ public class AutoLiftCommandBar1 extends CommandBase{
   	subsystem.startLift(speed);
  }
 
+ /** 
  @Override
  public void end(boolean interrupted){ 
 	// if motor encoder values are greater than or the encoder value of the height of bar #1, stop motors.
+	//FIXME this did not stop the motors, kept going forever.
    	if (leftLiftMotor.getSelectedSensorPosition() >= bar1HeightLeft && 
 	   rightLiftMotor.getSelectedSensorPosition() >= bar1HeightRight) {
 			subsystem.stopLift();
 	   }
+ }*/
+
+ @Override
+ 	public boolean isFinished() {
+		if (leftLiftMotor.getSelectedSensorPosition() >= bar1HeightLeft && 
+	   	rightLiftMotor.getSelectedSensorPosition() >= bar1HeightRight) {
+  			return true;
+		}
+		else {
+			return false;
+		}
  }
 
 } // End class
