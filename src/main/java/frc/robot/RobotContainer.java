@@ -99,7 +99,7 @@ public class RobotContainer {
 
     // Declaring buttons on the operator controller
     // final JoystickButton op_backButton = new JoystickButton(operatorController, Button.kBack.value);
-    final JoystickButton op_startButton = new JoystickButton(operatorController, Button.kStart.value);
+    // final JoystickButton op_startButton = new JoystickButton(operatorController, Button.kStart.value);
     final JoystickButton op_ButtonA = new JoystickButton(operatorController, Button.kA.value);
     final JoystickButton op_ButtonB = new JoystickButton(operatorController, Button.kB.value);
     final JoystickButton op_ButtonX = new JoystickButton(operatorController, Button.kX.value);
