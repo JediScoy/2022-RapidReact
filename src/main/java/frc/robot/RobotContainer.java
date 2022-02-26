@@ -122,8 +122,8 @@ public class RobotContainer {
       d_ButtonA.whenPressed(new SequentialCommandGroup(
         new LauncherSpeed(launcher, 0.20, 0.20).withTimeout(1),
           new ParallelCommandGroup (
-            new LauncherSpeed(launcher, 0.25, 0.25).withTimeout(0.5),
-            new IndexCommand(indexMotors, 0.5).withTimeout(0.5),
+            new LauncherSpeed(launcher, 0.25, 0.25).withTimeout(1),
+            new IndexCommand(indexMotors, 0.5).withTimeout(1),
               new ParallelCommandGroup (
                 new LauncherSpeed(launcher, 0.25, 0.25),
                 new IndexCommand(indexMotors, 0.5),
@@ -141,8 +141,8 @@ public class RobotContainer {
       d_ButtonY.whenPressed(new SequentialCommandGroup(
         new LauncherSpeed(launcher, 0.40, 0.45).withTimeout(1),
           new ParallelCommandGroup (
-            new LauncherSpeed(launcher, 0.35, 0.40).withTimeout(0.5),
-            new IndexCommand(indexMotors, 0.5).withTimeout(0.5),  
+            new LauncherSpeed(launcher, 0.35, 0.40).withTimeout(1),
+            new IndexCommand(indexMotors, 0.5).withTimeout(1),  
               new ParallelCommandGroup (
                 new LauncherSpeed(launcher, 0.35, 0.40),
                 new IndexCommand(indexMotors, 0.5),
