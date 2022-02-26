@@ -118,32 +118,39 @@ public class RobotContainer {
     */
 
     //Driver Controller button commands
-      // when A is held, run Launch motors by themselves for a second, then run Launch, Intake and Index motors all at once
-      // release to stop motors
+
+      /**  when A is held, run Launch motors by themselves for a second, then run Launch and Index motors for 0.5 seconds,
+       then finally run all 3 motors at once. release to stop all motors */
         // Low shot up close
       d_ButtonA.whenPressed(new SequentialCommandGroup(
         new LauncherSpeed(launcher, 0.20, 0.20).withTimeout(1),
-          new ParallelCommandGroup (
-            new LauncherSpeed(launcher, 0.25, 0.25),
-            new IntakeCommand(intakeMotor, -0.5),
-            new IndexCommand(indexMotors, 0.5)))
-      );
+          new SequentialCommandGroup(
+            new LauncherSpeed(launcher, 0.20, 0.20).withTimeout(1),
+            new IndexCommand(indexMotors, 0.5).withTimeout(1),
+              new ParallelCommandGroup (
+                new LauncherSpeed(launcher, 0.25, 0.25),
+                new IntakeCommand(intakeMotor, -0.5),
+                new IndexCommand(indexMotors, 0.5)))
+      ));
       d_ButtonA.whenReleased(new ParallelCommandGroup(
         new IntakeCommand(intakeMotor, 0.0),
         new IndexCommand(indexMotors, 0.0),
         new LauncherSpeed(launcher, 0.0, 0.0))
       );
 
-      // when Y is held, run Launch motors by themselves for a second, then run Launch, Intake and Index motors all at once
-      // release to stop motors
+     /**  when Y is held, run Launch motors by themselves for a second, then run Launch and Index motors for 0.5 seconds,
+       then finally run all 3 motors at once. release to stop all motors */
         // High shot up close
       d_ButtonY.whenPressed(new SequentialCommandGroup(
         new LauncherSpeed(launcher, 0.40, 0.45).withTimeout(1),
-          new ParallelCommandGroup (
-            new LauncherSpeed(launcher, 0.35, 0.40),
-            new IntakeCommand(intakeMotor, -0.5),
-            new IndexCommand(indexMotors, 0.5))
-      ));
+          new SequentialCommandGroup(
+            new LauncherSpeed(launcher, 0.40, 0.45).withTimeout(1),
+            new IndexCommand(indexMotors, 0.5).withTimeout(1),
+              new ParallelCommandGroup (
+                new LauncherSpeed(launcher, 0.35, 0.40),
+                new IntakeCommand(intakeMotor, -0.5),
+                new IndexCommand(indexMotors, 0.5))
+      )));
       d_ButtonY.whenReleased(new ParallelCommandGroup(
         new IntakeCommand(intakeMotor, 0.0),
         new IndexCommand(indexMotors, 0.0),
