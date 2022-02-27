@@ -34,7 +34,9 @@ public class Blue3 extends SequentialCommandGroup {
   
     public Blue3(DrivetrainSubsystem drivetrain, Index indexMotors, Intake intakeMotor, Launcher launcher) {
       addCommands(
-        new pathStraight()
+        new PathStraight(),
+        // speed front is first double
+        new LauncherSpeed(launcher, 0.3, 0.5)
       ); // end of add commands
  
     }  
