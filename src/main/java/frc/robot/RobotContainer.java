@@ -10,10 +10,16 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton; //NewCommands vendordep
 import static edu.wpi.first.wpilibj.XboxController.Button;
 
+import com.pathplanner.lib.PathPlanner;
+
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-
+import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 // Subsystem imports
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.Index;
@@ -38,7 +44,6 @@ import frc.robot.commands.auton.Red2;
 import frc.robot.commands.auton.Red3;
 import frc.robot.commands.LockLiftCommandBar1;
 import frc.robot.commands.LockLiftCommandBar2;
-import frc.robot.commands.ResetLiftEncoders;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -271,11 +276,12 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   
+  // TODO Adjust Auton Chooser VS built in Auton
   public Command getAutonomousCommand() {
-    return m_chooser.getSelected();  
+    // return m_chooser.getSelected();  
 
-    /** 
-     * // Load the path
+     
+    // Load the path
     Trajectory m_path = PathPlanner.loadPath("Straight", 5, 5);
 
     // 2. Defining PID Controllers for tracking trajectory
@@ -302,7 +308,7 @@ public class RobotContainer {
       new InstantCommand(() -> m_drivetrainSubsystem.stop()));
     
     // System.out.println(exampleState.velocityMetersPerSecond);
-    */
+    
   }    
   
 } // End of class

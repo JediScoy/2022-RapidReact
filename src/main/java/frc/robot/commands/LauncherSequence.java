@@ -14,15 +14,15 @@ public class LauncherSequence extends SequentialCommandGroup {
     
     public LauncherSequence(Launcher launcher, Intake intakeMotor, Index indexMotors) {
       new SequentialCommandGroup(
-        new LauncherSpeed(launcher, 0.20, 0.20).withTimeout(1),
+        new LauncherSpeed(launcher, 0.40, 0.45).withTimeout(1),
           new SequentialCommandGroup(
-            new LauncherSpeed(launcher, 0.20, 0.20).withTimeout(0.5).alongWith(
+            new LauncherSpeed(launcher, 0.40, 0.45).withTimeout(0.5).alongWith(
               new IndexSpeed(indexMotors, 0.5).withTimeout(0.5)),
                 new ParallelCommandGroup (
-                  new LauncherSpeed(launcher, 0.25, 0.25),
+                  new LauncherSpeed(launcher, 0.35, 0.40),
                   new IntakeSpeed(intakeMotor, -0.5),
-                  new IndexSpeed(indexMotors, 0.5)))
-      );
+                  new IndexSpeed(indexMotors, 0.5)
+      )));
     }
     
   } // end class
