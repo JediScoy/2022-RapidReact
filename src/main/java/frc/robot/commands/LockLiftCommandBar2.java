@@ -14,9 +14,9 @@ public class LockLiftCommandBar2 extends CommandBase{
  	private double speed;
 
 	// encoder value for bar 2 height of left arm
-	private double lockHeightLeft2 = -10107; //FIXME change to encoder value when lock arm engages on bar 2
+	private double lockHeightLeft2 = -1000; //FIXME change to encoder value when lock arm engages on bar 2
 	// encoder value for bar 2 height of right arm  
-	private double lockHeightRight2 = -5421;  //FIXME change to encoder value when lock arm engages on bar 2
+	private double lockHeightRight2 = -1000;  //FIXME change to encoder value when lock arm engages on bar 2
 
 	//private int leftLiftMotorEncoder = leftLiftMotor.get
 	
@@ -38,10 +38,10 @@ public class LockLiftCommandBar2 extends CommandBase{
  public boolean isFinished() {
 	if (leftLiftMotor.getSelectedSensorPosition() >= lockHeightLeft2 &&
 	   rightLiftMotor.getSelectedSensorPosition() >= lockHeightRight2) {
-		  return true;
+		  return false;
 	}
 	else {
-		return false;
+		return true;
 	}
 }
  

@@ -14,9 +14,9 @@ public class LockLiftCommandBar1 extends CommandBase{
  	private double speed;
 
 	// encoder value for bar 1 height of left arm
-	private double lockHeightLeft = -10107; 
+	private double lockHeightLeft = -11000; 
 	// encoder value for bar 1 height of right arm  
-	private double lockHeightRight = -5421;  
+	private double lockHeightRight = -6250;  
 
 	//private int leftLiftMotorEncoder = leftLiftMotor.get
 	
