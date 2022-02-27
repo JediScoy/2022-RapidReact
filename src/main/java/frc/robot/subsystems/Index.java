@@ -4,23 +4,13 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 // Shuffleboard imports
-import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 
 // CTRE imports
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 public class Index extends SubsystemBase {
   
   // variables
-  // private final TalonFX frontIndexMotor ;  
-  // private final TalonFX backIndexMotor;
-  // private frontIndexMotor = new WPI_TalonFX(Constants.FRONT_INDEX_MOTOR);
-  // backIndexMotor = new WPI_TalonFX(Constants.BACK_INDEX_MOTOR);
   private final WPI_TalonFX backIndexMotor = new WPI_TalonFX(Constants.BACK_INDEX_MOTOR); // Added so Index() worked
   private final WPI_TalonFX frontIndexMotor = new WPI_TalonFX(Constants.FRONT_INDEX_MOTOR); // Added so Index() worked
 

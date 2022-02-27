@@ -4,22 +4,15 @@
 
 package frc.robot;
 
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.controller.ProfiledPIDController;
-import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.buttons.Trigger;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton; //NewCommands vendordep
 import static edu.wpi.first.wpilibj.XboxController.Button;
-import com.pathplanner.lib.PathPlanner;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 
 // Subsystem imports
 import frc.robot.subsystems.DrivetrainSubsystem;
@@ -27,20 +20,19 @@ import frc.robot.subsystems.Index;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Launcher;
 import frc.robot.subsystems.Lift;
-//import frc.robot.subsystems.LiftPivot;
-import frc.robot.commands.auton.Blue1;
-import frc.robot.commands.auton.Blue2;
-// Command imports
 import frc.robot.commands.DefaultDriveCommand;
 import frc.robot.commands.IndexSpeed;
 import frc.robot.commands.IntakeSpeed;
 import frc.robot.commands.LauncherSpeed;
 import frc.robot.commands.LiftCommand;
-import frc.robot.commands.auton.Red1;
-//import frc.robot.commands.LiftPivotCommand;
-import frc.robot.commands.ResetLiftEncoders;
-// import src.main.deploy.pathplanner;
 
+// Auton
+import frc.robot.commands.auton.Blue1;
+import frc.robot.commands.auton.Blue2;
+import frc.robot.commands.auton.Blue3;
+import frc.robot.commands.auton.Red1;
+import frc.robot.commands.auton.Red2;
+import frc.robot.commands.auton.Red3;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -72,13 +64,20 @@ public class RobotContainer {
   private final Command blueTwo =
     new Blue2(m_drivetrainSubsystem, indexMotors, intakeMotor, launcher);
 
+  private final Command blueThree =
+    new Blue3(m_drivetrainSubsystem, indexMotors, intakeMotor, launcher);
+
   private final Command redOne =
     new Red1(m_drivetrainSubsystem, indexMotors, intakeMotor, launcher);
   
+  private final Command redTwo =
+    new Red2(m_drivetrainSubsystem, indexMotors, intakeMotor, launcher);
+
+  private final Command redThree =
+    new Red3(m_drivetrainSubsystem, indexMotors, intakeMotor, launcher);
+  
   // A chooser for autonomous commands
   SendableChooser<Command> m_chooser = new SendableChooser<>();
-
-
 
 
   // The container for the robot. Contains subsystems, OI devices, and commands.
@@ -101,7 +100,10 @@ public class RobotContainer {
     // TODO Add commands to the autonomous command chooser
     m_chooser.setDefaultOption("Blue 1", blueOne);
     m_chooser.addOption("Blue 2", blueTwo);
+    m_chooser.addOption("Blue 3", blueThree);
     m_chooser.addOption("Red 1", redOne);
+    m_chooser.addOption("Red 2", redTwo);
+    m_chooser.addOption("Red 3", redThree);
 
     // Puts the chooser on the dashboard
     Shuffleboard.getTab("Auton").add(m_chooser);
@@ -123,7 +125,7 @@ public class RobotContainer {
 
     // Declaring buttons on the operator controller
     // final JoystickButton op_backButton = new JoystickButton(operatorController, Button.kBack.value);
-    final JoystickButton op_startButton = new JoystickButton(operatorController, Button.kStart.value);
+    // final JoystickButton op_startButton = new JoystickButton(operatorController, Button.kStart.value);
     final JoystickButton op_ButtonA = new JoystickButton(operatorController, Button.kA.value);
     //final JoystickButton op_ButtonB = new JoystickButton(operatorController, Button.kB.value);
     //final JoystickButton op_ButtonX = new JoystickButton(operatorController, Button.kX.value);
@@ -135,11 +137,6 @@ public class RobotContainer {
 
     // Defining the actions associated with buttons
     d_backButton.whenPressed(m_drivetrainSubsystem::zeroGyroscope); // Shaun's gyro reset 
-
-    /** May not need this button, High shot from far may not be needed. 
-    d_ButtonA.whenPressed(new LauncherSpeed(launcher, 0.30, 0.60)); // High shot from a distance. No longer need negative values
-    d_ButtonA.whenReleased(new LauncherSpeed(launcher, 0.0, 0.00));
-    */
 
     //Driver Controller button commands
       // when A is held, run Launch motors by themselves for a second, then run Launch, Intake and Index motors all at once
@@ -260,6 +257,7 @@ public class RobotContainer {
     return m_chooser.getSelected();  
 
     /** 
+     * // Load the path
     Trajectory m_path = PathPlanner.loadPath("Straight", 5, 5);
 
     // 2. Defining PID Controllers for tracking trajectory

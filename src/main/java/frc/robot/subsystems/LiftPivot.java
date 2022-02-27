@@ -1,6 +1,5 @@
 package frc.robot.subsystems;
 
-// import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
@@ -8,19 +7,13 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 // Shuffleboard imports
-// import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts; // Displaying data?
-// import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard; // Displaying data?
-// import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab; // Displaying data?
-
 // CTRE imports
 
 public class LiftPivot extends SubsystemBase {
 
-// TODO Check direction of motors and determine if one needs to be reverse
   public final WPI_TalonFX leftPivotMotor = new WPI_TalonFX(Constants.LEFT_PIVOT_MOTOR);
   public final WPI_TalonFX rightPivotMotor = new WPI_TalonFX(Constants.RIGHT_PIVOT_MOTOR //, TalonFXInvertType.CounterClockwise
   );
-
 
   private final MotorController liftPivotMotors = new MotorControllerGroup(leftPivotMotor, rightPivotMotor);
   

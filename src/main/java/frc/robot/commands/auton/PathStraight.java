@@ -18,22 +18,21 @@ import java.io.IOException;
 import java.util.Optional;
 
 
-public class PathStraightComplex extends SequentialCommandGroup{
+public class PathStraight extends SequentialCommandGroup{
     private final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem();
 
     // 1. Load the path from Path Planner
-    Trajectory examplePath = PathPlanner.loadPath("Straight",5,5);
+    Trajectory m_path = PathPlanner.loadPath("Straight",5,5);
 
     // 2. Defining PID Controllers for tracking trajectory
     PIDController xController = new PIDController(Constants.kPXController, 0, 0);
     PIDController yController = new PIDController(Constants.kPYController, 0, 0);
     ProfiledPIDController thetaController = new ProfiledPIDController(Constants.kPThetaController, 0, 0, Constants.kThetaControllerConstraints);
     thetaController.enableContinuousInput(-Math.PI, Math.PI);
-    // thetaController.enableContinuousInput(-Math.PI, Math.PI);
 
     // 3. Command to follow path from PathPlanner
     SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(
-      examplePath, 
+      m_path, 
       m_drivetrainSubsystem::getPose, 
       Constants.m_kinematics, 
       xController, 
@@ -44,7 +43,7 @@ public class PathStraightComplex extends SequentialCommandGroup{
 
     // 4. Add some init and wrap-up, and return everything
     return new SequentialCommandGroup(
-      new InstantCommand(() -> m_drivetrainSubsystem.resetOdometry(examplePath.getInitialPose())),
+      new InstantCommand(() -> m_drivetrainSubsystem.resetOdometry(m_path.getInitialPose())),
       swerveControllerCommand,
       new InstantCommand(() -> m_drivetrainSubsystem.stop()));
   }    
