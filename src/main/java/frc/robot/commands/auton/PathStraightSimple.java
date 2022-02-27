@@ -4,24 +4,16 @@
 
 package frc.robot.commands.auton;
 import com.pathplanner.lib.PathPlanner;
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import frc.robot.subsystems.DrivetrainSubsystem;
-import frc.robot.Constants;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import java.io.IOException;
-import java.util.Optional;
 
 
 public class PathStraightSimple extends CommandBase{
     private final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem();
 
     // 1. Load the path from Path Planner
-    Trajectory examplePath = PathPlanner.loadPath("Straight",5,5);
+    Trajectory examplePath = PathPlanner.loadPath("Straight", 5, 5);
 
     // 2. Defining PID Controllers for tracking trajectory
 
@@ -30,4 +22,3 @@ public class PathStraightSimple extends CommandBase{
     // 4. Add some init and wrap-up, and return everything
        
 }
-
