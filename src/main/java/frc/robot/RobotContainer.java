@@ -20,6 +20,9 @@ import frc.robot.subsystems.Index;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Launcher;
 import frc.robot.subsystems.Lift;
+import frc.robot.commands.AutoLiftCommandBar1;
+import frc.robot.commands.AutoLiftCommandBar2;
+// Command imports
 import frc.robot.commands.DefaultDriveCommand;
 import frc.robot.commands.IndexSpeed;
 import frc.robot.commands.IntakeSpeed;
@@ -33,6 +36,9 @@ import frc.robot.commands.auton.Blue3;
 import frc.robot.commands.auton.Red1;
 import frc.robot.commands.auton.Red2;
 import frc.robot.commands.auton.Red3;
+import frc.robot.commands.LockLiftCommandBar1;
+import frc.robot.commands.LockLiftCommandBar2;
+import frc.robot.commands.ResetLiftEncoders;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -127,8 +133,8 @@ public class RobotContainer {
     // final JoystickButton op_backButton = new JoystickButton(operatorController, Button.kBack.value);
     // final JoystickButton op_startButton = new JoystickButton(operatorController, Button.kStart.value);
     final JoystickButton op_ButtonA = new JoystickButton(operatorController, Button.kA.value);
-    //final JoystickButton op_ButtonB = new JoystickButton(operatorController, Button.kB.value);
-    //final JoystickButton op_ButtonX = new JoystickButton(operatorController, Button.kX.value);
+    final JoystickButton op_ButtonB = new JoystickButton(operatorController, Button.kB.value);
+    final JoystickButton op_ButtonX = new JoystickButton(operatorController, Button.kX.value);
     final JoystickButton op_ButtonY = new JoystickButton(operatorController, Button.kY.value);
     final JoystickButton op_RightBumper = new JoystickButton(operatorController, Button.kRightBumper.value);
     final JoystickButton op_LeftBumper = new JoystickButton(operatorController, Button.kLeftBumper.value);
@@ -139,32 +145,39 @@ public class RobotContainer {
     d_backButton.whenPressed(m_drivetrainSubsystem::zeroGyroscope); // Shaun's gyro reset 
 
     //Driver Controller button commands
-      // when A is held, run Launch motors by themselves for a second, then run Launch, Intake and Index motors all at once
-      // release to stop motors
+
+      /**  when A is held, run Launch motors by themselves for a second, then run Launch and Index motors for 0.5 seconds,
+       then finally run all 3 motors at once. release to stop all motors */
         // Low shot up close
       d_ButtonA.whenPressed(new SequentialCommandGroup(
         new LauncherSpeed(launcher, 0.20, 0.20).withTimeout(1),
-          new ParallelCommandGroup (
-            new LauncherSpeed(launcher, 0.25, 0.25),
-            new IntakeSpeed(intakeMotor, -0.5),
-            new IndexSpeed(indexMotors, 0.5)))
-      );
+          new SequentialCommandGroup(
+            new LauncherSpeed(launcher, 0.20, 0.20).withTimeout(0.5).alongWith(
+              new IndexSpeed(indexMotors, 0.5).withTimeout(0.5)),
+                new ParallelCommandGroup (
+                  new LauncherSpeed(launcher, 0.25, 0.25),
+                  new IntakeSpeed(intakeMotor, -0.5),
+                  new IndexSpeed(indexMotors, 0.5)))
+      ));
       d_ButtonA.whenReleased(new ParallelCommandGroup(
         new IntakeSpeed(intakeMotor, 0.0),
         new IndexSpeed(indexMotors, 0.0),
         new LauncherSpeed(launcher, 0.0, 0.0))
       );
 
-      // when Y is held, run Launch motors by themselves for a second, then run Launch, Intake and Index motors all at once
-      // release to stop motors
+     /**  when Y is held, run Launch motors by themselves for a second, then run Launch and Index motors for 0.5 seconds,
+       then finally run all 3 motors at once. release to stop all motors */
         // High shot up close
       d_ButtonY.whenPressed(new SequentialCommandGroup(
         new LauncherSpeed(launcher, 0.40, 0.45).withTimeout(1),
-          new ParallelCommandGroup (
-            new LauncherSpeed(launcher, 0.35, 0.40),
-            new IntakeSpeed(intakeMotor, -0.5),
-            new IndexSpeed(indexMotors, 0.5))
-      ));
+          new SequentialCommandGroup(
+            new LauncherSpeed(launcher, 0.40, 0.45).withTimeout(0.5).alongWith(
+              new IndexSpeed(indexMotors, 0.5).withTimeout(0.5)),
+                new ParallelCommandGroup (
+                  new LauncherSpeed(launcher, 0.35, 0.40),
+                  new IntakeSpeed(intakeMotor, -0.5),
+                  new IndexSpeed(indexMotors, 0.5))
+      )));
       d_ButtonY.whenReleased(new ParallelCommandGroup(
         new IntakeSpeed(intakeMotor, 0.0),
         new IndexSpeed(indexMotors, 0.0),
@@ -195,10 +208,16 @@ public class RobotContainer {
     op_RightBumper.whenReleased(new LiftCommand(liftMotors, 0.0));
 
     // press A to auto raise climbing arms to the encoder value of bar #1
-    op_ButtonA.whenPressed(new LiftCommand(liftMotors, 0.5)); //FIXME add timeout when it reaches certain encoder value of bar 1
+    op_ButtonA.whenPressed(new AutoLiftCommandBar1(liftMotors, 0.5)); 
+
+    // press B to auto lower climbing arms to the encoder value of when the locking arms engage on bar #1
+    op_ButtonB.whenPressed(new LockLiftCommandBar1(liftMotors, -0.5)); //FIXME did not work, no movement
 
     // press Y to auto raise climbing arms to encoder value of bar #2
-    op_ButtonY.whenPressed(new LiftCommand(liftMotors, 0.5)); //FIXME add timeout when it reaches certain encoder value of bar 2
+    op_ButtonY.whenPressed(new AutoLiftCommandBar2(liftMotors, 0.5)); 
+
+    // press B to auto lower climbing arms to the encoder value of when the locking arms engage on bar #2
+    op_ButtonX.whenPressed(new LockLiftCommandBar2(liftMotors, -0.5));  //FIXME did not work, no movement
 
     // Use left stick up and down to manually move left climbing arm up and down
     leftLiftMotor.setDefaultCommand(new LiftCommand(
@@ -207,10 +226,6 @@ public class RobotContainer {
     // Use right stick up and down to manually move left climbing arm up and down
     rightLiftMotor.setDefaultCommand(new LiftCommand(
       rightLiftMotor, modifyAxis(operatorController.getRightY()))); //FIXME did not work, no movement
-
-    // reset lift encoder values when start button is pressed. 
-    //op_startButton.whenPressed(new ResetLiftEncoders()); //FIXME want this command to run automatically every time robot starts
-    
       
     /** Removed the Pivot arms from the robot, commenting out these buttons 
     op_ButtonX.whenPressed(new LiftPivotCommand(liftPivotMotors, 0.5)); // Rotates the pivot-lift arms for the higher bar
