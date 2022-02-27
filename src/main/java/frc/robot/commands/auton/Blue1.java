@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
  * Runs the Launcher for second, then runs the launcher again along with index motors with index, launcher, intake, index
 */ 
 public class Blue1 extends SequentialCommandGroup {
-  
+    // Basically Chad's full launch sequence
     public Blue1(DrivetrainSubsystem drivetrain, Index indexMotors, Intake intakeMotor, Launcher launcher) {
       addCommands(
         new LauncherSpeed(launcher, 0.40, 0.45).withTimeout(1),

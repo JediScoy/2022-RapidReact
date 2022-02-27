@@ -278,9 +278,9 @@ public class RobotContainer {
   
   // TODO Adjust Auton Chooser VS built in Auton
   public Command getAutonomousCommand() {
-    // return m_chooser.getSelected();  
+    return m_chooser.getSelected();  
 
-     
+    /**  
     // Load the path
     Trajectory m_path = PathPlanner.loadPath("Straight", 5, 5);
 
@@ -308,7 +308,7 @@ public class RobotContainer {
       new InstantCommand(() -> m_drivetrainSubsystem.stop()));
     
     // System.out.println(exampleState.velocityMetersPerSecond);
-    
+    */
   }    
   
 } // End of class
