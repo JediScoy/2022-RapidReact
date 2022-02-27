@@ -142,9 +142,12 @@ public class RobotContainer {
     //final double op_RightTrigger = operatorController.getRightTriggerAxis();
 
     // Defining the actions associated with buttons
-    d_backButton.whenPressed(m_drivetrainSubsystem::zeroGyroscope); // Shaun's gyro reset 
+   
 
     //Driver Controller button commands
+
+    // Resets the gyroscope to 0 degrees when back button is pressed
+    d_backButton.whenPressed(m_drivetrainSubsystem::zeroGyroscope); 
 
       /**  when A is held, run Launch motors by themselves for a second, then run Launch and Index motors for 0.5 seconds,
        then finally run all 3 motors at once. release to stop all motors */
@@ -211,13 +214,13 @@ public class RobotContainer {
     op_ButtonA.whenPressed(new AutoLiftCommandBar1(liftMotors, 0.5)); 
 
     // press B to auto lower climbing arms to the encoder value of when the locking arms engage on bar #1
-    op_ButtonB.whenPressed(new LockLiftCommandBar1(liftMotors, -0.5)); //FIXME did not work, no movement
+    op_ButtonB.whenPressed(new LockLiftCommandBar1(liftMotors, -0.5)); 
 
     // press Y to auto raise climbing arms to encoder value of bar #2
     op_ButtonY.whenPressed(new AutoLiftCommandBar2(liftMotors, 0.5)); 
 
     // press B to auto lower climbing arms to the encoder value of when the locking arms engage on bar #2
-    op_ButtonX.whenPressed(new LockLiftCommandBar2(liftMotors, -0.5));  //FIXME did not work, no movement
+    op_ButtonX.whenPressed(new LockLiftCommandBar2(liftMotors, -0.5));  
 
     // Use left stick up and down to manually move left climbing arm up and down
     leftLiftMotor.setDefaultCommand(new LiftCommand(
