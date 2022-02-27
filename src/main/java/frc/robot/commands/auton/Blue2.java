@@ -7,6 +7,7 @@ import frc.robot.Constants;
 import frc.robot.commands.IndexSpeed;
 import frc.robot.commands.IntakeSpeed;
 import frc.robot.commands.LauncherSequence;
+import frc.robot.commands.LauncherSequence2;
 import frc.robot.commands.LauncherSpeed;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.Intake;
@@ -24,7 +25,9 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 
 // FIXME Autonomous place holder for testing purposes
+
 public class Blue2 extends SequentialCommandGroup {
+/** 
 
   private final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem();
 
@@ -53,13 +56,14 @@ public class Blue2 extends SequentialCommandGroup {
     swerveControllerCommand,
   new InstantCommand(() -> m_drivetrainSubsystem.stop())));
   */
+
   public Blue2(DrivetrainSubsystem drivetrain, Index indexMotors, Intake intakeMotor, Launcher launcher) {
     
     
     addCommands(
-          new LauncherSequence(launcher, intakeMotor, indexMotors)
-      );
+      new IndexSpeed(indexMotors, -0.2).alongWith(new IntakeSpeed(intakeMotor, -0.1)));
 
         }    
     
   } // end class
+

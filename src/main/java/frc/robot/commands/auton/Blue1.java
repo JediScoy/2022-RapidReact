@@ -18,8 +18,7 @@ public class Blue1 extends SequentialCommandGroup {
   
     public Blue1(DrivetrainSubsystem drivetrain, Index indexMotors, Intake intakeMotor, Launcher launcher) {
       addCommands(
-        new LauncherSequence(launcher, intakeMotor, indexMotors)
-      ); // end of add commands
+        new LauncherSequence(launcher, intakeMotor, indexMotors)); // end of add commands
  
     }  
     

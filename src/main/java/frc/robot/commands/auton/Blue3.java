@@ -6,6 +6,8 @@ package frc.robot.commands.auton;
 import frc.robot.commands.IndexSpeed;
 import frc.robot.commands.IntakeSpeed;
 import frc.robot.commands.LauncherSequence;
+import frc.robot.commands.LauncherSequence2;
+import frc.robot.commands.LauncherSequence3;
 import frc.robot.commands.LauncherSpeed;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.Intake;
@@ -18,7 +20,7 @@ public class Blue3 extends SequentialCommandGroup {
   
     public Blue3(DrivetrainSubsystem drivetrain, Index indexMotors, Intake intakeMotor, Launcher launcher) {
       addCommands(
-        new LauncherSequence(launcher, intakeMotor, indexMotors)
+        new LauncherSequence3(launcher, intakeMotor, indexMotors)
       ); // end of add commands
  
     }  
