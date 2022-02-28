@@ -129,7 +129,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
     );
 
   }
-
+  /** This never worked, commenting out to see if it fixes broken code. 
   // Class to calculate the current Velocity and Accleration of the robot, and display that info on Shuffleboard
   class roboCalculator {
 
@@ -153,7 +153,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
       totalVelocity.setDouble(currentVelocity);
       totalAcceleration.setDouble(currentAcceleration);
     }
-  }//end of roboCalculator
+  }//end of roboCalculator */
 
 
   //method to stop motors, used for auton
