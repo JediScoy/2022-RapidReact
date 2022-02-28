@@ -129,33 +129,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
     );
 
   }
-  /** This never worked, commenting out to see if it fixes broken code. 
-  // Class to calculate the current Velocity and Accleration of the robot, and display that info on Shuffleboard
-  class roboCalculator {
-
-    //calling the Drivetrain tab of Shuffleboard
-    public ShuffleboardTab tab = Shuffleboard.getTab("Drivetrain");
-
-    //trying to put total velocity of the robot on the Shuffleboard
-    NetworkTableEntry totalVelocity = 
-      tab.add("Total Velocity", MAX_VELOCITY_METERS_PER_SECOND)
-        .getEntry();
-
-    //trying to put total acceleration of the robot on the Shuffleboard
-    NetworkTableEntry totalAcceleration = 
-      tab.add("Total Velocity", MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND)
-        .getEntry();
-
-    //calculating current Velocity/Accleration of the robot, FIXME says you have to update this is Periodic?
-    public void calculate() {
-      double currentVelocity = MAX_VELOCITY_METERS_PER_SECOND;
-      double currentAcceleration = MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND;
-      totalVelocity.setDouble(currentVelocity);
-      totalAcceleration.setDouble(currentAcceleration);
-    }
-  }//end of roboCalculator */
-
-
+  
   //method to stop motors, used for auton
   public void stop() {
         m_frontLeftModule.set(0, 0);
