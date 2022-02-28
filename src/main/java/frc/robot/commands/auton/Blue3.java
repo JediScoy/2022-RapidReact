@@ -34,20 +34,26 @@ public class Blue3 extends SequentialCommandGroup {
   
     public Blue3(DrivetrainSubsystem drivetrain, Index indexMotors, Intake intakeMotor, Launcher launcher) {
       addCommands(
-        // Launch the first ball - speedFront is first double, speedBack is second
-        new LauncherSpeed(launcher, 0.2, 0.2).withTimeout(1),
-        // Index the ball into the launcher
-        new IndexSpeed(indexMotors, 0.2).withTimeout(2),
-        // Robot drives in a straight path to the next ball
-        // new PathStraight().withTimeout(2)
-        // Intake the second ball
-        new IntakeSpeed(intakeMotor, 0.2).withTimeout(2),
-        // Start the launcher wheels
-        new LauncherSpeed(launcher, 0.2, 0.2).withTimeout(2),
-        // Index the ball into the launcher
-        new IndexSpeed(indexMotors, 0.2).withTimeout(2) 
-      ); // end of add commands
- 
-    }  
-    
+        // Start the Launcher - speedFront is first double, speedBack is second
+        new LauncherSpeed(launcher, 0.40, 0.45).withTimeout(1),
+        new SequentialCommandGroup(
+            // Maintain Launcher speed
+            new LauncherSpeed(launcher, 0.40, 0.45).withTimeout(2).alongWith(
+              // Index the ball #1 into the running Launcher
+              new IndexSpeed(indexMotors, 0.50).withTimeout(0.5)),
+                // Robot drives in a straight path to the next ball
+                // new PathStraight().withTimeout(2) // Gives an error and 'no code' when deployed
+                new ParallelCommandGroup(
+                  // Maintain Launcher speed
+                  new LauncherSpeed(launcher, 0.35, 0.40),
+                  // Intake ball #2 if needed
+                  new IntakeSpeed(intakeMotor, 0.50),
+                  // Index ball #2 into already running Launcher
+                  new IndexSpeed(indexMotors, 0.50)
+                )
+            )
+        ); // end of add commands
+
+        
+    } // end of Public Blue
   } // end class
