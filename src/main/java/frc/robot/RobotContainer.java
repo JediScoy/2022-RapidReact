@@ -76,7 +76,7 @@ public class RobotContainer {
     new Red2(m_drivetrainSubsystem, indexMotors, intakeMotor, launcher);
 
   private final Command redThree =
-    new Red3(m_drivetrainSubsystem, indexMotors, intakeMotor, launcher);
+    new Red3(m_drivetrainSubsystem);
   
   // private final Command PathStraight =
     // new PathStraight(m_drivetrainSubsystem);
