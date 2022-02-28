@@ -81,7 +81,7 @@ public class RobotContainer {
     new Red3(m_drivetrainSubsystem, indexMotors, intakeMotor, launcher);
   
   private final Command PathStraight =
-    new PathStraight();
+    new PathStraight(m_drivetrainSubsystem);
   // A chooser for autonomous commands
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 

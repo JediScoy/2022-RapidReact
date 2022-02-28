@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 public class PathStraight extends SequentialCommandGroup{
     private final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem();
 
-  public SequentialCommandGroup pathStraight(DrivetrainSubsystem drivetrain) {
+  public PathStraight(DrivetrainSubsystem drivetrain) {
     // Load the path
     PathPlannerTrajectory m_path = PathPlanner.loadPath("Straight", 5, 5);
 
@@ -40,9 +40,11 @@ public class PathStraight extends SequentialCommandGroup{
       m_drivetrainSubsystem);
 
     // 4. Add some init and wrap-up, and return everything
+    /** 
     return new SequentialCommandGroup(
       new InstantCommand(() -> m_drivetrainSubsystem.resetOdometry(m_path.getInitialPose())),
       swerveControllerCommand,
       new InstantCommand(() -> m_drivetrainSubsystem.stop()));
+      */
   }
 } // end of class

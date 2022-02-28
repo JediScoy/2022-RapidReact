@@ -5,6 +5,7 @@
 package frc.robot.commands.auton;
 import frc.robot.commands.IndexSpeed;
 import frc.robot.commands.IntakeSpeed;
+import frc.robot.commands.LauncherSequence;
 import frc.robot.commands.LauncherSpeed;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.Intake;
@@ -20,16 +21,7 @@ public class Blue1 extends SequentialCommandGroup {
     // Basically Chad's full launch sequence
     public Blue1(DrivetrainSubsystem drivetrain, Index indexMotors, Intake intakeMotor, Launcher launcher) {
       addCommands(
-        new LauncherSpeed(launcher, 0.40, 0.45).withTimeout(1),
-        new SequentialCommandGroup(
-          new LauncherSpeed(launcher, 0.40, 0.45).withTimeout(0.5).alongWith(
-            new IndexSpeed(indexMotors, 0.5).withTimeout(0.5)),
-              new ParallelCommandGroup (
-                new LauncherSpeed(launcher, 0.35, 0.40),
-                new IntakeSpeed(intakeMotor, -0.5),
-                new IndexSpeed(indexMotors, 0.5)
-              ) // end of ParallelCommandGroup
-        ) // end of SequentialCommandGroup 
+    new LauncherSequence(launcher, intakeMotor, indexMotors)
       ); // end of addCommands
  
     }  
