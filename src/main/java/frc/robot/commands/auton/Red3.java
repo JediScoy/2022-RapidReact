@@ -64,7 +64,7 @@ public Red3(DrivetrainSubsystem m_drivetrainSubsystem) {
             public void execute(){
               
                    m_drivetrainSubsystem.resetOdometry(trajectory.getInitialPose());
-                  
+                 swerveControllerCommand.execute();
                     m_drivetrainSubsystem.stop();
         
 
