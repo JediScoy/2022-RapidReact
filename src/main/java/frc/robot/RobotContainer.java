@@ -199,12 +199,18 @@ public class RobotContainer {
     d_ButtonX.whenPressed(new IndexSpeed(indexMotors, 0.5)); 
     d_ButtonX.whenReleased(new IndexSpeed(indexMotors, 0));
 
-    //Hold B to drive at half speed, release to drive normal 
-    d_ButtonB.whenPressed(new DefaultDriveCommand(   //FIXME may or may not work
+    //Hold B to drive robot at half speed, release to revert back to normal speed
+    d_ButtonB.whenPressed(new DefaultDriveCommand(   
       m_drivetrainSubsystem,
       () -> -modifyAxis(driverController.getLeftY()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND / 2,
       () -> -modifyAxis(driverController.getLeftX()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND / 2,
       () -> -modifyAxis(driverController.getRightX()) * DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND / 2
+    ));
+    d_ButtonB.whenReleased(new DefaultDriveCommand(   
+      m_drivetrainSubsystem,
+      () -> -modifyAxis(driverController.getLeftY()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
+      () -> -modifyAxis(driverController.getLeftX()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
+      () -> -modifyAxis(driverController.getRightX()) * DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
     ));
 
 
