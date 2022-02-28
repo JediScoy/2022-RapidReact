@@ -18,15 +18,16 @@ import frc.robot.subsystems.Index;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Launcher;
 import frc.robot.subsystems.Lift;
-import frc.robot.commands.AutoLiftCommandBar1;
-import frc.robot.commands.AutoLiftCommandBar2;
 // Command imports
 import frc.robot.commands.DefaultDriveCommand;
 import frc.robot.commands.IndexSpeed;
 import frc.robot.commands.IntakeSpeed;
 import frc.robot.commands.LauncherSpeed;
-import frc.robot.commands.LiftCommand;
-
+import frc.robot.commands.Lift.AutoLiftCommandBar1;
+import frc.robot.commands.Lift.AutoLiftCommandBar2;
+import frc.robot.commands.Lift.LiftCommand;
+import frc.robot.commands.Lift.LockLiftCommandBar1;
+import frc.robot.commands.Lift.LockLiftCommandBar2;
 // Auton
 import frc.robot.commands.auton.Blue1;
 import frc.robot.commands.auton.Blue2;
@@ -34,8 +35,6 @@ import frc.robot.commands.auton.Blue3;
 import frc.robot.commands.auton.Red1;
 import frc.robot.commands.auton.Red2;
 import frc.robot.commands.auton.Red3;
-import frc.robot.commands.LockLiftCommandBar1;
-import frc.robot.commands.LockLiftCommandBar2;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
