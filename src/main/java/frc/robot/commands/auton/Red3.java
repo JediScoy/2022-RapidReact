@@ -69,15 +69,5 @@ public Red3(DrivetrainSubsystem m_drivetrainSubsystem) {
         
 
             }
-    
-  
-    // 2. Generate trajectory
-    
-    // 3. Define PID controllers for tracking trajectory
-    
-    // 4. Construct command to follow trajectory
-   
-
-    // 5. Add some init and wrap-up, and return everything
    
 }
