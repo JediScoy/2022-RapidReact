@@ -120,7 +120,7 @@ public class RobotContainer {
     final JoystickButton d_backButton = new JoystickButton(driverController, Button.kBack.value);
     // final JoystickButton d_startButton = new JoystickButton(driverController, Button.kStart.value);
     final JoystickButton d_ButtonA = new JoystickButton(driverController, Button.kA.value);
-    //final JoystickButton d_ButtonB = new JoystickButton(driverController, Button.kB.value);
+    final JoystickButton d_ButtonB = new JoystickButton(driverController, Button.kB.value);
     final JoystickButton d_ButtonX = new JoystickButton(driverController, Button.kX.value);
     final JoystickButton d_ButtonY = new JoystickButton(driverController, Button.kY.value);
     final JoystickButton d_RightBumper = new JoystickButton(driverController, Button.kRightBumper.value);
@@ -198,6 +198,15 @@ public class RobotContainer {
     // Hold X to manually Advance cargo to the launcher, release to stop motors
     d_ButtonX.whenPressed(new IndexSpeed(indexMotors, 0.5)); 
     d_ButtonX.whenReleased(new IndexSpeed(indexMotors, 0));
+
+    //Hold B to drive at half speed, release to drive normal 
+    d_ButtonB.whenPressed(new DefaultDriveCommand(   //FIXME may or may not work
+      m_drivetrainSubsystem,
+      () -> -modifyAxis(driverController.getLeftY()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND / 2,
+      () -> -modifyAxis(driverController.getLeftX()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND / 2,
+      () -> -modifyAxis(driverController.getRightX()) * DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND / 2
+    ));
+
 
     //Operator Controller
       //lift button commands
