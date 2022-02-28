@@ -5,14 +5,21 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.command.InstantCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton; //NewCommands vendordep
 import static edu.wpi.first.wpilibj.XboxController.Button;
 
+import com.pathplanner.lib.PathPlanner;
+
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 // Subsystem imports
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.Index;
@@ -273,7 +280,7 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     return m_chooser.getSelected();  
 
-    /**  
+      /** 
     // Load the path
     Trajectory m_path = PathPlanner.loadPath("Straight", 5, 5);
 
@@ -296,12 +303,15 @@ public class RobotContainer {
 
     // 4. Add some init and wrap-up, and return everything
     return new SequentialCommandGroup(
-      new InstantCommand(() -> m_drivetrainSubsystem.resetOdometry(m_path.getInitialPose())),
+      new InstantCommand(()
+        -> m_drivetrainSubsystem.resetOdometry(m_path.getInitialPose())),
       swerveControllerCommand,
-      new InstantCommand(() -> m_drivetrainSubsystem.stop()));
+      new InstantCommand(() 
+        -> m_drivetrainSubsystem.stop()));
+        */
     
     // System.out.println(exampleState.velocityMetersPerSecond);
-    */
-  }    
+  
+  };    
   
 } // End of class
