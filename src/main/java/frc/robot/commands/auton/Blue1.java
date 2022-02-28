@@ -21,9 +21,15 @@ public class Blue1 extends SequentialCommandGroup {
     // Basically Chad's full launch sequence
     public Blue1(DrivetrainSubsystem drivetrain, Index indexMotors, Intake intakeMotor, Launcher launcher) {
       addCommands(
-    new LauncherSequence(launcher, intakeMotor, indexMotors)
-      ); // end of addCommands
- 
-    }  
+        new LauncherSpeed(launcher, 0.35, 0.40).withTimeout(0.75), // changed from 1 to 0.75
+          new SequentialCommandGroup(
+            new LauncherSpeed(launcher, 0.35, 0.40).withTimeout(0.25).alongWith( //changed from 0.5 to 0.25
+              new IndexSpeed(indexMotors, 0.5).withTimeout(0.25)), //changed from 0.5 to 0.25
+                new ParallelCommandGroup (
+                  new LauncherSpeed(launcher, 0.36, 0.42), // added 0.02
+                  new IntakeSpeed(intakeMotor, 0.5),
+                  new IndexSpeed(indexMotors, 0.5)
+                  )));
+  }    
     
   } // end class

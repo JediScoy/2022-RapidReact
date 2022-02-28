@@ -34,7 +34,6 @@ import frc.robot.commands.auton.Blue3;
 import frc.robot.commands.auton.Red1;
 import frc.robot.commands.auton.Red2;
 import frc.robot.commands.auton.Red3;
-import frc.robot.commands.auton.PathStraight;
 import frc.robot.commands.LockLiftCommandBar1;
 import frc.robot.commands.LockLiftCommandBar2;
 
@@ -80,9 +79,10 @@ public class RobotContainer {
   private final Command redThree =
     new Red3(m_drivetrainSubsystem, indexMotors, intakeMotor, launcher);
   
-  private final Command PathStraight =
-    new PathStraight(m_drivetrainSubsystem);
-  // A chooser for autonomous commands
+  // private final Command PathStraight =
+    // new PathStraight(m_drivetrainSubsystem);
+  
+    // A chooser for autonomous commands
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
 
@@ -110,7 +110,7 @@ public class RobotContainer {
     m_chooser.addOption("Red 1", redOne);
     m_chooser.addOption("Red 2", redTwo);
     m_chooser.addOption("Red 3", redThree);
-    m_chooser.addOption("Path Straight", PathStraight);
+    // m_chooser.addOption("Path Straight", PathStraight);
     // Puts the chooser on the dashboard
     Shuffleboard.getTab("Auton").add(m_chooser);
   }
