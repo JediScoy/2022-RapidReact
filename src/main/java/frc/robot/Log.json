@@ -1,0 +1,941 @@
+[
+    {
+        "messageType": 2,
+        "timestamp": -0.00006103515625,
+        "seqNumber": 2035,
+        "line": "********** Robot program starting **********"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 0.127197265625,
+        "seqNumber": 2036,
+        "line": "NT: server: client CONNECTED: 172.22.11.1 port 49232"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 0.63177490234375,
+        "seqNumber": 2037,
+        "line": "navX-Sensor Java library for FRC"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 0.7899169921875,
+        "seqNumber": 2038,
+        "line": "navX-Sensor Connected."
+    },
+    {
+        "messageType": 2,
+        "timestamp": 0.82061767578125,
+        "seqNumber": 2039,
+        "line": "navX-Sensor Board Type 50 (navX-MXP (Classic))"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 0.8291015625,
+        "seqNumber": 2040,
+        "line": "navX-Sensor firmware version 3.0"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 0.83587646484375,
+        "seqNumber": 2041,
+        "line": "navX-Sensor onboard startup calibration complete."
+    },
+    {
+        "messageType": 2,
+        "timestamp": 0.8402099609375,
+        "seqNumber": 2042,
+        "line": "navX-Sensor Yaw angle auto-reset to 0.0 due to startup calibration."
+    },
+    {
+        "messageType": 2,
+        "timestamp": 1.3173828125,
+        "seqNumber": 2043,
+        "line": "NT: server: client CONNECTED: 10.36.3.11 port 53452"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 1.81097412109375,
+        "seqNumber": 2044,
+        "line": "navX-Sensor Java library for FRC"
+    },
+    {
+        "timestamp": 1.90087890625,
+        "seqNumber": 2045,
+        "numOccur": 1,
+        "errorCode": -200,
+        "flags": 1,
+        "details": "CTR: No new response to update signal",
+        "location": "Talon FX 7 ConfigSupplyCurrentLimit",
+        "callStack": "\tat c_MotController_ConfigSupplyCurrentLimit\n\tat Java_com_ctre_phoenix_motorcontrol_can_MotControllerJNI_ConfigSupplyCurrentLimit\n",
+        "messageType": 0
+    },
+    {
+        "timestamp": 1.901611328125,
+        "seqNumber": 2046,
+        "numOccur": 1,
+        "errorCode": -200,
+        "flags": 1,
+        "details": "CTR: No new response to update signal",
+        "location": "Talon FX 7 ConfigSupplyCurrentLimit",
+        "callStack": "Stack Trace not received for performance reasons.",
+        "messageType": 0
+    },
+    {
+        "timestamp": 1.9072265625,
+        "seqNumber": 2047,
+        "numOccur": 1,
+        "errorCode": 1,
+        "flags": 1,
+        "details": "Failed to configure Falcon 500: SigNotUpdated",
+        "location": "com.swervedrivespecialties.swervelib.ctre.CtreUtils.checkCtreError(CtreUtils.java:12)",
+        "callStack": "",
+        "messageType": 0
+    },
+    {
+        "messageType": 2,
+        "timestamp": 1.90777587890625,
+        "seqNumber": 2048,
+        "line": "Error at com.swervedrivespecialties.swervelib.ctre.CtreUtils.checkCtreError(CtreUtils.java:12): Failed to configure Falcon 500: SigNotUpdated"
+    },
+    {
+        "timestamp": 1.92340087890625,
+        "seqNumber": 2049,
+        "numOccur": 1,
+        "errorCode": 1,
+        "flags": 1,
+        "details": "Unhandled exception: java.lang.IllegalArgumentException: Title is already in use: Current Velocity",
+        "location": "com.swervedrivespecialties.swervelib.DriveControllerFactory.addDashboardEntries(DriveControllerFactory.java:11)",
+        "callStack": "\tat edu.wpi.first.wpilibj.shuffleboard.ContainerHelper.checkTitle(ContainerHelper.java:139)\n\tat edu.wpi.first.wpilibj.shuffleboard.ContainerHelper.precheck(ContainerHelper.java:120)\n\tat edu.wpi.first.wpilibj.shuffleboard.ContainerHelper.addNumber(ContainerHelper.java:88)\n\tat edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout.addNumber(ShuffleboardLayout.java:62)\n\tat com.swervedrivespecialties.swervelib.DriveControllerFactory.addDashboardEntries(DriveControllerFactory.java:11)\n\tat com.swervedrivespecialties.swervelib.DriveControllerFactory.create(DriveControllerFactory.java:20)\n\tat com.swervedrivespecialties.swervelib.SwerveModuleFactory.create(SwerveModuleFactory.java:27)\n\tat com.swervedrivespecialties.swervelib.Mk3SwerveModuleHelper.createFalcon500(Mk3SwerveModuleHelper.java:73)\n\tat com.swervedrivespecialties.swervelib.Mk3SwerveModuleHelper.createFalcon500(Mk3SwerveModuleHelper.java:103)\n\tat frc.robot.subsystems.DrivetrainSubsystem.<init>(DrivetrainSubsystem.java:82)\n\tat frc.robot.commands.auton.PathStraight.<init>(PathStraight.java:19)\n\tat frc.robot.RobotContainer.<init>(RobotContainer.java:83)\n\tat frc.robot.Robot.robotInit(Robot.java:32)\n\tat edu.wpi.first.wpilibj.TimedRobot.startCompetition(TimedRobot.java:107)\n\tat edu.wpi.first.wpilibj.RobotBase.runRobot(RobotBase.java:373)\n\tat edu.wpi.first.wpilibj.RobotBase.startRobot(RobotBase.java:463)\n\tat frc.robot.Main.main(Main.java:24)\n",
+        "messageType": 0
+    },
+    {
+        "messageType": 2,
+        "timestamp": 1.92523193359375,
+        "seqNumber": 2050,
+        "line": "Error at com.swervedrivespecialties.swervelib.DriveControllerFactory.addDashboardEntries(DriveControllerFactory.java:11): Unhandled exception: java.lang.IllegalArgumentException: Title is already in use: Current Velocity"
+    },
+    {
+        "timestamp": 1.92547607421875,
+        "seqNumber": 2051,
+        "numOccur": 1,
+        "errorCode": 1,
+        "flags": 0,
+        "details": "The robot program quit unexpectedly. This is usually due to a code error.\n  The above stacktrace can help determine where the error occurred.\n  See https://wpilib.org/stacktrace for more information.",
+        "location": "edu.wpi.first.wpilibj.RobotBase.runRobot(RobotBase.java:388)",
+        "callStack": "",
+        "messageType": 1
+    },
+    {
+        "messageType": 2,
+        "timestamp": 1.9256591796875,
+        "seqNumber": 2052,
+        "line": "\tat edu.wpi.first.wpilibj.shuffleboard.ContainerHelper.checkTitle(ContainerHelper.java:139)"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 1.926025390625,
+        "seqNumber": 2053,
+        "line": "\tat edu.wpi.first.wpilibj.shuffleboard.ContainerHelper.precheck(ContainerHelper.java:120)"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 1.92645263671875,
+        "seqNumber": 2054,
+        "line": "\tat edu.wpi.first.wpilibj.shuffleboard.ContainerHelper.addNumber(ContainerHelper.java:88)"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 1.92694091796875,
+        "seqNumber": 2055,
+        "line": "\tat edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout.addNumber(ShuffleboardLayout.java:62)"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 1.9273681640625,
+        "seqNumber": 2056,
+        "line": "\tat com.swervedrivespecialties.swervelib.DriveControllerFactory.addDashboardEntries(DriveControllerFactory.java:11)"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 1.92767333984375,
+        "seqNumber": 2057,
+        "line": "\tat com.swervedrivespecialties.swervelib.DriveControllerFactory.create(DriveControllerFactory.java:20)"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 1.9281005859375,
+        "seqNumber": 2058,
+        "line": "\tat com.swervedrivespecialties.swervelib.SwerveModuleFactory.create(SwerveModuleFactory.java:27)"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 1.92840576171875,
+        "seqNumber": 2059,
+        "line": "\tat com.swervedrivespecialties.swervelib.Mk3SwerveModuleHelper.createFalcon500(Mk3SwerveModuleHelper.java:73)"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 1.92877197265625,
+        "seqNumber": 2060,
+        "line": "\tat com.swervedrivespecialties.swervelib.Mk3SwerveModuleHelper.createFalcon500(Mk3SwerveModuleHelper.java:103)"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 1.930419921875,
+        "seqNumber": 2061,
+        "line": "\tat frc.robot.subsystems.DrivetrainSubsystem.<init>(DrivetrainSubsystem.java:82)"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 1.9307861328125,
+        "seqNumber": 2062,
+        "line": "\tat frc.robot.commands.auton.PathStraight.<init>(PathStraight.java:19)"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 1.93133544921875,
+        "seqNumber": 2063,
+        "line": "\tat frc.robot.RobotContainer.<init>(RobotContainer.java:83)"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 1.9317626953125,
+        "seqNumber": 2064,
+        "line": "\tat frc.robot.Robot.robotInit(Robot.java:32)"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 1.933349609375,
+        "seqNumber": 2065,
+        "line": "\tat edu.wpi.first.wpilibj.TimedRobot.startCompetition(TimedRobot.java:107)"
+    },
+    {
+        "timestamp": 1.9334716796875,
+        "seqNumber": 2066,
+        "numOccur": 1,
+        "errorCode": 1,
+        "flags": 1,
+        "details": "The startCompetition() method (or methods called by it) should have handled the exception above.",
+        "location": "edu.wpi.first.wpilibj.RobotBase.runRobot(RobotBase.java:395)",
+        "callStack": "",
+        "messageType": 0
+    },
+    {
+        "messageType": 2,
+        "timestamp": 1.93377685546875,
+        "seqNumber": 2067,
+        "line": "\tat edu.wpi.first.wpilibj.RobotBase.runRobot(RobotBase.java:373)"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 1.93408203125,
+        "seqNumber": 2068,
+        "line": "\tat edu.wpi.first.wpilibj.RobotBase.startRobot(RobotBase.java:463)"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 1.9344482421875,
+        "seqNumber": 2069,
+        "line": "\tat frc.robot.Main.main(Main.java:24)"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 1.9351806640625,
+        "seqNumber": 2070,
+        "line": ""
+    },
+    {
+        "messageType": 2,
+        "timestamp": 1.93560791015625,
+        "seqNumber": 2071,
+        "line": "Warning at edu.wpi.first.wpilibj.RobotBase.runRobot(RobotBase.java:388): The robot program quit unexpectedly. This is usually due to a code error."
+    },
+    {
+        "messageType": 2,
+        "timestamp": 1.93597412109375,
+        "seqNumber": 2072,
+        "line": "  The above stacktrace can help determine where the error occurred."
+    },
+    {
+        "messageType": 2,
+        "timestamp": 1.936279296875,
+        "seqNumber": 2073,
+        "line": "  See https://wpilib.org/stacktrace for more information."
+    },
+    {
+        "messageType": 2,
+        "timestamp": 1.9366455078125,
+        "seqNumber": 2074,
+        "line": "Error at edu.wpi.first.wpilibj.RobotBase.runRobot(RobotBase.java:395): The startCompetition() method (or methods called by it) should have handled the exception above."
+    },
+    {
+        "timestamp": 2.46630859375,
+        "seqNumber": 2075,
+        "numOccur": 1,
+        "errorCode": 0,
+        "flags": 0,
+        "details": "[phoenix-diagnostics] Server shutdown cleanly. (dur:10|0)",
+        "location": "",
+        "callStack": "",
+        "messageType": 1
+    },
+    {
+        "timestamp": 2.46722412109375,
+        "seqNumber": 2076,
+        "numOccur": 1,
+        "errorCode": 0,
+        "flags": 0,
+        "details": "[phoenix] Library shutdown cleanly",
+        "location": "",
+        "callStack": "",
+        "messageType": 1
+    },
+    {
+        "timestamp": 2.67803955078125,
+        "seqNumber": 2077,
+        "numOccur": 1,
+        "errorCode": 0,
+        "flags": 0,
+        "details": "[phoenix-diagnostics] Server shutdown cleanly. (dur:10|0)",
+        "location": "",
+        "callStack": "",
+        "messageType": 1
+    },
+    {
+        "messageType": 2,
+        "timestamp": 2.6837158203125,
+        "seqNumber": 2078,
+        "line": "#"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 2.6842041015625,
+        "seqNumber": 2079,
+        "line": "# A fatal error has been detected by the Java Runtime Environment:"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 2.6866455078125,
+        "seqNumber": 2080,
+        "line": "#"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 2.68817138671875,
+        "seqNumber": 2081,
+        "line": "#  SIGSEGV (0xb) at pc=0xb6dec034, pid=2667, tid=2673"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 2.69000244140625,
+        "seqNumber": 2082,
+        "line": "pure virtual method called"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 2.6904296875,
+        "seqNumber": 2083,
+        "line": "terminate called without an active exception"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 6.11090087890625,
+        "seqNumber": 2084,
+        "line": "********** Robot program starting **********"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 6.7366943359375,
+        "seqNumber": 2085,
+        "line": "navX-Sensor Java library for FRC"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 6.796630859375,
+        "seqNumber": 2086,
+        "line": "NT: server: client CONNECTED: 172.22.11.1 port 49265"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 7.0069580078125,
+        "seqNumber": 2087,
+        "line": "NT: server: client CONNECTED: 10.36.3.11 port 53468"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 7.072021484375,
+        "seqNumber": 2088,
+        "line": "navX-Sensor Connected."
+    },
+    {
+        "messageType": 2,
+        "timestamp": 7.07391357421875,
+        "seqNumber": 2089,
+        "line": "navX-Sensor onboard startup calibration complete."
+    },
+    {
+        "messageType": 2,
+        "timestamp": 7.09332275390625,
+        "seqNumber": 2090,
+        "line": "navX-Sensor Yaw angle auto-reset to 0.0 due to startup calibration."
+    },
+    {
+        "messageType": 2,
+        "timestamp": 7.9056396484375,
+        "seqNumber": 2091,
+        "line": "navX-Sensor Java library for FRC"
+    },
+    {
+        "timestamp": 7.94281005859375,
+        "seqNumber": 2092,
+        "numOccur": 1,
+        "errorCode": 1,
+        "flags": 1,
+        "details": "Unhandled exception: java.lang.IllegalArgumentException: Title is already in use: Current Velocity",
+        "location": "com.swervedrivespecialties.swervelib.DriveControllerFactory.addDashboardEntries(DriveControllerFactory.java:11)",
+        "callStack": "\tat edu.wpi.first.wpilibj.shuffleboard.ContainerHelper.checkTitle(ContainerHelper.java:139)\n\tat edu.wpi.first.wpilibj.shuffleboard.ContainerHelper.precheck(ContainerHelper.java:120)\n\tat edu.wpi.first.wpilibj.shuffleboard.ContainerHelper.addNumber(ContainerHelper.java:88)\n\tat edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout.addNumber(ShuffleboardLayout.java:62)\n\tat com.swervedrivespecialties.swervelib.DriveControllerFactory.addDashboardEntries(DriveControllerFactory.java:11)\n\tat com.swervedrivespecialties.swervelib.DriveControllerFactory.create(DriveControllerFactory.java:20)\n\tat com.swervedrivespecialties.swervelib.SwerveModuleFactory.create(SwerveModuleFactory.java:27)\n\tat com.swervedrivespecialties.swervelib.Mk3SwerveModuleHelper.createFalcon500(Mk3SwerveModuleHelper.java:73)\n\tat com.swervedrivespecialties.swervelib.Mk3SwerveModuleHelper.createFalcon500(Mk3SwerveModuleHelper.java:103)\n\tat frc.robot.subsystems.DrivetrainSubsystem.<init>(DrivetrainSubsystem.java:82)\n\tat frc.robot.commands.auton.PathStraight.<init>(PathStraight.java:19)\n\tat frc.robot.RobotContainer.<init>(RobotContainer.java:83)\n\tat frc.robot.Robot.robotInit(Robot.java:32)\n\tat edu.wpi.first.wpilibj.TimedRobot.startCompetition(TimedRobot.java:107)\n\tat edu.wpi.first.wpilibj.RobotBase.runRobot(RobotBase.java:373)\n\tat edu.wpi.first.wpilibj.RobotBase.startRobot(RobotBase.java:463)\n\tat frc.robot.Main.main(Main.java:24)\n",
+        "messageType": 0
+    },
+    {
+        "messageType": 2,
+        "timestamp": 7.944091796875,
+        "seqNumber": 2093,
+        "line": "Error at com.swervedrivespecialties.swervelib.DriveControllerFactory.addDashboardEntries(DriveControllerFactory.java:11): Unhandled exception: java.lang.IllegalArgumentException: Title is already in use: Current Velocity"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 7.94573974609375,
+        "seqNumber": 2094,
+        "line": "\tat edu.wpi.first.wpilibj.shuffleboard.ContainerHelper.checkTitle(ContainerHelper.java:139)"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 7.946533203125,
+        "seqNumber": 2095,
+        "line": "\tat edu.wpi.first.wpilibj.shuffleboard.ContainerHelper.precheck(ContainerHelper.java:120)"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 7.9478759765625,
+        "seqNumber": 2096,
+        "line": "\tat edu.wpi.first.wpilibj.shuffleboard.ContainerHelper.addNumber(ContainerHelper.java:88)"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 7.94879150390625,
+        "seqNumber": 2097,
+        "line": "\tat edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout.addNumber(ShuffleboardLayout.java:62)"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 7.94940185546875,
+        "seqNumber": 2098,
+        "line": "\tat com.swervedrivespecialties.swervelib.DriveControllerFactory.addDashboardEntries(DriveControllerFactory.java:11)"
+    },
+    {
+        "timestamp": 7.949462890625,
+        "seqNumber": 2099,
+        "numOccur": 1,
+        "errorCode": 1,
+        "flags": 0,
+        "details": "The robot program quit unexpectedly. This is usually due to a code error.\n  The above stacktrace can help determine where the error occurred.\n  See https://wpilib.org/stacktrace for more information.",
+        "location": "edu.wpi.first.wpilibj.RobotBase.runRobot(RobotBase.java:388)",
+        "callStack": "",
+        "messageType": 1
+    },
+    {
+        "messageType": 2,
+        "timestamp": 7.9500732421875,
+        "seqNumber": 2100,
+        "line": "\tat com.swervedrivespecialties.swervelib.DriveControllerFactory.create(DriveControllerFactory.java:20)"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 7.95050048828125,
+        "seqNumber": 2101,
+        "line": "\tat com.swervedrivespecialties.swervelib.SwerveModuleFactory.create(SwerveModuleFactory.java:27)"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 7.9510498046875,
+        "seqNumber": 2102,
+        "line": "\tat com.swervedrivespecialties.swervelib.Mk3SwerveModuleHelper.createFalcon500(Mk3SwerveModuleHelper.java:73)"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 7.95159912109375,
+        "seqNumber": 2103,
+        "line": "\tat com.swervedrivespecialties.swervelib.Mk3SwerveModuleHelper.createFalcon500(Mk3SwerveModuleHelper.java:103)"
+    },
+    {
+        "timestamp": 7.9525146484375,
+        "seqNumber": 2104,
+        "numOccur": 1,
+        "errorCode": 1,
+        "flags": 1,
+        "details": "The startCompetition() method (or methods called by it) should have handled the exception above.",
+        "location": "edu.wpi.first.wpilibj.RobotBase.runRobot(RobotBase.java:395)",
+        "callStack": "",
+        "messageType": 0
+    },
+    {
+        "messageType": 2,
+        "timestamp": 7.953125,
+        "seqNumber": 2105,
+        "line": "\tat frc.robot.subsystems.DrivetrainSubsystem.<init>(DrivetrainSubsystem.java:82)"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 7.95416259765625,
+        "seqNumber": 2106,
+        "line": "\tat frc.robot.commands.auton.PathStraight.<init>(PathStraight.java:19)"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 7.95465087890625,
+        "seqNumber": 2107,
+        "line": "\tat frc.robot.RobotContainer.<init>(RobotContainer.java:83)"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 7.95550537109375,
+        "seqNumber": 2108,
+        "line": "\tat frc.robot.Robot.robotInit(Robot.java:32)"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 7.95587158203125,
+        "seqNumber": 2109,
+        "line": "\tat edu.wpi.first.wpilibj.TimedRobot.startCompetition(TimedRobot.java:107)"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 7.9564208984375,
+        "seqNumber": 2110,
+        "line": "\tat edu.wpi.first.wpilibj.RobotBase.runRobot(RobotBase.java:373)"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 7.956787109375,
+        "seqNumber": 2111,
+        "line": "\tat edu.wpi.first.wpilibj.RobotBase.startRobot(RobotBase.java:463)"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 7.9571533203125,
+        "seqNumber": 2112,
+        "line": "\tat frc.robot.Main.main(Main.java:24)"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 7.9573974609375,
+        "seqNumber": 2113,
+        "line": ""
+    },
+    {
+        "messageType": 2,
+        "timestamp": 7.95794677734375,
+        "seqNumber": 2114,
+        "line": "Warning at edu.wpi.first.wpilibj.RobotBase.runRobot(RobotBase.java:388): The robot program quit unexpectedly. This is usually due to a code error."
+    },
+    {
+        "messageType": 2,
+        "timestamp": 7.95831298828125,
+        "seqNumber": 2115,
+        "line": "  The above stacktrace can help determine where the error occurred."
+    },
+    {
+        "messageType": 2,
+        "timestamp": 7.95867919921875,
+        "seqNumber": 2116,
+        "line": "  See https://wpilib.org/stacktrace for more information."
+    },
+    {
+        "messageType": 2,
+        "timestamp": 7.95953369140625,
+        "seqNumber": 2117,
+        "line": "Error at edu.wpi.first.wpilibj.RobotBase.runRobot(RobotBase.java:395): The startCompetition() method (or methods called by it) should have handled the exception above."
+    },
+    {
+        "timestamp": 8.4871826171875,
+        "seqNumber": 2118,
+        "numOccur": 1,
+        "errorCode": 0,
+        "flags": 0,
+        "details": "[phoenix-diagnostics] Server shutdown cleanly. (dur:10|0)",
+        "location": "",
+        "callStack": "",
+        "messageType": 1
+    },
+    {
+        "timestamp": 8.488037109375,
+        "seqNumber": 2119,
+        "numOccur": 1,
+        "errorCode": 0,
+        "flags": 0,
+        "details": "[phoenix] Library shutdown cleanly",
+        "location": "",
+        "callStack": "",
+        "messageType": 1
+    },
+    {
+        "timestamp": 8.6988525390625,
+        "seqNumber": 2120,
+        "numOccur": 1,
+        "errorCode": 0,
+        "flags": 0,
+        "details": "[phoenix-diagnostics] Server shutdown cleanly. (dur:10|0)",
+        "location": "",
+        "callStack": "",
+        "messageType": 1
+    },
+    {
+        "messageType": 2,
+        "timestamp": 12.103271484375,
+        "seqNumber": 2121,
+        "line": "********** Robot program starting **********"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 12.7252197265625,
+        "seqNumber": 2122,
+        "line": "navX-Sensor Java library for FRC"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 12.83648681640625,
+        "seqNumber": 2123,
+        "line": "NT: server: client CONNECTED: 172.22.11.1 port 49297"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 13.0167236328125,
+        "seqNumber": 2124,
+        "line": "NT: server: client CONNECTED: 10.36.3.11 port 53484"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 13.04693603515625,
+        "seqNumber": 2125,
+        "line": "navX-Sensor Connected."
+    },
+    {
+        "messageType": 2,
+        "timestamp": 13.0504150390625,
+        "seqNumber": 2126,
+        "line": "navX-Sensor onboard startup calibration complete."
+    },
+    {
+        "messageType": 2,
+        "timestamp": 13.07080078125,
+        "seqNumber": 2127,
+        "line": "navX-Sensor Yaw angle auto-reset to 0.0 due to startup calibration."
+    },
+    {
+        "messageType": 2,
+        "timestamp": 13.88916015625,
+        "seqNumber": 2128,
+        "line": "navX-Sensor Java library for FRC"
+    },
+    {
+        "timestamp": 13.9244384765625,
+        "seqNumber": 2129,
+        "numOccur": 1,
+        "errorCode": 1,
+        "flags": 1,
+        "details": "Unhandled exception: java.lang.IllegalArgumentException: Title is already in use: Current Velocity",
+        "location": "com.swervedrivespecialties.swervelib.DriveControllerFactory.addDashboardEntries(DriveControllerFactory.java:11)",
+        "callStack": "\tat edu.wpi.first.wpilibj.shuffleboard.ContainerHelper.checkTitle(ContainerHelper.java:139)\n\tat edu.wpi.first.wpilibj.shuffleboard.ContainerHelper.precheck(ContainerHelper.java:120)\n\tat edu.wpi.first.wpilibj.shuffleboard.ContainerHelper.addNumber(ContainerHelper.java:88)\n\tat edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout.addNumber(ShuffleboardLayout.java:62)\n\tat com.swervedrivespecialties.swervelib.DriveControllerFactory.addDashboardEntries(DriveControllerFactory.java:11)\n\tat com.swervedrivespecialties.swervelib.DriveControllerFactory.create(DriveControllerFactory.java:20)\n\tat com.swervedrivespecialties.swervelib.SwerveModuleFactory.create(SwerveModuleFactory.java:27)\n\tat com.swervedrivespecialties.swervelib.Mk3SwerveModuleHelper.createFalcon500(Mk3SwerveModuleHelper.java:73)\n\tat com.swervedrivespecialties.swervelib.Mk3SwerveModuleHelper.createFalcon500(Mk3SwerveModuleHelper.java:103)\n\tat frc.robot.subsystems.DrivetrainSubsystem.<init>(DrivetrainSubsystem.java:82)\n\tat frc.robot.commands.auton.PathStraight.<init>(PathStraight.java:19)\n\tat frc.robot.RobotContainer.<init>(RobotContainer.java:83)\n\tat frc.robot.Robot.robotInit(Robot.java:32)\n\tat edu.wpi.first.wpilibj.TimedRobot.startCompetition(TimedRobot.java:107)\n\tat edu.wpi.first.wpilibj.RobotBase.runRobot(RobotBase.java:373)\n\tat edu.wpi.first.wpilibj.RobotBase.startRobot(RobotBase.java:463)\n\tat frc.robot.Main.main(Main.java:24)\n",
+        "messageType": 0
+    },
+    {
+        "messageType": 2,
+        "timestamp": 13.92578125,
+        "seqNumber": 2130,
+        "line": "Error at com.swervedrivespecialties.swervelib.DriveControllerFactory.addDashboardEntries(DriveControllerFactory.java:11): Unhandled exception: java.lang.IllegalArgumentException: Title is already in use: Current Velocity"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 13.92694091796875,
+        "seqNumber": 2131,
+        "line": "\tat edu.wpi.first.wpilibj.shuffleboard.ContainerHelper.checkTitle(ContainerHelper.java:139)"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 13.92724609375,
+        "seqNumber": 2132,
+        "line": "\tat edu.wpi.first.wpilibj.shuffleboard.ContainerHelper.precheck(ContainerHelper.java:120)"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 13.9293212890625,
+        "seqNumber": 2133,
+        "line": "\tat edu.wpi.first.wpilibj.shuffleboard.ContainerHelper.addNumber(ContainerHelper.java:88)"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 13.9298095703125,
+        "seqNumber": 2134,
+        "line": "\tat edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout.addNumber(ShuffleboardLayout.java:62)"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 13.93011474609375,
+        "seqNumber": 2135,
+        "line": "\tat com.swervedrivespecialties.swervelib.DriveControllerFactory.addDashboardEntries(DriveControllerFactory.java:11)"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 13.930419921875,
+        "seqNumber": 2136,
+        "line": "\tat com.swervedrivespecialties.swervelib.DriveControllerFactory.create(DriveControllerFactory.java:20)"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 13.9307861328125,
+        "seqNumber": 2137,
+        "line": "\tat com.swervedrivespecialties.swervelib.SwerveModuleFactory.create(SwerveModuleFactory.java:27)"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 13.93109130859375,
+        "seqNumber": 2138,
+        "line": "\tat com.swervedrivespecialties.swervelib.Mk3SwerveModuleHelper.createFalcon500(Mk3SwerveModuleHelper.java:73)"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 13.93133544921875,
+        "seqNumber": 2139,
+        "line": "\tat com.swervedrivespecialties.swervelib.Mk3SwerveModuleHelper.createFalcon500(Mk3SwerveModuleHelper.java:103)"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 13.931640625,
+        "seqNumber": 2140,
+        "line": "\tat frc.robot.subsystems.DrivetrainSubsystem.<init>(DrivetrainSubsystem.java:82)"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 13.9337158203125,
+        "seqNumber": 2141,
+        "line": "\tat frc.robot.commands.auton.PathStraight.<init>(PathStraight.java:19)"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 13.93414306640625,
+        "seqNumber": 2142,
+        "line": "\tat frc.robot.RobotContainer.<init>(RobotContainer.java:83)"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 13.9344482421875,
+        "seqNumber": 2143,
+        "line": "\tat frc.robot.Robot.robotInit(Robot.java:32)"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 13.9351806640625,
+        "seqNumber": 2144,
+        "line": "\tat edu.wpi.first.wpilibj.TimedRobot.startCompetition(TimedRobot.java:107)"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 13.935546875,
+        "seqNumber": 2145,
+        "line": "\tat edu.wpi.first.wpilibj.RobotBase.runRobot(RobotBase.java:373)"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 13.93585205078125,
+        "seqNumber": 2146,
+        "line": "\tat edu.wpi.first.wpilibj.RobotBase.startRobot(RobotBase.java:463)"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 13.93609619140625,
+        "seqNumber": 2147,
+        "line": "\tat frc.robot.Main.main(Main.java:24)"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 13.9364013671875,
+        "seqNumber": 2148,
+        "line": ""
+    },
+    {
+        "timestamp": 13.9415283203125,
+        "seqNumber": 2149,
+        "numOccur": 1,
+        "errorCode": 1,
+        "flags": 0,
+        "details": "The robot program quit unexpectedly. This is usually due to a code error.\n  The above stacktrace can help determine where the error occurred.\n  See https://wpilib.org/stacktrace for more information.",
+        "location": "edu.wpi.first.wpilibj.RobotBase.runRobot(RobotBase.java:388)",
+        "callStack": "",
+        "messageType": 1
+    },
+    {
+        "messageType": 2,
+        "timestamp": 13.94207763671875,
+        "seqNumber": 2150,
+        "line": "Warning at edu.wpi.first.wpilibj.RobotBase.runRobot(RobotBase.java:388): The robot program quit unexpectedly. This is usually due to a code error."
+    },
+    {
+        "timestamp": 13.9422607421875,
+        "seqNumber": 2151,
+        "numOccur": 1,
+        "errorCode": 1,
+        "flags": 1,
+        "details": "The startCompetition() method (or methods called by it) should have handled the exception above.",
+        "location": "edu.wpi.first.wpilibj.RobotBase.runRobot(RobotBase.java:395)",
+        "callStack": "",
+        "messageType": 0
+    },
+    {
+        "messageType": 2,
+        "timestamp": 13.9425048828125,
+        "seqNumber": 2152,
+        "line": "  The above stacktrace can help determine where the error occurred."
+    },
+    {
+        "messageType": 2,
+        "timestamp": 13.94281005859375,
+        "seqNumber": 2153,
+        "line": "  See https://wpilib.org/stacktrace for more information."
+    },
+    {
+        "messageType": 2,
+        "timestamp": 13.94354248046875,
+        "seqNumber": 2154,
+        "line": "Error at edu.wpi.first.wpilibj.RobotBase.runRobot(RobotBase.java:395): The startCompetition() method (or methods called by it) should have handled the exception above."
+    },
+    {
+        "timestamp": 14.47210693359375,
+        "seqNumber": 2155,
+        "numOccur": 1,
+        "errorCode": 0,
+        "flags": 0,
+        "details": "[phoenix-diagnostics] Server shutdown cleanly. (dur:10|0)",
+        "location": "",
+        "callStack": "",
+        "messageType": 1
+    },
+    {
+        "timestamp": 14.4730224609375,
+        "seqNumber": 2156,
+        "numOccur": 1,
+        "errorCode": 0,
+        "flags": 0,
+        "details": "[phoenix] Library shutdown cleanly",
+        "location": "",
+        "callStack": "",
+        "messageType": 1
+    },
+    {
+        "timestamp": 14.68377685546875,
+        "seqNumber": 2157,
+        "numOccur": 1,
+        "errorCode": 0,
+        "flags": 0,
+        "details": "[phoenix-diagnostics] Server shutdown cleanly. (dur:10|0)",
+        "location": "",
+        "callStack": "",
+        "messageType": 1
+    },
+    {
+        "messageType": 2,
+        "timestamp": 14.695068359375,
+        "seqNumber": 2158,
+        "line": "#"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 14.69549560546875,
+        "seqNumber": 2159,
+        "line": "# A fatal error has been detected by the Java Runtime Environment:"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 14.69580078125,
+        "seqNumber": 2160,
+        "line": "#"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 14.69647216796875,
+        "seqNumber": 2161,
+        "line": "#  SIGSEGV (0xb) at pc=0xb6e6b3d8, pid=2872, tid=2878"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 14.69732666015625,
+        "seqNumber": 2162,
+        "line": "#"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 14.69769287109375,
+        "seqNumber": 2163,
+        "line": "# JRE version: OpenJDK Runtime Environment (11.0.12.5) (build 11.0.12.5-frc+0-2022-11.0.12u5-1)"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 14.69805908203125,
+        "seqNumber": 2164,
+        "line": "# Java VM: OpenJDK Client VM (11.0.12.5-frc+0-2022-11.0.12u5-1, mixed mode, concurrent mark sweep gc, linux-)"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 14.7042236328125,
+        "seqNumber": 2165,
+        "line": "# Problematic frame:"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 14.70745849609375,
+        "seqNumber": 2166,
+        "line": "# C  [libc.so.6+0x6c3d8]"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 14.7109375,
+        "seqNumber": 2167,
+        "line": "#"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 14.71160888671875,
+        "seqNumber": 2168,
+        "line": "# No core dump will be written. Core dumps have been disabled. To enable core dumping, try \"ulimit -c unlimited\" before starting Java again"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 14.712158203125,
+        "seqNumber": 2169,
+        "line": "#"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 14.71282958984375,
+        "seqNumber": 2170,
+        "line": "# An error report file with more information is saved as:"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 14.7137451171875,
+        "seqNumber": 2171,
+        "line": "# /tmp/hs_err_pid2872.log"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 14.85009765625,
+        "seqNumber": 2172,
+        "line": "pure virtual method called"
+    },
+    {
+        "messageType": 2,
+        "timestamp": 14.8509521484375,
+        "seqNumber": 2173,
+        "line": "terminate called without an active exception"
+    }
+]
