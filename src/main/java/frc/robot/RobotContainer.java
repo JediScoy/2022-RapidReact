@@ -3,7 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
-
+// random robot imports
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -28,7 +28,7 @@ import frc.robot.commands.Lift.AutoLiftCommandBar2;
 import frc.robot.commands.Lift.LiftCommand;
 import frc.robot.commands.Lift.LockLiftCommandBar1;
 import frc.robot.commands.Lift.LockLiftCommandBar2;
-// Auton
+// Auton imports
 import frc.robot.commands.auton.Blue1;
 import frc.robot.commands.auton.Blue2;
 import frc.robot.commands.auton.Blue3;
@@ -115,7 +115,9 @@ public class RobotContainer {
   }
 
   private void configureButtonBindings() {
+
     /// Declaring buttons on driver controller
+
     final JoystickButton d_backButton = new JoystickButton(driverController, Button.kBack.value);
     // final JoystickButton d_startButton = new JoystickButton(driverController, Button.kStart.value);
     final JoystickButton d_ButtonA = new JoystickButton(driverController, Button.kA.value);
@@ -129,6 +131,7 @@ public class RobotContainer {
     
 
     // Declaring buttons on the operator controller
+
     // final JoystickButton op_backButton = new JoystickButton(operatorController, Button.kBack.value);
     // final JoystickButton op_startButton = new JoystickButton(operatorController, Button.kStart.value);
     final JoystickButton op_ButtonA = new JoystickButton(operatorController, Button.kA.value);
@@ -142,7 +145,6 @@ public class RobotContainer {
 
     // Defining the actions associated with buttons
    
-
     //Driver Controller button commands
 
     // Resets the gyroscope to 0 degrees when back button is pressed
@@ -213,8 +215,7 @@ public class RobotContainer {
     ));
 
 
-    //Operator Controller
-      //lift button commands
+    //Operator Controller - lift button commands
 
     // hold left bumper to manually raise climbing arms, release to stop motors
     op_LeftBumper.whenPressed(new LiftCommand(liftMotors, 0.5)); 
@@ -237,8 +238,12 @@ public class RobotContainer {
     op_ButtonX.whenPressed(new LockLiftCommandBar2(liftMotors, -0.5));  
 
     // Use left stick up and down to manually move left climbing arm up and down
-    leftLiftMotor.setDefaultCommand(new LiftCommand(
-      leftLiftMotor, modifyAxis(operatorController.getLeftY()))); //FIXME did not work, no movement
+    leftLiftMotor.setDefaultCommand(new DefaultDriveCommand(
+      m_drivetrainSubsystem,
+      () -> -modifyAxis(driverController.getLeftY()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
+      () -> -modifyAxis(driverController.getLeftX()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
+      () -> -modifyAxis(driverController.getRightX()) * DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
+    )); //FIXME did not work, no movement
 
     // Use right stick up and down to manually move left climbing arm up and down
     rightLiftMotor.setDefaultCommand(new LiftCommand(
