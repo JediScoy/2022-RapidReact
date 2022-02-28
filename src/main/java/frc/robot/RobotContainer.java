@@ -167,7 +167,7 @@ public class RobotContainer {
               new IndexSpeed(indexMotors, 0.5).withTimeout(0.5)),
                 new ParallelCommandGroup (
                   new LauncherSpeed(launcher, 0.25, 0.25),
-                  new IntakeSpeed(intakeMotor, -0.5),
+                  new IntakeSpeed(intakeMotor, 0.5),
                   new IndexSpeed(indexMotors, 0.5)))
       ));
       d_ButtonA.whenReleased(new ParallelCommandGroup(
@@ -180,12 +180,12 @@ public class RobotContainer {
        then finally run all 3 motors at once. release to stop all motors */
         // High shot up close
       d_ButtonY.whenPressed(new SequentialCommandGroup(
-        new LauncherSpeed(launcher, 0.40, 0.45).withTimeout(1),
+        new LauncherSpeed(launcher, 0.35, 0.40).withTimeout(0.75), // changed from 1 to 0.75
           new SequentialCommandGroup(
-            new LauncherSpeed(launcher, 0.40, 0.45).withTimeout(0.5).alongWith(
-              new IndexSpeed(indexMotors, 0.5).withTimeout(0.5)),
+            new LauncherSpeed(launcher, 0.35, 0.40).withTimeout(0.25).alongWith( //changed from 0.5 to 0.25
+              new IndexSpeed(indexMotors, 0.5).withTimeout(0.25)), //changed from 0.5 to 0.25
                 new ParallelCommandGroup (
-                  new LauncherSpeed(launcher, 0.35, 0.40),
+                  new LauncherSpeed(launcher, 0.36, 0.42), // added 0.02
                   new IntakeSpeed(intakeMotor, 0.5),
                   new IndexSpeed(indexMotors, 0.5))
       )));
@@ -196,11 +196,11 @@ public class RobotContainer {
       );
 
     // Hold right bumper to manually Intake cargo from the field, release to stop motors
-    d_RightBumper.whenPressed(new IntakeSpeed(intakeMotor, 0.5)); 
+    d_RightBumper.whenPressed(new IntakeSpeed(intakeMotor, -0.5)); 
     d_RightBumper.whenReleased(new IntakeSpeed(intakeMotor, 0.0)); 
 
     // Hold left bumper to manually Reverse cargo back to the field, release to stop motors
-    d_LeftBumper.whenPressed(new IntakeSpeed(intakeMotor, -0.5)); 
+    d_LeftBumper.whenPressed(new IntakeSpeed(intakeMotor, 0.5)); 
     d_LeftBumper.whenReleased(new IntakeSpeed(intakeMotor, 0.0)); 
 
     // Hold X to manually Advance cargo to the launcher, release to stop motors

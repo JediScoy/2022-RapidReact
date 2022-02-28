@@ -31,7 +31,7 @@ public class Blue3 extends SequentialCommandGroup {
               // Index the ball #1 into the running Launcher
               new IndexSpeed(indexMotors, 0.50).withTimeout(0.5)),
                 // Robot drives in a straight path to the next ball
-                new PathStraight().withTimeout(2), // Gives an error and 'no code' when deployed
+                //new PathStraight().withTimeout(2), // Gives an error and 'no code' when deployed
                 new ParallelCommandGroup(
                   // Maintain Launcher speed
                   new LauncherSpeed(launcher, 0.35, 0.40),
