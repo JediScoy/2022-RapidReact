@@ -21,11 +21,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static frc.robot.Constants.*;
 
 
-
 // Navx imports
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
-
 
 
 public class DrivetrainSubsystem extends SubsystemBase {
