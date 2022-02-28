@@ -237,13 +237,14 @@ public class RobotContainer {
     // press B to auto lower climbing arms to the encoder value of when the locking arms engage on bar #2
     op_ButtonX.whenPressed(new LockLiftCommandBar2(liftMotors, -0.5));  
 
+    /** 
     // Use left stick up and down to manually move left climbing arm up and down
     leftLiftMotor.setDefaultCommand(new DefaultDriveCommand(
       m_drivetrainSubsystem,
-      () -> -modifyAxis(driverController.getLeftY()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
-      () -> -modifyAxis(driverController.getLeftX()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
-      () -> -modifyAxis(driverController.getRightX()) * DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
-    )); //FIXME did not work, no movement
+      () -> -modifyAxis(operatorController.getLeftY()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
+      () -> -modifyAxis(operatorController.getLeftX()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
+      () -> -modifyAxis(operatorController.getRightX()) * DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
+    )); //FIXME did not work, no movement */
 
     // Use right stick up and down to manually move left climbing arm up and down
     rightLiftMotor.setDefaultCommand(new LiftCommand(
