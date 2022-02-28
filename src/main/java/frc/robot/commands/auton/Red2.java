@@ -5,8 +5,6 @@
 package frc.robot.commands.auton;
 import frc.robot.commands.IndexSpeed;
 import frc.robot.commands.IntakeSpeed;
-import frc.robot.commands.LauncherSequence;
-import frc.robot.commands.LauncherSequence2;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Index;

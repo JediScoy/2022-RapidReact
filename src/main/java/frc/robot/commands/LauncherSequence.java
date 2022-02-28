@@ -20,7 +20,7 @@ public class LauncherSequence extends SequentialCommandGroup {
               new IndexSpeed(indexMotors, 0.5).withTimeout(0.5)),
                 new ParallelCommandGroup (
                   new LauncherSpeed(launcher, 0.35, 0.40),
-                  new IntakeSpeed(intakeMotor, -0.5),
+                  new IntakeSpeed(intakeMotor, 0.5),
                   new IndexSpeed(indexMotors, 0.5)
       )));
     }
