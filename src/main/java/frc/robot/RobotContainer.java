@@ -295,7 +295,7 @@ public class RobotContainer {
 
      
     // Load the path
-    PathPlannerTrajectory m_path = PathPlanner.loadPath("Straight", 8, 2);
+    PathPlannerTrajectory m_path = PathPlanner.loadPath("Straight", 8, 5);
 
     // 2. Defining PID Controllers for tracking trajectory
     PIDController xController = new PIDController(Constants.kPXController, 0, 0);
