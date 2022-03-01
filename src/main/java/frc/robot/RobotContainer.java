@@ -313,24 +313,25 @@ public class RobotContainer {
       thetaController, 
       m_drivetrainSubsystem::setModuleStates, 
       m_drivetrainSubsystem);
+    
+
+    // 4. Add some init and wrap-up, and return everything
+    return new SequentialCommandGroup(
       new SequentialCommandGroup(
         new LauncherSpeed(launcher, 0.35, 0.40).withTimeout(0.75),
           new SequentialCommandGroup(
             new LauncherSpeed(launcher, 0.35, 0.40).withTimeout(0.25).alongWith(
               new IndexSpeed(indexMotors, 0.5).withTimeout(0.25)),
                 new ParallelCommandGroup (
-                  new LauncherSpeed(launcher, 0.36, 0.42),
-                  new IntakeSpeed(intakeMotor, 0.5),
-                  new IndexSpeed(indexMotors, 0.5))
-      ));
-
-    // 4. Add some init and wrap-up, and return everything
-    return new SequentialCommandGroup(
+                  new LauncherSpeed(launcher, 0.36, 0.42).withTimeout(2),
+                  new IntakeSpeed(intakeMotor, 0.5).withTimeout(2),
+                  new IndexSpeed(indexMotors, 0.5)).withTimeout(2).andThen(
       new InstantCommand(()
         -> m_drivetrainSubsystem.resetOdometry(m_path.getInitialPose())),
       swerveControllerCommand,
       new InstantCommand(() 
-        -> m_drivetrainSubsystem.stop()));
+        -> m_drivetrainSubsystem.stop())))
+));
       
     // System.out.println(exampleState.velocityMetersPerSecond);
   
