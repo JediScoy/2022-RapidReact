@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton; //NewCommands vendo
 import static edu.wpi.first.wpilibj.XboxController.Button;
 
 import com.pathplanner.lib.PathPlanner;
+import com.pathplanner.lib.PathPlannerTrajectory;
+import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
@@ -293,7 +295,7 @@ public class RobotContainer {
 
      
     // Load the path
-    Trajectory m_path = PathPlanner.loadPath("Straight", 8, 5);
+    PathPlannerTrajectory m_path = PathPlanner.loadPath("Straight", 8, 2);
 
     // 2. Defining PID Controllers for tracking trajectory
     PIDController xController = new PIDController(Constants.kPXController, 0, 0);
@@ -302,7 +304,7 @@ public class RobotContainer {
     thetaController.enableContinuousInput(-Math.PI, Math.PI);
 
     // 3. Command to follow path from PathPlanner
-    SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(
+    PPSwerveControllerCommand swerveControllerCommand = new PPSwerveControllerCommand(
       m_path, 
       m_drivetrainSubsystem::getPose, 
       Constants.m_kinematics, 
