@@ -14,7 +14,7 @@ public class LockLiftCommandBar2 extends CommandBase{
  	private double speed;
 
 	// encoder value for bar 2 height of left arm
-	private double lockHeightLeft2 = -1000; //FIXME change to encoder value when lock arm engages on bar 2
+	private double lockHeightLeft2 = -1250; //FIXME change to encoder value when lock arm engages on bar 2
 	// encoder value for bar 2 height of right arm  
 	private double lockHeightRight2 = -1000;  //FIXME change to encoder value when lock arm engages on bar 2
 
