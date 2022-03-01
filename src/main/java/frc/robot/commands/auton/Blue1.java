@@ -23,7 +23,7 @@ public class Blue1 extends SequentialCommandGroup {
       addCommands(
         new LauncherSpeed(launcher, 0.35, 0.40).withTimeout(0.75), // changed from 1 to 0.75
           new SequentialCommandGroup(
-            new LauncherSpeed(launcher, 0.35, 0.40).withTimeout(0.25).alongWith( //changed from 0.5 to 0.25
+            new LauncherSpeed(launcher, 0.30, 0.35).withTimeout(0.25).alongWith( //changed from 0.5 to 0.25
               new IndexSpeed(indexMotors, 0.5).withTimeout(0.25)), //changed from 0.5 to 0.25
                 new ParallelCommandGroup (
                   new LauncherSpeed(launcher, 0.36, 0.42), // added 0.02

@@ -75,7 +75,7 @@ public Red3(DrivetrainSubsystem m_drivetrainSubsystem) {
             @Override
             public boolean isFinished() {
                     if (isFin) {
-                          return true  
+                          return true;  
                     }
                     else{
                             return false;
