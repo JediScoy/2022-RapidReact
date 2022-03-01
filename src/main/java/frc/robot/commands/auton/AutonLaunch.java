@@ -16,16 +16,16 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 /** FIXME Autonomous place holder for testing purposes
  * Runs the Launcher for second, then runs the launcher again along with index motors with index, launcher, intake, index
 */ 
-public class Blue1 extends SequentialCommandGroup {
-    // Basically Chad's full launch sequence
-    public Blue1(DrivetrainSubsystem drivetrain, Index indexMotors, Intake intakeMotor, Launcher launcher) {
+public class AutonLaunch extends SequentialCommandGroup {
+    
+    public AutonLaunch(DrivetrainSubsystem drivetrain, Index indexMotors, Intake intakeMotor, Launcher launcher) {
       addCommands(
         new LauncherSpeed(launcher, 0.35, 0.40).withTimeout(0.75),
           new SequentialCommandGroup(
-            new LauncherSpeed(launcher, 0.30, 0.35).withTimeout(0.25).alongWith(
-              new IndexSpeed(indexMotors, 0.5).withTimeout(0.25)),
+            new LauncherSpeed(launcher, 0.35, 0.40).withTimeout(0.25).alongWith( 
+              new IndexSpeed(indexMotors, 0.5).withTimeout(0.25)), 
                 new ParallelCommandGroup (
-                  new LauncherSpeed(launcher, 0.36, 0.42),
+                  new LauncherSpeed(launcher, 0.36, 0.42), 
                   new IntakeSpeed(intakeMotor, 0.5),
                   new IndexSpeed(indexMotors, 0.5)
                   )));
