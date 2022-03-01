@@ -9,9 +9,17 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton; //NewCommands vendordep
 import static edu.wpi.first.wpilibj.XboxController.Button;
+
+import com.pathplanner.lib.PathPlanner;
+
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 // Subsystem imports
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.Index;
@@ -34,7 +42,6 @@ import frc.robot.commands.auton.Blue3;
 import frc.robot.commands.auton.Red1;
 import frc.robot.commands.auton.Red2;
 import frc.robot.commands.auton.Red3;
-import frc.robot.commands.auton.PathStraight;
 import frc.robot.commands.LockLiftCommandBar1;
 import frc.robot.commands.LockLiftCommandBar2;
 
@@ -81,7 +88,7 @@ public class RobotContainer {
     new Red3(m_drivetrainSubsystem, indexMotors, intakeMotor, launcher);
   
   private final Command PathStraight =
-    new PathStraight(m_drivetrainSubsystem);
+    new Red3(m_drivetrainSubsystem, indexMotors, intakeMotor, launcher);
   // A chooser for autonomous commands
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -282,11 +289,11 @@ public class RobotContainer {
   
   // TODO Adjust Auton Chooser VS built in Auton
   public Command getAutonomousCommand() {
-    return m_chooser.getSelected();  
+    // return m_chooser.getSelected();  
 
-      /** 
+     
     // Load the path
-    Trajectory m_path = PathPlanner.loadPath("Straight", 5, 5);
+    Trajectory m_path = PathPlanner.loadPath("Straight", 8, 5);
 
     // 2. Defining PID Controllers for tracking trajectory
     PIDController xController = new PIDController(Constants.kPXController, 0, 0);
@@ -304,6 +311,16 @@ public class RobotContainer {
       thetaController, 
       m_drivetrainSubsystem::setModuleStates, 
       m_drivetrainSubsystem);
+      new SequentialCommandGroup(
+        new LauncherSpeed(launcher, 0.35, 0.40).withTimeout(0.75),
+          new SequentialCommandGroup(
+            new LauncherSpeed(launcher, 0.35, 0.40).withTimeout(0.25).alongWith(
+              new IndexSpeed(indexMotors, 0.5).withTimeout(0.25)),
+                new ParallelCommandGroup (
+                  new LauncherSpeed(launcher, 0.36, 0.42),
+                  new IntakeSpeed(intakeMotor, 0.5),
+                  new IndexSpeed(indexMotors, 0.5))
+      ));
 
     // 4. Add some init and wrap-up, and return everything
     return new SequentialCommandGroup(
@@ -312,8 +329,7 @@ public class RobotContainer {
       swerveControllerCommand,
       new InstantCommand(() 
         -> m_drivetrainSubsystem.stop()));
-        */
-    
+      
     // System.out.println(exampleState.velocityMetersPerSecond);
   
   };    
