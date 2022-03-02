@@ -239,7 +239,7 @@ public class RobotContainer {
     )); 
     */
 
-    // FIXME did not work, no movement 
+    // TODO try this out  
     // Use right stick up and down to manually move ONLY right climbing arm up and down 
     rightLiftMotor.setDefaultCommand(new LiftCommand(
       rightLiftMotor, modifyAxis(operatorController.getRightY()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND
