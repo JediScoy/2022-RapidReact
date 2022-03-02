@@ -110,6 +110,7 @@ public class RobotContainer {
     m_chooser.addOption("Red 2", redTwo);
     m_chooser.addOption("Red 3", redThree);
     // m_chooser.addOption("Path Straight", PathStraight);
+    
     // Puts the chooser on the dashboard
     Shuffleboard.getTab("Auton").add(m_chooser);
   }
@@ -173,12 +174,12 @@ public class RobotContainer {
        then finally run all 3 motors at once. release to stop all motors */
         // High shot up close
       d_ButtonY.whenPressed(new SequentialCommandGroup(
-        new LauncherSpeed(launcher, 0.35, 0.40).withTimeout(0.75), // changed from 1 to 0.75
+        new LauncherSpeed(launcher, 0.35, 0.40).withTimeout(0.75),
           new SequentialCommandGroup(
-            new LauncherSpeed(launcher, 0.35, 0.40).withTimeout(0.25).alongWith( //changed from 0.5 to 0.25
-              new IndexSpeed(indexMotors, 0.5).withTimeout(0.25)), //changed from 0.5 to 0.25
+            new LauncherSpeed(launcher, 0.35, 0.40).withTimeout(0.25).alongWith(
+              new IndexSpeed(indexMotors, 0.5).withTimeout(0.25)),
                 new ParallelCommandGroup (
-                  new LauncherSpeed(launcher, 0.36, 0.42), // added 0.02
+                  new LauncherSpeed(launcher, 0.36, 0.42),
                   new IntakeSpeed(intakeMotor, 0.5),
                   new IndexSpeed(indexMotors, 0.5))
       )));
@@ -257,10 +258,6 @@ public class RobotContainer {
     op_ButtonY.whenPressed(new LiftPivotCommand(liftPivotMotors, -0.5)); // Rotates the pivot-lifts arms back towards the robot
     op_ButtonY.whenReleased(new LiftPivotCommand(liftPivotMotors, 0.0));
     */
-    
-  /** Use this to pass the autonomous command to the main {@link Robot} class.
-  * @return the command to run in autonomous
- */
 
   }
 
@@ -291,41 +288,8 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   
-  // TODO Adjust Auton Chooser VS built in Auton
   public Command getAutonomousCommand() {
     return m_chooser.getSelected();  
-
-      /** 
-    // Load the path
-    Trajectory m_path = PathPlanner.loadPath("Straight", 5, 5);
-
-    // 2. Defining PID Controllers for tracking trajectory
-    PIDController xController = new PIDController(Constants.kPXController, 0, 0);
-    PIDController yController = new PIDController(Constants.kPYController, 0, 0);
-    ProfiledPIDController thetaController = new ProfiledPIDController(Constants.kPThetaController, 0, 0, Constants.kThetaControllerConstraints);
-    thetaController.enableContinuousInput(-Math.PI, Math.PI);
-
-    // 3. Command to follow path from PathPlanner
-    SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(
-      m_path, 
-      m_drivetrainSubsystem::getPose, 
-      Constants.m_kinematics, 
-      xController, 
-      yController, 
-      thetaController, 
-      m_drivetrainSubsystem::setModuleStates, 
-      m_drivetrainSubsystem);
-
-    // 4. Add some init and wrap-up, and return everything
-    return new SequentialCommandGroup(
-      new InstantCommand(()
-        -> m_drivetrainSubsystem.resetOdometry(m_path.getInitialPose())),
-      swerveControllerCommand,
-      new InstantCommand(() 
-        -> m_drivetrainSubsystem.stop()));
-        */
-    
-    // System.out.println(exampleState.velocityMetersPerSecond);
   
   };    
   
