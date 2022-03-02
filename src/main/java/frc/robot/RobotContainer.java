@@ -118,42 +118,31 @@ public class RobotContainer {
   private void configureButtonBindings() {
 
     /// Declaring buttons on driver controller
-
     final JoystickButton d_backButton = new JoystickButton(driverController, Button.kBack.value);
-    // final JoystickButton d_startButton = new JoystickButton(driverController, Button.kStart.value);
     final JoystickButton d_ButtonA = new JoystickButton(driverController, Button.kA.value);
     final JoystickButton d_ButtonB = new JoystickButton(driverController, Button.kB.value);
     final JoystickButton d_ButtonX = new JoystickButton(driverController, Button.kX.value);
     final JoystickButton d_ButtonY = new JoystickButton(driverController, Button.kY.value);
     final JoystickButton d_RightBumper = new JoystickButton(driverController, Button.kRightBumper.value);
-    final JoystickButton d_LeftBumper = new JoystickButton(driverController, Button.kLeftBumper.value);
-    // final double d_LeftTrigger = driverController.getLeftTriggerAxis();
-    // final double d_RightTrigger = driverController.getRightTriggerAxis();
-    
+    final JoystickButton d_LeftBumper = new JoystickButton(driverController, Button.kLeftBumper.value);  
 
     // Declaring buttons on the operator controller
-
-    // final JoystickButton op_backButton = new JoystickButton(operatorController, Button.kBack.value);
-    // final JoystickButton op_startButton = new JoystickButton(operatorController, Button.kStart.value);
     final JoystickButton op_ButtonA = new JoystickButton(operatorController, Button.kA.value);
     final JoystickButton op_ButtonB = new JoystickButton(operatorController, Button.kB.value);
     final JoystickButton op_ButtonX = new JoystickButton(operatorController, Button.kX.value);
     final JoystickButton op_ButtonY = new JoystickButton(operatorController, Button.kY.value);
     final JoystickButton op_RightBumper = new JoystickButton(operatorController, Button.kRightBumper.value);
     final JoystickButton op_LeftBumper = new JoystickButton(operatorController, Button.kLeftBumper.value);
-    //final double op_LeftTrigger = operatorController.getLeftTriggerAxis();
-    //final double op_RightTrigger = operatorController.getRightTriggerAxis();
 
     // Defining the actions associated with buttons
-   
-    //Driver Controller button commands
+    // Driver Controller button commands
 
     // Resets the gyroscope to 0 degrees when back button is pressed
     d_backButton.whenPressed(m_drivetrainSubsystem::zeroGyroscope); 
 
-      /**  when A is held, run Launch motors by themselves for a second, then run Launch and Index motors for 0.5 seconds,
-       then finally run all 3 motors at once. release to stop all motors */
-        // Low shot up close
+      /**  LOW HOOP UP CLOSE LAUNCH SEQUENCE
+       when A is held, run Launch motors by themselves for a second, then run Launch and Index motors for 0.5 seconds,
+       then finally run all 3 motors at once. release to stop all motors */ 
       d_ButtonA.whenPressed(new SequentialCommandGroup(
         new LauncherSpeed(launcher, 0.20, 0.20).withTimeout(1),
           new SequentialCommandGroup(
@@ -164,15 +153,16 @@ public class RobotContainer {
                   new IntakeSpeed(intakeMotor, 0.5),
                   new IndexSpeed(indexMotors, 0.5)))
       ));
+      //stops all 3 motors when A button released
       d_ButtonA.whenReleased(new ParallelCommandGroup(
         new IntakeSpeed(intakeMotor, 0.0),
         new IndexSpeed(indexMotors, 0.0),
         new LauncherSpeed(launcher, 0.0, 0.0))
       );
 
-     /**  when Y is held, run Launch motors by themselves for a second, then run Launch and Index motors for 0.5 seconds,
-       then finally run all 3 motors at once. release to stop all motors */
-        // High shot up close
+     /**  HIGH HOOP EDGE OF TARMAC LAUNCH SEQUENCE
+       when Y is held, run Launch motors by themselves for 0.75 seconds, then run Launch and Index motors for 0.25 seconds,
+       then finally run all 3 motors at once. release button to stop all motors */
       d_ButtonY.whenPressed(new SequentialCommandGroup(
         new LauncherSpeed(launcher, 0.35, 0.40).withTimeout(0.75),
           new SequentialCommandGroup(
@@ -183,6 +173,7 @@ public class RobotContainer {
                   new IntakeSpeed(intakeMotor, 0.5),
                   new IndexSpeed(indexMotors, 0.5))
       )));
+      //stops all 3 motors when Y button released
       d_ButtonY.whenReleased(new ParallelCommandGroup(
         new IntakeSpeed(intakeMotor, 0.0),
         new IndexSpeed(indexMotors, 0.0),
@@ -216,49 +207,44 @@ public class RobotContainer {
     ));
 
 
-    //Operator Controller - lift button commands
+    //Operator Controller commands
 
-    // hold left bumper to manually raise climbing arms, release to stop motors
+    // hold left bumper to manually raise both climbing arms, release to stop motors
     op_LeftBumper.whenPressed(new LiftCommand(liftMotors, 0.5)); 
     op_LeftBumper.whenReleased(new LiftCommand(liftMotors, 0.0));
     
-    // hold right bumper to manually lower climbing arms, release to stop motors
+    // hold right bumper to manually lower both climbing arms, release to stop motors
     op_RightBumper.whenPressed(new LiftCommand(liftMotors, -0.5)); 
     op_RightBumper.whenReleased(new LiftCommand(liftMotors, 0.0));
 
-    // press A to auto raise climbing arms to the encoder value of bar #1
+    // press A to auto raise both climbing arms to the encoder value of bar #1
     op_ButtonA.whenPressed(new AutoLiftCommandBar1(liftMotors, 0.5)); 
 
-    // press B to auto lower climbing arms to the encoder value of when the locking arms engage on bar #1
+    // press B to auto lower both climbing arms to the encoder value of when the locking arms engage on bar #1
     op_ButtonB.whenPressed(new LockLiftCommandBar1(liftMotors, -0.5)); 
 
-    // press Y to auto raise climbing arms to encoder value of bar #2
+    // press Y to auto raise both climbing arms to encoder value of bar #2
     op_ButtonY.whenPressed(new AutoLiftCommandBar2(liftMotors, 0.5)); 
 
-    // press B to auto lower climbing arms to the encoder value of when the locking arms engage on bar #2
+    // press B to auto lower both climbing arms to the encoder value of when the locking arms engage on bar #2
     op_ButtonX.whenPressed(new LockLiftCommandBar2(liftMotors, -0.5));  
 
-    /** 
-    // Use left stick up and down to manually move left climbing arm up and down
+    /** FIXME this did not work, no movement 
+    // Use left stick up and down to manually move ONLY left climbing arm up and down
     leftLiftMotor.setDefaultCommand(new DefaultDriveCommand(
       m_drivetrainSubsystem,
       () -> -modifyAxis(operatorController.getLeftY()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
       () -> -modifyAxis(operatorController.getLeftX()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
       () -> -modifyAxis(operatorController.getRightX()) * DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
-    )); //FIXME did not work, no movement */
-
-    // Use right stick up and down to manually move left climbing arm up and down
-    rightLiftMotor.setDefaultCommand(new LiftCommand(
-      rightLiftMotor, modifyAxis(operatorController.getRightY()))); //FIXME did not work, no movement
-      
-    /** Removed the Pivot arms from the robot, commenting out these buttons 
-    op_ButtonX.whenPressed(new LiftPivotCommand(liftPivotMotors, 0.5)); // Rotates the pivot-lift arms for the higher bar
-    op_ButtonX.whenReleased(new LiftPivotCommand(liftPivotMotors, 0.0));
-  
-    op_ButtonY.whenPressed(new LiftPivotCommand(liftPivotMotors, -0.5)); // Rotates the pivot-lifts arms back towards the robot
-    op_ButtonY.whenReleased(new LiftPivotCommand(liftPivotMotors, 0.0));
+    )); 
     */
 
+    // FIXME did not work, no movement 
+    // Use right stick up and down to manually move ONLY right climbing arm up and down 
+    rightLiftMotor.setDefaultCommand(new LiftCommand(
+      rightLiftMotor, modifyAxis(operatorController.getRightY()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND
+      )); 
+      
   }
 
   private static double deadband(double value, double deadband) {
