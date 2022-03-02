@@ -294,7 +294,7 @@ public class RobotContainer {
     // return m_chooser.getSelected();  
 
      
-    // Load the path
+    // 1. Load the path from path planner ("path name", velocity in m/s, acceleration in m/s)
     PathPlannerTrajectory m_path = PathPlanner.loadPath("Straight", 8, 5);
 
     // 2. Defining PID Controllers for tracking trajectory
@@ -315,26 +315,30 @@ public class RobotContainer {
       m_drivetrainSubsystem);
     
 
-    // 4. Add some init and wrap-up, and return everything
+    // 4. Actual command sequence, run everything in order
     return new SequentialCommandGroup(
       new SequentialCommandGroup(
+        //runs Launch Motors withTimeout of 0.75 seconds to get up to speed of high hoop launch sequence
         new LauncherSpeed(launcher, 0.35, 0.40).withTimeout(0.75),
           new SequentialCommandGroup(
+            //runs Launcher & Index motors to launch ball out to score high hoop
             new LauncherSpeed(launcher, 0.35, 0.40).withTimeout(0.25).alongWith(
-              new IndexSpeed(indexMotors, 0.5).withTimeout(0.25)),
+            new IndexSpeed(indexMotors, 0.5).withTimeout(0.25)),
                 new ParallelCommandGroup (
-                  new LauncherSpeed(launcher, 0.36, 0.42).withTimeout(2),
-                  new IntakeSpeed(intakeMotor, 0.5).withTimeout(2),
-                  new IndexSpeed(indexMotors, 0.5)).withTimeout(2).andThen(
-      new InstantCommand(()
-        -> m_drivetrainSubsystem.resetOdometry(m_path.getInitialPose())),
-      swerveControllerCommand,
-      new InstantCommand(() 
-        -> m_drivetrainSubsystem.stop())))
-));
-      
-    // System.out.println(exampleState.velocityMetersPerSecond);
+                  //TODO trying to run Launcher, Intake, Index and Drive robot all at once to grab second ball
+                  /**runs all 3 Launcher, Intake & Index motors withTimout of 5 seconds 
+                   Also make robot drive path from step 1 */
+                  new LauncherSpeed(launcher, 0.36, 0.42).withTimeout(5),
+                  new IntakeSpeed(intakeMotor, 0.5).withTimeout(5),
+                  new IndexSpeed(indexMotors, 0.5).withTimeout(5),
+                  new InstantCommand(() //FIXME move this command out of Parallel group if this breaks things
+                    -> m_drivetrainSubsystem.resetOdometry(m_path.getInitialPose())),
+                    swerveControllerCommand).andThen(
+                    //end of command - stop robot
+                    new InstantCommand(() 
+                        -> m_drivetrainSubsystem.stop())))
+      ));
   
-  };    
+  }; // end of getAutonomusCommand()
   
 } // End of class
