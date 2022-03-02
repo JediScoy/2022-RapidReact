@@ -36,9 +36,10 @@ public class Robot extends TimedRobot {
     //add USB webcam view to dashboard
     UsbCamera camera = CameraServer.startAutomaticCapture();
     // sets camera to MJPEG format, 720p resloution and 30 FPS FIXME - drop resolution if over bandwidth cap
-    camera.setVideoMode(PixelFormat.kMJPEG, 960, 720, 30);
+    camera.setVideoMode(PixelFormat.kMJPEG, 360, 240, 30);
     camera.setExposureManual(10);
     camera.setWhiteBalanceManual(50);
+    
 
   }
 
