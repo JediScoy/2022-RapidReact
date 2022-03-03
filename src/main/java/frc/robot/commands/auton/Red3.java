@@ -36,9 +36,9 @@ public Red3(DrivetrainSubsystem m_drivetrainSubsystem) {
         trajectory = TrajectoryGenerator.generateTrajectory(
             new Pose2d(0, 0, new Rotation2d(0)),
             List.of(
-                    new Translation2d(5, 0),
-                    new Translation2d(5, 5)),
-            new Pose2d(10, 5, Rotation2d.fromDegrees(360)), //full rotation?
+                    new Translation2d(.33, 0),
+                    new Translation2d(.66, 0)),
+            new Pose2d(1, 0, Rotation2d.fromDegrees(0)), //full rotation?
             trajectoryConfig
             );
     
