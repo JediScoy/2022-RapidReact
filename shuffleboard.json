@@ -65,6 +65,19 @@
               "_source0": "network_table:///SmartDashboard/Right Lift Arm",
               "_title": "Right Lift Arm"
             }
+          },
+          "5,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///SmartDashboard/defaultDriveCommand",
+              "_title": "defaultDriveCommand",
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
           }
         }
       }
@@ -288,9 +301,9 @@
     }
   ],
   "windowGeometry": {
-    "x": -7.199999809265137,
-    "y": -7.199999809265137,
+    "x": -428.79998779296875,
+    "y": 402.3999938964844,
     "width": 1550.4000244140625,
-    "height": 838.4000244140625
+    "height": 737.5999755859375
   }
 }

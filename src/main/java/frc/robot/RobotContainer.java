@@ -318,8 +318,9 @@ public class RobotContainer {
     // 4. Actual command sequence, run everything in order
     return new SequentialCommandGroup(
       new SequentialCommandGroup(
-        //runs Launch Motors withTimeout of 0.75 seconds to get up to speed of high hoop launch sequence
-        new LauncherSpeed(launcher, 0.30, 0.35).withTimeout(0.75), // First attempt was 0.35, 0.40
+        // Runs Launch Motors withTimeout of 0.75 seconds to get up to speed of high hoop launch sequence
+        // First attempt was 0.35, 0.40
+        new LauncherSpeed(launcher, 0.30, 0.35).withTimeout(0.75), 
           new SequentialCommandGroup(
             //runs Launcher & Index motors to launch ball out to score high hoop
             new LauncherSpeed(launcher, 0.30, 0.35).withTimeout(0.25).alongWith( // First attempt was 0.35, 40
@@ -328,10 +329,12 @@ public class RobotContainer {
                   //TODO trying to run Launcher, Intake, Index and Drive robot all at once to grab second ball
                   /**runs all 3 Launcher, Intake & Index motors withTimout of 5 seconds 
                    Also make robot drive path from step 1 */
-                  new LauncherSpeed(launcher, 0.36, 0.42).withTimeout(5),
+                  
+                  // First attempt was 0.36, 0.42
+                  new LauncherSpeed(launcher, 0.40, 0.45).withTimeout(5), 
                   new IntakeSpeed(intakeMotor, 0.5).withTimeout(5),
                   new IndexSpeed(indexMotors, 0.5).withTimeout(5),
-                  new InstantCommand(() //FIXME move this command out of Parallel group if this breaks things
+                  new InstantCommand(() //Move this command out of Parallel group if this breaks things
                     -> m_drivetrainSubsystem.resetOdometry(m_path.getInitialPose())),
                     swerveControllerCommand).andThen(
                     //end of command - stop robot
