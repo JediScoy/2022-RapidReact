@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 
 
-// FIXME Autonomous place holder for testing purposes
+// Autonomous place holder for testing purposes
 public class AutonLaunch2Drive extends SequentialCommandGroup {
   
     public AutonLaunch2Drive(DrivetrainSubsystem drivetrain, Index indexMotors, Intake intakeMotor, Launcher launcher) {
