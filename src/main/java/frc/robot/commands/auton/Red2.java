@@ -15,9 +15,6 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 public class Red2 extends SequentialCommandGroup {
 
     public Red2(DrivetrainSubsystem drivetrain, Index indexMotors, Intake intakeMotor, Launcher launcher) {
-      addCommands(
-        new IndexSpeed(indexMotors, -0.2).alongWith(new IntakeSpeed(intakeMotor, -0.1)));
-      
-    }  
-  
+      addCommands(); 
+    }
   } // end class
