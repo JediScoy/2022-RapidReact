@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton; //NewCommands vendordep
 import static edu.wpi.first.wpilibj.XboxController.Button;
+<<<<<<< HEAD
 import java.util.List;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
@@ -19,12 +20,25 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+=======
+
+import com.pathplanner.lib.PathPlanner;
+import com.pathplanner.lib.PathPlannerTrajectory;
+import com.pathplanner.lib.commands.PPSwerveControllerCommand;
+
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.trajectory.Trajectory;
+>>>>>>> AutonShootANDDrive
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
+<<<<<<< HEAD
 
+=======
+>>>>>>> AutonShootANDDrive
 // Subsystem imports
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.Index;
@@ -42,9 +56,20 @@ import frc.robot.commands.Lift.LiftCommand;
 import frc.robot.commands.Lift.LockLiftCommandBar1;
 import frc.robot.commands.Lift.LockLiftCommandBar2;
 // Auton
+<<<<<<< HEAD
 import frc.robot.commands.auton.AutonLaunch1;
 import frc.robot.commands.auton.AutonLaunch2Drive;
 import frc.robot.commands.auton.AutonShortDrive;
+=======
+import frc.robot.commands.auton.Blue1;
+import frc.robot.commands.auton.Blue2;
+import frc.robot.commands.auton.Blue3;
+import frc.robot.commands.auton.Red1;
+import frc.robot.commands.auton.Red2;
+import frc.robot.commands.auton.Red3;
+import frc.robot.commands.LockLiftCommandBar1;
+import frc.robot.commands.LockLiftCommandBar2;
+>>>>>>> AutonShootANDDrive
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -83,7 +108,13 @@ public class RobotContainer {
   // private final Command PathStraight =
     // new PathStraight(m_drivetrainSubsystem);
   
+<<<<<<< HEAD
     // A chooser for autonomous commands
+=======
+  private final Command PathStraight =
+    new Red3(m_drivetrainSubsystem, indexMotors, intakeMotor, launcher);
+  // A chooser for autonomous commands
+>>>>>>> AutonShootANDDrive
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
 
@@ -285,6 +316,7 @@ public class RobotContainer {
   
 
   public Command getAutonomousCommand() {
+<<<<<<< HEAD
     //#region trajectory
      // 1. Create trajectory settings
      TrajectoryConfig trajectoryConfig = new TrajectoryConfig(
@@ -326,4 +358,59 @@ public class RobotContainer {
              new InstantCommand(() -> m_drivetrainSubsystem.stop()));
  
   }
+=======
+    // return m_chooser.getSelected();  
+
+     
+    // 1. Load the path from path planner ("path name", velocity in m/s, acceleration in m/s)
+    PathPlannerTrajectory m_path = PathPlanner.loadPath("Straight", 8, 5);
+
+    // 2. Defining PID Controllers for tracking trajectory
+    PIDController xController = new PIDController(Constants.kPXController, 0, 0);
+    PIDController yController = new PIDController(Constants.kPYController, 0, 0);
+    ProfiledPIDController thetaController = new ProfiledPIDController(Constants.kPThetaController, 0, 0, Constants.kThetaControllerConstraints);
+    thetaController.enableContinuousInput(-Math.PI, Math.PI);
+
+    // 3. Command to follow path from PathPlanner
+    PPSwerveControllerCommand swerveControllerCommand = new PPSwerveControllerCommand(
+      m_path, 
+      m_drivetrainSubsystem::getPose, 
+      Constants.m_kinematics, 
+      xController, 
+      yController, 
+      thetaController, 
+      m_drivetrainSubsystem::setModuleStates, 
+      m_drivetrainSubsystem);
+    
+
+    // 4. Actual command sequence, run everything in order
+    return new SequentialCommandGroup(
+      new SequentialCommandGroup(
+        // Runs Launch Motors withTimeout of 0.75 seconds to get up to speed of high hoop launch sequence
+        // First attempt was 0.35, 0.40
+        new LauncherSpeed(launcher, 0.30, 0.35).withTimeout(0.75), 
+          new SequentialCommandGroup(
+            //runs Launcher & Index motors to launch ball out to score high hoop
+            new LauncherSpeed(launcher, 0.30, 0.35).withTimeout(0.25).alongWith( // First attempt was 0.35, 40
+            new IndexSpeed(indexMotors, 0.5).withTimeout(0.25)),
+                new ParallelCommandGroup (
+                  //TODO trying to run Launcher, Intake, Index and Drive robot all at once to grab second ball
+                  /**runs all 3 Launcher, Intake & Index motors withTimout of 5 seconds 
+                   Also make robot drive path from step 1 */
+                  
+                  // First attempt was 0.36, 0.42
+                  new LauncherSpeed(launcher, 0.40, 0.45).withTimeout(5), 
+                  new IntakeSpeed(intakeMotor, 0.5).withTimeout(5),
+                  new IndexSpeed(indexMotors, 0.5).withTimeout(5),
+                  new InstantCommand(() //Move this command out of Parallel group if this breaks things
+                    -> m_drivetrainSubsystem.resetOdometry(m_path.getInitialPose())),
+                    swerveControllerCommand).andThen(
+                    //end of command - stop robot
+                    new InstantCommand(() 
+                        -> m_drivetrainSubsystem.stop())))
+      ));
+  
+  }; // end of getAutonomusCommand()
+  
+>>>>>>> AutonShootANDDrive
 } // End of class
