@@ -6,6 +6,7 @@ package frc.robot;
 // random robot imports
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton; //NewCommands vendordep
 import static edu.wpi.first.wpilibj.XboxController.Button;
@@ -78,6 +79,7 @@ public class RobotContainer {
   private final Command redThree =
     new Red3(m_drivetrainSubsystem);
   
+  private final Command defaultDriveCommand; 
   // private final Command PathStraight =
     // new PathStraight(m_drivetrainSubsystem);
   
@@ -87,6 +89,7 @@ public class RobotContainer {
 
   // The container for the robot. Contains subsystems, OI devices, and commands.
   public RobotContainer() {
+
     // Configure the button bindings
     configureButtonBindings();
 
@@ -95,12 +98,12 @@ public class RobotContainer {
     // Left stick Y axis -> forward and backwards movement
     // Left stick X axis -> left and right movement
     // Right stick X axis -> rotation
-    m_drivetrainSubsystem.setDefaultCommand(new DefaultDriveCommand(
-            m_drivetrainSubsystem,
-            () -> -modifyAxis(driverController.getLeftY()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
-            () -> -modifyAxis(driverController.getLeftX()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
-            () -> -modifyAxis(driverController.getRightX()) * DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
-    ));
+    defaultDriveCommand = new DefaultDriveCommand(
+      m_drivetrainSubsystem,
+      () -> -modifyAxis(driverController.getLeftY()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
+      () -> -modifyAxis(driverController.getLeftX()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
+      () -> -modifyAxis(driverController.getRightX()) * DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND);
+    m_drivetrainSubsystem.setDefaultCommand(defaultDriveCommand);
     
     // TODO Add commands to the autonomous command chooser
     m_chooser.setDefaultOption("Blue 1", blueOne);
@@ -113,6 +116,17 @@ public class RobotContainer {
     
     // Puts the chooser on the dashboard
     Shuffleboard.getTab("Auton").add(m_chooser);
+
+    // DEBUGGING CODE:
+    System.out.println("subsystem requirements for redThree");
+    redThree.getRequirements().forEach((x) -> System.out.println(x));
+    System.out.println("subsystem requirements for defaultDriveCommand");
+    defaultDriveCommand.getRequirements().forEach((x) -> System.out.println(x));
+  }
+
+  public void debugMethod () {
+    SmartDashboard.putBoolean("red3", redThree.isScheduled());
+    SmartDashboard.putBoolean("defaultDriveCommand", defaultDriveCommand.isScheduled());
   }
 
   private void configureButtonBindings() {

@@ -26,7 +26,10 @@ public class Red3 extends CommandBase{
     PIDController yController;
     DrivetrainSubsystem m_drivetrainSubsystem;
     SwerveControllerCommand swerveControllerCommand;
+
 public Red3(DrivetrainSubsystem m_drivetrainSubsystem) {
+
+        addRequirements(m_drivetrainSubsystem);
     this.m_drivetrainSubsystem = m_drivetrainSubsystem;
     trajectoryConfig = new TrajectoryConfig(
       DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND, //original called for max speed (just in case im making one of the dumb physics mistakes)
@@ -61,15 +64,23 @@ public Red3(DrivetrainSubsystem m_drivetrainSubsystem) {
               
 
 }
+
+
+
             @Override
             public void execute(){
               
                    m_drivetrainSubsystem.resetOdometry(trajectory.getInitialPose());
                  swerveControllerCommand.execute();
-                    m_drivetrainSubsystem.stop();
+                   
                     isFin = true;
         
 
+            }
+
+            @Override
+            public void end(boolean interrupted) {
+                m_drivetrainSubsystem.stop();
             }
    
             @Override
