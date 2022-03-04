@@ -37,6 +37,7 @@ import frc.robot.commands.DefaultDriveCommand;
 import frc.robot.commands.IndexSpeed;
 import frc.robot.commands.IntakeSpeed;
 import frc.robot.commands.LauncherSpeed;
+import frc.robot.commands.botchAuton;
 import frc.robot.commands.Lift.AutoLiftCommandBar1;
 import frc.robot.commands.Lift.AutoLiftCommandBar2;
 import frc.robot.commands.Lift.LiftCommand;
@@ -303,55 +304,60 @@ public class RobotContainer {
   
 
   public Command getAutonomousCommand() {
-    //#region trajectory
-     // 1. Create trajectory settings
-     TrajectoryConfig trajectoryConfig = new TrajectoryConfig(
-             DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND, //original called for max speed (just in case im making one of the dumb physics mistakes)
-             DrivetrainSubsystem.MAX_ACCELERATION_METERS_SECOND_SQUARED)
-                     .setKinematics(Constants.m_kinematics);
+    // //#region trajectory
+    //  // 1. Create trajectory settings
+    //  TrajectoryConfig trajectoryConfig = new TrajectoryConfig(
+    //          DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND, //original called for max speed (just in case im making one of the dumb physics mistakes)
+    //          DrivetrainSubsystem.MAX_ACCELERATION_METERS_SECOND_SQUARED)
+    //                  .setKinematics(Constants.m_kinematics);
  
-     // 2. Generate trajectory
-     Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
-             new Pose2d(0, 0, new Rotation2d(0)),
-             List.of(
-                     new Translation2d(1, 0)),
+    //  // 2. Generate trajectory
+    //  Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
+    //          new Pose2d(0, 0, new Rotation2d(0)),
+    //          List.of(
+    //                  new Translation2d(1, 0)),
                 
-             new Pose2d(2, 0, Rotation2d.fromDegrees(0)),
-             trajectoryConfig);
+    //          new Pose2d(2, 0, Rotation2d.fromDegrees(0)),
+    //          trajectoryConfig);
  
-     // 3. Define PID controllers for tracking trajectory
-     PIDController xController = new PIDController(Constants.kPXController, 0, .1);
-     PIDController yController = new PIDController(Constants.kPYController, 0, .1);
-     ProfiledPIDController thetaController = new ProfiledPIDController(
-             Constants.kPThetaController, 0, Constants.kDThetaController, Constants.kThetaControllerConstraints);
-     thetaController.enableContinuousInput(-Math.PI, Math.PI);
+    //  // 3. Define PID controllers for tracking trajectory
+    //  PIDController xController = new PIDController(Constants.kPXController, 0, .1);
+    //  PIDController yController = new PIDController(Constants.kPYController, 0, .1);
+    //  ProfiledPIDController thetaController = new ProfiledPIDController(
+    //          Constants.kPThetaController, 0, Constants.kDThetaController, Constants.kThetaControllerConstraints);
+    //  thetaController.enableContinuousInput(-Math.PI, Math.PI);
  
-     // 4. Construct command to follow trajectory
-     SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(
-             trajectory,
-             m_drivetrainSubsystem::getPose,
-             Constants.m_kinematics,
-             xController,
-             yController,
-             thetaController,
-             m_drivetrainSubsystem::setModuleStates,//?
-             m_drivetrainSubsystem);
-             new SequentialCommandGroup(
-              new LauncherSpeed(launcher, 0.35, 0.40).withTimeout(0.75),
-                new SequentialCommandGroup(
-                  new LauncherSpeed(launcher, 0.35, 0.40).withTimeout(0.25).alongWith(
-                    new IndexSpeed(indexMotors, 0.5).withTimeout(0.25)),
-                      new ParallelCommandGroup (
-                        new LauncherSpeed(launcher, 0.36, 0.42),
-                        new IntakeSpeed(intakeMotor, 0.5),
-                        new IndexSpeed(indexMotors, 0.5)
-              )));
+    //  // 4. Construct command to follow trajectory
+    //  SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(
+    //          trajectory,
+    //          m_drivetrainSubsystem::getPose,
+    //          Constants.m_kinematics,
+    //          xController,
+    //          yController,
+    //          thetaController,
+    //          m_drivetrainSubsystem::setModuleStates,//?
+    //          m_drivetrainSubsystem);
+    //          new SequentialCommandGroup(
+    //           new LauncherSpeed(launcher, 0.35, 0.40).withTimeout(0.75),
+    //             new SequentialCommandGroup(
+    //               new LauncherSpeed(launcher, 0.35, 0.40).withTimeout(0.25).alongWith(
+    //                 new IndexSpeed(indexMotors, 0.5).withTimeout(0.25)),
+    //                   new ParallelCommandGroup (
+    //                     new LauncherSpeed(launcher, 0.36, 0.42),
+    //                     new IntakeSpeed(intakeMotor, 0.5),
+    //                     new IndexSpeed(indexMotors, 0.5)
+    //           )));
  
-     // 5. Add some init and wrap-up, and return everything
-     return new SequentialCommandGroup(
-             new InstantCommand(() -> m_drivetrainSubsystem.resetOdometry(trajectory.getInitialPose())),
-             swerveControllerCommand,
-             new InstantCommand(() -> m_drivetrainSubsystem.stop()));
+    //  // 5. Add some init and wrap-up, and return everything
+    //  return new SequentialCommandGroup(
+    //          new InstantCommand(() -> m_drivetrainSubsystem.resetOdometry(trajectory.getInitialPose())),
+    //          swerveControllerCommand,
+    //          new InstantCommand(() -> m_drivetrainSubsystem.stop()));
  
+
+    return new botchAuton(m_drivetrainSubsystem, List.of(
+      new BotchAuton1Input(.3, 0, .5)//one third power, half a second
+      )
+
   }
 } // End of class

@@ -27,6 +27,9 @@ public final class Constants {
      * The front-to-back distance between the drivetrain wheels.
      * Should be measured from center to center.
      */
+//public static final double rot2Meter =  Mk3SwerveModuleHelper.GearRatio.STANDARD * Math.PI * WHEEL_DIAMETER
+
+
     public static final double DRIVETRAIN_WHEELBASE_METERS = 0.585; // FIXED Measure and set wheelbase
     // public static final int DRIVETRAIN_PIGEON_ID = 0; // Set Pigeon ID - We do not use Pigeon
 
