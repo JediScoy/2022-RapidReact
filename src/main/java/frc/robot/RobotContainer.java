@@ -3,16 +3,14 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
-// random robot imports
+
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton; //NewCommands vendordep
 import static edu.wpi.first.wpilibj.XboxController.Button;
-
 import java.util.List;
-
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -26,6 +24,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
+
 // Subsystem imports
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.Index;
@@ -42,13 +41,10 @@ import frc.robot.commands.Lift.AutoLiftCommandBar2;
 import frc.robot.commands.Lift.LiftCommand;
 import frc.robot.commands.Lift.LockLiftCommandBar1;
 import frc.robot.commands.Lift.LockLiftCommandBar2;
-// Auton imports
-import frc.robot.commands.auton.Blue1;
-import frc.robot.commands.auton.Blue2;
-import frc.robot.commands.auton.Blue3;
-import frc.robot.commands.auton.Red1;
-import frc.robot.commands.auton.Red2;
-import frc.robot.commands.auton.Red3;
+// Auton
+import frc.robot.commands.auton.AutonLaunch1;
+import frc.robot.commands.auton.AutonLaunch2Drive;
+import frc.robot.commands.auton.AutonShortDrive;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -74,24 +70,15 @@ public class RobotContainer {
   private final XboxController operatorController = new XboxController(1);
   
   // Autononmous TODO Auton references. Update throughout season
-  private final Command blueOne =
-    new Blue1(m_drivetrainSubsystem, indexMotors, intakeMotor, launcher);
+  private final Command autonLaunch1 =
+    new AutonLaunch1(indexMotors, intakeMotor, launcher);
 
-  private final Command blueTwo =
-    new Blue2(m_drivetrainSubsystem, indexMotors, intakeMotor, launcher);
+  private final Command autonLaunch2Drive =
+    new AutonLaunch2Drive(m_drivetrainSubsystem, indexMotors, intakeMotor, launcher);
 
-  private final Command blueThree =
-    new Blue3(m_drivetrainSubsystem, indexMotors, intakeMotor, launcher);
+  private final Command autonShortDrive =
+    new AutonShortDrive(m_drivetrainSubsystem);
 
-  private final Command redOne =
-    new Red1(m_drivetrainSubsystem, indexMotors, intakeMotor, launcher);
-  
-  private final Command redTwo =
-    new Red2(m_drivetrainSubsystem, indexMotors, intakeMotor, launcher);
-
-  private final Command redThree =
-    new Red3(m_drivetrainSubsystem);
-  
   private final Command defaultDriveCommand; 
   // private final Command PathStraight =
     // new PathStraight(m_drivetrainSubsystem);
@@ -119,31 +106,26 @@ public class RobotContainer {
     m_drivetrainSubsystem.setDefaultCommand(defaultDriveCommand);
     
     // TODO Add commands to the autonomous command chooser
-    m_chooser.setDefaultOption("Blue 1", blueOne);
-    m_chooser.addOption("Blue 2", blueTwo);
-    m_chooser.addOption("Blue 3", blueThree);
-    m_chooser.addOption("Red 1", redOne);
-    m_chooser.addOption("Red 2", redTwo);
-    m_chooser.addOption("Red 3", redThree);
-    // m_chooser.addOption("Path Straight", PathStraight);
-    
+    m_chooser.setDefaultOption("Launch 1", autonLaunch1);
+    m_chooser.addOption("Launch 2 + Drive", autonLaunch2Drive);
+    m_chooser.addOption("Short Drive only", autonShortDrive);
+
     // Puts the chooser on the dashboard
     Shuffleboard.getTab("Auton").add(m_chooser);
 
     // DEBUGGING CODE:
-    System.out.println("subsystem requirements for redThree");
-    redThree.getRequirements().forEach((x) -> System.out.println(x));
+    System.out.println("subsystem requirements for autonShortDrive");
+    autonShortDrive.getRequirements().forEach((x) -> System.out.println(x));
     System.out.println("subsystem requirements for defaultDriveCommand");
     defaultDriveCommand.getRequirements().forEach((x) -> System.out.println(x));
   }
 
   public void debugMethod () {
-    SmartDashboard.putBoolean("red3", redThree.isScheduled());
+    // SmartDashboard.putBoolean("Short Drive", autonShortDrive.isScheduled());
     SmartDashboard.putBoolean("defaultDriveCommand", defaultDriveCommand.isScheduled());
   }
 
   private void configureButtonBindings() {
-
     /// Declaring buttons on driver controller
     final JoystickButton d_backButton = new JoystickButton(driverController, Button.kBack.value);
     final JoystickButton d_ButtonA = new JoystickButton(driverController, Button.kA.value);
@@ -219,8 +201,8 @@ public class RobotContainer {
     d_ButtonX.whenPressed(new IndexSpeed(indexMotors, 0.5)); 
     d_ButtonX.whenReleased(new IndexSpeed(indexMotors, 0));
 
-    //Hold B to drive robot at precison speed, release to revert back to normal speed
-    d_ButtonB.whenPressed(new DefaultDriveCommand(   
+    //Hold B to drive at slower speed, release to drive normal 
+    d_ButtonB.whenPressed(new DefaultDriveCommand(
       m_drivetrainSubsystem,
       () -> -modifyAxis(driverController.getLeftY()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND / 6,
       () -> -modifyAxis(driverController.getLeftX()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND / 6,
