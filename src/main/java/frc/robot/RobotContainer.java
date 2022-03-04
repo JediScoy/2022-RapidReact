@@ -222,9 +222,9 @@ public class RobotContainer {
     //Hold B to drive robot at precison speed, release to revert back to normal speed
     d_ButtonB.whenPressed(new DefaultDriveCommand(   
       m_drivetrainSubsystem,
-      () -> -modifyAxis(driverController.getLeftY()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND / 3,
-      () -> -modifyAxis(driverController.getLeftX()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND / 3,
-      () -> -modifyAxis(driverController.getRightX()) * DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND / 3
+      () -> -modifyAxis(driverController.getLeftY()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND / 6,
+      () -> -modifyAxis(driverController.getLeftX()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND / 6,
+      () -> -modifyAxis(driverController.getRightX()) * DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND / 6
     ));
     d_ButtonB.whenReleased(new DefaultDriveCommand(   
       m_drivetrainSubsystem,
