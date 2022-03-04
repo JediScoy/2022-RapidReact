@@ -28,7 +28,7 @@ public class botchAuton extends CommandBase {
  */
  public botchAuton(DrivetrainSubsystem subsystem, List<BotchAuton1Input> coords) {
 
-   
+     this.timer = new Timer();
      this.driveSubsytem = subsystem;
      this.coords = coords;//'this' keyword refers to the instance of the class, not the parameter. Technically 'lesser' practice 
      addRequirements(subsystem);
