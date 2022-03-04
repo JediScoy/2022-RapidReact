@@ -12,7 +12,7 @@ import frc.robot.subsystems.Launcher;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
-/** FIXME Autonomous place holder for testing purposes
+/** Autonomous place holder for testing purposes
  * Runs the Launcher for second, then runs the launcher again along with index motors with index, launcher, intake, index
 */ 
 public class AutonLaunch1 extends SequentialCommandGroup {

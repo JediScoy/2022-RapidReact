@@ -67,7 +67,7 @@ public class RobotContainer {
   // Second operator controller
   private final XboxController operatorController = new XboxController(1);
   
-  // Autononmous TODO Auton references. Update throughout season
+  // Autononmous command references. Update throughout season
   private final Command autonLaunch1 =
     new AutonLaunch1(indexMotors, intakeMotor, launcher);
 
@@ -236,7 +236,7 @@ public class RobotContainer {
     // press B to auto lower both climbing arms to the encoder value of when the locking arms engage on bar #2
     op_ButtonX.whenPressed(new LockLiftCommandBar2(liftMotors, -0.5));  
 
-    /** FIXME this did not work, no movement 
+    /** Did not work, no movement 
     // Use left stick up and down to manually move ONLY left climbing arm up and down
     leftLiftMotor.setDefaultCommand(new DefaultDriveCommand(
       m_drivetrainSubsystem,
@@ -246,7 +246,7 @@ public class RobotContainer {
     )); 
     */
 
-    // FIXME Use right stick up and down to manually move ONLY right climbing arm up and down 
+    // Use right stick up and down to manually move ONLY right climbing arm up and down 
     rightLiftMotor.setDefaultCommand(new LiftCommand(
       rightLiftMotor, modifyAxis(operatorController.getRightY()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND
       )); 
