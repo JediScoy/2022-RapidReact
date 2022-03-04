@@ -319,10 +319,10 @@ public class RobotContainer {
     return new SequentialCommandGroup(
       new SequentialCommandGroup(
         //runs Launch Motors withTimeout of 0.75 seconds to get up to speed of high hoop launch sequence
-        new LauncherSpeed(launcher, 0.35, 0.40).withTimeout(0.75),
+        new LauncherSpeed(launcher, 0.30, 0.35).withTimeout(0.75), // First attempt was 0.35, 0.40
           new SequentialCommandGroup(
             //runs Launcher & Index motors to launch ball out to score high hoop
-            new LauncherSpeed(launcher, 0.35, 0.40).withTimeout(0.25).alongWith(
+            new LauncherSpeed(launcher, 0.30, 0.35).withTimeout(0.25).alongWith( // First attempt was 0.35, 40
             new IndexSpeed(indexMotors, 0.5).withTimeout(0.25)),
                 new ParallelCommandGroup (
                   //TODO trying to run Launcher, Intake, Index and Drive robot all at once to grab second ball
