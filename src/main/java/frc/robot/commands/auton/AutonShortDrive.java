@@ -18,8 +18,8 @@ import frc.robot.Constants;
 
 import frc.robot.subsystems.DrivetrainSubsystem;
 
-public class Red3 extends CommandBase{
-        boolean isFin = false;
+public class AutonShortDrive extends CommandBase{
+boolean isFin = false;
     TrajectoryConfig trajectoryConfig;
     Trajectory trajectory;
     PIDController xController;
@@ -27,7 +27,7 @@ public class Red3 extends CommandBase{
     DrivetrainSubsystem m_drivetrainSubsystem;
     SwerveControllerCommand swerveControllerCommand;
 
-public Red3(DrivetrainSubsystem m_drivetrainSubsystem) {
+public AutonShortDrive(DrivetrainSubsystem m_drivetrainSubsystem) {
 
         addRequirements(m_drivetrainSubsystem);
     this.m_drivetrainSubsystem = m_drivetrainSubsystem;
@@ -45,13 +45,13 @@ public Red3(DrivetrainSubsystem m_drivetrainSubsystem) {
             trajectoryConfig
             );
     
-            xController = new PIDController(Constants.kPXController, 0, 0);
-            yController = new PIDController(Constants.kPYController, 0, 0);
+            xController = new PIDController(0, 0, 0);
+            yController = new PIDController(0, 0, 0);
             ProfiledPIDController thetaController = new ProfiledPIDController(
                     Constants.kPThetaController, 0, 0, Constants.kThetaControllerConstraints);
             thetaController.enableContinuousInput(-Math.PI, Math.PI);
                 
-           swerveControllerCommand = new SwerveControllerCommand(
+            swerveControllerCommand = new SwerveControllerCommand(
                 trajectory,
                 m_drivetrainSubsystem::getPose,
                 Constants.m_kinematics,
@@ -62,7 +62,11 @@ public Red3(DrivetrainSubsystem m_drivetrainSubsystem) {
                 m_drivetrainSubsystem);
 
               
+  // Reset odometry to the starting pose of the trajectory.
+  m_drivetrainSubsystem.resetOdometry(trajectory.getInitialPose());
 
+  // Run path following command, then stop at the end.
+  // return swerveControllerCommand.andThen(() -> m_drivetrainSubsystem.drive(0, 0, 0, false));
 }
 
 
@@ -70,11 +74,12 @@ public Red3(DrivetrainSubsystem m_drivetrainSubsystem) {
             @Override
             public void execute(){
               
+
                 m_drivetrainSubsystem.resetOdometry(trajectory.getInitialPose());
                 swerveControllerCommand.execute();
                 isFin = true;
+                m_drivetrainSubsystem.stop();
         
-
             }
 
             @Override
@@ -90,5 +95,6 @@ public Red3(DrivetrainSubsystem m_drivetrainSubsystem) {
                     else{
                             return false;
                     }
+                
             }
 }
