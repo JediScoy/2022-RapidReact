@@ -10,9 +10,22 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton; //NewCommands vendordep
 import static edu.wpi.first.wpilibj.XboxController.Button;
+
+import java.util.List;
+
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
+import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 // Subsystem imports
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.Index;
@@ -288,9 +301,47 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   
+
   public Command getAutonomousCommand() {
-    return m_chooser.getSelected();  
-  
-  };    
-  
+    //#region trajectory
+     // 1. Create trajectory settings
+     TrajectoryConfig trajectoryConfig = new TrajectoryConfig(
+             DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND, //original called for max speed (just in case im making one of the dumb physics mistakes)
+             DrivetrainSubsystem.MAX_ACCELERATION_METERS_SECOND_SQUARED)
+                     .setKinematics(Constants.m_kinematics);
+ 
+     // 2. Generate trajectory
+     Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
+             new Pose2d(0, 0, new Rotation2d(0)),
+             List.of(
+                     new Translation2d(1, 0)),
+                
+             new Pose2d(2, 0, Rotation2d.fromDegrees(0)),
+             trajectoryConfig);
+ 
+     // 3. Define PID controllers for tracking trajectory
+     PIDController xController = new PIDController(Constants.kPXController, 0, .1);
+     PIDController yController = new PIDController(Constants.kPYController, 0, .1);
+     ProfiledPIDController thetaController = new ProfiledPIDController(
+             Constants.kPThetaController, 0, Constants.kDThetaController, Constants.kThetaControllerConstraints);
+     thetaController.enableContinuousInput(-Math.PI, Math.PI);
+ 
+     // 4. Construct command to follow trajectory
+     SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(
+             trajectory,
+             m_drivetrainSubsystem::getPose,
+             Constants.m_kinematics,
+             xController,
+             yController,
+             thetaController,
+             m_drivetrainSubsystem::setModuleStates,//?
+             m_drivetrainSubsystem);
+ 
+     // 5. Add some init and wrap-up, and return everything
+     return new SequentialCommandGroup(
+             new InstantCommand(() -> m_drivetrainSubsystem.resetOdometry(trajectory.getInitialPose())),
+             swerveControllerCommand,
+             new InstantCommand(() -> m_drivetrainSubsystem.stop()));
+ 
+  }
 } // End of class
