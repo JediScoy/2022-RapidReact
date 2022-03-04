@@ -18,7 +18,7 @@ public class botchAuton extends CommandBase {
     
     //#endregion
     private DrivetrainSubsystem driveSubsytem;
-    private boolean isFin;
+    private boolean isFin = false;
     
 
 /**
@@ -28,11 +28,13 @@ public class botchAuton extends CommandBase {
  */
  public botchAuton(DrivetrainSubsystem subsystem, List<BotchAuton1Input> coords) {
 
-     addRequirements(subsystem);
+   
      this.driveSubsytem = subsystem;
      this.coords = coords;//'this' keyword refers to the instance of the class, not the parameter. Technically 'lesser' practice 
- }
+     addRequirements(subsystem);
+}
     
+
     @Override
     public void execute() 
         {
@@ -42,9 +44,9 @@ public class botchAuton extends CommandBase {
                 {
                     driveSubsytem.drive(
                         ChassisSpeeds.fromFieldRelativeSpeeds(
-                                currentInput.x,
-                                currentInput.y,
-                                currentInput.theta,
+                                (currentInput.x).getAsDouble(),
+                                (currentInput.y).getAsDouble(),
+                                (currentInput.theta).getAsDouble(),
                                 driveSubsytem.getGyroscopeRotation()
                         )
                 );

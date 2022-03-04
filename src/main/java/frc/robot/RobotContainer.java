@@ -286,6 +286,9 @@ public class RobotContainer {
   
 
   public Command getAutonomousCommand() {
+   //#region old
+   
+  
     // //#region trajectory
     //  // 1. Create trajectory settings
     //  TrajectoryConfig trajectoryConfig = new TrajectoryConfig(
@@ -335,10 +338,15 @@ public class RobotContainer {
     //          new InstantCommand(() -> m_drivetrainSubsystem.resetOdometry(trajectory.getInitialPose())),
     //          swerveControllerCommand,
     //          new InstantCommand(() -> m_drivetrainSubsystem.stop()));
- 
+ //#endregion
 
     return new botchAuton(m_drivetrainSubsystem, List.of(
-      new BotchAuton1Input(.3, 0, .5)//one third power, half a second
+      new BotchAuton1Input
+        (
+          () -> -modifyAxis(0.3) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
+          () -> -modifyAxis(0) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
+        .5
+        )//one third power, half a second
       ));
 
   }
