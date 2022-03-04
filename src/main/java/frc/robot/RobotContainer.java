@@ -318,16 +318,6 @@ public class RobotContainer {
              thetaController,
              m_drivetrainSubsystem::setModuleStates,//?
              m_drivetrainSubsystem);
-             new SequentialCommandGroup(
-              new LauncherSpeed(launcher, 0.35, 0.40).withTimeout(0.75),
-                new SequentialCommandGroup(
-                  new LauncherSpeed(launcher, 0.35, 0.40).withTimeout(0.25).alongWith(
-                    new IndexSpeed(indexMotors, 0.5).withTimeout(0.25)),
-                      new ParallelCommandGroup (
-                        new LauncherSpeed(launcher, 0.36, 0.42),
-                        new IntakeSpeed(intakeMotor, 0.5),
-                        new IndexSpeed(indexMotors, 0.5)
-              )));
  
      // 5. Add some init and wrap-up, and return everything
      return new SequentialCommandGroup(
