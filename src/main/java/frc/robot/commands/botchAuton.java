@@ -44,18 +44,20 @@ public class botchAuton extends CommandBase {
                 {
                     driveSubsytem.drive(
                         ChassisSpeeds.fromFieldRelativeSpeeds(
-                                (currentInput.x).getAsDouble(),
-                                (currentInput.y).getAsDouble(),
-                                (currentInput.theta).getAsDouble(),
+                                (currentInput.x),
+                                (currentInput.y),
+                                (currentInput.theta),
                                 driveSubsytem.getGyroscopeRotation()
                         )
                 );
 
 
                 }
+                timer.reset();
             
-            isFin = true;
+            
             }
+            isFin = true;
         }
 
     @Override

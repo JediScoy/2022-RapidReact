@@ -65,11 +65,24 @@ public class RobotContainer {
   private final Lift rightLiftMotor = new Lift();
   // private final LiftPivot liftPivotMotors = new LiftPivot();
 
+ List<BotchAuton1Input> autoBotchCoords = List.of(
+    new BotchAuton1Input
+      (
+        0.3 * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
+        0 * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
+      .5
+      ));
+
+
+
+
   // Main driver controller
   private final XboxController driverController = new XboxController(0);
   // Second operator controller
   private final XboxController operatorController = new XboxController(1);
-  
+    //made a final global for safety of sorts
+  private final Command autoCommand =
+    new botchAuton(m_drivetrainSubsystem, autoBotchCoords);
   // Autononmous TODO Auton references. Update throughout season
   private final Command autonLaunch1 =
     new AutonLaunch1(indexMotors, intakeMotor, launcher);
@@ -124,6 +137,8 @@ public class RobotContainer {
   public void debugMethod () {
     // SmartDashboard.putBoolean("Short Drive", autonShortDrive.isScheduled());
     SmartDashboard.putBoolean("defaultDriveCommand", defaultDriveCommand.isScheduled());
+    SmartDashboard.putBoolean("AutonBotchCommand", autoCommand.isScheduled());
+    
   }
 
   private void configureButtonBindings() {
@@ -340,14 +355,10 @@ public class RobotContainer {
     //          new InstantCommand(() -> m_drivetrainSubsystem.stop()));
  //#endregion
 
-    return new botchAuton(m_drivetrainSubsystem, List.of(
-      new BotchAuton1Input
-        (
-          () -> -modifyAxis(0.3) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
-          () -> -modifyAxis(0) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
-        .5
-        )//one third power, half a second
-      ));
+    // autoCommand = new botchAuton(m_drivetrainSubsystem, //one third power, half a second
+
+        return autoCommand;
+      
 
   }
 } // End of class
