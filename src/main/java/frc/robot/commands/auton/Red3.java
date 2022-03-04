@@ -70,10 +70,9 @@ public Red3(DrivetrainSubsystem m_drivetrainSubsystem) {
             @Override
             public void execute(){
               
-                   m_drivetrainSubsystem.resetOdometry(trajectory.getInitialPose());
-                 swerveControllerCommand.execute();
-                   
-                    isFin = true;
+                m_drivetrainSubsystem.resetOdometry(trajectory.getInitialPose());
+                swerveControllerCommand.execute();
+                isFin = true;
         
 
             }
