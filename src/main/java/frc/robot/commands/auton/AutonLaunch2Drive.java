@@ -4,10 +4,7 @@
 
 package frc.robot.commands.auton;
 
-<<<<<<< HEAD:src/main/java/frc/robot/commands/auton/AutonLaunch2Drive.java
-=======
 // import frc.robot.commands.auton.PathStraight;
->>>>>>> AutonShootANDDrive:src/main/java/frc/robot/commands/auton/Blue3.java
 import frc.robot.commands.IndexSpeed;
 import frc.robot.commands.IntakeSpeed;
 import frc.robot.commands.LauncherSpeed;
