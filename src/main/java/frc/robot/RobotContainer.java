@@ -3,7 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
-// random robot imports
+
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -11,21 +11,17 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton; //NewCommands vendordep
 import static edu.wpi.first.wpilibj.XboxController.Button;
 
-import java.util.List;
+import com.pathplanner.lib.PathPlanner;
+import com.pathplanner.lib.PathPlannerTrajectory;
+import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.math.trajectory.TrajectoryConfig;
-import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
+
 // Subsystem imports
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.Index;
@@ -43,13 +39,11 @@ import frc.robot.commands.Lift.AutoLiftCommandBar2;
 import frc.robot.commands.Lift.LiftCommand;
 import frc.robot.commands.Lift.LockLiftCommandBar1;
 import frc.robot.commands.Lift.LockLiftCommandBar2;
-// Auton imports
-import frc.robot.commands.auton.Blue1;
-import frc.robot.commands.auton.Blue2;
-import frc.robot.commands.auton.Blue3;
-import frc.robot.commands.auton.Red1;
-import frc.robot.commands.auton.Red2;
-import frc.robot.commands.auton.Red3;
+
+// Auton
+import frc.robot.commands.auton.AutonLaunch1;
+import frc.robot.commands.auton.AutonLaunch2Drive;
+import frc.robot.commands.auton.AutonShortDrive;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -65,7 +59,7 @@ public class RobotContainer {
   private final Intake intakeMotor = new Intake();
   private final Launcher launcher = new Launcher();
   private final Lift liftMotors = new Lift();
-  private final Lift leftLiftMotor = new Lift();
+  // private final Lift leftLiftMotor = new Lift();
   private final Lift rightLiftMotor = new Lift();
   // private final LiftPivot liftPivotMotors = new LiftPivot();
 
@@ -74,30 +68,21 @@ public class RobotContainer {
   // Second operator controller
   private final XboxController operatorController = new XboxController(1);
   
-  // Autononmous TODO Auton references. Update throughout season
-  private final Command blueOne =
-    new Blue1(m_drivetrainSubsystem, indexMotors, intakeMotor, launcher);
+  // Autononmous command references. Update throughout season
+  private final Command autonLaunch1 =
+    new AutonLaunch1(indexMotors, intakeMotor, launcher);
 
-  private final Command blueTwo =
-    new Blue2(m_drivetrainSubsystem, indexMotors, intakeMotor, launcher);
+  private final Command autonLaunch2Drive =
+    new AutonLaunch2Drive(m_drivetrainSubsystem, indexMotors, intakeMotor, launcher);
 
-  private final Command blueThree =
-    new Blue3(m_drivetrainSubsystem, indexMotors, intakeMotor, launcher);
+  private final Command autonShortDrive =
+    new AutonShortDrive(m_drivetrainSubsystem);
 
-  private final Command redOne =
-    new Red1(m_drivetrainSubsystem, indexMotors, intakeMotor, launcher);
-  
-  private final Command redTwo =
-    new Red2(m_drivetrainSubsystem, indexMotors, intakeMotor, launcher);
-
-  private final Command redThree =
-    new Red3(m_drivetrainSubsystem);
-  
   private final Command defaultDriveCommand; 
   // private final Command PathStraight =
     // new PathStraight(m_drivetrainSubsystem);
   
-    // A chooser for autonomous commands
+  // A chooser for autonomous commands
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
 
@@ -119,32 +104,27 @@ public class RobotContainer {
       () -> -modifyAxis(driverController.getRightX()) * DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND);
     m_drivetrainSubsystem.setDefaultCommand(defaultDriveCommand);
     
-    // TODO Add commands to the autonomous command chooser
-    m_chooser.setDefaultOption("Blue 1", blueOne);
-    m_chooser.addOption("Blue 2", blueTwo);
-    m_chooser.addOption("Blue 3", blueThree);
-    m_chooser.addOption("Red 1", redOne);
-    m_chooser.addOption("Red 2", redTwo);
-    m_chooser.addOption("Red 3", redThree);
-    // m_chooser.addOption("Path Straight", PathStraight);
-    
+    // Add commands to the autonomous command chooser
+    m_chooser.setDefaultOption("Launch 1", autonLaunch1);
+    m_chooser.addOption("Launch 2 + Drive", autonLaunch2Drive);
+    m_chooser.addOption("Short Drive only", autonShortDrive);
+
     // Puts the chooser on the dashboard
     Shuffleboard.getTab("Auton").add(m_chooser);
 
     // DEBUGGING CODE:
-    System.out.println("subsystem requirements for redThree");
-    redThree.getRequirements().forEach((x) -> System.out.println(x));
+    System.out.println("subsystem requirements for autonShortDrive");
+    autonShortDrive.getRequirements().forEach((x) -> System.out.println(x));
     System.out.println("subsystem requirements for defaultDriveCommand");
     defaultDriveCommand.getRequirements().forEach((x) -> System.out.println(x));
   }
 
   public void debugMethod () {
-    SmartDashboard.putBoolean("red3", redThree.isScheduled());
+    // SmartDashboard.putBoolean("Short Drive", autonShortDrive.isScheduled());
     SmartDashboard.putBoolean("defaultDriveCommand", defaultDriveCommand.isScheduled());
   }
 
   private void configureButtonBindings() {
-
     /// Declaring buttons on driver controller
     final JoystickButton d_backButton = new JoystickButton(driverController, Button.kBack.value);
     final JoystickButton d_ButtonA = new JoystickButton(driverController, Button.kA.value);
@@ -220,8 +200,8 @@ public class RobotContainer {
     d_ButtonX.whenPressed(new IndexSpeed(indexMotors, 0.5)); 
     d_ButtonX.whenReleased(new IndexSpeed(indexMotors, 0));
 
-    //Hold B to drive robot at precison speed, release to revert back to normal speed
-    d_ButtonB.whenPressed(new DefaultDriveCommand(   
+    //Hold B to drive at slower speed, release to drive normal 
+    d_ButtonB.whenPressed(new DefaultDriveCommand(
       m_drivetrainSubsystem,
       () -> -modifyAxis(driverController.getLeftY()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND / 6,
       () -> -modifyAxis(driverController.getLeftX()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND / 6,
@@ -257,7 +237,7 @@ public class RobotContainer {
     // press B to auto lower both climbing arms to the encoder value of when the locking arms engage on bar #2
     op_ButtonX.whenPressed(new LockLiftCommandBar2(liftMotors, -0.5));  
 
-    /** FIXME this did not work, no movement 
+    /** Did not work, no movement 
     // Use left stick up and down to manually move ONLY left climbing arm up and down
     leftLiftMotor.setDefaultCommand(new DefaultDriveCommand(
       m_drivetrainSubsystem,
@@ -267,7 +247,6 @@ public class RobotContainer {
     )); 
     */
 
-    // TODO try this out  
     // Use right stick up and down to manually move ONLY right climbing arm up and down 
     rightLiftMotor.setDefaultCommand(new LiftCommand(
       rightLiftMotor, modifyAxis(operatorController.getRightY()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND
@@ -304,60 +283,59 @@ public class RobotContainer {
   
 
   public Command getAutonomousCommand() {
-    // //#region trajectory
-    //  // 1. Create trajectory settings
-    //  TrajectoryConfig trajectoryConfig = new TrajectoryConfig(
-    //          DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND, //original called for max speed (just in case im making one of the dumb physics mistakes)
-    //          DrivetrainSubsystem.MAX_ACCELERATION_METERS_SECOND_SQUARED)
-    //                  .setKinematics(Constants.m_kinematics);
- 
-    //  // 2. Generate trajectory
-    //  Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
-    //          new Pose2d(0, 0, new Rotation2d(0)),
-    //          List.of(
-    //                  new Translation2d(1, 0)),
-                
-    //          new Pose2d(2, 0, Rotation2d.fromDegrees(0)),
-    //          trajectoryConfig);
- 
-    //  // 3. Define PID controllers for tracking trajectory
-    //  PIDController xController = new PIDController(Constants.kPXController, 0, .1);
-    //  PIDController yController = new PIDController(Constants.kPYController, 0, .1);
-    //  ProfiledPIDController thetaController = new ProfiledPIDController(
-    //          Constants.kPThetaController, 0, Constants.kDThetaController, Constants.kThetaControllerConstraints);
-    //  thetaController.enableContinuousInput(-Math.PI, Math.PI);
- 
-    //  // 4. Construct command to follow trajectory
-    //  SwerveControllerCommand swerveControllerCommand = new SwerveControllerCommand(
-    //          trajectory,
-    //          m_drivetrainSubsystem::getPose,
-    //          Constants.m_kinematics,
-    //          xController,
-    //          yController,
-    //          thetaController,
-    //          m_drivetrainSubsystem::setModuleStates,//?
-    //          m_drivetrainSubsystem);
-    //          new SequentialCommandGroup(
-    //           new LauncherSpeed(launcher, 0.35, 0.40).withTimeout(0.75),
-    //             new SequentialCommandGroup(
-    //               new LauncherSpeed(launcher, 0.35, 0.40).withTimeout(0.25).alongWith(
-    //                 new IndexSpeed(indexMotors, 0.5).withTimeout(0.25)),
-    //                   new ParallelCommandGroup (
-    //                     new LauncherSpeed(launcher, 0.36, 0.42),
-    //                     new IntakeSpeed(intakeMotor, 0.5),
-    //                     new IndexSpeed(indexMotors, 0.5)
-    //           )));
- 
-    //  // 5. Add some init and wrap-up, and return everything
-    //  return new SequentialCommandGroup(
-    //          new InstantCommand(() -> m_drivetrainSubsystem.resetOdometry(trajectory.getInitialPose())),
-    //          swerveControllerCommand,
-    //          new InstantCommand(() -> m_drivetrainSubsystem.stop()));
- 
+    // return m_chooser.getSelected();  
 
-    return new botchAuton(m_drivetrainSubsystem, List.of(
-      new BotchAuton1Input(.3, 0, .5)//one third power, half a second
-      )
+     
+    // 1. Load the path from path planner ("path name", velocity in m/s, acceleration in m/s)
+    PathPlannerTrajectory m_path = PathPlanner.loadPath("Straight", 8, 5);
 
-  }
+    // 2. Defining PID Controllers for tracking trajectory
+    PIDController xController = new PIDController(Constants.kPXController, 0, 0);
+    PIDController yController = new PIDController(Constants.kPYController, 0, 0);
+    ProfiledPIDController thetaController = new ProfiledPIDController(Constants.kPThetaController, 0, 0, Constants.kThetaControllerConstraints);
+    thetaController.enableContinuousInput(-Math.PI, Math.PI);
+
+    // 3. Command to follow path from PathPlanner
+    PPSwerveControllerCommand swerveControllerCommand = new PPSwerveControllerCommand(
+      m_path, 
+      m_drivetrainSubsystem::getPose, 
+      Constants.m_kinematics, 
+      xController, 
+      yController, 
+      thetaController, 
+      m_drivetrainSubsystem::setModuleStates, 
+      m_drivetrainSubsystem);
+    
+
+    // 4. Actual command sequence, run everything in order
+    return new SequentialCommandGroup(
+      new SequentialCommandGroup(
+        // Runs Launch Motors withTimeout of 0.75 seconds to get up to speed of high hoop launch sequence
+        // First attempt was 0.35, 0.40
+        // Front speed first, Back speed second
+        new LauncherSpeed(launcher, 0.30, 0.35).withTimeout(0.75), 
+          new SequentialCommandGroup(
+            //runs Launcher & Index motors to launch ball out to score high hoop
+            new LauncherSpeed(launcher, 0.30, 0.35).withTimeout(0.25).alongWith( // First attempt was 0.35, 40
+            new IndexSpeed(indexMotors, 0.5).withTimeout(0.25)),
+                new ParallelCommandGroup (
+                  // Runs Launcher, Intake, Index and Drive robot all at once to grab second ball
+                  /**runs all 3 Launcher, Intake & Index motors withTimout of 5 seconds 
+                   Also make robot drive path from step 1 */
+                  
+                  // First attempt was 0.36, 0.42 -- short
+                  // Second attempt was 0.40, 0.45 -- short
+                  new LauncherSpeed(launcher, 0.40, 0.45).withTimeout(5), 
+                  new IntakeSpeed(intakeMotor, 0.5).withTimeout(5),
+                  new IndexSpeed(indexMotors, 0.5).withTimeout(5),
+                  new InstantCommand(() //Move this command out of Parallel group if this breaks things
+                    -> m_drivetrainSubsystem.resetOdometry(m_path.getInitialPose())),
+                    swerveControllerCommand).andThen(
+                    //end of command - stop robot
+                    new InstantCommand(() 
+                        -> m_drivetrainSubsystem.stop())))
+      ));
+  
+  }; // end of getAutonomusCommand()
+  
 } // End of class

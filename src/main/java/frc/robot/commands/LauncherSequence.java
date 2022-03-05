@@ -1,12 +1,11 @@
 package frc.robot.commands;
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.Index;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Launcher;
 
-/** TODO These values and sequence may not reflect the most recent
+/** These values and sequence may not reflect the most recent
  * Hoping to replace the multi-command sequence in robot container with this 
  * It will allow easier recycing of launcer code for auton
  * */

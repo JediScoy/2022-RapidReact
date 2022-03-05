@@ -45,7 +45,6 @@ public final class Constants {
         new Translation2d(-DRIVETRAIN_TRACKWIDTH_METERS / 2.0, -DRIVETRAIN_WHEELBASE_METERS / 2.0)
       );
 
-    // TODO Set the offsets using shuffleboard and a straight edge
     public static final int FRONT_RIGHT_MODULE_DRIVE_MOTOR = 1; // Set front right drive motor ID
     public static final int FRONT_RIGHT_MODULE_STEER_MOTOR = 2; // Set front right steer motor ID
     public static final int FRONT_RIGHT_MODULE_STEER_ENCODER = 21; // Set front right steer encoder ID
@@ -114,10 +113,9 @@ public final class Constants {
     public static final int RIGHT_PIVOT_MOTOR = 18; // Group
 
      //Stuff for Auton
-     public static final double kPXController = 0.2; // default 1.5 from SeanSun; forum values 
-     public static final double kPYController = 0.2; // default 1.5; forum values
-     public static final double kPThetaController = 0.199999809; 
-     public static final double kDThetaController = 0.0999999046;// default 3.0; forum value
+     public static final double kPXController = 1.5; // default 1.5 from SeanSun; forum values, our last was 3
+     public static final double kPYController = 1.5; // default 1.5; forum values
+     public static final double kPThetaController = 0.0; // default 3.0; forum value, our last was 0.01
  
      public static final TrapezoidProfile.Constraints kThetaControllerConstraints = //
      new TrapezoidProfile.Constraints(

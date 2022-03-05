@@ -44,7 +44,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
    * <p>
    * This is a measure of how fast the robot should be able to drive in a straight line.
    */
-  public static final double MAX_VELOCITY_METERS_PER_SECOND = 6380.0 / 60.0 * // FIXME Use our robots' velocity values
+  public static final double MAX_VELOCITY_METERS_PER_SECOND = 6380.0 / 60.0 *
           SdsModuleConfigurations.MK3_STANDARD.getDriveReduction() *
           SdsModuleConfigurations.MK3_STANDARD.getWheelDiameter() * Math.PI;
   /**
@@ -156,7 +156,6 @@ public class DrivetrainSubsystem extends SubsystemBase {
     }
 
     // We have to invert the angle of the NavX so that rotating the robot counter-clockwise makes the angle increase.
-    // FIXME check this with our robot configuration
     return Rotation2d.fromDegrees(360.0 - m_navx.getYaw());
   }
 
