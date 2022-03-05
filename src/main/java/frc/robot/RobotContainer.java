@@ -312,7 +312,6 @@ public class RobotContainer {
       new SequentialCommandGroup(
         // Runs Launch Motors withTimeout of 0.75 seconds to get up to speed of high hoop launch sequence
         // First attempt was 0.35, 0.40
-        // Front speed first, Back speed second
         new LauncherSpeed(launcher, 0.30, 0.35).withTimeout(0.75), 
           new SequentialCommandGroup(
             //runs Launcher & Index motors to launch ball out to score high hoop
@@ -323,8 +322,7 @@ public class RobotContainer {
                   /**runs all 3 Launcher, Intake & Index motors withTimout of 5 seconds 
                    Also make robot drive path from step 1 */
                   
-                  // First attempt was 0.36, 0.42 -- short
-                  // Second attempt was 0.40, 0.45 -- short
+                  // First attempt was 0.36, 0.42
                   new LauncherSpeed(launcher, 0.40, 0.45).withTimeout(5), 
                   new IntakeSpeed(intakeMotor, 0.5).withTimeout(5),
                   new IndexSpeed(indexMotors, 0.5).withTimeout(5),
