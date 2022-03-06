@@ -33,7 +33,7 @@ import frc.robot.commands.DefaultDriveCommand;
 import frc.robot.commands.IndexSpeed;
 import frc.robot.commands.IntakeSpeed;
 import frc.robot.commands.LauncherSpeed;
-import frc.robot.commands.botchAuton;
+// import frc.robot.commands.botchAuton;
 import frc.robot.commands.Lift.AutoLiftCommandBar1;
 import frc.robot.commands.Lift.AutoLiftCommandBar2;
 import frc.robot.commands.Lift.LiftCommand;
