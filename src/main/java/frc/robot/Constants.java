@@ -4,10 +4,12 @@
 
 package frc.robot;
 
+import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
+
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
-import frc.robot.subsystems.DrivetrainSubsystem;
+import frc.robot.subsystems.Drivetrain;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -119,7 +121,12 @@ public final class Constants {
  
      public static final TrapezoidProfile.Constraints kThetaControllerConstraints = //
      new TrapezoidProfile.Constraints(
-         DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
-         DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND);
-
+         Drivetrain.MAX_VELOCITY_METERS_PER_SECOND,
+         Drivetrain.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND);
+    
+    /**
+    public static final double MAX_VELOCITY_METERS_PER_SECOND = 6380.0 / 60.0 *
+      SdsModuleConfigurations.MK3_STANDARD.getDriveReduction() *
+      SdsModuleConfigurations.MK3_STANDARD.getWheelDiameter() * Math.PI;
+    */
 }

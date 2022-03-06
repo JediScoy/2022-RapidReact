@@ -26,7 +26,7 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
 
 
-public class DrivetrainSubsystem extends SubsystemBase {
+public class Drivetrain extends SubsystemBase {
   /**
    * The maximum voltage that will be delivered to the drive motors.
    * <p>
@@ -76,7 +76,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
   private ChassisSpeeds m_chassisSpeeds = new ChassisSpeeds(0.0, 0.0, 0.0);
 
-  public DrivetrainSubsystem() {
+  public Drivetrain() {
     ShuffleboardTab tab = Shuffleboard.getTab("Drivetrain");
     // Setup motor configuration
     m_frontLeftModule = Mk3SwerveModuleHelper.createFalcon500(
