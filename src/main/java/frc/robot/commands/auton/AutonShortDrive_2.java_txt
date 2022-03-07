@@ -7,7 +7,7 @@ import frc.robot.Constants;
 import frc.robot.commands.IndexSpeed;
 import frc.robot.commands.IntakeSpeed;
 import frc.robot.commands.LauncherSpeed;
-import frc.robot.subsystems.DrivetrainSubsystem;
+import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Index;
 import frc.robot.subsystems.Launcher;
@@ -26,11 +26,11 @@ import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 /** FIXME Autonomous place holder for testing purposes
  * Runs the Launcher for second, then runs the launcher again along with index motors with index, launcher, intake, index
 */ 
-public class CG_PathForward extends SequentialCommandGroup {
-    private final DrivetrainSubsystem m_drivetrainSubsystem;
+public class AutonShortDrive_2 extends SequentialCommandGroup {
+    private final Drivetrain m_drivetrain;
 
 
-    public cg_PathForward(DrivetrainSubsystem drivetrainSubsystem) {
+    public AutonShortDrive_2(Drivetrain m_drivetrain) {
       Trajectory m_path = PathPlanner.loadPath("Straight", 8, 2);
     
 

@@ -23,13 +23,13 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 // Subsystem imports
-import frc.robot.subsystems.DrivetrainSubsystem;
+import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Index;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Launcher;
 import frc.robot.subsystems.Lift;
 // Command imports
-import frc.robot.commands.DefaultDriveCommand;
+import frc.robot.commands.DriveCommand;
 import frc.robot.commands.IndexSpeed;
 import frc.robot.commands.IntakeSpeed;
 import frc.robot.commands.LauncherSpeed;
@@ -54,7 +54,7 @@ import frc.robot.commands.auton.AutonShortDrive;
 
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final DrivetrainSubsystem m_drivetrainSubsystem = new DrivetrainSubsystem();
+  private final Drivetrain m_drivetrain = new Drivetrain();
   private final Index indexMotors = new Index();
   private final Intake intakeMotor = new Intake();
   private final Launcher launcher = new Launcher();
@@ -73,12 +73,12 @@ public class RobotContainer {
     new AutonLaunch1(indexMotors, intakeMotor, launcher);
 
   private final Command autonLaunch2Drive =
-    new AutonLaunch2Drive(m_drivetrainSubsystem, indexMotors, intakeMotor, launcher);
+    new AutonLaunch2Drive(m_drivetrain, indexMotors, intakeMotor, launcher);
 
   private final Command autonShortDrive =
-    new AutonShortDrive(m_drivetrainSubsystem);
+    new AutonShortDrive(m_drivetrain);
 
-  private final Command defaultDriveCommand; 
+  private final Command driveCommand; 
   // private final Command PathStraight =
     // new PathStraight(m_drivetrainSubsystem);
   
@@ -97,12 +97,12 @@ public class RobotContainer {
     // Left stick Y axis -> forward and backwards movement
     // Left stick X axis -> left and right movement
     // Right stick X axis -> rotation
-    defaultDriveCommand = new DefaultDriveCommand(
-      m_drivetrainSubsystem,
-      () -> -modifyAxis(driverController.getLeftY()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
-      () -> -modifyAxis(driverController.getLeftX()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
-      () -> -modifyAxis(driverController.getRightX()) * DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND);
-    m_drivetrainSubsystem.setDefaultCommand(defaultDriveCommand);
+    driveCommand = new DriveCommand(
+      m_drivetrain,
+      () -> -modifyAxis(driverController.getLeftY()) * Drivetrain.MAX_VELOCITY_METERS_PER_SECOND,
+      () -> -modifyAxis(driverController.getLeftX()) * Drivetrain.MAX_VELOCITY_METERS_PER_SECOND,
+      () -> -modifyAxis(driverController.getRightX()) * Drivetrain.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND);
+    m_drivetrain.setDefaultCommand(driveCommand);
     
     // Add commands to the autonomous command chooser
     m_chooser.setDefaultOption("Launch 1", autonLaunch1);
@@ -116,12 +116,12 @@ public class RobotContainer {
     System.out.println("subsystem requirements for autonShortDrive");
     autonShortDrive.getRequirements().forEach((x) -> System.out.println(x));
     System.out.println("subsystem requirements for defaultDriveCommand");
-    defaultDriveCommand.getRequirements().forEach((x) -> System.out.println(x));
+    driveCommand.getRequirements().forEach((x) -> System.out.println(x));
   }
 
   public void debugMethod () {
     // SmartDashboard.putBoolean("Short Drive", autonShortDrive.isScheduled());
-    SmartDashboard.putBoolean("defaultDriveCommand", defaultDriveCommand.isScheduled());
+    SmartDashboard.putBoolean("defaultDriveCommand", driveCommand.isScheduled());
   }
 
   private void configureButtonBindings() {
@@ -146,7 +146,7 @@ public class RobotContainer {
     // Driver Controller button commands
 
     // Resets the gyroscope to 0 degrees when back button is pressed
-    d_backButton.whenPressed(m_drivetrainSubsystem::zeroGyroscope); 
+    d_backButton.whenPressed(m_drivetrain::zeroGyroscope); 
 
       /**  LOW HOOP UP CLOSE LAUNCH SEQUENCE
        when A is held, run Launch motors by themselves for a second, then run Launch and Index motors for 0.5 seconds,
@@ -201,17 +201,17 @@ public class RobotContainer {
     d_ButtonX.whenReleased(new IndexSpeed(indexMotors, 0));
 
     //Hold B to drive at slower speed, release to drive normal 
-    d_ButtonB.whenPressed(new DefaultDriveCommand(
-      m_drivetrainSubsystem,
-      () -> -modifyAxis(driverController.getLeftY()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND / 6,
-      () -> -modifyAxis(driverController.getLeftX()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND / 6,
-      () -> -modifyAxis(driverController.getRightX()) * DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND / 6
+    d_ButtonB.whenPressed(new DriveCommand(
+      m_drivetrain,
+      () -> -modifyAxis(driverController.getLeftY()) * Drivetrain.MAX_VELOCITY_METERS_PER_SECOND / 6,
+      () -> -modifyAxis(driverController.getLeftX()) * Drivetrain.MAX_VELOCITY_METERS_PER_SECOND / 6,
+      () -> -modifyAxis(driverController.getRightX()) * Drivetrain.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND / 6
     ));
-    d_ButtonB.whenReleased(new DefaultDriveCommand(   
-      m_drivetrainSubsystem,
-      () -> -modifyAxis(driverController.getLeftY()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
-      () -> -modifyAxis(driverController.getLeftX()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
-      () -> -modifyAxis(driverController.getRightX()) * DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
+    d_ButtonB.whenReleased(new DriveCommand(   
+      m_drivetrain,
+      () -> -modifyAxis(driverController.getLeftY()) * Drivetrain.MAX_VELOCITY_METERS_PER_SECOND,
+      () -> -modifyAxis(driverController.getLeftX()) * Drivetrain.MAX_VELOCITY_METERS_PER_SECOND,
+      () -> -modifyAxis(driverController.getRightX()) * Drivetrain.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
     ));
 
 
@@ -228,7 +228,7 @@ public class RobotContainer {
     // press A to auto raise both climbing arms to the encoder value of bar #1
     op_ButtonA.whenPressed(new AutoLiftCommandBar1(liftMotors, 0.5)); 
 
-    // press B to auto lower both climbing arms to the encoder value of when the locking arms engage on bar #1
+    // press B to auto lowr both climbing arms to the encoder value of when the locking arms engage on bar #1
     op_ButtonB.whenPressed(new LockLiftCommandBar1(liftMotors, -0.5)); 
 
     // press Y to auto raise both climbing arms to encoder value of bar #2
@@ -249,7 +249,7 @@ public class RobotContainer {
 
     // Use right stick up and down to manually move ONLY right climbing arm up and down 
     rightLiftMotor.setDefaultCommand(new LiftCommand(
-      rightLiftMotor, modifyAxis(operatorController.getRightY()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND
+      rightLiftMotor, modifyAxis(operatorController.getRightY()) * Drivetrain.MAX_VELOCITY_METERS_PER_SECOND
       )); 
       
   }
@@ -285,7 +285,7 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // return m_chooser.getSelected();  
 
-     
+    // (Mostly) working auton used in Week 1
     // 1. Load the path from path planner ("path name", velocity in m/s, acceleration in m/s)
     PathPlannerTrajectory m_path = PathPlanner.loadPath("Straight", 8, 5);
 
@@ -298,14 +298,13 @@ public class RobotContainer {
     // 3. Command to follow path from PathPlanner
     PPSwerveControllerCommand swerveControllerCommand = new PPSwerveControllerCommand(
       m_path, 
-      m_drivetrainSubsystem::getPose, 
+      m_drivetrain::getPose, 
       Constants.m_kinematics, 
       xController, 
       yController, 
       thetaController, 
-      m_drivetrainSubsystem::setModuleStates, 
-      m_drivetrainSubsystem);
-    
+      m_drivetrain::setModuleStates, 
+      m_drivetrain);
 
     // 4. Actual command sequence, run everything in order
     return new SequentialCommandGroup(
@@ -319,19 +318,19 @@ public class RobotContainer {
             new IndexSpeed(indexMotors, 0.5).withTimeout(0.25)),
                 new ParallelCommandGroup (
                   // Runs Launcher, Intake, Index and Drive robot all at once to grab second ball
-                  /**runs all 3 Launcher, Intake & Index motors withTimout of 5 seconds 
-                   Also make robot drive path from step 1 */
-                  
+                  // Runs all 3 Launcher, Intake & Index motors withTimout of 5 seconds 
+                  // Also make robot drive path from step 1
+               
                   // First attempt was 0.36, 0.42
                   new LauncherSpeed(launcher, 0.40, 0.45).withTimeout(5), 
                   new IntakeSpeed(intakeMotor, 0.5).withTimeout(5),
                   new IndexSpeed(indexMotors, 0.5).withTimeout(5),
                   new InstantCommand(() //Move this command out of Parallel group if this breaks things
-                    -> m_drivetrainSubsystem.resetOdometry(m_path.getInitialPose())),
+                    -> m_drivetrain.resetOdometry(m_path.getInitialPose())),
                     swerveControllerCommand).andThen(
                     //end of command - stop robot
                     new InstantCommand(() 
-                        -> m_drivetrainSubsystem.stop())))
+                        -> m_drivetrain.stop())))
       ));
   
   }; // end of getAutonomusCommand()

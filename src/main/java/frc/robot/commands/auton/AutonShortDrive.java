@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import frc.robot.Constants;
 
-import frc.robot.subsystems.DrivetrainSubsystem;
+import frc.robot.subsystems.Drivetrain;
 
 public class AutonShortDrive extends CommandBase{
 boolean isFin = false;
@@ -24,16 +24,16 @@ boolean isFin = false;
     Trajectory trajectory;
     PIDController xController;
     PIDController yController;
-    DrivetrainSubsystem m_drivetrainSubsystem;
+    Drivetrain m_drivetrain;
     SwerveControllerCommand swerveControllerCommand;
 
-public AutonShortDrive(DrivetrainSubsystem m_drivetrainSubsystem) {
+public AutonShortDrive(Drivetrain m_drivetrain) {
 
-        addRequirements(m_drivetrainSubsystem);
-    this.m_drivetrainSubsystem = m_drivetrainSubsystem;
+        addRequirements(m_drivetrain);
+    this.m_drivetrain = m_drivetrain;
     trajectoryConfig = new TrajectoryConfig(
-      DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND, //original called for max speed (just in case im making one of the dumb physics mistakes)
-      DrivetrainSubsystem.MAX_ACCELERATION_METERS_SECOND_SQUARED)
+      Drivetrain.MAX_VELOCITY_METERS_PER_SECOND, //original called for max speed (just in case im making one of the dumb physics mistakes)
+      Drivetrain.MAX_ACCELERATION_METERS_SECOND_SQUARED)
                 .setKinematics(Constants.m_kinematics);
 
         trajectory = TrajectoryGenerator.generateTrajectory(
@@ -53,17 +53,17 @@ public AutonShortDrive(DrivetrainSubsystem m_drivetrainSubsystem) {
                 
             swerveControllerCommand = new SwerveControllerCommand(
                 trajectory,
-                m_drivetrainSubsystem::getPose,
+                m_drivetrain::getPose,
                 Constants.m_kinematics,
                 xController,
                 yController,
                 thetaController,
-                m_drivetrainSubsystem::setModuleStates,//?
-                m_drivetrainSubsystem);
+                m_drivetrain::setModuleStates,//?
+                m_drivetrain);
 
               
   // Reset odometry to the starting pose of the trajectory.
-  m_drivetrainSubsystem.resetOdometry(trajectory.getInitialPose());
+  m_drivetrain.resetOdometry(trajectory.getInitialPose());
 
   // Run path following command, then stop at the end.
   // return swerveControllerCommand.andThen(() -> m_drivetrainSubsystem.drive(0, 0, 0, false));
@@ -75,16 +75,16 @@ public AutonShortDrive(DrivetrainSubsystem m_drivetrainSubsystem) {
             public void execute(){
               
 
-                m_drivetrainSubsystem.resetOdometry(trajectory.getInitialPose());
+                m_drivetrain.resetOdometry(trajectory.getInitialPose());
                 swerveControllerCommand.execute();
                 isFin = true;
-                m_drivetrainSubsystem.stop();
+                m_drivetrain.stop();
         
             }
 
             @Override
             public void end(boolean interrupted) {
-                m_drivetrainSubsystem.stop();
+                m_drivetrain.stop();
             }
    
             @Override

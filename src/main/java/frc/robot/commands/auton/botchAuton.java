@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 // import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.BotchAuton1Input;
-import frc.robot.subsystems.DrivetrainSubsystem;
+import frc.robot.subsystems.Drivetrain;
 
 
 
@@ -17,7 +17,7 @@ public class botchAuton extends CommandBase {
     Timer timer;
     
     //#endregion
-    private DrivetrainSubsystem driveSubsytem;
+    private Drivetrain driveSubsytem;
     private boolean isFin;
     
 
@@ -26,7 +26,7 @@ public class botchAuton extends CommandBase {
  * @param coords the Inputs to use 
  * 
  */
- public botchAuton(DrivetrainSubsystem subsystem, List<BotchAuton1Input> coords) {
+ public botchAuton(Drivetrain subsystem, List<BotchAuton1Input> coords) {
 
      addRequirements(subsystem);
      this.driveSubsytem = subsystem;
