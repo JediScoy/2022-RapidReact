@@ -199,8 +199,8 @@ public class Drivetrain extends SubsystemBase {
         m_odometry.update(getGyroscopeRotation(), states);
   } // end of setModulesStates
 
-        // https://github.com/5804/rapidReact2022Alpha/blob/master/src/main/java/frc/robot/subsystems/DrivetrainSubsystem.java
-        /**  TODO
+        /** https://github.com/5804/rapidReact2022Alpha/blob/master/src/main/java/frc/robot/subsystems/DrivetrainSubsystem.java
+        // TODO This code from 5804 solved their issue which was similar to our own. Added this to our code and tweaked our m_odometry variable
         desiredStates[0].speedMetersPerSecond = Math.abs(m_frontLeftModule.getDriveVelocity());
         desiredStates[1].speedMetersPerSecond = Math.abs(m_frontRightModule.getDriveVelocity());
         desiredStates[2].speedMetersPerSecond = Math.abs(m_backLeftModule.getDriveVelocity());
