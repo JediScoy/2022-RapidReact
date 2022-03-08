@@ -11,17 +11,26 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton; //NewCommands vendordep
 import static edu.wpi.first.wpilibj.XboxController.Button;
 
+import java.util.List;
+
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
+import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-
+import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 // Subsystem imports
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Index;
@@ -97,12 +106,20 @@ public class RobotContainer {
     // Left stick Y axis -> forward and backwards movement
     // Left stick X axis -> left and right movement
     // Right stick X axis -> rotation
+<<<<<<< HEAD
     driveCommand = new DriveCommand(
+=======
+    defaultDriveCommand = new DriveCommand(
+>>>>>>> dev
       m_drivetrain,
       () -> -modifyAxis(driverController.getLeftY()) * Drivetrain.MAX_VELOCITY_METERS_PER_SECOND,
       () -> -modifyAxis(driverController.getLeftX()) * Drivetrain.MAX_VELOCITY_METERS_PER_SECOND,
       () -> -modifyAxis(driverController.getRightX()) * Drivetrain.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND);
+<<<<<<< HEAD
     m_drivetrain.setDefaultCommand(driveCommand);
+=======
+    m_drivetrain.setDefaultCommand(defaultDriveCommand);
+>>>>>>> dev
     
     // Add commands to the autonomous command chooser
     m_chooser.setDefaultOption("Launch 1", autonLaunch1);
@@ -285,7 +302,11 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // return m_chooser.getSelected();  
 
+<<<<<<< HEAD
     // (Mostly) working auton used in Week 1
+=======
+    /** Auton working
+>>>>>>> dev
     // 1. Load the path from path planner ("path name", velocity in m/s, acceleration in m/s)
     PathPlannerTrajectory m_path = PathPlanner.loadPath("Straight", 8, 5);
 
@@ -318,9 +339,15 @@ public class RobotContainer {
             new IndexSpeed(indexMotors, 0.5).withTimeout(0.25)),
                 new ParallelCommandGroup (
                   // Runs Launcher, Intake, Index and Drive robot all at once to grab second ball
+<<<<<<< HEAD
                   // Runs all 3 Launcher, Intake & Index motors withTimout of 5 seconds 
                   // Also make robot drive path from step 1
                
+=======
+                  // Runs all 3 Launcher, Intake & Index motors withTimout of 5 seconds.
+                  // Also make robot drive path from step 1
+                  
+>>>>>>> dev
                   // First attempt was 0.36, 0.42
                   new LauncherSpeed(launcher, 0.40, 0.45).withTimeout(5), 
                   new IntakeSpeed(intakeMotor, 0.5).withTimeout(5),
@@ -332,7 +359,52 @@ public class RobotContainer {
                     new InstantCommand(() 
                         -> m_drivetrain.stop())))
       ));
-  
-  }; // end of getAutonomusCommand()
+    */
+
+    // Auton simple
+// Create config for trajectory
+    TrajectoryConfig config =
+        new TrajectoryConfig(
+                Drivetrain.MAX_VELOCITY_METERS_PER_SECOND,
+                Drivetrain.MAX_ACCELERATION_METERS_SECOND_SQUARED)
+            // Add kinematics to ensure max speed is actually obeyed
+            .setKinematics(Constants.m_kinematics);
+// An example trajectory to follow.  All units in meters.
+Trajectory m_path =
+    TrajectoryGenerator.generateTrajectory(
+        // Start at the origin facing the +X direction
+        new Pose2d(0, 0, new Rotation2d(0)),
+        // Pass through these two interior waypoints, making an 's' curve path
+        List.of(new Translation2d(1, 1), new Translation2d(2, -1)),
+        // End 3 meters straight ahead of where we started, facing forward
+        new Pose2d(3, 0, new Rotation2d(0)),
+        config);
+
+var thetaController =
+    new ProfiledPIDController(
+        Constants.kPThetaController, 0, 0, Constants.kThetaControllerConstraints);
+thetaController.enableContinuousInput(-Math.PI, Math.PI);
+
+SwerveControllerCommand swerveControllerCommand =
+    new SwerveControllerCommand(
+        m_path,
+        m_drivetrain::getPose, // Functional interface to feed supplier
+        Constants.m_kinematics,
+
+        // Position controllers
+        new PIDController(Constants.kPXController, 0, 0),
+        new PIDController(Constants.kPYController, 0, 0),
+        thetaController,
+        m_drivetrain::setModuleStates,
+        m_drivetrain);
+
+// Reset odometry to the starting pose of the trajectory.
+m_drivetrain.resetOdometry(m_path.getInitialPose());
+
+// Run path following command, then stop at the end.
+// ORIGINAL return swerveControllerCommand.andThen(() -> m_drivetrain.drive(0, 0, 0, false));
+return swerveControllerCommand.andThen(() -> m_drivetrain.drive(new ChassisSpeeds(0.0, 0.0, 0.0)));
+
+}; // end of getAutonomusCommand()
   
 } // End of class
