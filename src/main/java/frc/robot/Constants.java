@@ -130,14 +130,10 @@ public final class Constants {
      new TrapezoidProfile.Constraints(
          Drivetrain.MAX_VELOCITY_METERS_PER_SECOND,
          Drivetrain.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND);
-<<<<<<< HEAD
-
-=======
     
     /**
     public static final double MAX_VELOCITY_METERS_PER_SECOND = 6380.0 / 60.0 *
       SdsModuleConfigurations.MK3_STANDARD.getDriveReduction() *
       SdsModuleConfigurations.MK3_STANDARD.getWheelDiameter() * Math.PI;
     */
->>>>>>> dev
 }

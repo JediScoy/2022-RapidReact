@@ -13,19 +13,11 @@ public class DriveCommand extends CommandBase {
     private final DoubleSupplier m_translationYSupplier;
     private final DoubleSupplier m_rotationSupplier;
 
-<<<<<<< HEAD
-    public DriveCommand(Drivetrain drivetrainSubsystem,
-                               DoubleSupplier translationXSupplier,
-                               DoubleSupplier translationYSupplier,
-                               DoubleSupplier rotationSupplier) {
-        this.m_drivetrain = drivetrainSubsystem;
-=======
     public DriveCommand(Drivetrain drivetrain,
                                DoubleSupplier translationXSupplier,
                                DoubleSupplier translationYSupplier,
                                DoubleSupplier rotationSupplier) {
         this.m_drivetrain = drivetrain;
->>>>>>> dev
         this.m_translationXSupplier = translationXSupplier;
         this.m_translationYSupplier = translationYSupplier;
         this.m_rotationSupplier = rotationSupplier;

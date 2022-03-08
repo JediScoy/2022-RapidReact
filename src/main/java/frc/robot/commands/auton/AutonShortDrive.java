@@ -24,17 +24,10 @@ boolean isFin = false;
     Trajectory trajectory;
     PIDController xController;
     PIDController yController;
-<<<<<<< HEAD
     Drivetrain m_drivetrain;
     SwerveControllerCommand swerveControllerCommand;
 
 public AutonShortDrive(Drivetrain m_drivetrain) {
-=======
-    Drivetrain m_drivetrainSubsystem;
-    SwerveControllerCommand swerveControllerCommand;
-
-public AutonShortDrive(Drivetrain m_drivetrainSubsystem) {
->>>>>>> dev
 
         addRequirements(m_drivetrain);
     this.m_drivetrain = m_drivetrain;
