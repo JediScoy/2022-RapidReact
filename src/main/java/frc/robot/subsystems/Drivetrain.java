@@ -199,35 +199,31 @@ public class Drivetrain extends SubsystemBase {
         m_odometry.update(getGyroscopeRotation(), states);
   } // end of setModulesStates
 
-        /** https://github.com/5804/rapidReact2022Alpha/blob/master/src/main/java/frc/robot/subsystems/DrivetrainSubsystem.java
-        // TODO This code from 5804 solved their issue which was similar to our own. Added this to our code and tweaked our m_odometry variable
-        desiredStates[0].speedMetersPerSecond = Math.abs(m_frontLeftModule.getDriveVelocity());
-        desiredStates[1].speedMetersPerSecond = Math.abs(m_frontRightModule.getDriveVelocity());
-        desiredStates[2].speedMetersPerSecond = Math.abs(m_backLeftModule.getDriveVelocity());
-        desiredStates[3].speedMetersPerSecond = Math.abs(m_backRightModule.getDriveVelocity());
-        m_odometry.update(getGyroscopeRotation(), desiredStates);
-        */
-
-        // TODO
-        // SmartDashboard.putNumber("Current X", getPose().getX()); 
-        // SmartDashboard.putNumber("Current Y", getPose().getY()); 
-        // SmartDashboard.putNumber("Auto Angle", getPose().getRotation().getDegrees()); 
+    // TODO
+    // SmartDashboard.putNumber("Current X", getPose().getX()); 
+    // SmartDashboard.putNumber("Current Y", getPose().getY()); 
+    // SmartDashboard.putNumber("Auto Angle", getPose().getRotation().getDegrees()); 
 
   @Override
   public void periodic() {
 
     //defining states - Repeatedly update
-    SwerveModuleState[] states = m_kinematics.toSwerveModuleStates(m_chassisSpeeds);//removed a second param of MAX_VELOCITY_METERS_PER_SECOND, and changed the first param from itself(states) to the chassisspeeds object 
+    SwerveModuleState[] states = m_kinematics.toSwerveModuleStates(m_chassisSpeeds);
+    //removed a second param of MAX_VELOCITY_METERS_PER_SECOND, 
+    // and changed the first param from itself(states) to the chassisspeeds object 
     
     //update the odometer constantly
     odometer.update(getGyroscopeRotation(), states);
    
-    //Important note: This is the method SwerveDriveKinematics.normalizeWheelSpeeds() from the documentation, but it actually works, even though THIS isn't documented.
     //This part is for TELEOP
     SwerveDriveKinematics.desaturateWheelSpeeds(states, MAX_VELOCITY_METERS_PER_SECOND);
-    m_frontLeftModule.set(states[0].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, states[0].angle.getRadians());
-    m_frontRightModule.set(states[1].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, states[1].angle.getRadians());
-    m_backLeftModule.set(states[2].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, states[2].angle.getRadians());
-    m_backRightModule.set(states[3].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, states[3].angle.getRadians());
+    m_frontLeftModule.set(states[0].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, 
+      states[0].angle.getRadians());
+    m_frontRightModule.set(states[1].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE,
+      states[1].angle.getRadians());
+    m_backLeftModule.set(states[2].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, 
+      states[2].angle.getRadians());
+    m_backRightModule.set(states[3].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, 
+      states[3].angle.getRadians());
   }
 }
