@@ -75,12 +75,9 @@ public class Drivetrain extends SubsystemBase {
 
   private ChassisSpeeds m_chassisSpeeds = new ChassisSpeeds(0.0, 0.0, 0.0);
 
-<<<<<<< HEAD
-=======
   SwerveDriveOdometry m_odometry =   // TODO updated from the Needed for swerve drive
   new SwerveDriveOdometry(m_kinematics, getGyroscopeRotation());;
 
->>>>>>> dev
   public Drivetrain() {
     ShuffleboardTab tab = Shuffleboard.getTab("Drivetrain");
     // Setup motor configuration
