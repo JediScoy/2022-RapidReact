@@ -76,6 +76,9 @@ public class Drivetrain extends SubsystemBase {
 
   private ChassisSpeeds m_chassisSpeeds = new ChassisSpeeds(0.0, 0.0, 0.0);
 
+  SwerveDriveOdometry m_odometry =   // Needed for swerve drive
+  new SwerveDriveOdometry(m_kinematics, getGyroscopeRotation());;
+
   public Drivetrain() {
     ShuffleboardTab tab = Shuffleboard.getTab("Drivetrain");
     // Setup motor configuration
@@ -146,7 +149,7 @@ public class Drivetrain extends SubsystemBase {
    * 'forwards' direction.
    */
   public void zeroGyroscope() {
-    m_navx.zeroYaw(); // I think this is correct - Scoy
+    m_navx.zeroYaw();
   }
 
   public Rotation2d getGyroscopeRotation() {
@@ -158,6 +161,7 @@ public class Drivetrain extends SubsystemBase {
     // We have to invert the angle of the NavX so that rotating the robot counter-clockwise makes the angle increase.
     return Rotation2d.fromDegrees(360.0 - m_navx.getYaw());
   }
+
 
   //gets location of robot from odometer
   public Pose2d getPose(){
@@ -181,10 +185,33 @@ public class Drivetrain extends SubsystemBase {
         //these seem to maintain the same movement as the robot continues
         //This part is for AUTON
         m_frontLeftModule.set(states[0].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, states[0].angle.getRadians());
+        // TODI m_frontLeftModule.set(desiredStates[0].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, desiredStates[0].angle.getRadians());
+
         m_frontRightModule.set(states[1].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, states[1].angle.getRadians());
         m_backLeftModule.set(states[2].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, states[2].angle.getRadians());
         m_backRightModule.set(states[3].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, states[3].angle.getRadians());
-        }
+        
+
+        states[0].speedMetersPerSecond = Math.abs(m_frontLeftModule.getDriveVelocity());
+        states[1].speedMetersPerSecond = Math.abs(m_frontRightModule.getDriveVelocity());
+        states[2].speedMetersPerSecond = Math.abs(m_backLeftModule.getDriveVelocity());
+        states[3].speedMetersPerSecond = Math.abs(m_backRightModule.getDriveVelocity());     
+        m_odometry.update(getGyroscopeRotation(), states);
+  } // end of setModulesStates
+
+        // https://github.com/5804/rapidReact2022Alpha/blob/master/src/main/java/frc/robot/subsystems/DrivetrainSubsystem.java
+        /**  TODO
+        desiredStates[0].speedMetersPerSecond = Math.abs(m_frontLeftModule.getDriveVelocity());
+        desiredStates[1].speedMetersPerSecond = Math.abs(m_frontRightModule.getDriveVelocity());
+        desiredStates[2].speedMetersPerSecond = Math.abs(m_backLeftModule.getDriveVelocity());
+        desiredStates[3].speedMetersPerSecond = Math.abs(m_backRightModule.getDriveVelocity());
+        m_odometry.update(getGyroscopeRotation(), desiredStates);
+        */
+
+        // TODO
+        // SmartDashboard.putNumber("Current X", getPose().getX()); 
+        // SmartDashboard.putNumber("Current Y", getPose().getY()); 
+        // SmartDashboard.putNumber("Auto Angle", getPose().getRotation().getDegrees()); 
 
   @Override
   public void periodic() {
