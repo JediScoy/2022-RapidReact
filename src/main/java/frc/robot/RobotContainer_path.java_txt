@@ -106,20 +106,12 @@ public class RobotContainer {
     // Left stick Y axis -> forward and backwards movement
     // Left stick X axis -> left and right movement
     // Right stick X axis -> rotation
-<<<<<<< HEAD
     driveCommand = new DriveCommand(
-=======
-    defaultDriveCommand = new DriveCommand(
->>>>>>> dev
       m_drivetrain,
       () -> -modifyAxis(driverController.getLeftY()) * Drivetrain.MAX_VELOCITY_METERS_PER_SECOND,
       () -> -modifyAxis(driverController.getLeftX()) * Drivetrain.MAX_VELOCITY_METERS_PER_SECOND,
       () -> -modifyAxis(driverController.getRightX()) * Drivetrain.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND);
-<<<<<<< HEAD
     m_drivetrain.setDefaultCommand(driveCommand);
-=======
-    m_drivetrain.setDefaultCommand(defaultDriveCommand);
->>>>>>> dev
     
     // Add commands to the autonomous command chooser
     m_chooser.setDefaultOption("Launch 1", autonLaunch1);
