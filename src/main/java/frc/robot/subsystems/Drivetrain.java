@@ -76,7 +76,7 @@ public class Drivetrain extends SubsystemBase {
 
   private ChassisSpeeds m_chassisSpeeds = new ChassisSpeeds(0.0, 0.0, 0.0);
 
-  SwerveDriveOdometry m_odometry =   // Needed for swerve drive
+  SwerveDriveOdometry m_odometry =   // TODO updated from the Needed for swerve drive
   new SwerveDriveOdometry(m_kinematics, getGyroscopeRotation());;
 
   public Drivetrain() {
