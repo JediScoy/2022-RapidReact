@@ -33,6 +33,7 @@ import frc.robot.commands.DriveCommand;
 import frc.robot.commands.IndexSpeed;
 import frc.robot.commands.IntakeSpeed;
 import frc.robot.commands.LauncherSpeed;
+import frc.robot.commands.xmode;
 // import frc.robot.commands.botchAuton;
 import frc.robot.commands.Lift.AutoLiftCommandBar1;
 import frc.robot.commands.Lift.AutoLiftCommandBar2;
@@ -283,55 +284,7 @@ public class RobotContainer {
   
 
   public Command getAutonomousCommand() {
-    // return m_chooser.getSelected();  
-
-    // (Mostly) working auton used in Week 1
-    // 1. Load the path from path planner ("path name", velocity in m/s, acceleration in m/s)
-    PathPlannerTrajectory m_path = PathPlanner.loadPath("Straight", 8, 5);
-
-    // 2. Defining PID Controllers for tracking trajectory
-    PIDController xController = new PIDController(Constants.kPXController, 0, 0);
-    PIDController yController = new PIDController(Constants.kPYController, 0, 0);
-    ProfiledPIDController thetaController = new ProfiledPIDController(Constants.kPThetaController, 0, 0, Constants.kThetaControllerConstraints);
-    thetaController.enableContinuousInput(-Math.PI, Math.PI);
-
-    // 3. Command to follow path from PathPlanner
-    PPSwerveControllerCommand swerveControllerCommand = new PPSwerveControllerCommand(
-      m_path, 
-      m_drivetrain::getPose, 
-      Constants.m_kinematics, 
-      xController, 
-      yController, 
-      thetaController, 
-      m_drivetrain::setModuleStates, 
-      m_drivetrain);
-
-    // 4. Actual command sequence, run everything in order
-    return new SequentialCommandGroup(
-      new SequentialCommandGroup(
-        // Runs Launch Motors withTimeout of 0.75 seconds to get up to speed of high hoop launch sequence
-        // First attempt was 0.35, 0.40
-        new LauncherSpeed(launcher, 0.30, 0.35).withTimeout(0.75), 
-          new SequentialCommandGroup(
-            //runs Launcher & Index motors to launch ball out to score high hoop
-            new LauncherSpeed(launcher, 0.30, 0.35).withTimeout(0.25).alongWith( // First attempt was 0.35, 40
-            new IndexSpeed(indexMotors, 0.5).withTimeout(0.25)),
-                new ParallelCommandGroup (
-                  // Runs Launcher, Intake, Index and Drive robot all at once to grab second ball
-                  // Runs all 3 Launcher, Intake & Index motors withTimout of 5 seconds 
-                  // Also make robot drive path from step 1
-               
-                  // First attempt was 0.36, 0.42
-                  new LauncherSpeed(launcher, 0.40, 0.45).withTimeout(5), 
-                  new IntakeSpeed(intakeMotor, 0.5).withTimeout(5),
-                  new IndexSpeed(indexMotors, 0.5).withTimeout(5),
-                  new InstantCommand(() //Move this command out of Parallel group if this breaks things
-                    -> m_drivetrain.resetOdometry(m_path.getInitialPose())),
-                    swerveControllerCommand).andThen(
-                    //end of command - stop robot
-                    new InstantCommand(() 
-                        -> m_drivetrain.stop())))
-      ));
+ return new xmode(m_drivetrain);
   
   }; // end of getAutonomusCommand()
   
