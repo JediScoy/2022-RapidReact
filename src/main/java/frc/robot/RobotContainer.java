@@ -297,7 +297,7 @@ public class RobotContainer {
 
     // (Mostly) working auton used in Week 1
     // 1. Load the path from path planner ("path name", velocity in m/s, acceleration in m/s)
-    PathPlannerTrajectory m_path = PathPlanner.loadPath("Straight", 8, 5);
+    PathPlannerTrajectory m_path = PathPlanner.loadPath("PATHV", 8, 5);
 
     // 2. Defining PID Controllers for tracking trajectory
     PIDController xController = new PIDController(Constants.kPXController, 0, 0);
