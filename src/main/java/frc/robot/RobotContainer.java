@@ -101,11 +101,11 @@ public class RobotContainer {
     m_drivetrain.setDefaultCommand(defaultDriveCommand);
     
     // Add commands to the autonomous command chooser
-    autonChooser.setDefaultOption("Launch 1", autonLaunch1);
-    autonChooser.addOption("Launch 2 + Drive", autonLaunch2Drive);
-    autonChooser.addOption("Drive only", autonShortDrive);
-    autonChooser.addOption("Short Drive only", autonShortDrive);
-    autonChooser.addOption("Launch 1 & Drive", autonStraight);
+    autonChooser.setDefaultOption("Launch 1, No Drive", autonLaunch1);
+    // autonChooser.addOption("Launch 2, Drive", autonLaunch2Drive);
+    // autonChooser.addOption("Drive only", autonShortDrive);
+    autonChooser.addOption("Drive", autonShortDrive);
+    // autonChooser.addOption("Launch 1 & Drive", autonStraight);
 
     // Puts the chooser on the dashboard
     Shuffleboard.getTab("Auton").add(autonChooser);
