@@ -6,13 +6,13 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Launcher;
 
 public class LaunchHigh extends CommandBase {
   private final Launcher launcher;
 
-  
   public LaunchHigh(Launcher launch) {
     // Use addRequirements() here to declare subsystem dependencies.
 
@@ -38,6 +38,7 @@ public class LaunchHigh extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    // launcher.stopLauncher(); // FIXME maybe?
+    return true; // FIXME True didn't do anything. Launcher just keeps running
   }
 }
