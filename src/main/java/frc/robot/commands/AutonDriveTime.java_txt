@@ -1,7 +1,0 @@
-package frc.robot.commands;
-
-public DriveStraightAuto(Drivetrain m_drive) {
-    // Add your commands in the super() call, e.g.
-    // super(new FooCommand(), new BarCommand());
-    super(new Swerve (drive, .5, .5).withTimeout(3));
-  }
