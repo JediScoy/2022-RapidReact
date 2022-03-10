@@ -163,3 +163,4 @@ imgui.ini
 *.class
 *.class
 .gradle/buildOutputCleanup/buildOutputCleanup.lock
+*.lock
