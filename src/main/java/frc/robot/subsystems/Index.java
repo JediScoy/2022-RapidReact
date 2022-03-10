@@ -1,7 +1,13 @@
+/** FRC 3603 Index Subsystem
+ * Moves the cargo from ready position in the Launcher Subsystem
+*/ 
+
 package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+
+import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 
 // Shuffleboard imports
 
@@ -19,22 +25,26 @@ public class Index extends SubsystemBase {
     new WPI_TalonFX(Constants.FRONT_INDEX_MOTOR), 
     new WPI_TalonFX(Constants.BACK_INDEX_MOTOR));
   
- // private double speed; // schmaybe
 
   public Index() {
     backIndexMotor.setInverted(true);
     frontIndexMotor.setInverted(false);
   }
 
+  // Starts the Index which moves the cargo
   public void startIndex(double speed){
-      // frontIndexMotor.set(ControlMode.PercentOutput, speed); // Use individual motor lines of code if the group speed doesn't work
-      // backIndexMotor.set(ControlMode.PercentOutput, speed);
-      indexMotors.set(speed);
+    indexMotors.set(speed);
+  }
+
+  //Sets the Speed of Index Motor
+  // 
+  double indexVelocity = 3500;
+  public void setIndexSpeed() {
+    backIndexMotor.set(TalonFXControlMode.Velocity, indexVelocity);
+    frontIndexMotor.set(TalonFXControlMode.Velocity, indexVelocity);
   }
 
   public void stopIndex() {
-    // frontIndexMotor.set(ControlMode.PercentOutput, 0);
-    // backIndexMotor.set(ControlMode.PercentOutput, 0);
     indexMotors.set(0);
   }
 

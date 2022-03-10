@@ -2,25 +2,26 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
+/** FRC 3603
+ * Experimental 
+ * */
+
 package frc.robot.commands.auton;
 
-import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
 
 import static frc.robot.Constants.*;
 
-public class AutonStraight extends PPSwerveControllerCommand {
+public class PathStraight extends PPSwerveControllerCommand {
   /** Creates a new GenericAutonomousCommand. */
   private final Drivetrain drivetrain;
 
-  public AutonStraight(Drivetrain drivetrain, PathPlannerTrajectory path) {
+  public PathStraight(Drivetrain drivetrain, PathPlannerTrajectory path) {
     // Use addRequirements() here to declare subsystem dependencies.
 
     super(
@@ -41,7 +42,6 @@ public class AutonStraight extends PPSwerveControllerCommand {
     this.drivetrain = drivetrain;
     drivetrain.resetOdometry(path.getInitialPose());
 
-    //FIXME: Does add requirements have to be called for the driveTrainSubsystem?
   }
 
   // Called when the command is initially scheduled.

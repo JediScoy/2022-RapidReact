@@ -4,16 +4,16 @@
 // the WPILib BSD license file in the root directory of this project.
 
 
-package frc.robot.commands.auton;
+package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Launcher;
 
-public class AUTOLaunchHigh extends CommandBase {
+public class LaunchHigh extends CommandBase {
   private final Launcher launcher;
 
   
-  public AUTOLaunchHigh(Launcher launch) {
+  public LaunchHigh(Launcher launch) {
     // Use addRequirements() here to declare subsystem dependencies.
 
     launcher = launch;
@@ -33,7 +33,6 @@ public class AUTOLaunchHigh extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    // shooterSubsystem.stopShooter();
   }
 
   // Returns true when the command should end.

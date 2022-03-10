@@ -1,7 +1,5 @@
 package frc.robot.commands;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.auton.AUTOLaunchHigh;
 import frc.robot.subsystems.Index;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Launcher;
@@ -15,10 +13,10 @@ public class CGLauncherBall2 extends SequentialCommandGroup {
     
     public CGLauncherBall2(Launcher launcher, Intake intakeMotor, Index indexMotors) {
      addCommands(
-      new AUTOLaunchHigh(launcher),
+      new LaunchHigh(launcher),
       new IndexSpeed(indexMotors, 0.5),
       new IntakeSpeed(intakeMotor, 0.5),
-      new AUTOLaunchHigh(launcher),
+      new LaunchHigh(launcher),
       new IndexSpeed(indexMotors, 0.5)
       ); // end of add commands
     }

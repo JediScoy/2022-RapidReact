@@ -2,59 +2,42 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
+/** FRC 3603 Robot Container
+ * 
+ */
 package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton; //NewCommands vendordep
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import static edu.wpi.first.wpilibj.XboxController.Button;
-
-import java.util.List;
-
-import com.pathplanner.lib.PathPlanner;
-import com.pathplanner.lib.PathPlannerTrajectory;
-import com.pathplanner.lib.commands.PPSwerveControllerCommand;
-
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.controller.ProfiledPIDController;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.math.trajectory.TrajectoryConfig;
-import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
+
 // Subsystem imports
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Index;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Launcher;
 import frc.robot.subsystems.Lift;
+import frc.robot.commands.AutonLaunch1;
+import frc.robot.commands.AutonLaunch2Drive;
 import frc.robot.commands.CGStraightPath;
+
 // Command imports
 import frc.robot.commands.DriveCommand;
+import frc.robot.commands.DriveShort;
 import frc.robot.commands.IndexSpeed;
 import frc.robot.commands.IntakeSpeed;
 import frc.robot.commands.LauncherSpeed;
-// import frc.robot.commands.botchAuton;
 import frc.robot.commands.Lift.AutoLiftCommandBar1;
 import frc.robot.commands.Lift.AutoLiftCommandBar2;
 import frc.robot.commands.Lift.LiftCommand;
 import frc.robot.commands.Lift.LockLiftCommandBar1;
 import frc.robot.commands.Lift.LockLiftCommandBar2;
-
-// Auton
-import frc.robot.commands.auton.AutonLaunch1;
-import frc.robot.commands.auton.AutonLaunch2Drive;
-import frc.robot.commands.auton.AutonShortDrive;
-import frc.robot.commands.auton.AutonStraight;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -87,7 +70,7 @@ public class RobotContainer {
     new AutonLaunch2Drive(m_drivetrain, indexMotors, intakeMotor, launcher);
 
   private final Command autonShortDrive =
-    new AutonShortDrive(m_drivetrain);
+    new DriveShort(m_drivetrain);
 
   private final Command autonStraight =
     new CGStraightPath(m_drivetrain, launcher);
@@ -97,7 +80,7 @@ public class RobotContainer {
     // new PathStraight(m_drivetrainSubsystem);
   
   // A chooser for autonomous commands
-  SendableChooser<Command> m_chooser = new SendableChooser<>();
+  SendableChooser<Command> autonChooser = new SendableChooser<>();
 
 
   // The container for the robot. Contains subsystems, OI devices, and commands.
@@ -119,14 +102,14 @@ public class RobotContainer {
     m_drivetrain.setDefaultCommand(defaultDriveCommand);
     
     // Add commands to the autonomous command chooser
-    m_chooser.setDefaultOption("Launch 1", autonLaunch1);
-    m_chooser.addOption("Launch 2 + Drive", autonLaunch2Drive);
-    m_chooser.addOption("Drive only", autonShortDrive);
-    m_chooser.addOption("Short Drive only", autonShortDrive);
-    m_chooser.addOption("Straight", autonStraight);
+    autonChooser.setDefaultOption("Launch 1", autonLaunch1);
+    autonChooser.addOption("Launch 2 + Drive", autonLaunch2Drive);
+    autonChooser.addOption("Drive only", autonShortDrive);
+    autonChooser.addOption("Short Drive only", autonShortDrive);
+    autonChooser.addOption("Straight", autonStraight);
 
     // Puts the chooser on the dashboard
-    Shuffleboard.getTab("Auton").add(m_chooser);
+    Shuffleboard.getTab("Auton").add(autonChooser);
   
     // DEBUGGING CODE:
     System.out.println("subsystem requirements for autonShortDrive");
@@ -300,62 +283,8 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
    
-<<<<<<< HEAD
-    // return m_chooser.getSelected();  
+    return autonChooser.getSelected();
 
-    // (Mostly) working auton used in Week 1
-    // 1. Load the path from path planner ("path name", velocity in m/s, acceleration in m/s)
-    PathPlannerTrajectory m_path = PathPlanner.loadPath("Straight", 8, 1);
-
-    // 2. Defining PID Controllers for tracking trajectory
-    PIDController xController = new PIDController(Constants.kPXController, 0, 0);
-    PIDController yController = new PIDController(Constants.kPYController, 0, 0);
-    ProfiledPIDController thetaController = new ProfiledPIDController(Constants.kPThetaController, 0, 0, Constants.kThetaControllerConstraints);
-    thetaController.enableContinuousInput(-Math.PI, Math.PI);
-
-    // 3. Command to follow path from PathPlanner
-    PPSwerveControllerCommand swerveControllerCommand = new PPSwerveControllerCommand(
-      m_path, 
-      m_drivetrain::getPose, 
-      Constants.m_kinematics, 
-      xController, 
-      yController, 
-      thetaController, 
-      m_drivetrain::setModuleStates, 
-      m_drivetrain);
-
-    /** */
-    // 4. Actual command sequence, run everything in order
-    return new SequentialCommandGroup(
-      new SequentialCommandGroup(
-        // Runs Launch Motors withTimeout of 0.75 seconds to get up to speed of high hoop launch sequence
-        // First attempt was 0.35, 0.40
-        new LauncherSpeed(launcher, 0.30, 0.35).withTimeout(0.75), 
-          new SequentialCommandGroup(
-            //runs Launcher & Index motors to launch ball out to score high hoop
-            new LauncherSpeed(launcher, 0.30, 0.35).withTimeout(0.25).alongWith( // First attempt was 0.35, 40
-            new IndexSpeed(indexMotors, 0.5).withTimeout(0.25)),
-                new ParallelCommandGroup (
-                  // Runs Launcher, Intake, Index and Drive robot all at once to grab second ball
-                  // Runs all 3 Launcher, Intake & Index motors withTimout of 5 seconds 
-                  // Also make robot drive path from step 1
-               
-                  // First attempt was 0.36, 0.42
-                  new LauncherSpeed(launcher, 0.40, 0.45).withTimeout(5), 
-                  new IntakeSpeed(intakeMotor, 0.5).withTimeout(5),
-                  new IndexSpeed(indexMotors, 0.5).withTimeout(5),
-                  new InstantCommand(() //Move this command out of Parallel group if this breaks things
-                    -> m_drivetrain.resetOdometry(m_path.getInitialPose())),
-                    swerveControllerCommand).andThen(
-                    //end of command - stop robot
-                    new InstantCommand(() 
-                        -> m_drivetrain.stop())))
-      ));
-  
-=======
-    return m_chooser.getSelected();
-
->>>>>>> dev3
   }; // end of getAutonomusCommand()
   
 } // End of class

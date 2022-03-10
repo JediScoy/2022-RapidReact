@@ -57,7 +57,7 @@ public class Drivetrain extends SubsystemBase {
    * <p>
    * This is a measure of how fast the robot should be able to drive in a straight line.
    */
-  public static final double MAX_VELOCITY_METERS_PER_SECOND = 6380.0 / 60.0 * // TODO original value 6380, suggested 5000?
+  public static final double MAX_VELOCITY_METERS_PER_SECOND = 6380.0 / 60.0 * // TODO Our is 6380, Alpha uses 5000
           SdsModuleConfigurations.MK3_STANDARD.getDriveReduction() *
           SdsModuleConfigurations.MK3_STANDARD.getWheelDiameter() * Math.PI;
   /**
@@ -312,11 +312,11 @@ public class Drivetrain extends SubsystemBase {
             m_backRightModule.set(speed, 0);
       }
     
-      public void driveForwardAt80() {
-          m_frontLeftModule.set(0.8, 0);
-          m_frontRightModule.set(0.8, 0);
-          m_backLeftModule.set(0.8, 0);
-          m_backRightModule.set(0.8, 0);
+      public void driveForwardAt40() {
+          m_frontLeftModule.set(0.4, 0);
+          m_frontRightModule.set(0.4, 0);
+          m_backLeftModule.set(0.4, 0);
+          m_backRightModule.set(0.4, 0);
       }
     
       public void driveBackwardAt80() {

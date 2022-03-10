@@ -1,3 +1,7 @@
+/** FRC 3603
+ * Experimental trajectory editor
+ * https://www.chiefdelphi.com/t/waymaker-a-new-waypoint-editor-for-path-planning/396363/4
+ */
 package frc.robot.commands.auton;
 
 import java.util.List;
@@ -10,8 +14,7 @@ import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import frc.robot.Constants;
 import frc.robot.subsystems.Drivetrain;
 
-// https://www.chiefdelphi.com/t/waymaker-a-new-waypoint-editor-for-path-planning/396363/4
-public class waypoints_experimental {
+public class Waymaker {
     private Trajectory trajectoryForPath(List<Pose2d> path, boolean reversed) {
     
         TrajectoryConfig config =

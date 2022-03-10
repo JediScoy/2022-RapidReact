@@ -8,7 +8,7 @@ public class IndexSpeed extends CommandBase {
     // The subsystem the command runs on
     private final Index subsystem;
 
-    private double speed;
+    private double speed = 0.5;
 
     public IndexSpeed(Index subsystem, double speed) {
       this.subsystem = subsystem;
@@ -21,6 +21,10 @@ public class IndexSpeed extends CommandBase {
       subsystem.startIndex(speed);
     }
   
+    public void execute() {
+      subsystem.setIndexSpeed();
+    }
+
     @Override
     public void end(boolean interrupted){ 
       subsystem.stopIndex();

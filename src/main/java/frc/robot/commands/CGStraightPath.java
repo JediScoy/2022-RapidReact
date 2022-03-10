@@ -10,8 +10,6 @@ import com.pathplanner.lib.PathPlannerTrajectory;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.auton.AUTOLaunchHigh;
-import frc.robot.commands.auton.AutonStraight;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Launcher;
 
@@ -27,7 +25,7 @@ public class CGStraightPath extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new AUTOLaunchHigh(launch), //.withTimeout(0.75)
+      new LaunchHigh(launch), //.withTimeout(0.75)
       new InstantCommand(()-> drivetrain.resetOdometry(trajectory1.getInitialPose())),
       drivetrain.createCommandForTrajectory(trajectory1).andThen(() -> drivetrain.drive(new ChassisSpeeds(0.0, 0.0, 0.0)))
     );
