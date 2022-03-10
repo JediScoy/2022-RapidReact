@@ -36,7 +36,7 @@ import edu.wpi.first.wpilibj.SPI;
 
 
 public class Drivetrain extends SubsystemBase {
-  // added from Alpha
+  // Added from #5804
   public ProfiledPIDController thetaController =
   new ProfiledPIDController(
       kPThetaController, 0, 0, kThetaControllerConstraints);
@@ -54,10 +54,11 @@ public class Drivetrain extends SubsystemBase {
   //   5880.0 / 60.0 / SdsModuleConfigurations.MK4_L2.getDriveReduction() * SdsModuleConfigurations.MK4_L2.getWheelDiameter() * Math.PI
   /**
    * The maximum velocity of the robot in meters per second.
-   * <p>
    * This is a measure of how fast the robot should be able to drive in a straight line.
    */
-  public static final double MAX_VELOCITY_METERS_PER_SECOND = 6380.0 / 60.0 * // TODO Our is 6380, Alpha uses 5000
+
+  // TODO Our value is 6380, #5804 uses 5000
+  public static final double MAX_VELOCITY_METERS_PER_SECOND = 6380.0 / 60.0 * 
           SdsModuleConfigurations.MK3_STANDARD.getDriveReduction() *
           SdsModuleConfigurations.MK3_STANDARD.getWheelDiameter() * Math.PI;
   /**
@@ -68,7 +69,7 @@ public class Drivetrain extends SubsystemBase {
   public static final double MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND = MAX_VELOCITY_METERS_PER_SECOND /
           Math.hypot(DRIVETRAIN_TRACKWIDTH_METERS / 2.0, DRIVETRAIN_WHEELBASE_METERS / 2.0);
   
-  // TODO block added
+  // TODO Added from #5804
   public final SwerveDriveKinematics m_kinematics = new SwerveDriveKinematics(
     // Front left
     new Translation2d(DRIVETRAIN_TRACKWIDTH_METERS / 2.0, DRIVETRAIN_WHEELBASE_METERS / 2.0),
@@ -80,10 +81,11 @@ public class Drivetrain extends SubsystemBase {
     new Translation2d(-DRIVETRAIN_TRACKWIDTH_METERS / 2.0, -DRIVETRAIN_WHEELBASE_METERS / 2.0)
     );
 
-  public static final double MAX_ACCELERATION_METERS_SECOND_SQUARED = MAX_VELOCITY_METERS_PER_SECOND /
-  Math.hypot(DRIVETRAIN_TRACKWIDTH_METERS / 2.0, DRIVETRAIN_WHEELBASE_METERS / 2.0);
+  public static final double MAX_ACCELERATION_METERS_SECOND_SQUARED = MAX_VELOCITY_METERS_PER_SECOND / 
+    Math.hypot(DRIVETRAIN_TRACKWIDTH_METERS / 2.0, DRIVETRAIN_WHEELBASE_METERS / 2.0);
 
  
+  // FIXME Test this on our robot
   // The important thing about how you configure your gyroscope is that rotating the robot counter-clockwise should
   // cause the angle reading to increase until it wraps back over to zero.
   
@@ -99,15 +101,21 @@ public class Drivetrain extends SubsystemBase {
   private final SwerveModule m_backLeftModule;
   private final SwerveModule m_backRightModule;
 
+  // TODO Added from #5804
+  Pose2d targetPose;
+  public double target = (getGyroscopeRotation().getDegrees());
+  // 
+
   private ChassisSpeeds m_chassisSpeeds = new ChassisSpeeds(0.0, 0.0, 0.0);
 
-  // TODO Added from Alpha
+  // TODO Added from #5804
   SwerveDriveOdometry m_odometry =   // Needed for swerve drive
-  new SwerveDriveOdometry(m_kinematics, getGyroscopeRotation());;
+    new SwerveDriveOdometry(m_kinematics, getGyroscopeRotation());;
+  //
 
   public Drivetrain() {
     ShuffleboardTab tab = Shuffleboard.getTab("Drivetrain");
-    // TODO added from Alpha
+    // TODO Added from #5804
     thetaController.enableContinuousInput(-Math.PI, Math.PI);
 
 
@@ -187,7 +195,7 @@ public class Drivetrain extends SubsystemBase {
     m_navx.zeroYaw();
   }
 
-  // TODO added from Alpha
+  // TODO Added from #5804
   public double getRawRoation() {
     return m_navx.getRotation2d().getDegrees();
 }
@@ -255,7 +263,6 @@ public class Drivetrain extends SubsystemBase {
     // FIXME update the odometer constantly removing for testing
     // odometer.update(getGyroscopeRotation(), states);
    
-    //Important note: This is the method SwerveDriveKinematics.normalizeWheelSpeeds() from the documentation, but it actually works, even though THIS isn't documented.
     //This part is for TELEOP
     SwerveDriveKinematics.desaturateWheelSpeeds(states, MAX_VELOCITY_METERS_PER_SECOND);
     m_frontLeftModule.set(states[0].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, states[0].angle.getRadians());
