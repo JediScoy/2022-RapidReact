@@ -2,8 +2,11 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.auton;
 
+import frc.robot.commands.IndexSpeed;
+import frc.robot.commands.IntakeSpeed;
+import frc.robot.commands.LauncherSpeed;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Index;
@@ -13,9 +16,9 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 
 
 // Autonomous place holder for testing purposes
-public class AutonLaunch2Drive extends SequentialCommandGroup {
+public class CGLaunch2_DriveStraight extends SequentialCommandGroup {
   
-    public AutonLaunch2Drive(Drivetrain drivetrain, Index indexMotors, Intake intakeMotor, Launcher launcher) {
+    public CGLaunch2_DriveStraight(Drivetrain drivetrain, Index indexMotors, Intake intakeMotor, Launcher launcher) {
       addCommands(
         // Start the Launcher - speedFront is first double, speedBack is second
         new LauncherSpeed(launcher, 0.40, 0.45).withTimeout(1),
