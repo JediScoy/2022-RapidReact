@@ -28,6 +28,7 @@ import frc.robot.commands.DriveCommand;
 import frc.robot.commands.IndexSpeed;
 import frc.robot.commands.IntakeSpeed;
 import frc.robot.commands.LauncherSpeed;
+import frc.robot.commands.XLaunch;
 import frc.robot.commands.Lift.AutoLiftCommandBar1;
 import frc.robot.commands.Lift.AutoLiftCommandBar2;
 import frc.robot.commands.Lift.LiftCommand;
@@ -65,7 +66,7 @@ public class RobotContainer {
   private final Command autonLaunch1 =
     new CGLaunch1_DriveNone(indexMotors, intakeMotor, launcher);
 
-  private final Command autonLaunch2Drive =
+  private final Command autonLaunch1Drive =
     new CGLaunch2_DriveStraight(m_drivetrain, indexMotors, intakeMotor, launcher);
 
   private final Command autonShortDrive =
@@ -73,6 +74,9 @@ public class RobotContainer {
 
   private final Command autonStraight =
     new CGLaunch1_DriveStraight(m_drivetrain, launcher);
+  
+  // private final Command xLaunch =
+  //  new XLaunch(3);
 
   private final Command defaultDriveCommand; 
   // private final Command PathStraight =
@@ -102,10 +106,11 @@ public class RobotContainer {
     
     // Add commands to the autonomous command chooser
     autonChooser.setDefaultOption("Launch 1, No Drive", autonLaunch1);
-    // autonChooser.addOption("Launch 2, Drive", autonLaunch2Drive);
+    autonChooser.addOption("Launch 1, Drive", autonLaunch1Drive);
     // autonChooser.addOption("Drive only", autonShortDrive);
     autonChooser.addOption("Drive", autonShortDrive);
     // autonChooser.addOption("Launch 1 & Drive", autonStraight);
+    // autonChooser.addOption("X Wheels", xLaunch);
 
     // Puts the chooser on the dashboard
     Shuffleboard.getTab("Auton").add(autonChooser);
@@ -281,7 +286,6 @@ public class RobotContainer {
   
 
   public Command getAutonomousCommand() {
-   
     return autonChooser.getSelected();
 
   }; // end of getAutonomusCommand()
