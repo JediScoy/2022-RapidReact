@@ -7,8 +7,12 @@ package frc.robot.subsystems;
 import com.swervedrivespecialties.swervelib.Mk3SwerveModuleHelper;
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 import com.swervedrivespecialties.swervelib.SwerveModule;
+
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
@@ -16,20 +20,29 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-// import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static frc.robot.Constants.*;
+
+import com.pathplanner.lib.commands.PPSwerveControllerCommand;
 
 
 // Navx imports
 import com.kauailabs.navx.frc.AHRS;
+import com.pathplanner.lib.PathPlannerTrajectory;
+
 import edu.wpi.first.wpilibj.SPI;
 
 
 public class Drivetrain extends SubsystemBase {
+  // added from Alpha
+  public ProfiledPIDController thetaController =
+  new ProfiledPIDController(
+      kPThetaController, 0, 0, kThetaControllerConstraints);
+
   /**
    * The maximum voltage that will be delivered to the drive motors.
-   * <p>
    * This can be reduced to cap the robot's maximum speed. Typically, this is useful during initial testing of the robot.
    */
   public static final double MAX_VOLTAGE = 12.0;
@@ -44,7 +57,7 @@ public class Drivetrain extends SubsystemBase {
    * <p>
    * This is a measure of how fast the robot should be able to drive in a straight line.
    */
-  public static final double MAX_VELOCITY_METERS_PER_SECOND = 6380.0 / 60.0 *
+  public static final double MAX_VELOCITY_METERS_PER_SECOND = 6380.0 / 60.0 * // TODO original value 6380, suggested 5000?
           SdsModuleConfigurations.MK3_STANDARD.getDriveReduction() *
           SdsModuleConfigurations.MK3_STANDARD.getWheelDiameter() * Math.PI;
   /**
@@ -54,6 +67,18 @@ public class Drivetrain extends SubsystemBase {
   // Here we calculate the theoretical maximum angular velocity. You can also replace this with a measured amount.
   public static final double MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND = MAX_VELOCITY_METERS_PER_SECOND /
           Math.hypot(DRIVETRAIN_TRACKWIDTH_METERS / 2.0, DRIVETRAIN_WHEELBASE_METERS / 2.0);
+  
+  // TODO block added
+  public final SwerveDriveKinematics m_kinematics = new SwerveDriveKinematics(
+    // Front left
+    new Translation2d(DRIVETRAIN_TRACKWIDTH_METERS / 2.0, DRIVETRAIN_WHEELBASE_METERS / 2.0),
+    // Front right
+    new Translation2d(DRIVETRAIN_TRACKWIDTH_METERS / 2.0, -DRIVETRAIN_WHEELBASE_METERS / 2.0),
+    // Back left
+    new Translation2d(-DRIVETRAIN_TRACKWIDTH_METERS / 2.0, DRIVETRAIN_WHEELBASE_METERS / 2.0),
+    // Back right
+    new Translation2d(-DRIVETRAIN_TRACKWIDTH_METERS / 2.0, -DRIVETRAIN_WHEELBASE_METERS / 2.0)
+    );
 
   public static final double MAX_ACCELERATION_METERS_SECOND_SQUARED = MAX_VELOCITY_METERS_PER_SECOND /
   Math.hypot(DRIVETRAIN_TRACKWIDTH_METERS / 2.0, DRIVETRAIN_WHEELBASE_METERS / 2.0);
@@ -76,11 +101,16 @@ public class Drivetrain extends SubsystemBase {
 
   private ChassisSpeeds m_chassisSpeeds = new ChassisSpeeds(0.0, 0.0, 0.0);
 
+  // TODO Added from Alpha
   SwerveDriveOdometry m_odometry =   // Needed for swerve drive
   new SwerveDriveOdometry(m_kinematics, getGyroscopeRotation());;
 
   public Drivetrain() {
     ShuffleboardTab tab = Shuffleboard.getTab("Drivetrain");
+    // TODO added from Alpha
+    thetaController.enableContinuousInput(-Math.PI, Math.PI);
+
+
     // Setup motor configuration
     m_frontLeftModule = Mk3SwerveModuleHelper.createFalcon500(
             // This parameter is optional, but will allow you to see the current state of the module on the dashboard.
@@ -132,7 +162,12 @@ public class Drivetrain extends SubsystemBase {
         BACK_RIGHT_MODULE_STEER_ENCODER,
         BACK_RIGHT_MODULE_STEER_OFFSET
     );
-
+    /** 
+    tab.getLayout("Back Left Module", BuiltInLayouts.kList).addNumber("Back Left Module", ()->m_backLeftModule.getDriveEncoderValue());
+        tab.getLayout("Back Right Module", BuiltInLayouts.kList).addNumber("Back Right Module", ()->m_backRightModule.getDriveEncoderValue());
+        tab.getLayout("Front Left Module", BuiltInLayouts.kList).addNumber("Front Left Module", ()->m_frontLeftModule.getDriveEncoderValue());
+        tab.getLayout("Front Right Module", BuiltInLayouts.kList).addNumber("Front Right Module", ()->m_frontRightModule.getDriveEncoderValue());
+    */
   }
   
   //method to stop motors, used for auton
@@ -151,6 +186,11 @@ public class Drivetrain extends SubsystemBase {
   public void zeroGyroscope() {
     m_navx.zeroYaw();
   }
+
+  // TODO added from Alpha
+  public double getRawRoation() {
+    return m_navx.getRotation2d().getDegrees();
+}
 
   public Rotation2d getGyroscopeRotation() {
     if (m_navx.isMagnetometerCalibrated()) {
@@ -177,41 +217,34 @@ public class Drivetrain extends SubsystemBase {
     m_chassisSpeeds = chassisSpeeds;
   }
 
-  public void setModuleStates(SwerveModuleState[] states) {
-        //Ensures we aren't going past the speed that we should be going
-        //Important note: This is the method SwerveDriveKinematics.normalizeWheelSpeeds() from the documentation, but it actually works, even though THIS isn't documented.
-        SwerveDriveKinematics.desaturateWheelSpeeds(states, MAX_VELOCITY_METERS_PER_SECOND);
+  public void setModuleStates(SwerveModuleState[] desiredStates) {
+      // Changed to states -> desiredStates  
+      //Ensures we aren't going past the speed that we should be going
+        SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, MAX_VELOCITY_METERS_PER_SECOND);
         
         //these seem to maintain the same movement as the robot continues
         //This part is for AUTON
-        m_frontLeftModule.set(states[0].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, states[0].angle.getRadians());
+        m_frontLeftModule.set(desiredStates[0].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, desiredStates[0].angle.getRadians());
         // TODI m_frontLeftModule.set(desiredStates[0].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, desiredStates[0].angle.getRadians());
 
-        m_frontRightModule.set(states[1].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, states[1].angle.getRadians());
-        m_backLeftModule.set(states[2].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, states[2].angle.getRadians());
-        m_backRightModule.set(states[3].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, states[3].angle.getRadians());
+        m_frontRightModule.set(desiredStates[1].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, desiredStates[1].angle.getRadians());
+        m_backLeftModule.set(desiredStates[2].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, desiredStates[2].angle.getRadians());
+        m_backRightModule.set(desiredStates[3].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, desiredStates[3].angle.getRadians());
         
-
-        states[0].speedMetersPerSecond = Math.abs(m_frontLeftModule.getDriveVelocity());
-        states[1].speedMetersPerSecond = Math.abs(m_frontRightModule.getDriveVelocity());
-        states[2].speedMetersPerSecond = Math.abs(m_backLeftModule.getDriveVelocity());
-        states[3].speedMetersPerSecond = Math.abs(m_backRightModule.getDriveVelocity());     
-        m_odometry.update(getGyroscopeRotation(), states);
-  } // end of setModulesStates
-
-        // https://github.com/5804/rapidReact2022Alpha/blob/master/src/main/java/frc/robot/subsystems/DrivetrainSubsystem.java
-        /**  TODO
         desiredStates[0].speedMetersPerSecond = Math.abs(m_frontLeftModule.getDriveVelocity());
         desiredStates[1].speedMetersPerSecond = Math.abs(m_frontRightModule.getDriveVelocity());
         desiredStates[2].speedMetersPerSecond = Math.abs(m_backLeftModule.getDriveVelocity());
-        desiredStates[3].speedMetersPerSecond = Math.abs(m_backRightModule.getDriveVelocity());
+        desiredStates[3].speedMetersPerSecond = Math.abs(m_backRightModule.getDriveVelocity());     
         m_odometry.update(getGyroscopeRotation(), desiredStates);
-        */
 
-        // TODO
-        // SmartDashboard.putNumber("Current X", getPose().getX()); 
-        // SmartDashboard.putNumber("Current Y", getPose().getY()); 
-        // SmartDashboard.putNumber("Auto Angle", getPose().getRotation().getDegrees()); 
+        SmartDashboard.putNumber("Current X", getPose().getX()); 
+        SmartDashboard.putNumber("Current Y", getPose().getY()); 
+        SmartDashboard.putNumber("Auto Angle", getPose().getRotation().getDegrees()); 
+
+
+  } // end of setModulesStates
+
+        // https://github.com/5804/rapidReact2022Alpha/blob/master/src/main/java/frc/robot/subsystems/DrivetrainSubsystem.java
 
   @Override
   public void periodic() {
@@ -219,8 +252,8 @@ public class Drivetrain extends SubsystemBase {
     //defining states - Repeatedly update
     SwerveModuleState[] states = m_kinematics.toSwerveModuleStates(m_chassisSpeeds);//removed a second param of MAX_VELOCITY_METERS_PER_SECOND, and changed the first param from itself(states) to the chassisspeeds object 
     
-    //update the odometer constantly
-    odometer.update(getGyroscopeRotation(), states);
+    // FIXME update the odometer constantly removing for testing
+    // odometer.update(getGyroscopeRotation(), states);
    
     //Important note: This is the method SwerveDriveKinematics.normalizeWheelSpeeds() from the documentation, but it actually works, even though THIS isn't documented.
     //This part is for TELEOP
@@ -229,5 +262,74 @@ public class Drivetrain extends SubsystemBase {
     m_frontRightModule.set(states[1].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, states[1].angle.getRadians());
     m_backLeftModule.set(states[2].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, states[2].angle.getRadians());
     m_backRightModule.set(states[3].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, states[3].angle.getRadians());
+
+    SmartDashboard.putNumber("Raw Angle", getRawRoation());
+    SmartDashboard.putNumber("current angle", getGyroscopeRotation().getDegrees());
+    SmartDashboard.putNumber("Current X", getPose().getX()); 
+    SmartDashboard.putNumber("Current Y", getPose().getY());
+
+    
+//     SmartDashboard.putNumber("Target", target);
+
+      
+      SmartDashboard.putNumber("Current Angle", getPose().getRotation().getDegrees()); 
+     // SmartDashboard.putNumber("Target Pose Angle", targetPose.getRotation().getDegrees());
   }
+
+        public void resetEncoders() {
+        }
+
+        public int getFrontRightEncoderValue() {
+            return 0;
+        }
+
+        public void driveForward(int i) {
+        }
+
+        public void driveBackward(int i) {
+        }
+
+        public Command createCommandForTrajectory(PathPlannerTrajectory trajectory) {
+          return new PPSwerveControllerCommand(
+                trajectory,
+                this::getPose, // Functional interface to feed supplier
+                this.m_kinematics,
+          
+                // Position controllers
+                new PIDController(kPXController, 0, 0),
+                new PIDController(kPYController, 0, 0),
+                thetaController,
+                this::setModuleStates,
+                this
+          );
+    
+      }
+    
+      public void driveForward(double speed) {
+            m_frontLeftModule.set(speed, 0);
+            m_frontRightModule.set(speed, 0);
+            m_backLeftModule.set(speed, 0);
+            m_backRightModule.set(speed, 0);
+      }
+    
+      public void driveForwardAt80() {
+          m_frontLeftModule.set(0.8, 0);
+          m_frontRightModule.set(0.8, 0);
+          m_backLeftModule.set(0.8, 0);
+          m_backRightModule.set(0.8, 0);
+      }
+    
+      public void driveBackwardAt80() {
+          m_frontLeftModule.set(-0.8, 0);
+          m_frontRightModule.set(-0.8, 0);
+          m_backLeftModule.set(-0.8, 0);
+          m_backRightModule.set(-0.8, 0);
+      }
+    
+      public void driveBackward(double speed) {
+          m_frontLeftModule.set(-1*speed, 0);
+          m_frontRightModule.set(-1*speed, 0);
+          m_backLeftModule.set(-1*speed, 0);
+          m_backRightModule.set(-1*speed, 0);
+      }
 }
