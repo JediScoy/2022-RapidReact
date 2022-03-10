@@ -30,9 +30,11 @@ public class CGLaunch1_DriveStraight extends SequentialCommandGroup {
     addCommands(
       // new CGLauncherBall1(launch, null, null),
       // new CGLauncherBall1(Launcher, Intake, Index),
-      new LaunchHigh(launch), //.withTimeout(0.75)
-      new InstantCommand(()-> drivetrain.resetOdometry(trajectory1.getInitialPose())),
-      drivetrain.createCommandForTrajectory(trajectory1).andThen(() -> drivetrain.drive(new ChassisSpeeds(0.0, 0.0, 0.0)))
+      new LaunchHigh(launch).withTimeout(0.75),
+      new InstantCommand(()
+        -> drivetrain.resetOdometry(trajectory1.getInitialPose())),
+        drivetrain.createCommandForTrajectory(trajectory1).andThen(() 
+        -> drivetrain.drive(new ChassisSpeeds(0.0, 0.0, 0.0)))
     );
   }
 }

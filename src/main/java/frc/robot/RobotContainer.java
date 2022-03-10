@@ -23,13 +23,8 @@ import frc.robot.subsystems.Index;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Launcher;
 import frc.robot.subsystems.Lift;
-import frc.robot.commands.AutonLaunch1;
-import frc.robot.commands.AutonLaunch2Drive;
-import frc.robot.commands.CGStraightPath;
-
 // Command imports
 import frc.robot.commands.DriveCommand;
-import frc.robot.commands.DriveShort;
 import frc.robot.commands.IndexSpeed;
 import frc.robot.commands.IntakeSpeed;
 import frc.robot.commands.LauncherSpeed;
@@ -38,6 +33,10 @@ import frc.robot.commands.Lift.AutoLiftCommandBar2;
 import frc.robot.commands.Lift.LiftCommand;
 import frc.robot.commands.Lift.LockLiftCommandBar1;
 import frc.robot.commands.Lift.LockLiftCommandBar2;
+import frc.robot.commands.auton.CGLaunch1_DriveNone;
+import frc.robot.commands.auton.CGLaunch2_DriveStraight;
+import frc.robot.commands.auton.CGLaunch1_DriveStraight;
+import frc.robot.commands.auton.DriveShort;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -64,16 +63,16 @@ public class RobotContainer {
 
   // Autononmous command references. Update throughout season
   private final Command autonLaunch1 =
-    new AutonLaunch1(indexMotors, intakeMotor, launcher);
+    new CGLaunch1_DriveNone(indexMotors, intakeMotor, launcher);
 
   private final Command autonLaunch2Drive =
-    new AutonLaunch2Drive(m_drivetrain, indexMotors, intakeMotor, launcher);
+    new CGLaunch2_DriveStraight(m_drivetrain, indexMotors, intakeMotor, launcher);
 
   private final Command autonShortDrive =
     new DriveShort(m_drivetrain);
 
   private final Command autonStraight =
-    new CGStraightPath(m_drivetrain, launcher);
+    new CGLaunch1_DriveStraight(m_drivetrain, launcher);
 
   private final Command defaultDriveCommand; 
   // private final Command PathStraight =
@@ -106,7 +105,7 @@ public class RobotContainer {
     autonChooser.addOption("Launch 2 + Drive", autonLaunch2Drive);
     autonChooser.addOption("Drive only", autonShortDrive);
     autonChooser.addOption("Short Drive only", autonShortDrive);
-    autonChooser.addOption("Straight", autonStraight);
+    autonChooser.addOption("Launch 1 & Drive", autonStraight);
 
     // Puts the chooser on the dashboard
     Shuffleboard.getTab("Auton").add(autonChooser);
