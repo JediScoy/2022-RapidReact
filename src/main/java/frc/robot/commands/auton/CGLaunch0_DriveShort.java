@@ -18,7 +18,7 @@ import frc.robot.Constants;
 
 import frc.robot.subsystems.Drivetrain;
 
-public class DriveShort extends CommandBase{
+public class CGLaunch0_DriveShort extends CommandBase{
 boolean isFin = false;
     TrajectoryConfig trajectoryConfig;
     Trajectory trajectory;

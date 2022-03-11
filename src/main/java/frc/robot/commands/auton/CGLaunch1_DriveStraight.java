@@ -10,7 +10,6 @@ import com.pathplanner.lib.PathPlannerTrajectory;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.LaunchHigh;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Launcher;
 
@@ -21,14 +20,14 @@ import frc.robot.subsystems.Launcher;
 public class CGLaunch1_DriveStraight extends SequentialCommandGroup {
   /** Creates a new S1_2BallCommandGroup. */
   public CGLaunch1_DriveStraight(Drivetrain drivetrain, Launcher launch) {
-    PathPlannerTrajectory trajectory1 = PathPlanner.loadPath("Straight", 3, 1);
+    PathPlannerTrajectory trajectory1 = PathPlanner.loadPath("Straight", 2, 1);
 
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       // new CGLauncherBall1(launch, null, null),
       // new CGLauncherBall1(Launcher, Intake, Index),
-      new LaunchHigh(launch).withTimeout(0.75),
+      // new LaunchHigh(launch).withTimeout(0.75),
       new InstantCommand(()
         -> drivetrain.resetOdometry(trajectory1.getInitialPose())),
         drivetrain.createCommandForTrajectory(trajectory1).andThen(() 

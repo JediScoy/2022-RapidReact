@@ -28,6 +28,7 @@ public class CGLaunch2_DriveStraight extends SequentialCommandGroup {
     public CGLaunch2_DriveStraight(Drivetrain drivetrain, Index indexMotors, Intake intakeMotor, Launcher launcher) {
       addCommands(
         // Start the Launcher - speedFront is first double, speedBack is second
+        
         new LauncherSpeed(launcher, 0.40, 0.45).withTimeout(1),
         new SequentialCommandGroup(
             // Maintain Launcher speed
@@ -42,6 +43,7 @@ public class CGLaunch2_DriveStraight extends SequentialCommandGroup {
                   new IntakeSpeed(intakeMotor, 0.50),
                   // Index ball #2 into already running Launcher
                   new IndexSpeed(indexMotors, 0.50),
+          
             new InstantCommand(()
             -> drivetrain.resetOdometry(trajectory1.getInitialPose())),
             drivetrain.createCommandForTrajectory(trajectory1).andThen(() 

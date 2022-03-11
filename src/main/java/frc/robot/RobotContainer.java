@@ -34,10 +34,10 @@ import frc.robot.commands.Lift.AutoLiftCommandBar2;
 import frc.robot.commands.Lift.LiftCommand;
 import frc.robot.commands.Lift.LockLiftCommandBar1;
 import frc.robot.commands.Lift.LockLiftCommandBar2;
+import frc.robot.commands.auton.CGLaunch0_DriveOnly;
+import frc.robot.commands.auton.CGLaunch0_DriveShort;
 import frc.robot.commands.auton.CGLaunch1_DriveNone;
-// import frc.robot.commands.auton.CGLaunch1_DriveStraight;
 import frc.robot.commands.auton.CGLaunch2_DriveStraight;
-import frc.robot.commands.auton.DriveShort;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -119,13 +119,15 @@ public class RobotContainer {
     // Launches high goal inside tarmac, drives out with launch sequence operating
     autonChooser.addOption("Launch 2, Drive",
       new CGLaunch2_DriveStraight(m_drivetrain, indexMotors, intakeMotor, launcher));
-
-    // Drives out only. TODO Drivetrain testing purposes only -- would not use in competition
+    
+    
+    autonChooser.addOption("Drive Only",
+      new CGLaunch0_DriveOnly(m_drivetrain, indexMotors, intakeMotor, launcher));
+    
+      // Drives out only. TODO Drivetrain testing purposes only -- would not use in competition
     // Tested, but it doesn't function at the moment
-    autonChooser.addOption("Launch none, Drive test only",
-      new DriveShort());
-
-    // autonChooser.addOption("Launch 1 & Drive", autonStraight);
+    autonChooser.addOption("Drive Short test",
+      new CGLaunch0_DriveShort());
 
     // Puts the chooser on the dashboard
     Shuffleboard.getTab("Auton").add(autonChooser);
