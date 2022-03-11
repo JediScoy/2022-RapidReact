@@ -3,7 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 /** FRC 3603 Robot Container
- * 
+ *
  */
 package frc.robot;
 
@@ -74,10 +74,10 @@ public class RobotContainer {
   private final Command autonStraight =
     new CGLaunch1_DriveStraight(m_drivetrain, launcher);
 
-  private final Command defaultDriveCommand; 
+  private final Command defaultDriveCommand;
   // private final Command PathStraight =
     // new PathStraight(m_drivetrainSubsystem);
-  
+
   // A chooser for autonomous commands
   SendableChooser<Command> autonChooser = new SendableChooser<>();
 
@@ -99,7 +99,7 @@ public class RobotContainer {
       () -> -modifyAxis(driverController.getLeftX()) * Drivetrain.MAX_VELOCITY_METERS_PER_SECOND,
       () -> -modifyAxis(driverController.getRightX()) * Drivetrain.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND);
     m_drivetrain.setDefaultCommand(defaultDriveCommand);
-    
+
     // Add commands to the autonomous command chooser
     autonChooser.setDefaultOption("Launch 1, No Drive", autonLaunch1);
     // autonChooser.addOption("Launch 2, Drive", autonLaunch2Drive);
@@ -109,7 +109,7 @@ public class RobotContainer {
 
     // Puts the chooser on the dashboard
     Shuffleboard.getTab("Auton").add(autonChooser);
-  
+
     // DEBUGGING CODE:
     System.out.println("subsystem requirements for autonShortDrive");
     autonShortDrive.getRequirements().forEach((x) -> System.out.println(x));
@@ -130,7 +130,7 @@ public class RobotContainer {
     final JoystickButton d_ButtonX = new JoystickButton(driverController, Button.kX.value);
     final JoystickButton d_ButtonY = new JoystickButton(driverController, Button.kY.value);
     final JoystickButton d_RightBumper = new JoystickButton(driverController, Button.kRightBumper.value);
-    final JoystickButton d_LeftBumper = new JoystickButton(driverController, Button.kLeftBumper.value);  
+    final JoystickButton d_LeftBumper = new JoystickButton(driverController, Button.kLeftBumper.value);
 
     // Declaring buttons on the operator controller
     final JoystickButton op_ButtonA = new JoystickButton(operatorController, Button.kA.value);
@@ -144,11 +144,11 @@ public class RobotContainer {
     // Driver Controller button commands
 
     // Resets the gyroscope to 0 degrees when back button is pressed
-    d_backButton.whenPressed(m_drivetrain::zeroGyroscope); 
+    d_backButton.whenPressed(m_drivetrain::zeroGyroscope);
 
       /**  LOW HOOP UP CLOSE LAUNCH SEQUENCE
        when A is held, run Launch motors by themselves for a second, then run Launch and Index motors for 0.5 seconds,
-       then finally run all 3 motors at once. release to stop all motors */ 
+       then finally run all 3 motors at once. release to stop all motors */
       d_ButtonA.whenPressed(new SequentialCommandGroup(
         new LauncherSpeed(launcher, 0.20, 0.20).withTimeout(1),
           new SequentialCommandGroup(
@@ -187,25 +187,25 @@ public class RobotContainer {
       );
 
     // Hold right bumper to manually Intake cargo from the field, release to stop motors
-    d_RightBumper.whenPressed(new IntakeSpeed(intakeMotor, -0.5)); 
-    d_RightBumper.whenReleased(new IntakeSpeed(intakeMotor, 0.0)); 
+    d_RightBumper.whenPressed(new IntakeSpeed(intakeMotor, -0.5));
+    d_RightBumper.whenReleased(new IntakeSpeed(intakeMotor, 0.0));
 
     // Hold left bumper to manually Reverse cargo back to the field, release to stop motors
-    d_LeftBumper.whenPressed(new IntakeSpeed(intakeMotor, 0.5)); 
-    d_LeftBumper.whenReleased(new IntakeSpeed(intakeMotor, 0.0)); 
+    d_LeftBumper.whenPressed(new IntakeSpeed(intakeMotor, 0.5));
+    d_LeftBumper.whenReleased(new IntakeSpeed(intakeMotor, 0.0));
 
     // Hold X to manually Advance cargo to the launcher, release to stop motors
-    d_ButtonX.whenPressed(new IndexSpeed(indexMotors, 0.5)); 
+    d_ButtonX.whenPressed(new IndexSpeed(indexMotors, 0.5));
     d_ButtonX.whenReleased(new IndexSpeed(indexMotors, 0));
 
-    //Hold B to drive at slower speed, release to drive normal 
+    //Hold B to drive at slower speed, release to drive normal
     d_ButtonB.whenPressed(new DriveCommand(
       m_drivetrain,
       () -> -modifyAxis(driverController.getLeftY()) * Drivetrain.MAX_VELOCITY_METERS_PER_SECOND / 6,
       () -> -modifyAxis(driverController.getLeftX()) * Drivetrain.MAX_VELOCITY_METERS_PER_SECOND / 6,
       () -> -modifyAxis(driverController.getRightX()) * Drivetrain.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND / 6
     ));
-    d_ButtonB.whenReleased(new DriveCommand(   
+    d_ButtonB.whenReleased(new DriveCommand(
       m_drivetrain,
       () -> -modifyAxis(driverController.getLeftY()) * Drivetrain.MAX_VELOCITY_METERS_PER_SECOND,
       () -> -modifyAxis(driverController.getLeftX()) * Drivetrain.MAX_VELOCITY_METERS_PER_SECOND,
@@ -216,40 +216,40 @@ public class RobotContainer {
     //Operator Controller commands
 
     // hold left bumper to manually raise both climbing arms, release to stop motors
-    op_LeftBumper.whenPressed(new LiftCommand(liftMotors, 0.5)); 
+    op_LeftBumper.whenPressed(new LiftCommand(liftMotors, 0.5));
     op_LeftBumper.whenReleased(new LiftCommand(liftMotors, 0.0));
-    
+
     // hold right bumper to manually lower both climbing arms, release to stop motors
-    op_RightBumper.whenPressed(new LiftCommand(liftMotors, -0.5)); 
+    op_RightBumper.whenPressed(new LiftCommand(liftMotors, -0.5));
     op_RightBumper.whenReleased(new LiftCommand(liftMotors, 0.0));
 
     // press A to auto raise both climbing arms to the encoder value of bar #1
-    op_ButtonA.whenPressed(new AutoLiftCommandBar1(liftMotors, 0.5)); 
+    op_ButtonA.whenPressed(new AutoLiftCommandBar1(liftMotors, 0.5));
 
     // press B to auto lower both climbing arms to the encoder value of when the locking arms engage on bar #1
-    op_ButtonB.whenPressed(new LockLiftCommandBar1(liftMotors, -0.5)); 
+    op_ButtonB.whenPressed(new LockLiftCommandBar1(liftMotors, -0.5));
 
     // press Y to auto raise both climbing arms to encoder value of bar #2
-    op_ButtonY.whenPressed(new AutoLiftCommandBar2(liftMotors, 0.5)); 
+    op_ButtonY.whenPressed(new AutoLiftCommandBar2(liftMotors, 0.5));
 
     // press B to auto lower both climbing arms to the encoder value of when the locking arms engage on bar #2
-    op_ButtonX.whenPressed(new LockLiftCommandBar2(liftMotors, -0.5));  
+    op_ButtonX.whenPressed(new LockLiftCommandBar2(liftMotors, -0.5));
 
-    /** Did not work, no movement 
+    /** Did not work, no movement
     // Use left stick up and down to manually move ONLY left climbing arm up and down
     leftLiftMotor.setDefaultCommand(new DefaultDriveCommand(
       m_drivetrainSubsystem,
       () -> -modifyAxis(operatorController.getLeftY()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
       () -> -modifyAxis(operatorController.getLeftX()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
       () -> -modifyAxis(operatorController.getRightX()) * DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
-    )); 
+    ));
     */
 
-    // Use right stick up and down to manually move ONLY right climbing arm up and down 
+    // Use right stick up and down to manually move ONLY right climbing arm up and down
     rightLiftMotor.setDefaultCommand(new LiftCommand(
       rightLiftMotor, modifyAxis(operatorController.getRightY()) * Drivetrain.MAX_VELOCITY_METERS_PER_SECOND
-      )); 
-      
+      ));
+
   }
 
   private static double deadband(double value, double deadband) {
@@ -273,17 +273,17 @@ public class RobotContainer {
 
     return value;
   }
-   
+
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    * @return the command to run in autonomous
    */
-  
+
 
   public Command getAutonomousCommand() {
-   
+
     return autonChooser.getSelected();
 
   }; // end of getAutonomusCommand()
-  
+
 } // End of class
