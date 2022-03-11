@@ -121,6 +121,7 @@ public class RobotContainer {
       new CGLaunch2_DriveStraight(m_drivetrain, indexMotors, intakeMotor, launcher));
 
     // Drives out only. TODO Drivetrain testing purposes only -- would not use in competition
+    // Tested, but it doesn't function at the moment
     autonChooser.addOption("Launch none, Drive test only",
       new DriveShort());
 
