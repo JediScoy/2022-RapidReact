@@ -15,8 +15,8 @@ public class Launcher extends SubsystemBase {
   // Falcon 500 is controlled by TalonFX
   // These are the two motors for launching the cargo
 
-  private final TalonFX backLauncherMotor = new TalonFX(Constants.BACK_LAUNCHER_MOTOR);
-  private final TalonFX frontLauncherMotor = new TalonFX(Constants.FRONT_LAUNCHER_MOTOR);
+  private final TalonFX backLauncherMotor = new TalonFX(Constants.Launcher.BACK_LAUNCHER_MOTOR);
+  private final TalonFX frontLauncherMotor = new TalonFX(Constants.Launcher.FRONT_LAUNCHER_MOTOR);
 
   public Launcher() {
     // backLauncherMotor.configFactoryDefault();

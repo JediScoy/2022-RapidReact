@@ -94,12 +94,16 @@ public final class Constants {
     // 245
     // 267.1: 359, 1.75
     
-    
 
-    // Two motors are used to launch the "Cargo"
-    public static final int BACK_LAUNCHER_MOTOR = 9; // Sets the bottom launcher motor ID value
-    public static final int FRONT_LAUNCHER_MOTOR = 10; // Sets the top launcher motor ID value
-    
+    // Constants for Launcher
+    public static final class Launcher {
+      // Two motors are used to launch the "Cargo"
+      // Sets the bottom launcher motor ID value
+      public static final int BACK_LAUNCHER_MOTOR = 9; 
+      // Sets the top launcher motor ID value
+      public static final int FRONT_LAUNCHER_MOTOR = 10; 
+    }
+
     // Intake motors
     public static final int INTAKE_MOTOR = 11; // Sets the Intake Motor ID value
 
@@ -115,6 +119,9 @@ public final class Constants {
     public static final int LEFT_PIVOT_MOTOR = 17; // Grouped
     public static final int RIGHT_PIVOT_MOTOR = 18; // Group
 
+     // Constants for the Autonomous subsystem
+     public static final class Auton {
+    }
      //Autononomous values
      public static final double kPXController = 1.5; // default 1.5 from SeanSun; forum values, our last was 3
      public static final double kPYController = 1.5; // default 1.5; forum values

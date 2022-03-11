@@ -108,15 +108,10 @@ public class Drivetrain extends SubsystemBase {
 
   private ChassisSpeeds m_chassisSpeeds = new ChassisSpeeds(0.0, 0.0, 0.0);
 
-<<<<<<< HEAD
-  SwerveDriveOdometry m_odometry =   // TODO updated from the Needed for swerve drive
-  new SwerveDriveOdometry(m_kinematics, getGyroscopeRotation());;
-=======
   // TODO Added from #5804
   SwerveDriveOdometry m_odometry =   // Needed for swerve drive
     new SwerveDriveOdometry(m_kinematics, getGyroscopeRotation());;
   //
->>>>>>> dev2
 
   public Drivetrain() {
     ShuffleboardTab tab = Shuffleboard.getTab("Drivetrain");
@@ -244,20 +239,6 @@ public class Drivetrain extends SubsystemBase {
         m_backLeftModule.set(desiredStates[2].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, desiredStates[2].angle.getRadians());
         m_backRightModule.set(desiredStates[3].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, desiredStates[3].angle.getRadians());
         
-<<<<<<< HEAD
-
-        states[0].speedMetersPerSecond = Math.abs(m_frontLeftModule.getDriveVelocity());
-        states[1].speedMetersPerSecond = Math.abs(m_frontRightModule.getDriveVelocity());
-        states[2].speedMetersPerSecond = Math.abs(m_backLeftModule.getDriveVelocity());
-        states[3].speedMetersPerSecond = Math.abs(m_backRightModule.getDriveVelocity());     
-        m_odometry.update(getGyroscopeRotation(), states);
-  } // end of setModulesStates
-
-    // TODO
-    // SmartDashboard.putNumber("Current X", getPose().getX()); 
-    // SmartDashboard.putNumber("Current Y", getPose().getY()); 
-    // SmartDashboard.putNumber("Auto Angle", getPose().getRotation().getDegrees()); 
-=======
         desiredStates[0].speedMetersPerSecond = Math.abs(m_frontLeftModule.getDriveVelocity());
         desiredStates[1].speedMetersPerSecond = Math.abs(m_frontRightModule.getDriveVelocity());
         desiredStates[2].speedMetersPerSecond = Math.abs(m_backLeftModule.getDriveVelocity());
@@ -272,7 +253,6 @@ public class Drivetrain extends SubsystemBase {
   } // end of setModulesStates
 
         // https://github.com/5804/rapidReact2022Alpha/blob/master/src/main/java/frc/robot/subsystems/DrivetrainSubsystem.java
->>>>>>> dev2
 
   @Override
   public void periodic() {
@@ -287,16 +267,6 @@ public class Drivetrain extends SubsystemBase {
    
     //This part is for TELEOP
     SwerveDriveKinematics.desaturateWheelSpeeds(states, MAX_VELOCITY_METERS_PER_SECOND);
-<<<<<<< HEAD
-    m_frontLeftModule.set(states[0].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, 
-      states[0].angle.getRadians());
-    m_frontRightModule.set(states[1].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE,
-      states[1].angle.getRadians());
-    m_backLeftModule.set(states[2].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, 
-      states[2].angle.getRadians());
-    m_backRightModule.set(states[3].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, 
-      states[3].angle.getRadians());
-=======
     m_frontLeftModule.set(states[0].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, states[0].angle.getRadians());
     m_frontRightModule.set(states[1].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, states[1].angle.getRadians());
     m_backLeftModule.set(states[2].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, states[2].angle.getRadians());
@@ -313,7 +283,6 @@ public class Drivetrain extends SubsystemBase {
       
       SmartDashboard.putNumber("Current Angle", getPose().getRotation().getDegrees()); 
      // SmartDashboard.putNumber("Target Pose Angle", targetPose.getRotation().getDegrees());
->>>>>>> dev2
   }
 
         public void resetEncoders() {
