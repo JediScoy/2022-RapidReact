@@ -23,6 +23,7 @@ import frc.robot.subsystems.Index;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Launcher;
 import frc.robot.subsystems.Lift;
+
 // Command imports
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.IndexSpeed;
@@ -69,24 +70,23 @@ public class RobotContainer {
     new CGLaunch2_DriveStraight(m_drivetrain, indexMotors, intakeMotor, launcher);
 
   private final Command autonShortDrive =
-    new DriveShort(m_drivetrain);
+    new DriveShort();
 
-<<<<<<< HEAD
   private final Command driveCommand; 
-=======
   private final Command autonStraight =
     new CGLaunch1_DriveStraight(m_drivetrain, launcher);
 
   private final Command defaultDriveCommand;
->>>>>>> dev
   // private final Command PathStraight =
     // new PathStraight(m_drivetrainSubsystem);
 
   // A chooser for autonomous commands
   SendableChooser<Command> autonChooser = new SendableChooser<>();
 
+}
 
   // The container for the robot. Contains subsystems, OI devices, and commands.
+  
   public RobotContainer() {
 
     // Configure the button bindings
@@ -102,14 +102,9 @@ public class RobotContainer {
       () -> -modifyAxis(driverController.getLeftY()) * Drivetrain.MAX_VELOCITY_METERS_PER_SECOND,
       () -> -modifyAxis(driverController.getLeftX()) * Drivetrain.MAX_VELOCITY_METERS_PER_SECOND,
       () -> -modifyAxis(driverController.getRightX()) * Drivetrain.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND);
-<<<<<<< HEAD
     
     m_drivetrain.setDefaultCommand(driveCommand);
     
-=======
-    m_drivetrain.setDefaultCommand(defaultDriveCommand);
-
->>>>>>> dev
     // Add commands to the autonomous command chooser
     autonChooser.setDefaultOption("Launch 1, No Drive", autonLaunch1);
     // autonChooser.addOption("Launch 2, Drive", autonLaunch2Drive);
@@ -236,13 +231,8 @@ public class RobotContainer {
     // press A to auto raise both climbing arms to the encoder value of bar #1
     op_ButtonA.whenPressed(new AutoLiftCommandBar1(liftMotors, 0.5));
 
-<<<<<<< HEAD
-    // press B to auto lowr both climbing arms to the encoder value of when the locking arms engage on bar #1
-    op_ButtonB.whenPressed(new LockLiftCommandBar1(liftMotors, -0.5)); 
-=======
     // press B to auto lower both climbing arms to the encoder value of when the locking arms engage on bar #1
     op_ButtonB.whenPressed(new LockLiftCommandBar1(liftMotors, -0.5));
->>>>>>> dev
 
     // press Y to auto raise both climbing arms to encoder value of bar #2
     op_ButtonY.whenPressed(new AutoLiftCommandBar2(liftMotors, 0.5));
@@ -296,61 +286,9 @@ public class RobotContainer {
 
 
   public Command getAutonomousCommand() {
-<<<<<<< HEAD
-    // return m_chooser.getSelected();  
-
-  // Auton simple
-  // Create config for trajectory
-    TrajectoryConfig config =
-        new TrajectoryConfig(
-                Drivetrain.MAX_VELOCITY_METERS_PER_SECOND,
-                Drivetrain.MAX_ACCELERATION_METERS_SECOND_SQUARED)
-            // Add kinematics to ensure max speed is actually obeyed
-            .setKinematics(Constants.m_kinematics);
-  // An example trajectory to follow.  All units in meters.
-  Trajectory m_path =
-    TrajectoryGenerator.generateTrajectory(
-        // Start at the origin facing the +X direction
-        new Pose2d(0, 0, new Rotation2d(0)),
-        // Pass through these two interior waypoints, making an 's' curve path
-        List.of(new Translation2d(1, 0), new Translation2d(2, 0)),
-        // End 3 meters straight ahead of where we started, facing forward
-        new Pose2d(3, 0, new Rotation2d(0)),
-        config);
-
-  var thetaController =
-    new ProfiledPIDController(
-        Constants.kPThetaController, 0, 0, Constants.kThetaControllerConstraints);
-  thetaController.enableContinuousInput(-Math.PI, Math.PI);
-
-  SwerveControllerCommand swerveControllerCommand =
-    new SwerveControllerCommand(
-        m_path,
-        m_drivetrain::getPose, // Functional interface to feed supplier
-        Constants.m_kinematics,
-
-        // Position controllers
-        new PIDController(Constants.kPXController, 0, 0),
-        new PIDController(Constants.kPYController, 0, 0),
-        thetaController,
-        m_drivetrain::setModuleStates,
-        m_drivetrain);
-
-  // Reset odometry to the starting pose of the trajectory.
-  m_drivetrain.resetOdometry(m_path.getInitialPose());
-
-  // Run path following command, then stop at the end.
-  // ORIGINAL return swerveControllerCommand.andThen(() -> m_drivetrain.drive(0, 0, 0, false));
-    return swerveControllerCommand.andThen(() -> m_drivetrain.drive(new ChassisSpeeds(0.0, 0.0, 0.0)));
-
-  }; // end of getAutonomusCommand()
-  
-} // End of class
-=======
 
     return autonChooser.getSelected();
 
   }; // end of getAutonomusCommand()
 
 } // End of class
->>>>>>> dev

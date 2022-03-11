@@ -27,11 +27,7 @@ boolean isFin = false;
     Drivetrain m_drivetrain;
     SwerveControllerCommand swerveControllerCommand;
 
-<<<<<<< HEAD:src/main/java/frc/robot/commands/auton/AutonShortDrive.java
-public AutonShortDrive(Drivetrain m_drivetrain) {
-=======
-public DriveShort(Drivetrain m_drivetrainSubsystem) {
->>>>>>> dev:src/main/java/frc/robot/commands/auton/DriveShort.java
+public void driveShort(Drivetrain m_drivetrain) {
 
         addRequirements(m_drivetrain);
     this.m_drivetrain = m_drivetrain;

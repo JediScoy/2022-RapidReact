@@ -10,12 +10,10 @@ import com.pathplanner.lib.PathPlannerTrajectory;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.CGLauncherBall1;
 import frc.robot.commands.LaunchHigh;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Launcher;
-import frc.robot.subsystems.Index;
-import frc.robot.subsystems.Intake;
+
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
