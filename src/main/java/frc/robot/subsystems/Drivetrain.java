@@ -273,7 +273,10 @@ public class Drivetrain extends SubsystemBase {
     m_backRightModule.set(states[3].speedMetersPerSecond / MAX_VELOCITY_METERS_PER_SECOND * MAX_VOLTAGE, states[3].angle.getRadians());
 
     SmartDashboard.putNumber("Raw Angle", getRawRoation());
+    // FIXME This updates on Dashboard but doesn't wrap to zero. Same as Raw Angle.
     SmartDashboard.putNumber("current angle", getGyroscopeRotation().getDegrees());
+    // FIXME Doesn't actually update on Dashboard
+    SmartDashboard.putNumber("Current Angle", getPose().getRotation().getDegrees()); 
     SmartDashboard.putNumber("Current X", getPose().getX()); 
     SmartDashboard.putNumber("Current Y", getPose().getY());
 
@@ -281,7 +284,6 @@ public class Drivetrain extends SubsystemBase {
 //     SmartDashboard.putNumber("Target", target);
 
       
-      SmartDashboard.putNumber("Current Angle", getPose().getRotation().getDegrees()); 
      // SmartDashboard.putNumber("Target Pose Angle", targetPose.getRotation().getDegrees());
   }
 
