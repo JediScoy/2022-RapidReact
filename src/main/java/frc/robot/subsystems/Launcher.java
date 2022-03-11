@@ -6,14 +6,6 @@
 package frc.robot.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-// import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
-
-// Shuffleboard imports
-// import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
-// import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-// import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-
-// CTRE imports
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
@@ -23,8 +15,8 @@ public class Launcher extends SubsystemBase {
   // Falcon 500 is controlled by TalonFX
   // These are the two motors for launching the cargo
 
-  private final TalonFX backLauncherMotor = new TalonFX(Constants.BACK_LAUNCHER_MOTOR);
-  private final TalonFX frontLauncherMotor = new TalonFX(Constants.FRONT_LAUNCHER_MOTOR);
+  private final TalonFX backLauncherMotor = new TalonFX(Constants.Launcher.BACK_LAUNCHER_MOTOR);
+  private final TalonFX frontLauncherMotor = new TalonFX(Constants.Launcher.FRONT_LAUNCHER_MOTOR);
 
   public Launcher() {
     // backLauncherMotor.configFactoryDefault();
@@ -33,6 +25,12 @@ public class Launcher extends SubsystemBase {
     // frontLauncherMotor.configFactoryDefault();
     frontLauncherMotor.setNeutralMode(NeutralMode.Coast);
     frontLauncherMotor.setInverted(true);
+
+    backLauncherMotor.configNominalOutputForward(0, Constants.kTimeoutMs);
+    frontLauncherMotor.configNominalOutputForward(0, Constants.kTimeoutMs);
+    backLauncherMotor.configNominalOutputReverse(0, Constants.kTimeoutMs);
+    frontLauncherMotor.configNominalOutputReverse(0, Constants.kTimeoutMs);
+    
   }
 
   /** Launches the Cargo with speed set for low hub
@@ -45,10 +43,22 @@ public class Launcher extends SubsystemBase {
   }
 
   public void setLauncherSpeed(double speedFront, double speedBack) {
-    backLauncherMotor.set(ControlMode.PercentOutput, speedBack);
     frontLauncherMotor.set(ControlMode.PercentOutput, speedFront);
+    backLauncherMotor.set(ControlMode.PercentOutput, speedBack);
+  }
+  
+  // Set HIGH goal speed
+  public void setLauncherHigh() {
+    frontLauncherMotor.set(ControlMode.PercentOutput, 0.40);
+    backLauncherMotor.set(ControlMode.PercentOutput, 0.35);
   }
 
+  // Set LOW goal speed
+  public void setLauncherLow() {
+    backLauncherMotor.set(ControlMode.PercentOutput, 0.20);
+    frontLauncherMotor.set(ControlMode.PercentOutput, 0.20);
+  }
+  
   public void stopLauncher() {
     backLauncherMotor.set(ControlMode.PercentOutput, 0);
     frontLauncherMotor.set(ControlMode.PercentOutput, 0);

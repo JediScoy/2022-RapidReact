@@ -2,9 +2,10 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
+/** FRC 3603 Constants
+ * 
+ */
 package frc.robot;
-
-import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
 
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
@@ -100,12 +101,16 @@ public final class Constants {
     // 245
     // 267.1: 359, 1.75
     
-    
 
-    // Two motors are used to launch the "Cargo"
-    public static final int BACK_LAUNCHER_MOTOR = 9; // Sets the bottom launcher motor ID value
-    public static final int FRONT_LAUNCHER_MOTOR = 10; // Sets the top launcher motor ID value
-    
+    // Constants for Launcher
+    public static final class Launcher {
+      // Two motors are used to launch the "Cargo"
+      // Sets the bottom launcher motor ID value
+      public static final int BACK_LAUNCHER_MOTOR = 9; 
+      // Sets the top launcher motor ID value
+      public static final int FRONT_LAUNCHER_MOTOR = 10; 
+    }
+
     // Intake motors
     public static final int INTAKE_MOTOR = 11; // Sets the Intake Motor ID value
 
@@ -121,10 +126,15 @@ public final class Constants {
     public static final int LEFT_PIVOT_MOTOR = 17; // Grouped
     public static final int RIGHT_PIVOT_MOTOR = 18; // Group
 
-     //Stuff for Auton
+     // Constants for the Autonomous subsystem
+     public static final class Auton {
+    }
+     //Autononomous values
      public static final double kPXController = 1.5; // default 1.5 from SeanSun; forum values, our last was 3
      public static final double kPYController = 1.5; // default 1.5; forum values
      public static final double kPThetaController = 0.0; // default 3.0; forum value, our last was 0.01
+     public static final int kTimeoutMs = 30; // Added
+
  
      public static final TrapezoidProfile.Constraints kThetaControllerConstraints = //
      new TrapezoidProfile.Constraints(

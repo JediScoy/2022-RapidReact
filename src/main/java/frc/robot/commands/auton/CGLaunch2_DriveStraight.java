@@ -4,7 +4,6 @@
 
 package frc.robot.commands.auton;
 
-// import frc.robot.commands.auton.PathStraight;
 import frc.robot.commands.IndexSpeed;
 import frc.robot.commands.IntakeSpeed;
 import frc.robot.commands.LauncherSpeed;
@@ -13,13 +12,20 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Index;
 import frc.robot.subsystems.Launcher;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+
+import com.pathplanner.lib.PathPlanner;
+import com.pathplanner.lib.PathPlannerTrajectory;
+
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 
 
 // Autonomous place holder for testing purposes
-public class AutonLaunch2Drive extends SequentialCommandGroup {
-  
-    public AutonLaunch2Drive(Drivetrain drivetrain, Index indexMotors, Intake intakeMotor, Launcher launcher) {
+public class CGLaunch2_DriveStraight extends SequentialCommandGroup {
+  PathPlannerTrajectory trajectory1 = PathPlanner.loadPath("Straight", 3, 1);
+
+    public CGLaunch2_DriveStraight(Drivetrain drivetrain, Index indexMotors, Intake intakeMotor, Launcher launcher) {
       addCommands(
         // Start the Launcher - speedFront is first double, speedBack is second
         new LauncherSpeed(launcher, 0.40, 0.45).withTimeout(1),
@@ -35,9 +41,12 @@ public class AutonLaunch2Drive extends SequentialCommandGroup {
                   // Intake ball #2 if needed
                   new IntakeSpeed(intakeMotor, 0.50),
                   // Index ball #2 into already running Launcher
-                  new IndexSpeed(indexMotors, 0.50)
-                )
-            )
+                  new IndexSpeed(indexMotors, 0.50),
+            new InstantCommand(()
+            -> drivetrain.resetOdometry(trajectory1.getInitialPose())),
+            drivetrain.createCommandForTrajectory(trajectory1).andThen(() 
+            -> drivetrain.drive(new ChassisSpeeds(0.0, 0.0, 0.0)
+            ))))
         ); // end of add commands
 
 
