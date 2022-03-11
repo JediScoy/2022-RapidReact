@@ -4,7 +4,6 @@
 
 package frc.robot.commands.auton;
 
-// import frc.robot.commands.auton.PathStraight;
 import frc.robot.commands.IndexSpeed;
 import frc.robot.commands.IntakeSpeed;
 import frc.robot.commands.LauncherSpeed;
@@ -17,9 +16,9 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 
 
 // Autonomous place holder for testing purposes
-public class AutonLaunch2Drive extends SequentialCommandGroup {
+public class CGLaunch2_DriveStraight extends SequentialCommandGroup {
   
-    public AutonLaunch2Drive(Drivetrain drivetrain, Index indexMotors, Intake intakeMotor, Launcher launcher) {
+    public CGLaunch2_DriveStraight(Drivetrain drivetrain, Index indexMotors, Intake intakeMotor, Launcher launcher) {
       addCommands(
         // Start the Launcher - speedFront is first double, speedBack is second
         new LauncherSpeed(launcher, 0.40, 0.45).withTimeout(1),

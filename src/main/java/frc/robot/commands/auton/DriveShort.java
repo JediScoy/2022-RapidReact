@@ -18,7 +18,7 @@ import frc.robot.Constants;
 
 import frc.robot.subsystems.Drivetrain;
 
-public class AutonShortDrive extends CommandBase{
+public class DriveShort extends CommandBase{
 boolean isFin = false;
     TrajectoryConfig trajectoryConfig;
     Trajectory trajectory;
@@ -27,7 +27,7 @@ boolean isFin = false;
     Drivetrain m_drivetrainSubsystem;
     SwerveControllerCommand swerveControllerCommand;
 
-public AutonShortDrive(Drivetrain m_drivetrainSubsystem) {
+public DriveShort(Drivetrain m_drivetrainSubsystem) {
 
         addRequirements(m_drivetrainSubsystem);
     this.m_drivetrainSubsystem = m_drivetrainSubsystem;

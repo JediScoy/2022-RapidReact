@@ -160,3 +160,14 @@ imgui.ini
 
 # End of https://www.gitignore.io/api/c++,java,linux,macos,gradle,windows,visualstudiocode
 *.class
+<<<<<<< HEAD
+=======
+*.class
+*.class
+.gradle/buildOutputCleanup/buildOutputCleanup.lock
+*.lock
+*.class
+.gradle/buildOutputCleanup/buildOutputCleanup.lock
+*.class
+*.class
+>>>>>>> dev2
