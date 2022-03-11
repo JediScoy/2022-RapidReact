@@ -35,8 +35,8 @@ import frc.robot.commands.Lift.LiftCommand;
 import frc.robot.commands.Lift.LockLiftCommandBar1;
 import frc.robot.commands.Lift.LockLiftCommandBar2;
 import frc.robot.commands.auton.CGLaunch1_DriveNone;
-import frc.robot.commands.auton.CGLaunch2_DriveStraight;
 import frc.robot.commands.auton.CGLaunch1_DriveStraight;
+import frc.robot.commands.auton.CGLaunch2_DriveStraight;
 import frc.robot.commands.auton.DriveShort;
 
 /**
@@ -47,46 +47,50 @@ import frc.robot.commands.auton.DriveShort;
  */
 
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
-  private final Drivetrain m_drivetrain = new Drivetrain();
-  private final Index indexMotors = new Index();
-  private final Intake intakeMotor = new Intake();
-  private final Launcher launcher = new Launcher();
-  private final Lift liftMotors = new Lift();
-  // private final Lift leftLiftMotor = new Lift();
-  private final Lift rightLiftMotor = new Lift();
-  // private final LiftPivot liftPivotMotors = new LiftPivot();
-
+ 
   // Main driver controller
   private final XboxController driverController = new XboxController(0);
   // Second operator controller
   private final XboxController operatorController = new XboxController(1);
 
-  // Autononmous command references. Update throughout season
-  private final Command autonLaunch1 =
-    new CGLaunch1_DriveNone(indexMotors, intakeMotor, launcher);
+  // The robot's subsystems and commands are defined here...
+  //// Drivetrain
+  private final Drivetrain m_drivetrain = new Drivetrain();
+  
+  //// Intake
+  private final Intake intakeMotor = new Intake();
+  
+  //// Launcher
+  private final Index indexMotors = new Index();
+  private final Launcher launcher = new Launcher();
+  
+  //// Lift 
+  private final Lift liftMotors = new Lift();
+  private final Lift rightLiftMotor = new Lift();
+  // private final Lift leftLiftMotor = new Lift();
+  // private final LiftPivot liftPivotMotors = new LiftPivot();
 
-  private final Command autonLaunch2Drive =
-    new CGLaunch2_DriveStraight(m_drivetrain, indexMotors, intakeMotor, launcher);
-
-  private final Command autonShortDrive =
-    new DriveShort();
-
-  private final Command driveCommand; 
-  private final Command autonStraight =
-    new CGLaunch1_DriveStraight(m_drivetrain, launcher);
-
-  private final Command defaultDriveCommand;
-  // private final Command PathStraight =
-    // new PathStraight(m_drivetrainSubsystem);
-
-  // A chooser for autonomous commands
+  
+  //// Autonomous
   SendableChooser<Command> autonChooser = new SendableChooser<>();
 
-}
+  /** TODO Remove after testing the new chooser setup that contains these commands directly   
+  private final Command autonLaunch1 = new CGLaunch1_DriveNone(indexMotors, intakeMotor, launcher);
 
-  // The container for the robot. Contains subsystems, OI devices, and commands.
+  private final Command autonLaunch2Drive = new CGLaunch2_DriveStraight(m_drivetrain, indexMotors, intakeMotor, launcher);
+
+  private final Command autonShortDrive = new DriveShort();
   
+  private final Command autonStraight = new CGLaunch1_DriveStraight(m_drivetrain, launcher);
+  */
+
+  private final Command driveCommand; 
+  // private final Command defaultDriveCommand;
+
+  // private final Command PathStraight =
+    // new PathStraight(m_drivetrainSubsystem);
+  
+  // The container for the robot. Contains subsystems, OI devices, and commands.
   public RobotContainer() {
 
     // Configure the button bindings
@@ -105,19 +109,30 @@ public class RobotContainer {
     
     m_drivetrain.setDefaultCommand(driveCommand);
     
-    // Add commands to the autonomous command chooser
-    autonChooser.setDefaultOption("Launch 1, No Drive", autonLaunch1);
-    // autonChooser.addOption("Launch 2, Drive", autonLaunch2Drive);
-    // autonChooser.addOption("Drive only", autonShortDrive);
-    autonChooser.addOption("Drive", autonShortDrive);
+    // TODO add and test autonomous files here
+    // AUTONOMOUS chooser
+
+    // Launches high goal inside the tarmac, doesn't drive out
+    autonChooser.setDefaultOption("Launch 1, Drive none",
+      new CGLaunch1_DriveNone(indexMotors, intakeMotor, launcher));
+
+    // Launches high goal inside tarmac, drives out with launch sequence operating
+    autonChooser.addOption("Launch 2, Drive",
+      new CGLaunch2_DriveStraight(m_drivetrain, indexMotors, intakeMotor, launcher));
+
+    // Drives out only. TODO Drivetrain testing purposes only -- would not use in competition
+    autonChooser.addOption("Launch none, Drive test only",
+      new DriveShort());
+
     // autonChooser.addOption("Launch 1 & Drive", autonStraight);
 
     // Puts the chooser on the dashboard
     Shuffleboard.getTab("Auton").add(autonChooser);
 
     // DEBUGGING CODE:
-    System.out.println("subsystem requirements for autonShortDrive");
-    autonShortDrive.getRequirements().forEach((x) -> System.out.println(x));
+    // System.out.println("subsystem requirements for autonShortDrive");
+    // autonShortDrive.getRequirements().forEach((x) -> System.out.println(x));
+
     System.out.println("subsystem requirements for defaultDriveCommand");
     driveCommand.getRequirements().forEach((x) -> System.out.println(x));
   }
@@ -146,7 +161,8 @@ public class RobotContainer {
     final JoystickButton op_LeftBumper = new JoystickButton(operatorController, Button.kLeftBumper.value);
 
     // Defining the actions associated with buttons
-    // Driver Controller button commands
+
+    // DRIVER Controller button commands
 
     // Resets the gyroscope to 0 degrees when back button is pressed
     d_backButton.whenPressed(m_drivetrain::zeroGyroscope);
@@ -218,7 +234,7 @@ public class RobotContainer {
     ));
 
 
-    //Operator Controller commands
+    // OPERATOR Controller commands
 
     // hold left bumper to manually raise both climbing arms, release to stop motors
     op_LeftBumper.whenPressed(new LiftCommand(liftMotors, 0.5));
