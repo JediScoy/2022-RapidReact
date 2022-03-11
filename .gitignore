@@ -179,3 +179,6 @@ imgui.ini
 *.class
 >>>>>>> dev
 *.class
+bin/main/frc/robot/Constants.class
+bin/main/frc/robot/RobotContainer.class
+*.class
