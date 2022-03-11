@@ -183,3 +183,5 @@ bin/main/frc/robot/Constants.class
 bin/main/frc/robot/RobotContainer.class
 *.class
 bin/main/frc/robot/RobotContainer.class
+bin/main/frc/robot/RobotContainer.class
+.gradle/buildOutputCleanup/buildOutputCleanup.lock
