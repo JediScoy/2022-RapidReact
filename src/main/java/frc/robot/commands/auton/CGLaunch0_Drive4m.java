@@ -17,10 +17,10 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 // Autonomous place holder for testing purposes
-public class CGLaunch0_DriveOnly extends SequentialCommandGroup {
-  PathPlannerTrajectory trajectory1 = PathPlanner.loadPath("Straight", 4, 1);
+public class CGLaunch0_Drive4m extends SequentialCommandGroup {
+  PathPlannerTrajectory trajectory1 = PathPlanner.loadPath("1Ball", 3, 1);
 
-    public CGLaunch0_DriveOnly(Drivetrain drivetrain, Index indexMotors, Intake intakeMotor, Launcher launcher) {
+    public CGLaunch0_Drive4m(Drivetrain drivetrain, Index indexMotors, Intake intakeMotor, Launcher launcher) {
       addCommands(
         // Start the Launcher - speedFront is first double, speedBack is second
             new InstantCommand(()

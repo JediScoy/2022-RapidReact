@@ -20,7 +20,7 @@ import frc.robot.subsystems.Launcher;
 public class CGLaunch1_DriveStraight extends SequentialCommandGroup {
   /** Creates a new S1_2BallCommandGroup. */
   public CGLaunch1_DriveStraight(Drivetrain drivetrain, Launcher launch) {
-    PathPlannerTrajectory trajectory1 = PathPlanner.loadPath("Straight", 2, 1);
+    PathPlannerTrajectory trajectory1 = PathPlanner.loadPath("1Ball", 4, 2);
 
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
