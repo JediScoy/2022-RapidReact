@@ -4,6 +4,7 @@
 
 package frc.robot.commands.auton;
 
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.DriveCommand;
@@ -17,8 +18,7 @@ public class Drive2Seconds extends SequentialCommandGroup {
   public Drive2Seconds(Drivetrain drivetrain) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new DriveCommand(drivetrain, () -> {return 0;}, () -> {return 0.3;}, () -> {return 0.0;}),
-                new WaitCommand(2),
+    addCommands(new ParallelDeadlineGroup(new WaitCommand(2), new DriveCommand(drivetrain, () -> {return 0;}, () -> {return 0.3;}, () -> {return 0.0;})),
                 new DriveCommand(drivetrain, () -> {return 0;}, () -> {return 0.0;}, () -> {return 0.0;}));
   }
 }
