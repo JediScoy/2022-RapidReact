@@ -233,6 +233,7 @@ public class Drivetrain extends SubsystemBase {
       // Changed to states -> desiredStates  
       //Ensures we aren't going past the speed that we should be going
         SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, MAX_VELOCITY_METERS_PER_SECOND);
+        odometry.update(getGyroscopeRotation(), desiredStates);
         
         //these seem to maintain the same movement as the robot continues
         //This part is for AUTON
@@ -249,7 +250,6 @@ public class Drivetrain extends SubsystemBase {
         desiredStates[1].speedMetersPerSecond = Math.abs(m_frontRightModule.getDriveVelocity());
         desiredStates[2].speedMetersPerSecond = Math.abs(m_backLeftModule.getDriveVelocity());
         desiredStates[3].speedMetersPerSecond = Math.abs(m_backRightModule.getDriveVelocity());     
-        odometry.update(getGyroscopeRotation(), desiredStates);
 
         SmartDashboard.putNumber("Current X", getPose().getX()); 
         SmartDashboard.putNumber("Current Y", getPose().getY()); 
@@ -291,66 +291,66 @@ public class Drivetrain extends SubsystemBase {
     SmartDashboard.putNumber("Current Y", getPose().getY());
 
     
-//     SmartDashboard.putNumber("Target", target);
+    // SmartDashboard.putNumber("Target", target);
 
       
-     // SmartDashboard.putNumber("Target Pose Angle", targetPose.getRotation().getDegrees());
+    // SmartDashboard.putNumber("Target Pose Angle", targetPose.getRotation().getDegrees());
   }
 
-        public void resetEncoders() {
-        }
+    public void resetEncoders() {
+    }
 
-        public int getFrontRightEncoderValue() {
-            return 0;
-        }
+    public int getFrontRightEncoderValue() {
+        return 0;
+    }
 
-        public void driveForward(int i) {
-        }
+    public void driveForward(int i) {
+    }
 
-        public void driveBackward(int i) {
-        }
+    public void driveBackward(int i) {
+    }
 
-        public Command createCommandForTrajectory(PathPlannerTrajectory trajectory) {
-          return new PPSwerveControllerCommand(
-                trajectory,
-                this::getPose, // Functional interface to feed supplier
-                this.m_kinematics,
-          
-                // Position controllers
-                new PIDController(kPXController, 0, 0),
-                new PIDController(kPYController, 0, 0),
-                thetaController,
-                this::setModuleStates,
-                this
-          );
-    
-      }
-    
-      public void driveForward(double speed) {
-            m_frontLeftModule.set(speed, 0);
-            m_frontRightModule.set(speed, 0);
-            m_backLeftModule.set(speed, 0);
-            m_backRightModule.set(speed, 0);
-      }
-    
-      public void driveForwardAt40() {
-          m_frontLeftModule.set(0.4, 0);
-          m_frontRightModule.set(0.4, 0);
-          m_backLeftModule.set(0.4, 0);
-          m_backRightModule.set(0.4, 0);
-      }
-    
-      public void driveBackwardAt80() {
-          m_frontLeftModule.set(-0.8, 0);
-          m_frontRightModule.set(-0.8, 0);
-          m_backLeftModule.set(-0.8, 0);
-          m_backRightModule.set(-0.8, 0);
-      }
-    
-      public void driveBackward(double speed) {
-          m_frontLeftModule.set(-1*speed, 0);
-          m_frontRightModule.set(-1*speed, 0);
-          m_backLeftModule.set(-1*speed, 0);
-          m_backRightModule.set(-1*speed, 0);
-      }
+    public Command createCommandForTrajectory(PathPlannerTrajectory trajectory) {
+      return new PPSwerveControllerCommand(
+            trajectory,
+            this::getPose, // Functional interface to feed supplier
+            this.m_kinematics,
+      
+            // Position controllers
+            new PIDController(kPXController, 0, 0),
+            new PIDController(kPYController, 0, 0),
+            thetaController,
+            this::setModuleStates,
+            this
+      );
+
+  }
+
+  public void driveForward(double speed) {
+        m_frontLeftModule.set(speed, 0);
+        m_frontRightModule.set(speed, 0);
+        m_backLeftModule.set(speed, 0);
+        m_backRightModule.set(speed, 0);
+  }
+
+  public void driveForwardAt40() {
+      m_frontLeftModule.set(0.4, 0);
+      m_frontRightModule.set(0.4, 0);
+      m_backLeftModule.set(0.4, 0);
+      m_backRightModule.set(0.4, 0);
+  }
+
+  public void driveBackwardAt80() {
+      m_frontLeftModule.set(-0.8, 0);
+      m_frontRightModule.set(-0.8, 0);
+      m_backLeftModule.set(-0.8, 0);
+      m_backRightModule.set(-0.8, 0);
+  }
+
+  public void driveBackward(double speed) {
+      m_frontLeftModule.set(-1*speed, 0);
+      m_frontRightModule.set(-1*speed, 0);
+      m_backLeftModule.set(-1*speed, 0);
+      m_backRightModule.set(-1*speed, 0);
+  }
 }
