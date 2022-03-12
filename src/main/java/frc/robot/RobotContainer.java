@@ -34,10 +34,12 @@ import frc.robot.commands.Lift.AutoLiftCommandBar2;
 import frc.robot.commands.Lift.LiftCommand;
 import frc.robot.commands.Lift.LockLiftCommandBar1;
 import frc.robot.commands.Lift.LockLiftCommandBar2;
+import frc.robot.commands.auton.CGLaunch0_Drive4m;
+import frc.robot.commands.auton.CGLaunch0_DriveV;
 import frc.robot.commands.auton.CGLaunch1_DriveNone;
-// import frc.robot.commands.auton.CGLaunch1_DriveStraight;
+import frc.robot.commands.auton.CGLaunch2Plus_Drive;
+import frc.robot.commands.auton.CGLaunch2_Drive;
 import frc.robot.commands.auton.CGLaunch2_DriveStraight;
-import frc.robot.commands.auton.DriveShort;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -103,9 +105,9 @@ public class RobotContainer {
     // Right stick X axis -> rotation
     driveCommand = new DriveCommand(
       m_drivetrain,
-      () -> -modifyAxis(driverController.getLeftY()) * Drivetrain.MAX_VELOCITY_METERS_PER_SECOND,
-      () -> -modifyAxis(driverController.getLeftX()) * Drivetrain.MAX_VELOCITY_METERS_PER_SECOND,
-      () -> -modifyAxis(driverController.getRightX()) * Drivetrain.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND);
+      () -> -modifyAxis(driverController.getLeftY()) * Drivetrain.MAX_VELOCITY_METERS_PER_SECOND, // divide by 4 for slow mo
+      () -> -modifyAxis(driverController.getLeftX()) * Drivetrain.MAX_VELOCITY_METERS_PER_SECOND, // divide by 4 for slow mo
+      () -> -modifyAxis(driverController.getRightX()) * Drivetrain.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND); // divide by 4 for slow mo
     
     m_drivetrain.setDefaultCommand(driveCommand);
     
@@ -117,18 +119,25 @@ public class RobotContainer {
       new CGLaunch1_DriveNone(indexMotors, intakeMotor, launcher));
 
     // Launches high goal inside tarmac, drives out with launch sequence operating
-    autonChooser.addOption("Launch 2, Drive",
-      new CGLaunch2_DriveStraight(m_drivetrain, indexMotors, intakeMotor, launcher));
+    autonChooser.addOption("Launch 2",
+      new CGLaunch2_Drive(m_drivetrain, indexMotors, intakeMotor, launcher));
+    
+    autonChooser.addOption("Launch 2, Pickup 1",
+      new CGLaunch2Plus_Drive(m_drivetrain, indexMotors, intakeMotor, launcher));
+    
+    autonChooser.addOption("Drive 4m",
+      new CGLaunch0_Drive4m(m_drivetrain, indexMotors, intakeMotor, launcher));
 
-    // Drives out only. TODO Drivetrain testing purposes only -- would not use in competition
+    autonChooser.addOption("Drive V",
+      new CGLaunch0_DriveV(m_drivetrain, indexMotors, intakeMotor, launcher));
+    
+      // Drives out only. TODO Drivetrain testing purposes only -- would not use in competition
     // Tested, but it doesn't function at the moment
-    autonChooser.addOption("Launch none, Drive test only",
-      new DriveShort());
-
-    // autonChooser.addOption("Launch 1 & Drive", autonStraight);
+    // autonChooser.addOption("Drive Short test",
+    // new CGLaunch0_DriveShort());
 
     // Puts the chooser on the dashboard
-    Shuffleboard.getTab("Auton").add(autonChooser);
+    Shuffleboard.getTab("Auton").add(autonChooser).withSize(2, 4);
 
     // DEBUGGING CODE:
     // System.out.println("subsystem requirements for autonShortDrive");

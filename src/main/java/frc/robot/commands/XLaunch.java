@@ -8,16 +8,13 @@ public class XLaunch extends ParallelDeadlineGroup{
 
     public XLaunch(int time, Command launchcommand, Command xmode) {
         
-        super((Command)(new WaitCommand(time)), launchcommand, xmode);//FIXME: may be buggy; harrowing conversion?
+        super((Command)(new WaitCommand(time)), launchcommand, xmode);
     }
 
 
     public XLaunch(Command deadline, Command[] commands) {
         super(deadline, commands);
 
-
-
-        //TODO Auto-generated constructor stub
     }
 
 
