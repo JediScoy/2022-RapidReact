@@ -73,6 +73,8 @@ public class RobotContainer {
   // private final Lift leftLiftMotor = new Lift();
   // private final LiftPivot liftPivotMotors = new LiftPivot();
 
+  //// Limelight
+  private final Limelight limelight = new Limelight();
   
   //// Autonomous
   SendableChooser<Command> autonChooser = new SendableChooser<>();
@@ -241,6 +243,20 @@ public class RobotContainer {
       () -> -modifyAxis(driverController.getRightX()) * Drivetrain.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND / 6
     ));
     d_ButtonB.whenReleased(new DriveCommand(
+      m_drivetrain,
+      () -> -modifyAxis(driverController.getLeftY()) * Drivetrain.MAX_VELOCITY_METERS_PER_SECOND,
+      () -> -modifyAxis(driverController.getLeftX()) * Drivetrain.MAX_VELOCITY_METERS_PER_SECOND,
+      () -> -modifyAxis(driverController.getRightX()) * Drivetrain.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
+    ));
+
+    //Hold X to rotationally align the robot (driver still has control of translational motion)
+    op_ButtonX.whenPressed(new DriveCommand(
+      m_drivetrain,
+      () -> -modifyAxis(driverController.getLeftY()) * Drivetrain.MAX_VELOCITY_METERS_PER_SECOND,
+      () -> -modifyAxis(driverController.getLeftX()) * Drivetrain.MAX_VELOCITY_METERS_PER_SECOND,
+      () -> {return -limelight.getX() * Constants.kPThetaLimelightController;}
+    ));
+    op_ButtonX.whenReleased(new DriveCommand(
       m_drivetrain,
       () -> -modifyAxis(driverController.getLeftY()) * Drivetrain.MAX_VELOCITY_METERS_PER_SECOND,
       () -> -modifyAxis(driverController.getLeftX()) * Drivetrain.MAX_VELOCITY_METERS_PER_SECOND,

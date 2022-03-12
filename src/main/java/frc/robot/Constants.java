@@ -108,6 +108,7 @@ public final class Constants {
      public static final double kPThetaController = 0.0; // default 3.0; forum value, our last was 0.01
      public static final int kTimeoutMs = 30; // Added
 
+     public static final double kPThetaLimelightController = 1.0/30.0;
  
      public static final TrapezoidProfile.Constraints kThetaControllerConstraints = //
      new TrapezoidProfile.Constraints(
