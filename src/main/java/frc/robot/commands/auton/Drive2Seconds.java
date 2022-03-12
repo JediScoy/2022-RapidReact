@@ -18,7 +18,8 @@ public class Drive2Seconds extends SequentialCommandGroup {
   public Drive2Seconds(Drivetrain drivetrain) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new ParallelDeadlineGroup(new WaitCommand(2), new DriveCommand(drivetrain, () -> {return 0;}, () -> {return 0.3;}, () -> {return 0.0;})),
-                new DriveCommand(drivetrain, () -> {return 0;}, () -> {return 0.0;}, () -> {return 0.0;}));
+
+    // Wait command will stop the paralleldeadlinegroup, other conditions could subsituted for time to make the group stop
+    addCommands(new ParallelDeadlineGroup(new WaitCommand(8), new DriveCommand(drivetrain, () -> {return 0;}, () -> {return 0.7;}, () -> {return 0.0;})));
   }
 }
