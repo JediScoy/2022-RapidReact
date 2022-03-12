@@ -40,6 +40,7 @@ import frc.robot.commands.auton.CGLaunch1_DriveNone;
 import frc.robot.commands.auton.CGLaunch2Plus_Drive;
 import frc.robot.commands.auton.CGLaunch2_Drive;
 import frc.robot.commands.auton.CGLaunch2_DriveStraight;
+import frc.robot.commands.auton.Drive2Seconds;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -130,6 +131,9 @@ public class RobotContainer {
 
     autonChooser.addOption("Drive V",
       new CGLaunch0_DriveV(m_drivetrain, indexMotors, intakeMotor, launcher));
+
+    autonChooser.addOption("Drive2Seconds",
+      new Drive2Seconds(m_drivetrain));
     
       // Drives out only. TODO Drivetrain testing purposes only -- would not use in competition
     // Tested, but it doesn't function at the moment
