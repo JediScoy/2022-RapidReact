@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.auton;
+package frc.robot.commands.PathPlannerBased;
 
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
@@ -17,10 +17,10 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 // Autonomous place holder for testing purposes
-public class CGLaunch0_DriveV extends SequentialCommandGroup {
-  PathPlannerTrajectory trajectory1 = PathPlanner.loadPath("PATHV", 4, 2);
+public class CG_2BallDrive extends SequentialCommandGroup {
+  PathPlannerTrajectory trajectory1 = PathPlanner.loadPath("2Ball", 4, 2);
 
-    public CGLaunch0_DriveV(Drivetrain drivetrain, Index indexMotors, Intake intakeMotor, Launcher launcher) {
+    public CG_2BallDrive(Drivetrain drivetrain, Index indexMotors, Intake intakeMotor, Launcher launcher) {
       addCommands(
         // Start the Launcher - speedFront is first double, speedBack is second
             new InstantCommand(()

@@ -34,13 +34,12 @@ import frc.robot.commands.Lift.AutoLiftCommandBar2;
 import frc.robot.commands.Lift.LiftCommand;
 import frc.robot.commands.Lift.LockLiftCommandBar1;
 import frc.robot.commands.Lift.LockLiftCommandBar2;
-import frc.robot.commands.auton.CGLaunch0_Drive4m;
-import frc.robot.commands.auton.CGLaunch0_DriveV;
-import frc.robot.commands.auton.CGLaunch1_DriveNone;
-import frc.robot.commands.auton.CGLaunch2Plus_Drive;
-import frc.robot.commands.auton.CGLaunch2_Drive;
-import frc.robot.commands.auton.CGLaunch2_DriveStraight;
-import frc.robot.commands.auton.Drive2Seconds;
+import frc.robot.commands.PathPlannerBased.CG_2BalDrivePlus;
+import frc.robot.commands.PathPlannerBased.CG_2BallDrive;
+import frc.robot.commands.PathPlannerBased.CG_1BallDrive2m;
+import frc.robot.commands.PathPlannerBased.CG_DriveV;
+import frc.robot.commands.auton.CG_1BallDriveNone;
+import frc.robot.commands.auton.CG_1BallDriveStraight;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -119,23 +118,23 @@ public class RobotContainer {
 
     // Launches high goal inside the tarmac, doesn't drive out
     autonChooser.setDefaultOption("Launch 1, Drive none",
-      new CGLaunch1_DriveNone(indexMotors, intakeMotor, launcher));
+      new CG_1BallDriveNone(indexMotors, intakeMotor, launcher));
 
     // Launches high goal inside tarmac, drives out with launch sequence operating
     autonChooser.addOption("Launch 2",
-      new CGLaunch2_Drive(m_drivetrain, indexMotors, intakeMotor, launcher));
+      new CG_2BallDrive(m_drivetrain, indexMotors, intakeMotor, launcher));
     
     autonChooser.addOption("Launch 2, Pickup 1",
-      new CGLaunch2Plus_Drive(m_drivetrain, indexMotors, intakeMotor, launcher));
+      new CG_2BalDrivePlus(m_drivetrain, indexMotors, intakeMotor, launcher));
     
     autonChooser.addOption("Drive 4m",
-      new CGLaunch0_Drive4m(m_drivetrain, indexMotors, intakeMotor, launcher));
+      new CG_1BallDrive2m(m_drivetrain, indexMotors, intakeMotor, launcher));
 
     autonChooser.addOption("Drive V",
-      new CGLaunch0_DriveV(m_drivetrain, indexMotors, intakeMotor, launcher));
+      new CG_DriveV(m_drivetrain, indexMotors, intakeMotor, launcher));
 
-    autonChooser.addOption("Drive2Seconds",
-      new Drive2Seconds(m_drivetrain));
+    autonChooser.addOption("1 Ball, Drive straight",
+      new CG_1BallDriveStraight(m_drivetrain));
     
       // Drives out only. TODO Drivetrain testing purposes only -- would not use in competition
     // Tested, but it doesn't function at the moment

@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.auton;
+package frc.robot.commands.PathPlannerBased;
 
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
@@ -17,9 +17,9 @@ import frc.robot.subsystems.Launcher;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class CGLaunch1_DriveStraight extends SequentialCommandGroup {
+public class CG_1BallDriveStraight extends SequentialCommandGroup {
   /** Creates a new S1_2BallCommandGroup. */
-  public CGLaunch1_DriveStraight(Drivetrain drivetrain, Launcher launch) {
+  public CG_1BallDriveStraight(Drivetrain drivetrain, Launcher launch) {
     PathPlannerTrajectory trajectory1 = PathPlanner.loadPath("1Ball", 4, 2);
 
     // Add your commands in the addCommands() call, e.g.
