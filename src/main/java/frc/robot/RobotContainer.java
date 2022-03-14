@@ -280,7 +280,7 @@ public class RobotContainer {
     // press Y to auto raise both climbing arms to encoder value of bar #2
     op_ButtonY.whenPressed(new AutoLiftCommandBar2(liftMotors, 0.5));
 
-    // press B to auto lower both climbing arms to the encoder value of when the locking arms engage on bar #2
+    // press X to auto lower both climbing arms to the encoder value of when the locking arms engage on bar #2
     op_ButtonX.whenPressed(new LockLiftCommandBar2(liftMotors, -0.5));
 
     /** Did not work, no movement
