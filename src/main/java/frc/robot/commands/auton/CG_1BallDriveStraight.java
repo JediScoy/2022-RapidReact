@@ -55,8 +55,8 @@ public class CG_1BallDriveStraight extends SequentialCommandGroup {
                 new DriveCommand(
                   drivetrain,
                   // Trying to pass a translationXSupploier, translationYSupplier, and rotationalSupplier
-                  () -> {return 0.0;}, //Forwards speed
-                  () -> {return 0.7;}, //Left speed
+                  () -> {return 0.7;}, //Forwards speed
+                  () -> {return 0.0;}, //Left speed
                   () -> {return 0.0;}) //Turn speed
                 ) // end of ParallelDeadlineGroup
       ))); //end of addCommands
