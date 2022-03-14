@@ -13,16 +13,18 @@ public class Interpolator {
     //This must be monotonically decreasing
 
     // FIXME Find these values from Limelight
-    private static double angles[] = {14.02984, 13.06595, 10.573};
+    private static double angles[] = {20.00, 18.00, 11.75, 3.75};
     
     //This is an ordered list of "speed" outputs (this example is for a PID loop being fed raw encoder values)
     // FIXME Find through trial and error
     private static double speeds[] = {0.30, 0.35, 0.40, 0.45};
     
+    // The front and back launch motors need to have different speeds,
+    // so that's why there is a front and back speed
     // Speed of the front launcher motor
-    private static double speedFront[] = {0.30, 0.35, 0.40, 0.45}; 
+    private static double speedFront[] = {0.30, 0.35, 0.40, 0.30}; 
     // Speed of the back launcher motor
-    private static double speedBack[] = {0.30, 0.35, 0.40, 0.45};
+    private static double speedBack[] = {0.35, 0.40, 0.45, 0.60};
     
     //If it consistently shoots too low, this variable is used to correct that
     private static double m_offset = 0;
