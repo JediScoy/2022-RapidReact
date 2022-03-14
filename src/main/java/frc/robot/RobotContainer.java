@@ -247,6 +247,7 @@ public class RobotContainer {
     ));
 
     //Hold X to rotationally align the robot (driver still has control of translational motion)
+    //FIXME duplicate button
     op_ButtonX.whenPressed(new DriveCommand(
       m_drivetrain,
       () -> -modifyAxis(driverController.getLeftY()) * Drivetrain.MAX_VELOCITY_METERS_PER_SECOND,
