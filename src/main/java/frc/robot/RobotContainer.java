@@ -36,8 +36,8 @@ import frc.robot.commands.Lift.LockLiftCommandBar1;
 import frc.robot.commands.Lift.LockLiftCommandBar2;
 import frc.robot.commands.PathPlannerBased.CG_2BalDrivePlus;
 import frc.robot.commands.PathPlannerBased.CG_2BallDrive;
-import frc.robot.commands.PathPlannerBased.CG_1BallDrive2m;
-import frc.robot.commands.PathPlannerBased.CG_DriveV;
+import frc.robot.commands.PathPlannerBased.Drive2m;
+import frc.robot.commands.PathPlannerBased.DriveV;
 import frc.robot.commands.auton.CG_1BallDriveNone;
 import frc.robot.commands.auton.CG_1BallDriveStraight;
 
@@ -125,11 +125,11 @@ public class RobotContainer {
     autonChooser.addOption("Launch 2, Pickup 1",
       new CG_2BalDrivePlus(m_drivetrain, indexMotors, intakeMotor, launcher));
     
-    autonChooser.addOption("Drive 4m",
-      new CG_1BallDrive2m(m_drivetrain, indexMotors, intakeMotor, launcher));
+    autonChooser.addOption("Drive 2m",
+      new Drive2m(m_drivetrain));
 
     autonChooser.addOption("Drive V",
-      new CG_DriveV(m_drivetrain, indexMotors, intakeMotor, launcher));
+      new DriveV(m_drivetrain, indexMotors, intakeMotor, launcher));
 
     autonChooser.setDefaultOption("1 Ball, Drive straight",
       new CG_1BallDriveStraight(m_drivetrain, indexMotors, intakeMotor, launcher));

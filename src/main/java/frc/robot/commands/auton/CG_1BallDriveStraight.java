@@ -19,7 +19,6 @@ import frc.robot.commands.IntakeSpeed;
 import frc.robot.commands.LauncherSpeed;
 import frc.robot.subsystems.Index;
 import frc.robot.subsystems.Launcher;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:

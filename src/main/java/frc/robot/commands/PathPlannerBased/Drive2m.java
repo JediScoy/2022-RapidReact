@@ -5,9 +5,6 @@
 package frc.robot.commands.PathPlannerBased;
 
 import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.Index;
-import frc.robot.subsystems.Launcher;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 import com.pathplanner.lib.PathPlanner;
@@ -17,10 +14,10 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 // Autonomous place holder for testing purposes
-public class CG_1BallDrive2m extends SequentialCommandGroup {
-  PathPlannerTrajectory trajectory1 = PathPlanner.loadPath("1Ball", 3, 1);
+public class Drive2m extends SequentialCommandGroup {
+  PathPlannerTrajectory trajectory1 = PathPlanner.loadPath("Drive2m", 3, 1);
 
-    public CG_1BallDrive2m(Drivetrain drivetrain, Index indexMotors, Intake intakeMotor, Launcher launcher) {
+    public Drive2m(Drivetrain drivetrain) {
       addCommands(
         // Start the Launcher - speedFront is first double, speedBack is second
             new InstantCommand(()

@@ -17,10 +17,10 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 // Autonomous place holder for testing purposes
-public class CG_DriveV extends SequentialCommandGroup {
+public class DriveV extends SequentialCommandGroup {
   PathPlannerTrajectory trajectory1 = PathPlanner.loadPath("PATHV", 4, 2);
 
-    public CG_DriveV(Drivetrain drivetrain, Index indexMotors, Intake intakeMotor, Launcher launcher) {
+    public DriveV(Drivetrain drivetrain, Index indexMotors, Intake intakeMotor, Launcher launcher) {
       addCommands(
         // Start the Launcher - speedFront is first double, speedBack is second
             new InstantCommand(()

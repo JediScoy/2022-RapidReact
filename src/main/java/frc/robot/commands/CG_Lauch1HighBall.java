@@ -10,9 +10,9 @@ import frc.robot.subsystems.Launcher;
  * It will allow easier recycing of launcer code for auton
  * */
 
-public class CGLauncherBall1 extends SequentialCommandGroup {
+public class CG_Lauch1HighBall extends SequentialCommandGroup {
     
-    public CGLauncherBall1(Launcher launcher, Intake intakeMotor, Index indexMotors) {
+    public CG_Lauch1HighBall(Launcher launcher, Intake intakeMotor, Index indexMotors) {
      addCommands(
        new LaunchHigh(launcher), //.withTimeout(0.75),
        new IndexSpeed(indexMotors, 0.5), // .withTimeout(0.25))
