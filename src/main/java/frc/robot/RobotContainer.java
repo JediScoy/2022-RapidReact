@@ -146,13 +146,13 @@ public class RobotContainer {
     // System.out.println("subsystem requirements for autonShortDrive");
     // autonShortDrive.getRequirements().forEach((x) -> System.out.println(x));
 
-    System.out.println("subsystem requirements for defaultDriveCommand");
+    System.out.println("subsystem requirements for DriveCommand");
     driveCommand.getRequirements().forEach((x) -> System.out.println(x));
   }
 
   public void debugMethod () {
     // SmartDashboard.putBoolean("Short Drive", autonShortDrive.isScheduled());
-    SmartDashboard.putBoolean("defaultDriveCommand", driveCommand.isScheduled());
+    SmartDashboard.putBoolean("DriveCommand", driveCommand.isScheduled());
   }
 
   private void configureButtonBindings() {
