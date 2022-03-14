@@ -231,7 +231,7 @@ public class Drivetrain extends SubsystemBase {
 
   public void setModuleStates(SwerveModuleState[] desiredStates) {
       // Changed to states -> desiredStates  
-      //Ensures we aren't going past the speed that we should be going
+      // Ensures we aren't going past the speed that we should be going
         SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, MAX_VELOCITY_METERS_PER_SECOND);
         odometry.update(getGyroscopeRotation(), desiredStates);
         
@@ -340,17 +340,4 @@ public class Drivetrain extends SubsystemBase {
       m_backRightModule.set(0.4, 0);
   }
 
-  public void driveBackwardAt80() {
-      m_frontLeftModule.set(-0.8, 0);
-      m_frontRightModule.set(-0.8, 0);
-      m_backLeftModule.set(-0.8, 0);
-      m_backRightModule.set(-0.8, 0);
-  }
-
-  public void driveBackward(double speed) {
-      m_frontLeftModule.set(-1*speed, 0);
-      m_frontRightModule.set(-1*speed, 0);
-      m_backLeftModule.set(-1*speed, 0);
-      m_backRightModule.set(-1*speed, 0);
-  }
 }

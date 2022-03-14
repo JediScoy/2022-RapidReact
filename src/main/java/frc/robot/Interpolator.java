@@ -11,10 +11,13 @@ public class Interpolator {
 
     //This is an ordered list of "distance" measurements (this example is the y-angle reported by the Limelight).
     //This must be monotonically decreasing
-    private static double angles[] = {14.02984, 13.06595, 10.573, 8.05872, 7.395187, 6.2501, 5.351089, 4.949104, 4.49338, 3.239723, 2.73799, 2.420449, 1.858061, 1.541063, 1.481606};
+
+    // FIXME Find these values from Limelight
+    private static double angles[] = {14.02984, 13.06595, 10.573};
     
     //This is an ordered list of "speed" outputs (this example is for a PID loop being fed raw encoder values)
-    private static double speeds[] = {13500, 13000, 13000, 13000, 12700, 12700, 12700, 12700, 12800, 13450, 14000, 15000, 16000, 17600, 18000};
+    // FIXME Find through trial and error
+    private static double speeds[] = {0.35, 0.40, 0.45};
     
     //If it consistently shoots too low, this variable is used to correct that
     private static double m_offset = 0;
