@@ -170,6 +170,8 @@ public class RobotContainer {
     final JoystickButton op_ButtonB = new JoystickButton(operatorController, Button.kB.value);
     final JoystickButton op_ButtonX = new JoystickButton(operatorController, Button.kX.value);
     final JoystickButton op_ButtonY = new JoystickButton(operatorController, Button.kY.value);
+    final JoystickButton op_StartButton = new JoystickButton(operatorController, Button.kStart.value);
+    final JoystickButton op_BackButton = new JoystickButton(operatorController, Button.kBack.value);
     final JoystickButton op_RightBumper = new JoystickButton(operatorController, Button.kRightBumper.value);
     final JoystickButton op_LeftBumper = new JoystickButton(operatorController, Button.kLeftBumper.value);
 
@@ -246,23 +248,22 @@ public class RobotContainer {
       () -> -modifyAxis(driverController.getRightX()) * Drivetrain.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
     ));
 
-    //Hold X to rotationally align the robot (driver still has control of translational motion)
-    //FIXME duplicate button
-    op_ButtonX.whenPressed(new DriveCommand(
-      m_drivetrain,
-      () -> -modifyAxis(driverController.getLeftY()) * Drivetrain.MAX_VELOCITY_METERS_PER_SECOND,
-      () -> -modifyAxis(driverController.getLeftX()) * Drivetrain.MAX_VELOCITY_METERS_PER_SECOND,
-      () -> {return -limelight.getX() * Constants.kPThetaLimelightController;}
-    ));
-    op_ButtonX.whenReleased(new DriveCommand(
-      m_drivetrain,
-      () -> -modifyAxis(driverController.getLeftY()) * Drivetrain.MAX_VELOCITY_METERS_PER_SECOND,
-      () -> -modifyAxis(driverController.getLeftX()) * Drivetrain.MAX_VELOCITY_METERS_PER_SECOND,
-      () -> -modifyAxis(driverController.getRightX()) * Drivetrain.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
-    ));
-
 
     // OPERATOR Controller commands
+
+    //Hold X to rotationally align the robot (driver still has control of translational motion)
+      op_ButtonX.whenPressed(new DriveCommand(
+        m_drivetrain,
+          () -> -modifyAxis(driverController.getLeftY()) * Drivetrain.MAX_VELOCITY_METERS_PER_SECOND,
+          () -> -modifyAxis(driverController.getLeftX()) * Drivetrain.MAX_VELOCITY_METERS_PER_SECOND,
+          () -> {return -limelight.getX() * Constants.kPThetaLimelightController;}
+      ));
+      op_ButtonX.whenReleased(new DriveCommand(
+          m_drivetrain,
+          () -> -modifyAxis(driverController.getLeftY()) * Drivetrain.MAX_VELOCITY_METERS_PER_SECOND,
+          () -> -modifyAxis(driverController.getLeftX()) * Drivetrain.MAX_VELOCITY_METERS_PER_SECOND,
+          () -> -modifyAxis(driverController.getRightX()) * Drivetrain.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
+      ));
 
     // hold left bumper to manually raise both climbing arms, release to stop motors
     op_LeftBumper.whenPressed(new LiftCommand(liftMotors, 0.5));
@@ -275,14 +276,14 @@ public class RobotContainer {
     // press A to auto raise both climbing arms to the encoder value of bar #1
     op_ButtonA.whenPressed(new AutoLiftCommandBar1(liftMotors, 0.5));
 
-    // press B to auto lower both climbing arms to the encoder value of when the locking arms engage on bar #1
-    op_ButtonB.whenPressed(new LockLiftCommandBar1(liftMotors, -0.5));
+    // press Back Button to auto lower both climbing arms to the encoder value of when the locking arms engage on bar #1
+    op_BackButton.whenPressed(new LockLiftCommandBar1(liftMotors, -0.5));
 
     // press Y to auto raise both climbing arms to encoder value of bar #2
     op_ButtonY.whenPressed(new AutoLiftCommandBar2(liftMotors, 0.5));
 
-    // press X to auto lower both climbing arms to the encoder value of when the locking arms engage on bar #2
-    op_ButtonX.whenPressed(new LockLiftCommandBar2(liftMotors, -0.5));
+    // press Start Button to auto lower both climbing arms to the encoder value of when the locking arms engage on bar #2
+    op_StartButton.whenPressed(new LockLiftCommandBar2(liftMotors, -0.5));
 
     /** Did not work, no movement
     // Use left stick up and down to manually move ONLY left climbing arm up and down
