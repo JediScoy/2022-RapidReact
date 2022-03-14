@@ -117,8 +117,6 @@ public class RobotContainer {
     // AUTONOMOUS chooser
 
     // Launches high goal inside the tarmac, doesn't drive out
-    autonChooser.setDefaultOption("Launch 1, Drive none",
-      new CG_1BallDriveNone(indexMotors, intakeMotor, launcher));
 
     // Launches high goal inside tarmac, drives out with launch sequence operating
     autonChooser.addOption("Launch 2",
@@ -133,7 +131,7 @@ public class RobotContainer {
     autonChooser.addOption("Drive V",
       new CG_DriveV(m_drivetrain, indexMotors, intakeMotor, launcher));
 
-    autonChooser.addOption("1 Ball, Drive straight",
+    autonChooser.setDefaultOption("1 Ball, Drive straight",
       new CG_1BallDriveStraight(m_drivetrain, indexMotors, intakeMotor, launcher));
     
       // Drives out only. TODO Drivetrain testing purposes only -- would not use in competition
