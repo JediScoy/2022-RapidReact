@@ -17,7 +17,12 @@ public class Interpolator {
     
     //This is an ordered list of "speed" outputs (this example is for a PID loop being fed raw encoder values)
     // FIXME Find through trial and error
-    private static double speeds[] = {0.35, 0.40, 0.45};
+    private static double speeds[] = {0.30, 0.35, 0.40, 0.45};
+    
+    // Speed of the front launcher motor
+    private static double speedFront[] = {0.30, 0.35, 0.40, 0.45}; 
+    // Speed of the back launcher motor
+    private static double speedBack[] = {0.30, 0.35, 0.40, 0.45};
     
     //If it consistently shoots too low, this variable is used to correct that
     private static double m_offset = 0;

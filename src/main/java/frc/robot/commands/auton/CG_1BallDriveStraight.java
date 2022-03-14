@@ -50,6 +50,7 @@ public class CG_1BallDriveStraight extends SequentialCommandGroup {
               new ParallelDeadlineGroup(
                 // Wait command will stop the paralleldeadlinegroup
                 // Other conditions could subsituted for time to make the group stop
+                // 4 seconds of drivetime at 0.70 equates to 105 inches of x,y movement
                 new WaitCommand(4),
                 new DriveCommand(
                   drivetrain, 

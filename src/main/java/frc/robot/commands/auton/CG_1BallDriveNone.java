@@ -20,10 +20,10 @@ public class CG_1BallDriveNone extends SequentialCommandGroup {
     public CG_1BallDriveNone(Index indexMotors, Intake intakeMotor, Launcher launcher) {
       addCommands(
       // Start the Launcher - speedFront is first double, speedBack is second
-        new LauncherSpeed(launcher, 0.35, 0.40).withTimeout(0.75),
+        new LauncherSpeed(launcher, 0.30, 0.35).withTimeout(0.75),
           new SequentialCommandGroup(
           // Maintain Launcher speed
-            new LauncherSpeed(launcher, 0.35, 0.40).withTimeout(0.25).alongWith( 
+            new LauncherSpeed(launcher, 0.30, 0.35).withTimeout(0.25).alongWith( 
             // Index the ball #1 into the running Launcher
               new IndexSpeed(indexMotors, 0.5).withTimeout(0.25)), 
                 new ParallelCommandGroup (
