@@ -134,7 +134,7 @@ public class RobotContainer {
       new CG_DriveV(m_drivetrain, indexMotors, intakeMotor, launcher));
 
     autonChooser.addOption("1 Ball, Drive straight",
-      new CG_1BallDriveStraight(m_drivetrain));
+      new CG_1BallDriveStraight(m_drivetrain, indexMotors, intakeMotor, launcher));
     
       // Drives out only. TODO Drivetrain testing purposes only -- would not use in competition
     // Tested, but it doesn't function at the moment

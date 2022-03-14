@@ -13,25 +13,43 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.DriveCommand;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Intake;
+import frc.robot.commands.IndexSpeed;
+import frc.robot.commands.IntakeSpeed;
+import frc.robot.commands.LauncherSpeed;
+import frc.robot.subsystems.Index;
+import frc.robot.subsystems.Launcher;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class CG_1BallDriveStraight extends SequentialCommandGroup {
   /** Creates a new Drive2Seconds. */
-  public CG_1BallDriveStraight(Drivetrain drivetrain) {
-    
-
-    
+  public CG_1BallDriveStraight(Drivetrain drivetrain, Index indexMotors, Intake intakeMotor, Launcher launcher) {
+        
     addCommands(
       // TODO Add command to launch ball inside tarmac
-      
+      // Start the Launcher - speedFront is first double, speedBack is second
+      new LauncherSpeed(launcher, 0.35, 0.40).withTimeout(0.75),
+      new SequentialCommandGroup(
+      // Maintain Launcher speed
+        new LauncherSpeed(launcher, 0.35, 0.40).withTimeout(0.25).alongWith( 
+        // Index the ball #1 into the running Launcher
+          new IndexSpeed(indexMotors, 0.5).withTimeout(0.25)), 
+            new ParallelCommandGroup (
+              // Maintain Launcher speed
+              new LauncherSpeed(launcher, 0.36, 0.42),
+              // Intake ball #2 if needed
+              new IntakeSpeed(intakeMotor, 0.5),
+              // Index ball #2 into already running Launcher
+              new IndexSpeed(indexMotors, 0.5),
       new ParallelDeadlineGroup(
         // Wait command will stop the paralleldeadlinegroup
         // Other conditions could subsituted for time to make the group stop
         new WaitCommand(8),
         new DriveCommand(drivetrain, () -> {return 0;}, () -> {return 0.7;}, () -> {return 0.0;})
         ) // end of ParallelDeadlineGroup
-      ); //end of addCommands
+      ))); //end of addCommands
   }
 }
