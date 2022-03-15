@@ -35,24 +35,28 @@ public class CG_1BallDriveStraight_dev extends SequentialCommandGroup {
         new LauncherSpeed(launcher, 0.30, 0.35).withTimeout(0.25).alongWith( 
         // Index the first ball into the running Launcher
           new IndexSpeed(indexMotors, 0.5).withTimeout(0.25)),              
-              new ParallelDeadlineGroup(
-                // Wait command will stop the paralleldeadlinegroup
-                // Other conditions could subsituted for time to make the group stop
-                // 4 seconds of drivetime at 0.70 equates to 105 inches of drive movement
-                new WaitCommand(3),
-                // Start the drivetrain
-                new DriveCommand(
-                  drivetrain,
-                  // Trying to pass a translationXSupploier, translationYSupplier, and rotationalSupplier
-                  () -> {return 0.7;}, //Forwards speed
-                  () -> {return 0.0;}, //Left speed
-                  () -> {return 0.0;}), //Turn speed
+            new ParallelDeadlineGroup(
+              // Wait command will stop the paralleldeadlinegroup
+              // Other conditions could subsituted for time to make the group stop
+              // 4 seconds of drivetime at 0.70 equates to 105 inches of drive movement
+              new WaitCommand(3),
+              // Start the drivetrain
+              new DriveCommand(
+                drivetrain,
+                // Trying to pass a translationXSupploier, translationYSupplier, and rotationalSupplier
+                () -> {return 0.7;}, //Forwards speed
+                () -> {return 0.0;}, //Left speed
+                () -> {return 0.0;}), //Turn speed
               new LauncherSpeed(launcher, 0.36, 0.42),
               // Intake ball #2 if needed
               new IntakeSpeed(intakeMotor, 0.5),
               // Index ball #2 into already running Launcher
               new IndexSpeed(indexMotors, 0.5)
                 ) // end of ParallelDeadlineGroup
+              // TODO Get robot to turn approximately the correct number of degrees for an easier gyro reset
+              
+              // TODO Add gyroreset for assisting the driver going into teleop
+
       )); //end of addCommands
   }
 }
