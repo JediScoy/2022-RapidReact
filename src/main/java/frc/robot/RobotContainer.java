@@ -34,11 +34,11 @@ import frc.robot.commands.Lift.AutoLiftCommandBar2;
 import frc.robot.commands.Lift.LiftCommand;
 import frc.robot.commands.Lift.LockLiftCommandBar1;
 import frc.robot.commands.Lift.LockLiftCommandBar2;
-import frc.robot.commands.PathPlannerBased.CG_2BalDrivePlus;
+// import frc.robot.commands.PathPlannerBased.CG_2BalDrivePlus;
 import frc.robot.commands.PathPlannerBased.CG_2BallDrive;
-import frc.robot.commands.PathPlannerBased.Drive2m;
-import frc.robot.commands.PathPlannerBased.DriveV;
-import frc.robot.commands.auton.CG_1BallDriveNone;
+// import frc.robot.commands.PathPlannerBased.Drive2m;
+// import frc.robot.commands.PathPlannerBased.DriveV;
+// import frc.robot.commands.auton.CG_1BallDriveNone;
 import frc.robot.commands.auton.CG_1BallDriveStraight;
 
 /**
@@ -78,21 +78,7 @@ public class RobotContainer {
   //// Autonomous
   SendableChooser<Command> autonChooser = new SendableChooser<>();
 
-  /** TODO Remove after testing the new chooser setup that contains these commands directly   
-  private final Command autonLaunch1 = new CGLaunch1_DriveNone(indexMotors, intakeMotor, launcher);
-
-  private final Command autonLaunch2Drive = new CGLaunch2_DriveStraight(m_drivetrain, indexMotors, intakeMotor, launcher);
-
-  private final Command autonShortDrive = new DriveShort();
-  
-  private final Command autonStraight = new CGLaunch1_DriveStraight(m_drivetrain, launcher);
-  */
-
   private final Command driveCommand; 
-  // private final Command defaultDriveCommand;
-
-  // private final Command PathStraight =
-    // new PathStraight(m_drivetrainSubsystem);
   
   // The container for the robot. Contains subsystems, OI devices, and commands.
   public RobotContainer() {
@@ -107,9 +93,9 @@ public class RobotContainer {
     // Right stick X axis -> rotation
     driveCommand = new DriveCommand(
       m_drivetrain,
-      () -> -modifyAxis(driverController.getLeftY()) * Drivetrain.MAX_VELOCITY_METERS_PER_SECOND, // divide by 4 for slow mo
-      () -> -modifyAxis(driverController.getLeftX()) * Drivetrain.MAX_VELOCITY_METERS_PER_SECOND, // divide by 4 for slow mo
-      () -> -modifyAxis(driverController.getRightX()) * Drivetrain.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND); // divide by 4 for slow mo
+      () -> -modifyAxis(driverController.getLeftY()) * Drivetrain.MAX_VELOCITY_METERS_PER_SECOND,
+      () -> -modifyAxis(driverController.getLeftX()) * Drivetrain.MAX_VELOCITY_METERS_PER_SECOND,
+      () -> -modifyAxis(driverController.getRightX()) * Drivetrain.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND);
     
     m_drivetrain.setDefaultCommand(driveCommand);
     
@@ -119,25 +105,20 @@ public class RobotContainer {
     // Launches high goal inside the tarmac, doesn't drive out
 
     // Launches high goal inside tarmac, drives out with launch sequence operating
-    autonChooser.addOption("Launch 2",
+    autonChooser.setDefaultOption("1 Ball Launch",
+      new CG_1BallDriveStraight(m_drivetrain, indexMotors, intakeMotor, launcher));
+
+    autonChooser.addOption("2 Ball Launch",
       new CG_2BallDrive(m_drivetrain, indexMotors, intakeMotor, launcher));
     
-    autonChooser.addOption("Launch 2, Pickup 1",
-      new CG_2BalDrivePlus(m_drivetrain, indexMotors, intakeMotor, launcher));
+    // autonChooser.addOption("2 Ball Launch, Pickup 1",
+      // new CG_2BalDrivePlus(m_drivetrain, indexMotors, intakeMotor, launcher));
     
-    autonChooser.addOption("Drive 2m",
-      new Drive2m(m_drivetrain));
+    // autonChooser.addOption("Drive 2m",
+      // new Drive2m(m_drivetrain));
 
-    autonChooser.addOption("Drive V",
-      new DriveV(m_drivetrain, indexMotors, intakeMotor, launcher));
-
-    autonChooser.setDefaultOption("1 Ball, Drive straight",
-      new CG_1BallDriveStraight(m_drivetrain, indexMotors, intakeMotor, launcher));
-    
-      // Drives out only. TODO Drivetrain testing purposes only -- would not use in competition
-    // Tested, but it doesn't function at the moment
-    // autonChooser.addOption("Drive Short test",
-    // new CGLaunch0_DriveShort());
+    // autonChooser.addOption("Drive V",
+      // new DriveV(m_drivetrain, indexMotors, intakeMotor, launcher));
 
     // Puts the chooser on the dashboard
     Shuffleboard.getTab("Auton").add(autonChooser).withSize(2, 4);
@@ -146,13 +127,13 @@ public class RobotContainer {
     // System.out.println("subsystem requirements for autonShortDrive");
     // autonShortDrive.getRequirements().forEach((x) -> System.out.println(x));
 
-    System.out.println("subsystem requirements for DriveCommand");
-    driveCommand.getRequirements().forEach((x) -> System.out.println(x));
+    // System.out.println("subsystem requirements for DriveCommand");
+    // driveCommand.getRequirements().forEach((x) -> System.out.println(x));
   }
 
   public void debugMethod () {
     // SmartDashboard.putBoolean("Short Drive", autonShortDrive.isScheduled());
-    SmartDashboard.putBoolean("DriveCommand", driveCommand.isScheduled());
+    // SmartDashboard.putBoolean("DriveCommand", driveCommand.isScheduled());
   }
 
   private void configureButtonBindings() {
