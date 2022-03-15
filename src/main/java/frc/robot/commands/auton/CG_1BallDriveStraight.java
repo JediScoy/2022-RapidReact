@@ -30,7 +30,6 @@ public class CG_1BallDriveStraight extends SequentialCommandGroup {
     addCommands(
       
       // Start the Launcher - speedFront is first double, speedBack is second
-      // TODO Check these inside tarmac percent outputs
       new LauncherSpeed(launcher, 0.30, 0.35).withTimeout(0.75),
       new SequentialCommandGroup(
       // Maintain Launcher speed

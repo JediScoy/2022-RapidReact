@@ -24,41 +24,35 @@ import frc.robot.subsystems.Launcher;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class CG_1BallDriveStraight_dev extends SequentialCommandGroup {
-  /** Creates a new Drive2Seconds. */
   public CG_1BallDriveStraight_dev(Drivetrain drivetrain, Index indexMotors, Intake intakeMotor, Launcher launcher) {
 
     addCommands(
       
       // Start the Launcher - speedFront is first double, speedBack is second
-      // TODO Check these inside tarmac percent outputs
       new LauncherSpeed(launcher, 0.30, 0.35).withTimeout(0.75),
       new SequentialCommandGroup(
       // Maintain Launcher speed
         new LauncherSpeed(launcher, 0.30, 0.35).withTimeout(0.25).alongWith( 
-        // Index the ball #1 into the running Launcher
-          new IndexSpeed(indexMotors, 0.5).withTimeout(0.25)), 
-            new ParallelDeadlineGroup(
-              new WaitCommand(4),
-              // Maintain Launcher speed
+        // Index the first ball into the running Launcher
+          new IndexSpeed(indexMotors, 0.5).withTimeout(0.25)),              
+              new ParallelDeadlineGroup(
+                // Wait command will stop the paralleldeadlinegroup
+                // Other conditions could subsituted for time to make the group stop
+                // 4 seconds of drivetime at 0.70 equates to 105 inches of drive movement
+                new WaitCommand(3),
+                // Start the drivetrain
+                new DriveCommand(
+                  drivetrain,
+                  // Trying to pass a translationXSupploier, translationYSupplier, and rotationalSupplier
+                  () -> {return 0.7;}, //Forwards speed
+                  () -> {return 0.0;}, //Left speed
+                  () -> {return 0.0;}), //Turn speed
               new LauncherSpeed(launcher, 0.36, 0.42),
               // Intake ball #2 if needed
               new IntakeSpeed(intakeMotor, 0.5),
               // Index ball #2 into already running Launcher
-              new IndexSpeed(indexMotors, 0.5),
-
-              // Start the drivetrain
-              new ParallelDeadlineGroup(
-                // Wait command will stop the paralleldeadlinegroup
-                // Other conditions could subsituted for time to make the group stop
-                // 4 seconds of drivetime at 0.70 equates to 105 inches of x,y movement
-                new WaitCommand(4),
-                new DriveCommand(
-                  drivetrain, 
-                  // Trying to pass a translationXSupploier, translationYSupplier, and rotationalSupplier
-                  () -> {return 0.0;},
-                  () -> {return 0.7;}, 
-                  () -> {return 0.0;})
+              new IndexSpeed(indexMotors, 0.5)
                 ) // end of ParallelDeadlineGroup
-      ))); //end of addCommands
+      )); //end of addCommands
   }
 }
